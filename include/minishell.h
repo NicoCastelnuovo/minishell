@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/14 08:37:58 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:39:39 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <readline/history.h>
 # include "libft.h"
 # include "ft_printf.h"
-# include "get_next_line.h"
 # include "typedef.h"
 
 #endif
