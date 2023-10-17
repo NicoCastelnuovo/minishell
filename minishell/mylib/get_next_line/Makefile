@@ -6,7 +6,7 @@
 #    By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 15:31:49 by fahmadia          #+#    #+#              #
-#    Updated: 2023/10/11 10:43:17 by fahmadia         ###   ########.fr        #
+#    Updated: 2023/10/17 13:55:37 by fahmadia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ CC = cc
 
 CFLAGS = -c -g -Wall -Wextra -Werror
 
-NAME = getnextline.a
+NAME = libgetnextline.a
 
 OBJS = $(SRCS:.c=.o)
 

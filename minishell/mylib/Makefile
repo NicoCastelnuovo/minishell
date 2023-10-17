@@ -6,7 +6,7 @@
 #    By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 15:20:22 by fahmadia          #+#    #+#              #
-#    Updated: 2023/10/11 09:15:28 by fahmadia         ###   ########.fr        #
+#    Updated: 2023/10/17 13:16:06 by fahmadia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIBFT = ./libft
 LIBFTPRINTF_LIB = ./ft_printf/libftprintf.a
 LIBFTPRINTF = ./ft_printf
 
-GETNEXTLINE_LIB = ./get_next_line/getnextline.a
+LIBGETNEXTLINE_LIB = ./get_next_line/libgetnextline.a
 GETNEXTLINE = ./get_next_line
 
 COLOR_GREEN = \033[0;32m
@@ -29,20 +29,19 @@ COLOR_END = \033[0m
 
 all: $(NAME)
 
-$(NAME): $(LIBFT_LIB) $(LIBFTPRINTF_LIB) $(GETNEXTLINE_LIB) 
+$(NAME): $(LIBFT_LIB) $(LIBFTPRINTF_LIB) $(LIBGETNEXTLINE_LIB) 
 	@make extract
-# @make clean
+	@make clean
 	
 extract:
 	@cp $(LIBFT_LIB) $(COPY_DEST)
 	@cp $(LIBFTPRINTF_LIB) $(COPY_DEST)
-	@cp $(GETNEXTLINE_LIB) $(COPY_DEST)
+	@cp $(LIBGETNEXTLINE_LIB) $(COPY_DEST)
 	@ar x ./libft.a
 	@ar x ./libftprintf.a
-	@ar x ./getnextline.a
+	@ar x ./libgetnextline.a
 	@ar rcs $(NAME) $(OBJS)
-	@rm -f $(OBJS) "__.SYMDEF SORTED" ./libft.a ./libftprintf.a ./getnextline.a
-	@rm -f "__.SYMDEF SORTED" ./libft.a ./libftprintf.a ./getnextline.a
+	@rm -f $(OBJS) "__.SYMDEF SORTED" ./libft.a ./libftprintf.a ./libgetnextline.a
 	@echo "$(COLOR_GREEN)libft.a, ft_printf.a, and get_next_line.a are merged and libmylib.a is created.$(COLOR_END)"
 
 $(LIBFT_LIB): 
@@ -51,7 +50,7 @@ $(LIBFT_LIB):
 $(LIBFTPRINTF_LIB):
 	@make -C $(LIBFTPRINTF)
 
-$(GETNEXTLINE_LIB):
+$(LIBGETNEXTLINE_LIB):
 	@make -C $(GETNEXTLINE)
 
 clean: 
