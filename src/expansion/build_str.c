@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:45:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/18 18:44:08 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/18 19:03:01 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,27 +44,25 @@ static int	get_varvalue_len(t_list *var_lst)
 	return (len);
 }
 
-char	*build_str(char *old_str, t_list *var_lst)
+int		get_total_len(t_list *var_lst, char *old_str)
 {
 	int		tot_varname_len;
 	int		tot_varvalue_len;
-	int		total_len;
 
-	ft_printf("OLD: [%s]\n", old_str);
-
-	// get total size needed to allocate
 	tot_varname_len = get_varname_len(var_lst);
 	tot_varvalue_len = get_varvalue_len(var_lst);
-	total_len = ft_strlen(old_str) - tot_varname_len + tot_varvalue_len; // \0 omitted
-	ft_printf("OLD[%d] - VARNAME[%d] + VARVALUE[%d] + NULLTERM[1] = %d\n\n", ft_strlen(old_str), tot_varname_len, tot_varvalue_len, total_len + 1);
+	return (ft_strlen(old_str) - tot_varname_len + tot_varvalue_len);
+}
 
-	// populate with characters
+static char	*create_new_str(t_list *var_lst, int total_len, char *old_str)
+{
 	char	*new_str;
 	int		i;
 	t_var	*var;
 
 	new_str = ft_calloc(total_len + 1, sizeof(char)); // protect
 	new_str[total_len] = '\0';
+	// populate new string
 	i = 0;
 	while (i < total_len)
 	{
@@ -93,7 +91,17 @@ char	*build_str(char *old_str, t_list *var_lst)
 			var_lst = var_lst->next;
 		}
 	}
-	ft_printf("\nNEW STR: [%s]\n", new_str);
-	ft_printf("\n");
+	return (new_str);
+}
+
+char	*build_str(char *old_str, t_list *var_lst)
+{
+	int		total_len;
+	char	*new_str;
+
+	ft_printf("OLD: [%s]\n", old_str);
+	total_len = get_total_len(var_lst, old_str);
+	new_str = create_new_str(var_lst, total_len, old_str);
+	ft_printf("NEW: [%s]\n", new_str);
 	return (new_str);
 }

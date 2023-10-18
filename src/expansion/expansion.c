@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/18 18:43:04 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/18 18:59:20 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ static char **expansion(char *s, int exit_code)
 		if (head->content)
 		{
 			ft_printf("name [%s]", ((t_var *)head->content)->name);
-			ft_printf("[%d]\n", ((t_var *)head->content)->name_len);
+			ft_printf("[%d] - ", ((t_var *)head->content)->name_len);
 			ft_printf("value [%s]", ((t_var *)head->content)->value);
 			ft_printf("[%d]\n", ((t_var *)head->content)->value_len);
 		}
@@ -186,5 +186,5 @@ int main(int argc, char **argv, char **env)
 	// to_expand = expansion(s13, 0);
 	// to_expand = expansion(s14, 99);
 
-
+	return (0);
 }
