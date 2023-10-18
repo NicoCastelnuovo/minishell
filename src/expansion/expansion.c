@@ -6,24 +6,15 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/18 13:52:41 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/18 18:23:59 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-	cc ./src/expansion/expansion.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/libft -lft -L./mylib/ft_printf/ -lftprintf
+	cc ./src/expansion/expansion.c ./src/expansion/build_str.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/libft -lft -L./mylib/ft_printf/ -lftprintf
 */
-
-static char *build_new_string(char *src, char **expanded, int total_var_len)
-{
-	char	*new_string;
-	int		total_len;
-	int		i;
-
-
-}
 
 /*
 	Take as argument a string without dollar sign included. It checks
@@ -60,275 +51,133 @@ static int	get_n_dollars(char *s)
 	return (n);
 }
 
-static int expand_variables(char **to_expand, int n)
+/*
+	For each variable name in the list, getenv() is applied, and the value is
+	duplicated into the node. If the variable doesn't exist, an empty string
+	is duplicated.
+*/
+static void	expand_variables(t_list *var_lst, int n)
 {
-	char	*tmp;
 	char	*expanded;
-	int		i;
-	int		total_var_len;
+	t_var	*var;
 
-	total_var_len = 0;
-	i = 0;
-	while (i < n)
+	while (var_lst) // check if ok not createing a cpy
 	{
-		ft_printf("[%s] -> ", to_expand[i]);
-		if (ft_strncmp(to_expand[i], "$", 1)) // if not the dollar sign, need to expand otherwise not
+		var = (t_var *)var_lst->content;
+		if (ft_strncmp(var->name, "$", 1)) // if not the dollar sign, need to expand otherwise not
 		{
-			total_var_len += ft_strlen(to_expand[i] + 1);
-			expanded = getenv(to_expand[i]);
-			tmp = to_expand[i];
+			expanded = getenv(var->name);
 			if (!expanded)
-				to_expand[i] = ft_strdup("");
+			{
+				var->value = ft_strdup("");
+				var->value_len = ft_strlen(var->value);
+			}
 			else
-				to_expand[i] = ft_strdup(expanded);
-			free(tmp);
+			{
+				var->value = ft_strdup(expanded);
+				var->value_len = ft_strlen(var->value);
+			}
 		}
-		ft_printf("[%s]\n", to_expand[i]);
-		i++;
+		// else if (ft_strncmp(var->name, "?", 1)) ------> !!!!
+		var_lst = var_lst->next; // check if ok not createing a cpy
 	}
 	ft_printf("\n");
-	return (total_var_len);
 }
 
-static char **get_env_var_names(char *s, int n)
+/*
+	Based on the number of $ sign found in the string, the function returns
+	a list whose content has the variable name to expand, and the length of it.
+*/
+static t_list	*create_varlst(char *s, int n)
 {
-	char	**to_expand;
+	t_list	*var_lst;
+	t_list	*new_node;
+	t_var	*var;
 	int		i;
-	int		len;
 
-	to_expand = ft_calloc(n + 1, sizeof(char *));
-	if (!to_expand)
-		return (NULL);
-	to_expand[n] = NULL;
+	var_lst = NULL;
 	i = 0;
 	while (i < n)
 	{
+		var = ft_calloc(1, sizeof(t_var)); // protect
 		s = ft_strchr(s, '$');
 		s++;
-		len = get_var_name_len(s);
-		if (len == 0)
-			to_expand[i] = "$"; // better $
+		var->name_len = get_var_name_len(s);
+		if (var->name_len == 0)
+			var->name = ft_strdup("$"); // better allocate or not ???
 		else
-			to_expand[i] = ft_substr(s, 0, len);
+			var->name = ft_substr(s, 0, var->name_len);
+		var->value = NULL;
+		var->value_len = -1;
+		new_node = ft_lstnew(var);
+		// protect
+		ft_lstadd_back(&var_lst, new_node);
 		i++;
 	}
-	return (to_expand);
+	return (var_lst);
 }
 
 static char **expansion(char *s)
 {
 	int		n;
-	int		total_var_len;
-	char	**to_expand;
-	char	*expanded_string;
+	t_list	*var_lst;
+	char	*new_string;
 
 	n = get_n_dollars(s);
-	to_expand = get_env_var_names(s, n);
-	total_var_len = expand_variables(to_expand, n);
-	// to_expand are now expanded
-	expanded_string = build_new_string(s, to_expand, total_var_len);
+	var_lst = create_varlst(s, n);
+	expand_variables(var_lst, n);
+	t_list *head = var_lst;
+
+
+	while (head)
+	{
+		if (head->content)
+		{
+			ft_printf("name [%s]", ((t_var *)head->content)->name);
+			ft_printf("[%d]\n", ((t_var *)head->content)->name_len);
+			ft_printf("value [%s]", ((t_var *)head->content)->value);
+			ft_printf("[%d]\n", ((t_var *)head->content)->value_len);
+		}
+		head = head->next;
+	}
+	ft_printf("________\n\n");
+
+
+	new_string = build_str(s, var_lst);
+
 }
 
 int main(int argc, char **argv, char **env)
 {
-	char	*s0 = "This is $USER and other shit"; 				// ---> ncasteln and other shit
-	char	*s1 = "$USERHELLO";			// ---> []
-	char	*s2 = "USER$?USER"; 		// ---> USER0USER
-	char	*s3 = "$USER$PWD"; 		// ---> ncastelnncasteln
-	char	*s4 = "$USER?";				// ncasteln?
+	char	*s0 = "This is $USER and other shit"; 			// ---> ncasteln and other shit
+	char	*s1 = "$USERHELLO";								// ---> []
+	char	*s2 = "USER$?USER"; 							// ---> USER0USER
+	char	*s3 = "$USER $PWD"; 							// ---> ncastelnncasteln
+	char	*s4 = "$USER?";									// ncasteln?
 	char	*s5 = "I am $USER I am in $PWD, I've got a lot of $";
-	char	*s6 = "--> $ <--";			// ---> nothing to store
-	char	*s7 = "$$$ $ $ $PWD$";			// ---> nothing to store
+	char	*s6 = "--> $ <--";
+	char	*s7 = "$$$ $ $ $USER$$$$$";
 	char	*s8 = "$NOTEXIST";
 	char	*s9 = "$! $@ $# $$ $% $^ $& $* $( $) $_ $+ $:";
+	char	*s10 = "Hello $USER$NOTHING$!!!";
+	char	*s11 = "$PWD$";
+	char	*s12 = "     $WTF    ";							// [9 blank spaces]
 
 	char	**to_expand;
 
-	to_expand = expansion(s0);
-	to_expand = expansion(s1);
-	to_expand = expansion(s2);
-	to_expand = expansion(s3);
-	to_expand = expansion(s4);
-	to_expand = expansion(s5);
-	to_expand = expansion(s6);
-	to_expand = expansion(s7);
-	to_expand = expansion(s8);
-	to_expand = expansion(s9);
+	// to_expand = expansion(s0);
+	// to_expand = expansion(s1);
+	// to_expand = expansion(s3);
+	// to_expand = expansion(s4);
+	// to_expand = expansion(s5);
+	// to_expand = expansion(s6);
+	// to_expand = expansion(s7);
+	// to_expand = expansion(s8);
+	// to_expand = expansion(s9);
+	// to_expand = expansion(s10); // "Hello ncasteln$!!!"
+	// to_expand = expansion(s11);
+	// to_expand = expansion(s12);
 
+	// to_expand = expansion(s2); // need handle
 
 }
-
-
-
-
-
-
-
-// 	cc ./src/expansion/expansion.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/libft -lft -L./mylib/ft_printf/ -lftprintf
-// */
-
-// static char *build_new_string(char *src, char **expanded, int total_var_len)
-// {
-// 	char	*new_string;
-// 	int		total_len;
-// 	int		i;
-
-
-// }
-
-// /*
-// 	Take as argument a string without dollar sign included. It checks
-// 	immediately if the parameter is $?, which is not an env var, but a Shell
-// 	built-in variable.
-// */
-// static int	get_var_name_len(char *s)
-// {
-// 	int	i;
-
-// 	if (s[0] == '?')
-// 		return (1);
-// 	i = 0;
-// 	while (s[i])
-// 	{
-// 		if (!ft_isalnum(s[i]) && s[i] != '_')
-// 			return (i);
-// 		i++;
-// 	}
-// 	return (i);
-// }
-
-// static int	get_n_dollars(char *s)
-// {
-// 	int	n;
-
-// 	n = 0;
-// 	while (*s)
-// 	{
-// 		if (*s == '$')
-// 			n++;
-// 		s++;
-// 	}
-// 	return (n);
-// }
-
-// static int expand_variables(char **to_expand, int n)
-// {
-// 	char	*tmp;
-// 	char	*expanded;
-// 	int		i;
-// 	int		total_var_len;
-
-// 	total_var_len = 0;
-// 	i = 0;
-// 	while (i < n)
-// 	{
-// 		ft_printf("[%s] -> ", to_expand[i]);
-// 		if (ft_strncmp(to_expand[i], "$", 1)) // if not the dollar sign, need to expand otherwise not
-// 		{
-// 			total_var_len += ft_strlen(to_expand[i] + 1);
-// 			expanded = getenv(to_expand[i]);
-// 			tmp = to_expand[i];
-// 			if (!expanded)
-// 				to_expand[i] = ft_strdup("");
-// 			else
-// 				to_expand[i] = ft_strdup(expanded);
-// 			free(tmp);
-// 		}
-// 		ft_printf("[%s]\n", to_expand[i]);
-// 		i++;
-// 	}
-// 	ft_printf("\n");
-// 	return (total_var_len);
-// }
-
-// static t_list	*get_env_var_names(char *s, int n)
-// {
-// 	t_list	*env_lst;
-// 	t_list	*new_node;
-// 	t_var	*content;
-// 	int		i;
-
-// 	env_lst = ft_calloc(1, sizeof(t_list));
-// 	i = 0;
-// 	while (i < n)
-// 	{
-// 		content = ft_calloc(1, sizeof(t_var)); // protect
-// 		s = ft_strchr(s, '$');
-// 		s++;
-// 		content->len = get_var_name_len(s);
-// 		if (content->len == 0)
-// 			content->var = ft_strdup("$"); // better allocate or not ???
-// 		else
-// 			content->var = ft_substr(s, 0, content->len);
-// 		new_node = ft_lstnew((t_var *) content);
-// 		ft_lstadd_back(&env_lst, new_node);
-// 		i++;
-// 	}
-// 	return (env_lst);
-// }
-
-// static char **expansion(char *s)
-// {
-// 	int		n;
-// 	t_list	*env_lst;
-
-// 	n = get_n_dollars(s);
-// 	env_lst = get_env_var_names(s, n);
-
-// 	ft_printf("var [%s] len of [%d]\n", ((t_var *)head->content)->var, 1);
-// 	// t_list *head = env_lst;
-// 	// while (head->next)
-// 	// {
-// 	// 	head = head->next;
-// 	// }
-// }
-
-// int main(int argc, char **argv, char **env)
-// {
-// 	char	*s0 = "This is $USER and other shit"; 				// ---> ncasteln and other shit
-// 	char	*s1 = "$USERHELLO";			// ---> []
-// 	char	*s2 = "USER$?USER"; 		// ---> USER0USER
-// 	char	*s3 = "$USER$PWD"; 		// ---> ncastelnncasteln
-// 	char	*s4 = "$USER?";				// ncasteln?
-// 	char	*s5 = "I am $USER I am in $PWD, I've got a lot of $";
-// 	char	*s6 = "--> $ <--";			// ---> nothing to store
-// 	char	*s7 = "$$$ $ $ $PWD$";			// ---> nothing to store
-// 	char	*s8 = "$NOTEXIST";
-// 	char	*s9 = "$! $@ $# $$ $% $^ $& $* $( $) $_ $+ $:";
-
-// 	char	**to_expand;
-
-// 	to_expand = expansion(s0);
-// 	to_expand = expansion(s1);
-// 	to_expand = expansion(s2);
-// 	to_expand = expansion(s3);
-// 	to_expand = expansion(s4);
-// 	to_expand = expansion(s5);
-// 	to_expand = expansion(s6);
-// 	to_expand = expansion(s7);
-// 	to_expand = expansion(s8);
-// 	to_expand = expansion(s9);
-
-
-// }
-
-
-
-
-
-// 		// s = ft_strchr(s, '$');
-// 		// s++;
-// 		// if (s[0] == '?')
-// 		// 	to_expand[i] = ft_strdup("?");
-// 		// else
-// 		// {
-// 		// 	len = get_var_name_len(s);
-// 		// 	ft_printf("len = %d\n", len);
-// 		// 	if (len == 0)
-// 		// 		to_expand[i] = ft_strdup("$");
-// 		// 	else
-// 		// 		to_expand[i] = ft_substr(s, 0, len);
-// 		// 	// if (!to_expand)
-// 		// 	ft_printf("[%s]\n", to_expand[i]);
-// 		// }
-// 		// i++;

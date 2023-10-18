@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/18 13:15:22 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/18 15:42:11 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ typedef struct	s_token
 
 typedef struct	s_var
 {
-	char	*var;
-	int		len;
+	char	*name;
+	char	*value;
+	int		name_len;
+	int		value_len;
 }			t_var;
 
 #endif

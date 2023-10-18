@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/10/17 15:08:26 by fahmadia         ###   ########.fr        #
+#    Updated: 2023/10/18 15:49:13 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 VPATH = ./src/lexer\
 	./src/helpers/linked_lists
-	
+
 SRCS = lexer.c\
 	create_node.c\
 	add_node_to_linked_list.c
@@ -39,7 +39,7 @@ $(NAME): $(OBJS) $(MYLIB) Makefile
 
 $(OBJS_PATH)/%.o: %.c
 	@mkdir -p $(OBJS_PATH)
-	@$(CC) $(CFLAGS) $(INCLUDE) $< -o $@ 
+	@$(CC) $(CFLAGS) $(INCLUDE) $< -o $@
 
 $(MYLIB):
 	@cd $(MYLIB_PATH) && make
