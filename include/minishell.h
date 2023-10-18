@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/18 10:19:00 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/18 10:57:21 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@
 
 t_token	*create_node(void *content, int type);
 t_token	*add_node_to_linked_list(t_token *head, void *content, int type);
+// Comment of Nico
 
 #endif
