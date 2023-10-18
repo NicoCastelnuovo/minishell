@@ -6,7 +6,7 @@
 #    By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/21 19:48:22 by fahmadia          #+#    #+#              #
-#    Updated: 2023/10/11 10:48:21 by fahmadia         ###   ########.fr        #
+#    Updated: 2023/10/17 15:49:37 by fahmadia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,8 +43,6 @@ COLOR_END = \033[0m
 all: $(NAME)
 
 $(NAME): $(SRCS) $(OBJS)
-# @make bonus -C $(LIBFT)
-# @cp $(LIBFT_LIB) $(NAME)
 	@ar rcs $(NAME) $(OBJS)
 	@echo "$(COLOR_GREEN)ft_printf.a is created without bonus object files.$(COLOR_END)"
 
@@ -53,12 +51,10 @@ $(NAME): $(SRCS) $(OBJS)
 
 clean: 
 	@rm -f $(OBJS)
-# @make clean -C $(LIBFT)
 	@echo "$(COLOR_YELLOW)ft_printf object files are deleted.$(COLOR_END)"
 
 fclean: clean
 	@rm -f $(NAME)
-# @make fclean -C $(LIBFT)
 	@echo "$(COLOR_YELLOW)ft_printf object files and ft_printf.a are deleted.$(COLOR_END)"
 
 re: 
