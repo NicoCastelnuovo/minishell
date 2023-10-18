@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/18 18:23:59 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/18 18:43:04 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	get_n_dollars(char *s)
 	duplicated into the node. If the variable doesn't exist, an empty string
 	is duplicated.
 */
-static void	expand_variables(t_list *var_lst, int n)
+static void	expand_variables(t_list *var_lst, int n, int exit_code)
 {
 	char	*expanded;
 	t_var	*var;
@@ -64,9 +64,12 @@ static void	expand_variables(t_list *var_lst, int n)
 	while (var_lst) // check if ok not createing a cpy
 	{
 		var = (t_var *)var_lst->content;
-		if (ft_strncmp(var->name, "$", 1)) // if not the dollar sign, need to expand otherwise not
+		if (ft_strncmp(var->name, "$", 1) != 0) // if not the dollar sign, need to expand otherwise not
 		{
-			expanded = getenv(var->name);
+			if (ft_strncmp(var->name, "?", 1) == 0)
+				expanded = ft_itoa(exit_code);
+			else
+				expanded = getenv(var->name);
 			if (!expanded)
 			{
 				var->value = ft_strdup("");
@@ -117,7 +120,7 @@ static t_list	*create_varlst(char *s, int n)
 	return (var_lst);
 }
 
-static char **expansion(char *s)
+static char **expansion(char *s, int exit_code)
 {
 	int		n;
 	t_list	*var_lst;
@@ -125,7 +128,7 @@ static char **expansion(char *s)
 
 	n = get_n_dollars(s);
 	var_lst = create_varlst(s, n);
-	expand_variables(var_lst, n);
+	expand_variables(var_lst, n, exit_code);
 	t_list *head = var_lst;
 
 
@@ -162,22 +165,26 @@ int main(int argc, char **argv, char **env)
 	char	*s10 = "Hello $USER$NOTHING$!!!";
 	char	*s11 = "$PWD$";
 	char	*s12 = "     $WTF    ";							// [9 blank spaces]
+	char	*s13 = "Hello my name is $USER and my last command was $_";							// [9 blank spaces]
+	char	*s14 = "$USER$?$USER"; 							// ---> ncasteln99ncasteln
 
 	char	**to_expand;
 
-	// to_expand = expansion(s0);
-	// to_expand = expansion(s1);
-	// to_expand = expansion(s3);
-	// to_expand = expansion(s4);
-	// to_expand = expansion(s5);
-	// to_expand = expansion(s6);
-	// to_expand = expansion(s7);
-	// to_expand = expansion(s8);
-	// to_expand = expansion(s9);
-	// to_expand = expansion(s10); // "Hello ncasteln$!!!"
-	// to_expand = expansion(s11);
-	// to_expand = expansion(s12);
+	// to_expand = expansion(s0, 0);
+	// to_expand = expansion(s1, 0);
+	// to_expand = expansion(s2, 0);
+	// to_expand = expansion(s3, 0);
+	// to_expand = expansion(s4, 0);
+	// to_expand = expansion(s5, 0);
+	// to_expand = expansion(s6, 0);
+	// to_expand = expansion(s7, 0);
+	// to_expand = expansion(s8, 0);
+	to_expand = expansion(s9, 0);
+	// to_expand = expansion(s10, 0);
+	// to_expand = expansion(s11, 0);
+	// to_expand = expansion(s12, 0);
+	// to_expand = expansion(s13, 0);
+	// to_expand = expansion(s14, 99);
 
-	// to_expand = expansion(s2); // need handle
 
 }
