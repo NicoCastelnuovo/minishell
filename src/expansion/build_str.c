@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:45:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/19 10:34:30 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/19 11:59:35 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static char	*create_new_str(t_list *var_lst, int total_len, char *old_str)
 	t_var	*var;
 
 	new_str = ft_calloc(total_len + 1, sizeof(char)); // protect
-	new_str[total_len] = '\0';
+	// new_str[total_len] = '\0'; // not necessary
 	i = 0;
 	while (i < total_len)
 	{

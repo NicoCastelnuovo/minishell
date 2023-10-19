@@ -6,15 +6,11 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/19 10:20:25 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/19 10:57:54 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-	cc ./src/expansion/main.c ./src/expansion/utils.c ./src/expansion/expansion.c ./src/expansion/build_str.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/ -lmylib
-*/
 
 /*
 	Take as argument a string without dollar sign included. It checks

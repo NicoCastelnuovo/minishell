@@ -6,11 +6,16 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 07:27:44 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/19 10:18:09 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/19 10:58:09 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+	Compiling Command
+	cc ./src/expansion/main.c ./src/expansion/utils.c ./src/expansion/expansion.c ./src/expansion/build_str.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/ -lmylib
+*/
 
 int main(int argc, char **argv, char **env)
 {

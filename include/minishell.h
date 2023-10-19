@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/19 09:25:09 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/19 11:39:59 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include <stdio.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft.h"
@@ -28,5 +29,8 @@ char	*build_str(char *old_str, t_list *var_lst);
 char	*expansion(char *s, int exit_code);
 void	del_var_lst(void *content);
 void	print_var_lst(t_list *var_lst);
+
+// -------------------------------------------------------------------- BULTINS
+int		pwd(char *opt);
 
 #endif
