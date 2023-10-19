@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:45:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/18 19:03:01 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/19 10:34:30 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,33 +62,22 @@ static char	*create_new_str(t_list *var_lst, int total_len, char *old_str)
 
 	new_str = ft_calloc(total_len + 1, sizeof(char)); // protect
 	new_str[total_len] = '\0';
-	// populate new string
 	i = 0;
 	while (i < total_len)
 	{
-		if (*old_str != '$')
+		if (*old_str == '$' && var_lst)
+		{
+			var = (t_var *)var_lst->content;
+			ft_strlcpy(new_str + i, var->value, var->value_len + 1);
+			i += var->value_len;
+			old_str += var->name_len + 1;
+			var_lst = var_lst->next;
+		}
+		else
 		{
 			new_str[i] = *old_str;
 			old_str++;
 			i++;
-		}
-		else // substitution
-		{
-			var = (t_var *)var_lst->content;
-			if (ft_strncmp(var->name, "$", ft_strlen(var->name)) == 0) // ,eams of it is $
-			{
-				// just copy it
-				new_str[i] = *old_str;
-				old_str++;
-				i++;
-			}
-			else // need to explicitly handle not-existent variables ???
-			{
-				ft_strlcpy(new_str + i, var->value, var->value_len + 1);
-				i += var->value_len;
-				old_str += var->name_len + 1;
-			}
-			var_lst = var_lst->next;
 		}
 	}
 	return (new_str);
@@ -99,9 +88,7 @@ char	*build_str(char *old_str, t_list *var_lst)
 	int		total_len;
 	char	*new_str;
 
-	ft_printf("OLD: [%s]\n", old_str);
 	total_len = get_total_len(var_lst, old_str);
 	new_str = create_new_str(var_lst, total_len, old_str);
-	ft_printf("NEW: [%s]\n", new_str);
 	return (new_str);
 }

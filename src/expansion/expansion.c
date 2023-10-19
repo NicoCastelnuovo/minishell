@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/19 09:25:18 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/19 10:20:25 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,12 @@ static void	get_var_values(t_list *var_lst, int n, int exit_code)
 	char	*expanded;
 	t_var	*var;
 
-	while (var_lst) // check if ok not createing a cpy
+	while (var_lst)
 	{
 		var = (t_var *)var_lst->content;
-		if (ft_strncmp(var->name, "$", 1) != 0) // if not the dollar sign, need to expand otherwise not
+		if (ft_strncmp(var->name, "$", 1) == 0)
+			expanded = ft_strdup("$");
+		else
 		{
 			if (ft_strncmp(var->name, "?", 1) == 0)
 				expanded = ft_itoa(exit_code);
@@ -75,12 +77,11 @@ static void	get_var_values(t_list *var_lst, int n, int exit_code)
 				else
 					expanded = ft_strdup("");
 			}
-			var->value = expanded;
-			var->value_len = ft_strlen(var->value);
 		}
-		var_lst = var_lst->next; // check if ok not createing a cpy
+		var->value = expanded;
+		var->value_len = ft_strlen(var->value);
+		var_lst = var_lst->next;
 	}
-	ft_printf("\n");
 }
 
 /*
@@ -98,15 +99,19 @@ static t_list	*get_var_names(char *s, int n)
 	i = 0;
 	while (i < n)
 	{
-		var = ft_calloc(1, sizeof(t_var)); // protect
+		var = ft_calloc(1, sizeof(t_var));
+		if (!var)
+			return (ft_lstclear(&var_lst, del_var_lst), NULL);
 		s = ft_strchr(s, '$');
 		s++;
 		var->name_len = get_var_name_len(s);
 		if (var->name_len == 0)
-			var->name = ft_strdup("$"); // better allocate or not ???
+			var->name = ft_strdup("$");
 		else
 			var->name = ft_substr(s, 0, var->name_len);
-		var->value = NULL; // maybe set value of $ as $
+		if (!var->name)
+			return (ft_lstclear(&var_lst, del_var_lst), NULL);
+		var->value = NULL;
 		var->value_len = -1;
 		new_node = ft_lstnew(var); // protect
 		ft_lstadd_back(&var_lst, new_node);
@@ -115,6 +120,10 @@ static t_list	*get_var_names(char *s, int n)
 	return (var_lst);
 }
 
+/*
+	Just perform the expansion on a string which needs it. The check to
+	understand if the string needs to be expanded is done before.
+*/
 char	*expansion(char *s, int exit_code)
 {
 	int		n;
@@ -123,11 +132,13 @@ char	*expansion(char *s, int exit_code)
 
 	n = get_n_dollars(s);
 	var_lst = get_var_names(s, n);
-
-	print_var_lst(var_lst); // remove
-
 	get_var_values(var_lst, n, exit_code);
 	new_str = build_str(s, var_lst);
+
+	print_var_lst(var_lst); // remove
+	ft_printf("old_str: [%s]\n", s);
+	ft_printf("new_str: [%s]\n", new_str);
+
 	ft_lstclear(&var_lst, del_var_lst);
 	return (new_str);
 }

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 07:27:44 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/19 09:25:13 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/19 10:18:09 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,16 @@ int main(int argc, char **argv, char **env)
 	char	*s6 = "--> $ <--";
 	char	*s7 = "$$$ $ $ $USER$$$$$";
 	char	*s8 = "$NOTEXIST";
-	char	*s9 = "$ $@ $# $$ $% $^ $& $* $( $) $_ $+ $: $?";
+	char	*s9 = "$$$ $USER $@$#$$ $% $^ $& $* $( $) $_ $+ $: $?";
 	char	*s10 = "Hello $USER$NOTHING$!!!";
 	char	*s11 = "$PWD$";
 	char	*s12 = "     $WTF    ";							// [9 blank spaces]
 	char	*s13 = "Hello my name is $USER and my last command was $_";							// [9 blank spaces]
 	char	*s14 = "$USER$?$USER"; 							// ---> ncasteln99ncasteln
 	char	*s15 = "$USER $USER$ $USER%$?"; 							// ---> ncasteln99ncasteln
+	char	*s16 = "$HOME $_$ $TERM% \\$ {$?}"; 							// ---> ncasteln99ncasteln
 
-	char *new_string = expansion(s0, 99);
+	char *new_string = expansion(s16, 99);
 	free(new_string);
 
 	return (0);
