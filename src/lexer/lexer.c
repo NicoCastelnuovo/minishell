@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:15:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/17 15:40:52 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/19 08:44:31 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	read_input_char_by_char(char *input, char **reference, int *input_counter, 
 		{
 			store_previous_chars_as_token(*reference, *token_counter);
 		}
-		check_for_second_special_char(input, input[*input_counter], input_counter, token_counter, special_char_counter);		
+		check_for_second_special_char(input, input[*input_counter], input_counter, token_counter, special_char_counter);
 		*reference += *token_counter;
 		*token_counter = 0;
 	}
@@ -114,7 +114,7 @@ char	*get_input(void)
 int	main(void)
 {
 	char	*input;
-	
+
 	// input = get_input();
 	input = "$USER$USER";
 	tokenize_input(input);

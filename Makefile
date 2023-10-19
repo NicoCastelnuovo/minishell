@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/10/18 15:49:13 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/10/19 08:53:15 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ OBJS_PATH = ./objs
 OBJS = $(patsubst %.c, $(OBJS_PATH)/%.o, $(SRCS))
 
 CC = cc
-CFLAGS = -c -g -Wall -Werror -Wextra
+CFLAGS = -c -g -Wall -Wextra #-Werror
 NAME = minishell
 MYLIB_PATH = ./mylib
 MYLIB = $(MYLIB_PATH)/libmylib.a

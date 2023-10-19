@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 09:29:17 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/04/14 12:45:06 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/19 08:19:43 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	fill_string(char *a, int *i, int *j, int positive_n)
 }
 
 static char	*itoa_int_min(char *a)
-{		
+{
 	int	i;
 	int	j;
 	int	positive_n;
@@ -103,16 +103,12 @@ static	char	*check_int_sign(int n, int digits_num, int positive_n, char *a)
 }
 
 char	*ft_itoa(int n)
-{	
+{
 	int		digits_num;
-	int		i;
-	int		j;
 	char	*a;
 	int		positive_n;
 
 	digits_num = count_digits(n);
-	i = digits_num - 1;
-	j = 0;
 	positive_n = n;
 	a = NULL;
 	if (n == -2147483648)
