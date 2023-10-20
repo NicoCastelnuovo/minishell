@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/19 10:57:54 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:03:37 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ static t_list	*get_var_names(char *s, int n)
 	Just perform the expansion on a string which needs it. The check to
 	understand if the string needs to be expanded is done before.
 */
-char	*expansion(char *s, int exit_code)
+char	*expansion(char *s, int exit_code, char **env)
 {
 	int		n;
 	t_list	*var_lst;

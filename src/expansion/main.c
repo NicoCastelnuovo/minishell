@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 07:27:44 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/19 10:58:09 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:04:30 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int main(int argc, char **argv, char **env)
 	char	*s15 = "$USER $USER$ $USER%$?"; 							// ---> ncasteln99ncasteln
 	char	*s16 = "$HOME $_$ $TERM% \\$ {$?}"; 							// ---> ncasteln99ncasteln
 
-	char *new_string = expansion(s16, 99);
+	char *new_string = expansion(s2, 99, env);
 	free(new_string);
 
 	return (0);

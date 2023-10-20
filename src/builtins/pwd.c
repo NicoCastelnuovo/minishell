@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:52:18 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/20 08:12:07 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/20 15:03:11 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,16 @@ static int	is_blank_str(char *s)
 	pwd command returns the current working path. As the subject states, it has
 	not to handle any option (-P and -L) like the original Shell buil-in. In
 	those case an error is returned.
+	ATTENTION: the dir returned is not allocated on the heap!
 */
-int		pwd(char *opt)
+const char	*get_wd(char *opt)
 {
 	char	*dir;
 	char	*buff;
 	size_t	size;
 
-	if (opt && !is_blank_str(opt))
-		return (E2BIG); // set argument error ???
+	// if (opt && !is_blank_str(opt))
+	// 	return (E2BIG); // set argument error ???
 	size = 1;
 	buff = ft_calloc(size + 1, sizeof(char)); // protect --- create err function!
 	dir = getcwd(buff, size);
@@ -46,7 +47,6 @@ int		pwd(char *opt)
 		buff = ft_calloc(size + 1, sizeof(char)); // protect --- create err function
 		dir = getcwd(buff, size);
 	}
-	ft_printf("custom_pwd: [%s]\n", dir);
 	free (buff);
-	return (0);
+	return (dir);
 }

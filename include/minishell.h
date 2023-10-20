@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/20 11:56:21 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:03:23 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,18 @@ t_token	*add_node_to_linked_list(t_token *head, void *content, int type);
 
 // ------------------------------------------------------------------ EXPANSION
 char	*build_str(char *old_str, t_list *var_lst);
-char	*expansion(char *s, int exit_code);
+char	*expansion(char *s, int exit_code, char **env);
 void	del_var_lst(void *content);
 void	print_var_lst(t_list *var_lst);
 
 // -------------------------------------------------------------------- BULTINS
-int		echo(char *s);
-int		pwd(char *opt);
-int		cd(char *path, char **env);
-int		print_env(char **env);
+int			echo(char *s);
+const char	*get_wd(char *opt);
+int			cd(char *path, char **env);
+char		*get_env_var(char *name, char **env);
+char		**copy_env(char **envp);
+void		print_env(char **env);
 
 // ---------------------------------------------------------------------- UTILS
-char	**copy_envp(char **envp);
 
 #endif
