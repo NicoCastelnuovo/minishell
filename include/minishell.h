@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/18 10:19:00 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/19 09:31:20 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include "ft_printf.h"
 # include "typedef.h"
 
-t_token	*create_node(void *content, int type);
-t_token	*add_node_to_linked_list(t_token *head, void *content, int type);
+t_token_data	*create_node(void *content, int type);
+t_token_data	*add_node_to_linked_list(t_token_data *head, void *content, int type);
 
 #endif

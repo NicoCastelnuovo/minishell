@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/17 15:09:39 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/20 07:45:41 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,17 @@ typedef enum	s_type
 	DOLLAR_CHAR = '$',
 }	t_type;
 
-typedef struct	s_token
+typedef struct	s_token_data
 {
-	int				length;
-	int				type;
-	char			*content;
-	struct s_token	*next;
-}	t_token;
+	int		length;
+	int		type;
+	char	*string;
+}	t_token_data;
+
+// typedef struct	s_token
+// {
+// 	t_token_data	*content;
+// 	struct s_token	*next;
+// }	t_token;
 
 #endif
