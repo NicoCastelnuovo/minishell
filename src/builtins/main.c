@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:56:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/20 16:05:02 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:32:39 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 /*
 	TO DO:
 	- Make a pre-check in case of a builtin, and throw error in case of args/option which should not be used.
+	- Decide what to do in case of case to not handle (example 'cd <no argument provided>')
 */
 
 // --------- PWD ----------
@@ -47,25 +48,26 @@
 // }
 
 // --------- CD ----------
-// int	main(int argc, char **argv, char **env)
-// {
-// 	char	**env_cpy = copy_env(env);
+int	main(int argc, char **argv, char **env)
+{
+	char	**env_cpy = copy_env(env);
 
-// 	char	*path0 = "/";
-// 	char	*path1 = "./";
-// 	char	*path2 = "../";
-// 	char	*path3 = "../libft";
-// 	char	*path4 = "Where are you going?";
-// 	char	*path5 = "/Users/ncasteln/Downloads";
-// 	char	*path6 = "../../";
+	char	*path0 = "/";
+	char	*path1 = "./";
+	char	*path2 = "../";
+	char	*path3 = "../libft";
+	char	*path4 = "Where are you going?";
+	char	*path5 = "/Users/ncasteln/Downloads";
+	char	*path6 = "../../";
+	char	*path7 = "src";
 
-// 	ft_printf("BEFORE [%s]\n\n", get_env_var("PWD=", env_cpy));
-// 	print_env(env_cpy);
-// 	ft_printf("\n\n");
-// 	if (cd("/", env_cpy))
-// 		return (1);
-// 	ft_printf("AFTER [%s]\n\n", get_env_var("PWD=", env_cpy));
-// 	print_env(env_cpy);
-// 	ft_printf("\n\n");
-// 	return (0);
-// }
+	ft_printf("BEFORE [%s]\n\n", get_env_var_value("PWD=", env_cpy));
+	print_env(env_cpy);
+	ft_printf("\n\n");
+	if (cd(path5, env_cpy))
+		return (1);
+	ft_printf("AFTER [%s]\n\n", get_env_var_value("PWD=", env_cpy));
+	print_env(env_cpy);
+	ft_printf("\n\n");
+	return (0);
+}

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/20 16:03:23 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:32:32 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	print_var_lst(t_list *var_lst);
 int			echo(char *s);
 const char	*get_wd(char *opt);
 int			cd(char *path, char **env);
-char		*get_env_var(char *name, char **env);
+char		*get_env_var_value(char *name, char **env);
 char		**copy_env(char **envp);
 void		print_env(char **env);
 

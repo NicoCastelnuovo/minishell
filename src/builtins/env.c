@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 08:50:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/20 16:01:25 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:32:30 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	returns the variable of the original env, this would retrieve the value
 	of the current env.
 */
-char	*get_env_var(char *name, char **env)
+char	*get_env_var_value(char *name, char **env)
 {
 	int	i;
 
@@ -25,7 +25,7 @@ char	*get_env_var(char *name, char **env)
 	while (env[i])
 	{
 		if (ft_strnstr(env[i], name, ft_strlen(name)))
-			return (env[i]);
+			return (env[i] + ft_strlen(name));
 		i++;
 	}
 	return ("\n");
