@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:15:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/20 07:54:37 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/20 10:31:45 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,18 @@ void	initialize_token_data(t_list *token_node, char *token_content, t_list **tok
 		token_head_data->length++;
 	token_data->length = token_head_data->length;
 	printf("token_head_data->length = %d\n", token_data->length);
-	printf("token_head_data->content = %s\n", token_data->string);
+	// printf("token_head_data->content = %s\n", token_data->string);
 }
 
-char	*store_special_char_as_token(char *c, int special_char_counter, t_list **token_head)
+char	*store_special_char_as_token(char *c, t_list **token_head)
 {
 	char	*special_char_string;
 	t_list	*special_char_node;
 	
-	special_char_string = malloc((special_char_counter + 1) * sizeof(char));
-	special_char_string[special_char_counter] = '\0';
+	special_char_string = malloc((1 + 1) * sizeof(char));
+	special_char_string[1] = '\0';
 	special_char_node = malloc(sizeof(t_list));
-	ft_memset(special_char_string, *c, special_char_counter);
+	ft_memset(special_char_string, *c, 1);
 	printf("***special_character:%s\n", special_char_string);
 	ft_lstadd_back(token_head, special_char_node);
 	initialize_token_data(special_char_node, special_char_string, token_head);
@@ -71,58 +71,62 @@ char	*check_is_special_char(char c)
 	return (result);
 }
 
-int	check_for_second_special_char(char *input, char c, int *input_counter, int *token_counter, int *special_char_counter, t_list **token_head)
-{
-	if (c == '>' || c == '<')
-	{
-		if (input[*(input_counter) + 1] == c)
-		{
-			(*input_counter)++;
-			(*token_counter)++;
-			(*special_char_counter)++;
-			store_special_char_as_token(&c, *special_char_counter, token_head);
-			// return (1);
-		}
-		else
-			store_special_char_as_token((char *)&(input[*input_counter]), *special_char_counter, token_head);
-	}
-	else
-		store_special_char_as_token((char *)&(input[*input_counter]), *special_char_counter, token_head);
-	*special_char_counter = 0;
-	return (0);
-}
+// int	check_for_second_special_char(char *input, char c, int *input_counter, int *token_counter, int *special_char_counter, t_list **token_head)
+// {
+// 	if (c == '>' || c == '<')
+// 	{
+// 		if (input[*(input_counter) + 1] == c)
+// 		{
+// 			(*input_counter)++;
+// 			(*token_counter)++;
+// 			(*special_char_counter)++;
+// 			store_special_char_as_token(&c, *special_char_counter, token_head);
+// 			// return (1);
+// 		}
+// 		else
+// 			store_special_char_as_token((char *)&(input[*input_counter]), *special_char_counter, token_head);
+// 	}
+// 	else
+// 		store_special_char_as_token((char *)&(input[*input_counter]), *special_char_counter, token_head);
+// 	*special_char_counter = 0;
+// 	return (0);
+// }
 
-void	read_input_char_by_char(char *input, char **reference, int *input_counter, int *token_counter, int *special_char_counter, t_list **token_head)
+void	read_input_char_by_char(char *input, char **reference, int *input_counter, int *token_counter, t_list **token_head)
 {
-		if (check_is_special_char(input[*input_counter]))
+	if (check_is_special_char(input[*input_counter]))
 	{
-		(*special_char_counter)++;
 		if (*token_counter > 1)
 		{
 			store_previous_chars_as_token(*reference, *token_counter, token_head);
+			*reference += *token_counter - 1;
+			store_special_char_as_token(*reference, token_head);	
+			(*reference)++;
+			*token_counter = 0;
 		}
-		check_for_second_special_char(input, input[*input_counter], input_counter, token_counter, special_char_counter, token_head);		
-		*reference += *token_counter;
-		*token_counter = 0;
+		else
+		{
+			store_special_char_as_token(*reference, token_head);	
+			*reference += *token_counter;
+			*token_counter = 0;
+		}
 	}
 	(*input_counter)++;
 	(*token_counter)++;
 }
 
-void	tokenize_input(const char *input, t_list **token_head)
+void	tokenize_input(char *input, t_list **token_head)
 {
 	int		input_counter;
 	int		token_counter;
-	int		special_char_counter;
 	char	*reference;
 
 	reference = (char *)input;
 	input_counter = 0;
 	token_counter = 1;
-	special_char_counter = 0;
 	while (input[input_counter])
 	{
-		read_input_char_by_char((char *)input, &reference, &input_counter, &token_counter, &special_char_counter, token_head);
+		read_input_char_by_char(input, &reference, &input_counter, &token_counter, token_head);
 	}
 	store_previous_chars_as_token(reference, token_counter, token_head);
 	reference += token_counter;
@@ -143,7 +147,9 @@ int	main(void)
 	t_list	*token_head;
 	
 	// input = get_input();
-	input = "$USER$USER\"test\"";
+	input = "<< < cat | <infile1 ls -l < infile2 > outfile | grep test | cat -e >outfile2 | wc -l >>outfile2 | grep -e >>";
+	// input = "cat |";
+
 	token_head = NULL;
 	tokenize_input(input, &token_head);
 	// free(input);
