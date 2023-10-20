@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/20 16:32:32 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:15:19 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ int			cd(char *path, char **env);
 char		*get_env_var_value(char *name, char **env);
 char		**copy_env(char **envp);
 void		print_env(char **env);
+void		update_env_var(char *name, char *value, char **env);
+void		unset_env_var(char *name, char **env);
+void		export(char *new_var);
 
 // ---------------------------------------------------------------------- UTILS
 
