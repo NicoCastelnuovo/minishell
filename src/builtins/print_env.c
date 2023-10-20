@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   print_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/27 12:16:04 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/20 11:34:00 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/10/20 08:50:30 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/10/20 09:04:32 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+int	print_env(char **env)
 {
-	size_t	i;
+	int i;
 
 	i = 0;
-	if (dstsize > 0)
+	while (env[i])
 	{
-		while (i < dstsize - 1 && src[i])
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
+		ft_putendl_fd(env[i], 1);
+		i++;
 	}
-	return (ft_strlen(src));
 }

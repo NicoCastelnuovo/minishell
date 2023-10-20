@@ -6,17 +6,17 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:56:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/19 16:18:47 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/20 12:50:10 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-	cc ./src/builtins/main.c ./src/builtins/cd.c ./src/builtins/pwd.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/ -lmylib
+	cc ./src/utils/copy_envp.c ./src/builtins/main.c ./src/builtins/print_env.c ./src/builtins/cd.c ./src/builtins/pwd.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/ -lmylib
 */
 
-// pwd
+// --------- PWD ----------
 // int	main(int argc, char **argv, char **env)
 // {
 // 	char	*opt0 = NULL;
@@ -31,13 +31,20 @@
 // 	return (0);
 // }
 
-// cd
-int	main(int argc, char **argv, char **env)
+// --------- CD ----------
+int	main(int argc, char **argv, char **envp)
 {
 	char	*path0 = "/";
-	char	*path1 = "where are you going?";
+	char	*path1 = "./";
+	char	*path2 = "../";
+	char	*path3 = "../libft";
+	char	*path4 = "Where are you going?";
+	char	*path5 = "/Users/ncasteln/Downloads";
+	char	*path6 = "../../";
 
-	if (cd(path0))
-		return (1);
+	char	**envp_cpy = copy_envp(envp);
+
+	// if (cd(path6, env))
+	// 	return (1);
 	return (0);
 }
