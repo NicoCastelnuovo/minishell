@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 14:37:58 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/05/30 15:11:40 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/20 12:02:12 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ char	*ft_my_strjoin(char *s1, char *s2)
 	size_t	s2_length;
 	size_t	total_size;
 	char	*p_new_string;
-	int		i;
 
-	i = 0;
 	if (!s1)
 	{
 		s1 = malloc(1 * sizeof(char));

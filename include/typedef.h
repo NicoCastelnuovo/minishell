@@ -6,12 +6,14 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/20 07:45:41 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/20 15:03:27 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPEDEF_H
 # define TYPEDEF_H
+
+# define SPECIAL_CHAR_NUM 10
 
 typedef enum	s_type
 {
@@ -31,9 +33,17 @@ typedef enum	s_type
 	DOLLAR_CHAR = '$',
 }	t_type;
 
+typedef enum	s_position
+{
+	NOT_QUOTED = 1,
+	IN_SINGLE_QUOTE,
+	IN_DOUBLE_QUOTE,
+}	t_position;
+
 typedef struct	s_token_data
 {
-	int		length;
+	int		list_size;
+	int		string_length;
 	int		type;
 	char	*string;
 }	t_token_data;

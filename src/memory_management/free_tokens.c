@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   free_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/20 12:12:54 by fahmadia         ###   ########.fr       */
+/*   Created: 2023/10/20 12:05:34 by fahmadia          #+#    #+#             */
+/*   Updated: 2023/10/20 15:21:48 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "libft.h"
-# include "ft_printf.h"
-# include "typedef.h"
+void	free_token_data(void *content)
+{
+	t_token_data	*token_data;
 
-t_token_data	*create_node(void *content, int type);
-t_token_data	*add_node_to_linked_list(t_token_data *head, void *content, int type);
-void			free_tokens(t_list **token_head);
+	token_data = (t_token_data *)content;
+	// if (!token_data)
+	// 	return ;
+	free(token_data->string);
+	free(token_data);
+}
 
-#endif
+void	free_tokens(t_list **token_head)
+{
+	ft_lstclear(token_head, free_token_data);
+}

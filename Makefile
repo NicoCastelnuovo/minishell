@@ -6,16 +6,18 @@
 #    By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/10/17 15:08:26 by fahmadia         ###   ########.fr        #
+#    Updated: 2023/10/20 12:14:45 by fahmadia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 VPATH = ./src/lexer\
-	./src/helpers/linked_lists
+	./src/helpers/linked_lists\
+	./src/memory_management
 	
 SRCS = lexer.c\
 	create_node.c\
-	add_node_to_linked_list.c
+	add_node_to_linked_list.c\
+	free_tokens.c
 
 OBJS_PATH = ./objs
 OBJS = $(patsubst %.c, $(OBJS_PATH)/%.o, $(SRCS))
