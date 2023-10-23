@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:37:54 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/20 17:19:53 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/23 08:33:17 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 void	unset_env_var(char *name, char **env)
 {
 	char	*is_found;
+	char	*tmp;
 	int		i;
 
 	i = 0;
