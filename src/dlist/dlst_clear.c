@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   dlst_clear.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 16:23:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/19 16:35:24 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/04/12 09:47:06 by fahmadia          #+#    #+#             */
+/*   Updated: 2023/10/23 11:03:13 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-/*
-	echo writes any oprand to stdout separated by a single blank char, and
-	followed by a new line. As the subject states, it has to be implemented
-	with the optional -n argument.
-*/
-int	echo(char *s)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
+	t_list	*current;
 
+	while (*lst)
+	{
+		current = *lst;
+		*lst = (*lst)-> next;
+		ft_lstdelone(current, del);
+	}
 }

@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   dlst_append.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 16:23:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/19 16:35:24 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/04/11 18:33:39 by fahmadia          #+#    #+#             */
+/*   Updated: 2023/10/23 15:33:06 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	echo writes any oprand to stdout separated by a single blank char, and
-	followed by a new line. As the subject states, it has to be implemented
-	with the optional -n argument.
-*/
-int	echo(char *s)
+void	dlst_append(t_dlist **lst, t_dlist *new)
 {
+	t_dlist	*last;
 
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	last = dlst_last(*lst);
+	last->next = new;
+	new->prev = last;
 }

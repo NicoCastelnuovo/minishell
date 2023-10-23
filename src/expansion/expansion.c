@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/20 16:03:37 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/23 09:36:17 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static t_list	*get_var_names(char *s, int n)
 	{
 		var = ft_calloc(1, sizeof(t_var));
 		if (!var)
-			return (ft_lstclear(&var_lst, del_var_lst), NULL);
+			return (ft_lstclear(&var_lst, del_var_lst_content), NULL);
 		s = ft_strchr(s, '$');
 		s++;
 		var->name_len = get_var_name_len(s);
@@ -106,7 +106,7 @@ static t_list	*get_var_names(char *s, int n)
 		else
 			var->name = ft_substr(s, 0, var->name_len);
 		if (!var->name)
-			return (ft_lstclear(&var_lst, del_var_lst), NULL);
+			return (ft_lstclear(&var_lst, del_var_lst_content), NULL);
 		var->value = NULL;
 		var->value_len = -1;
 		new_node = ft_lstnew(var); // protect
@@ -135,6 +135,6 @@ char	*expansion(char *s, int exit_code, char **env)
 	ft_printf("old_str: [%s]\n", s);
 	ft_printf("new_str: [%s]\n", new_str);
 
-	ft_lstclear(&var_lst, del_var_lst);
+	ft_lstclear(&var_lst, del_var_lst_content);
 	return (new_str);
 }

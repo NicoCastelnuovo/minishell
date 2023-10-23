@@ -6,13 +6,13 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 08:02:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/20 16:02:19 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:55:16 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	del_var_lst(void *content)
+void	del_var_lst_content(void *content)
 {
 	t_var	*var;
 
@@ -23,8 +23,11 @@ void	del_var_lst(void *content)
 			free(var->name);
 		if (var->value)
 			free(var->value);
-		free(var);
+		var->name_len = -1;
+		var->value_len = -1;
 	}
+	// free(var); // ?
+	// var = NULL; // ?
 }
 
 void	print_var_lst(t_list *var_lst)

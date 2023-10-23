@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/18 15:42:11 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/23 14:50:03 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ typedef enum	s_type
 	PIPE = '|',
 	DOLLAR_CHAR = '$',
 }	t_type;
+
+
+typedef struct	s_dlist
+{
+	void			*content;
+	struct s_dlist	*next;
+	struct s_dlist	*prev;
+}				t_dlist;
 
 typedef struct	s_token
 {

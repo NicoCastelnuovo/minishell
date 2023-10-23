@@ -6,14 +6,14 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:56:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/23 08:34:01 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/23 17:05:02 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-	cc ./src/builtins/unset.c ./src/builtins/env.c ./src/builtins/main.c ./src/builtins/cd.c ./src/builtins/pwd.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/ -lmylib
+	cc ./src/dlist/dlst_new.c ./src/dlist/dlst_delnode.c ./src/dlist/dlst_last.c ./src/dlist/dlst_append.c ./src/expansion/utils.c ./src/expansion/expansion.c ./src/expansion/build_str.c ./src/builtins/unset.c ./src/builtins/env.c ./src/builtins/main.c ./src/builtins/cd.c ./src/builtins/pwd.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/ -lmylib
 */
 
 /*
@@ -37,20 +37,19 @@
 // }
 
 // --------- ENV ----------
-int	main(int argc, char **argv, char **env)
-{
-	char	**env_cpy = copy_env(env);
-	//try with empty environment
+// int	main(int argc, char **argv, char **env)
+// {
+// 	// try with empty environment
+// 	t_dlist	*env_cpy = init_env(env);
+// 	print_env(env_cpy);
 
-	print_env(env_cpy);
-
-	return (0);
-}
+// 	return (0);
+// }
 
 // --------- CD ----------
 // int	main(int argc, char **argv, char **env)
 // {
-// 	char	**env_cpy = copy_env(env);
+// 	char	**env_cpy = init_env(env);
 
 // 	char	*path0 = "/";
 // 	char	*path1 = "./";
@@ -61,25 +60,116 @@ int	main(int argc, char **argv, char **env)
 // 	char	*path6 = "../../";
 // 	char	*path7 = "src";
 
-// 	ft_printf("BEFORE [%s]\n\n", get_env_var_value("PWD=", env_cpy));
+// 	ft_printf("BEFORE [%s]\n\n", get_env_var_value("PWD=", &env_cpy));
 // 	print_env(env_cpy);
 // 	ft_printf("\n\n");
 // 	if (cd(path5, env_cpy))
 // 		return (1);
-// 	ft_printf("AFTER [%s]\n\n", get_env_var_value("PWD=", env_cpy));
+// 	ft_printf("AFTER [%s]\n\n", get_env_var_value("PWD=", &env_cpy));
 // 	print_env(env_cpy);
 // 	ft_printf("\n\n");
 // 	return (0);
 // }
 
 // --------- UNSET ----------
-// int	main(int argc, char **argv, char **env)
-// {
-// 	char	**env_cpy = copy_env(env);
+int	main(int argc, char **argv, char **env)
+{
+	// t_dlist	*env_cpy = NULL;
+	// t_var 	*cont;
 
-// 	ft_printf("PATH BEFORE: [%s]\n", get_env_var_value("PATH=", env_cpy));
-// 	unset_env_var("PATH", env_cpy);
-// 	ft_printf("PATH AFTER: [%s]\n\n",  get_env_var_value("PATH=", env_cpy));
-// 	print_env(env_cpy);
-// 	return (0);
-// }
+
+	// cont = ft_calloc(1, sizeof(t_var));
+	// cont->name = ft_strdup("Monkey=");
+	// cont->name_len = ft_strlen("Monkey=");
+	// cont->value = ft_strdup("AAAAA");
+	// dlst_append(&env_cpy, dlst_new(cont));
+
+	// cont = ft_calloc(1, sizeof(t_var));
+	// cont->name = ft_strdup("Dog=");
+	// cont->name_len = ft_strlen("Dog=");
+	// cont->value = ft_strdup("BBBB");
+	// dlst_append(&env_cpy, dlst_new(cont));
+
+	// cont = ft_calloc(1, sizeof(t_var));
+	// cont->name = ft_strdup("Cat=");
+	// cont->name_len = ft_strlen("Cat=");
+	// cont->value = ft_strdup("CCC");
+	// dlst_append(&env_cpy, dlst_new(cont));
+
+	t_dlist	*env_cpy = init_env(env);
+
+	print_env(env_cpy);
+
+	// // first element remove
+	// unset_env_var("TERM_PROGRAM=", &env_cpy);
+	// print_env(env_cpy);
+	// unset_env_var("TERM=", &env_cpy);
+	// print_env(env_cpy);
+	// unset_env_var("HOMEBREW_TEMP=", &env_cpy);
+	// print_env(env_cpy);
+	// unset_env_var("SHELL=", &env_cpy);
+	// print_env(env_cpy);
+				// unset_env_var("TMPDIR=", &env_cpy);
+				// unset_env_var("TERM_PROGRAM_VERSION=", &env_cpy);
+	// print_env(env_cpy);
+	// unset_env_var("ORIGINAL_XDG_CURRENT_DESKTOP=", &env_cpy); // ????
+	// print_env(env_cpy);
+	// unset_env_var("MallocNanoZone=", &env_cpy);
+	// print_env(env_cpy);
+
+	// // // // mid remove
+	// unset_env_var("PATH=", &env_cpy);
+	// print_env(env_cpy);
+	// unset_env_var("SHLVL=", &env_cpy);
+	// unset_env_var("HOME=", &env_cpy);
+	// print_env(env_cpy);
+	// unset_env_var("LOGNAME=", &env_cpy);
+	// print_env(env_cpy);
+	// unset_env_var("PWD=", &env_cpy);
+	// print_env(env_cpy);
+
+	// 2 PROBLEMS
+	// Qualsiasi siano MID o LAST, se li rimuovo in orinde si sputtanano
+	// // // remove last elements - NOT WORK
+	// unset_env_var("COLORTERM=", &env_cpy);
+	// unset_env_var("SECURITYSESSIONID=", &env_cpy);
+	// unset_env_var("_=", &env_cpy);
+	// // // remove last elements - WORK
+	// unset_env_var("_=", &env_cpy);
+	// unset_env_var("COLORTERM=", &env_cpy);
+	// unset_env_var("SECURITYSESSIONID=", &env_cpy);
+
+	// // remove all
+	// unset_env_var("USER=", &env_cpy);
+	// unset_env_var("COMMAND_MODE=", &env_cpy);
+	// unset_env_var("SSH_AUTH_SOCK=", &env_cpy);
+	// unset_env_var("__CF_USER_TEXT_ENCODING=", &env_cpy);
+	// // unset_env_var("HOMEBREW_CACHE=", &env_cpy);
+	// unset_env_var("LaunchInstanceID=", &env_cpy);
+	// unset_env_var("LANG=", &env_cpy);
+
+	// unset_env_var("VSCODE_GIT_ASKPASS_EXTRA_ARGS=", &env_cpy);
+	// unset_env_var("XPC_FLAGS=", &env_cpy);
+	// // unset_env_var("XPC_SERVICE_NAME=", &env_cpy);
+	// // unset_env_var("VSCODE_GIT_ASKPASS_MAIN=", &env_cpy);
+	// unset_env_var("VSCODE_GIT_IPC_HANDLE=", &env_cpy);
+	// unset_env_var("VSCODE_GIT_ASKPASS_NODE=", &env_cpy);
+	// unset_env_var("GIT_ASKPASS=", &env_cpy);
+
+	// // no existing
+	// unset_env_var("NO EXIST 0", &env_cpy);
+	// unset_env_var("NO EXIST 1", &env_cpy);
+	// unset_env_var("NO EXIST 2", &env_cpy);
+
+	// NULL
+	// unset_env_var(NULL, &env_cpy);
+
+	ft_printf("------------------------------------------\n");
+	if (((t_var *)env_cpy->content)->name)
+		ft_printf("NEW HEAD is %s\n", ((t_var *)env_cpy->content)->name);
+	else
+		ft_printf("- NO FUCKING HEAD -\n");
+	ft_printf("------------------------------------------\n");
+	print_env(env_cpy);
+	return (0);
+}
