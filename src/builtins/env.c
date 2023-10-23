@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 08:50:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/23 08:26:36 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/23 08:49:38 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,23 @@ static void	free_dptr(char **p)
 	free(p);
 }
 
+static t_var	get_env_var_content(char *env_var)
+{
+	t_var	*var;
+	char	**name_value;
+
+	var = ft_calloc(1, sizeof(t_var));
+	if (!var)
+		return (NULL);
+	name_value = ft_split(env_var, '=');
+	if (!name_value)
+		return (NULL);
+	var->name = name_value[0];
+	var->value = name_value[1];
+	var->name_len = ft_strlen(var->name);
+	var->name_len = ft_strlen(var->value);
+}
+
 /*
 	Copies the environment. In case the environment is ignored with 'env -i'
 	option, an empty environment is still created. In such case, env_cpy
@@ -93,22 +110,23 @@ static void	free_dptr(char **p)
 */
 char	**copy_env(char **env)
 {
-	char	**env_cpy;
+	t_list	*env_cpy;
+	t_var	*var;
 	int		i;
 
-	i = 0;
-	while (env[i])
-		i++;
-	env_cpy = ft_calloc(i + 1, sizeof(char *));
-	if (!env_cpy)
-		return (NULL);
+	env_cpy = NULL;
 	i = 0;
 	while (env[i])
 	{
-		env_cpy[i] = ft_calloc(ft_strlen(env[i]) + 1, sizeof(char));
-		if (!env_cpy[i])
-			return (free_dptr(env_cpy), NULL);
-		ft_strlcpy(env_cpy[i], env[i], ft_strlen(env[i]) + 1);
+		var = ft_calloc(1, sizeof(t_var));
+		if (!var)
+			return (NULL); // free_content
+
+		ft_lstnew();
+		// env_cpy[i] = ft_calloc(ft_strlen(env[i]) + 1, sizeof(char));
+		// if (!env_cpy[i])
+		// 	return (free_dptr(env_cpy), NULL);
+		// ft_strlcpy(env_cpy[i], env[i], ft_strlen(env[i]) + 1);
 		i++;
 	}
 	return (env_cpy);

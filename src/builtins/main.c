@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:56:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/23 08:31:22 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/23 08:34:01 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@
 // }
 
 // --------- ENV ----------
-// int	main(int argc, char **argv, char **env)
-// {
-// 	char	**env_cpy = copy_env(env);
-// 	//try with empty environment
+int	main(int argc, char **argv, char **env)
+{
+	char	**env_cpy = copy_env(env);
+	//try with empty environment
 
-// 	print_env(env_cpy);
+	print_env(env_cpy);
 
-// 	return (0);
-// }
+	return (0);
+}
 
 // --------- CD ----------
 // int	main(int argc, char **argv, char **env)
@@ -73,13 +73,13 @@
 // }
 
 // --------- UNSET ----------
-int	main(int argc, char **argv, char **env)
-{
-	char	**env_cpy = copy_env(env);
+// int	main(int argc, char **argv, char **env)
+// {
+// 	char	**env_cpy = copy_env(env);
 
-	ft_printf("PATH BEFORE: [%s]\n", get_env_var_value("PATH=", env_cpy));
-	unset_env_var("PATH", env_cpy);
-	ft_printf("PATH AFTER: [%s]\n\n",  get_env_var_value("PATH=", env_cpy));
-	print_env(env_cpy);
-	return (0);
-}
+// 	ft_printf("PATH BEFORE: [%s]\n", get_env_var_value("PATH=", env_cpy));
+// 	unset_env_var("PATH", env_cpy);
+// 	ft_printf("PATH AFTER: [%s]\n\n",  get_env_var_value("PATH=", env_cpy));
+// 	print_env(env_cpy);
+// 	return (0);
+// }
