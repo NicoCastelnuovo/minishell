@@ -6,29 +6,11 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/25 16:42:26 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:22:22 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-	Given c as a divider, returns the length of the substring which is on the
-	left of it. Example. Hello=world!!!, if the divider is =, it returns 5.
-*/
-static int	get_substr_len(char *s, char c)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == c)
-			return (i);
-		i++;
-	}
-	return (i);
-}
 
 static int	env_var_already_set(char *name, t_env **env)
 {
@@ -43,7 +25,12 @@ static int	env_var_already_set(char *name, t_env **env)
 	}
 	return (0);
 }
-
+/*
+	NOTES:
+	-	export should work with more than one variable (pd)
+	-	unspecified result if no argument
+	-	what shoul do a part of setting a varible?
+*/
 void	export(char *name_value, t_env **env)
 {
 	char	*name;

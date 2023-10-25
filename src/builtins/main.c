@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:56:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/25 16:41:31 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:15:51 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ int	main(int argc, char **argv, char **env)
 	export("PWD=This is just an update for the shit", &env_cpy);
 	export("_=?", &env_cpy);
 	export("SUPER_SHIT=====This is just an update for the shit", &env_cpy);
+	export("====================================", &env_cpy);
 	ft_printf("\n");
 
 	ft_printf("__ AFTER __\n");

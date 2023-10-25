@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 10:51:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/25 16:33:06 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:00:23 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void		print_env(t_env *env);
 void		unset_env_var(char *name, t_env **env);
 
 void		export(char *name_value, t_env **env);
+
+int			get_substr_len(char *s, char c);
 
 
 #endif
