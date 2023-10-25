@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 08:50:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/25 10:24:02 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/25 13:15:43 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,21 @@ t_var	*search_var(char *name, t_list *env)
 	return (NULL);
 }
 
-void	print_env(t_dlist *env)
+void	print_env(t_env *env)
 {
-	t_var	*var;
+	t_var	*head;
 
-	while (env)
+	head = env->head;
+	if (env->size)
 	{
-		var = (t_var *)env->content;
-		if (var)
+		while (head)
 		{
-			ft_putstr_fd(var->name, 1);
-			ft_putendl_fd(var->value, 1);
+			if (head->name)
+				ft_putstr_fd(head->name, 1);
+			if (head->value)
+				ft_putendl_fd(head->value, 1);
+			head = head->next;
 		}
-		env = env->next;
 	}
 }
 
@@ -138,29 +140,24 @@ static t_var	*prepare_node_content(char *env_var)
 	return (var);
 }
 
-/*
-	Copies the environment. In case the environment is ignored with 'env -i'
-	option, an empty environment is still created. In such case, env_cpy
-	exist, but the first element (env_cpy[0]) is set to NULL.
-*/
-t_dlist	*init_env(char **env)
+t_env	*init_env(char **env)
 {
-	t_dlist	*env_cpy;
-	t_var	*var;
-	t_dlist	*new_node;
+	t_var	*content;
+	t_var	*new_node;
+	t_env	*env_cpy;
 	int		i;
 
-	env_cpy = NULL;
-	i = 0;
+	env_cpy = ft_calloc(1, sizeof(t_env)); // protect
+	env_cpy->head = NULL;
+	env_cpy->tail = NULL;
+	env_cpy->size = 0;
 	while (env[i])
 	{
-		var = prepare_node_content(env[i]);
-		if (!var)
-			return (NULL); // free!
-		new_node = dlst_new(var);
+		content = prepare_node_content(env[i]);
+		new_node = env_dlst_new(content);
 		if (!new_node)
-			return (NULL); // free
-		dlst_append(&env_cpy, new_node);
+			return (NULL); // free()
+		env_dlst_append(&env_cpy, new_node);
 		i++;
 	}
 	return (env_cpy);

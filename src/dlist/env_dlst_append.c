@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dlst_append.c                                      :+:      :+:    :+:   */
+/*   env_dlst_append.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 18:33:39 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/25 10:22:44 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/25 12:41:12 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	dlst_append(t_dlist **lst, t_dlist *new)
+void	env_dlst_append(t_env **env, t_var *new)
 {
-	t_dlist	*last;
-
-	if (!*lst)
+	if (!(*env)->head)
 	{
-		*lst = new;
+		(*env)->head = new;
+		(*env)->tail = new;
+		(*env)->size += 1;
 		return ;
 	}
-	last = dlst_last(*lst);
-	last->next = new;
-	new->prev = last;
+	(*env)->tail->next = new;
+	new->prev = (*env)->tail;
+	(*env)->tail = new;
+	(*env)->size += 1;
 }

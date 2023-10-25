@@ -6,14 +6,14 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:56:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/25 10:31:54 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/25 13:34:22 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-	cc ./src/dlist/dlst_new.c ./src/dlist/dlst_delnode.c ./src/dlist/dlst_last.c ./src/dlist/dlst_append.c ./src/expansion/utils.c ./src/expansion/expansion.c ./src/expansion/build_str.c ./src/builtins/unset.c ./src/builtins/env.c ./src/builtins/main.c ./src/builtins/cd.c ./src/builtins/pwd.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/ -lmylib
+	cc ./src/builtins/env.c ./src/builtins/unset.c ./src/builtins/main.c ./src/dlist/env_dlst_new.c ./src/dlist/env_dlst_delnode.c ./src/dlist/env_dlst_append.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/ -lmylib
 */
 
 /*
@@ -74,14 +74,17 @@
 // --------- UNSET ----------
 int	main(int argc, char **argv, char **env)
 {
-	t_dlist	*env_cpy = init_env(env);
+	t_env	*env_cpy = init_env(env);
+	ft_printf("__INIT ENVIRONMENT__\n");
+	ft_printf("SIZE [%d]\n\n", env_cpy->size);
 	print_env(env_cpy);
 
-	unset_env_var("TERM_PROGRAM=", &env_cpy);
+	unset_env_var("_=", &env_cpy);
+	unset_env_var("SHELL=", &env_cpy);
 	unset_env_var("TERM=", &env_cpy);
 	unset_env_var("HOMEBREW_TEMP=", &env_cpy);
-	unset_env_var("SHELL=", &env_cpy);
 	unset_env_var("TMPDIR=", &env_cpy);
+	unset_env_var("TERM_PROGRAM=", &env_cpy);
 	unset_env_var("TERM_PROGRAM_VERSION=", &env_cpy);
 	unset_env_var("ORIGINAL_XDG_CURRENT_DESKTOP=", &env_cpy);
 	unset_env_var("MallocNanoZone=", &env_cpy);
@@ -93,6 +96,14 @@ int	main(int argc, char **argv, char **env)
 	unset_env_var("COLORTERM=", &env_cpy);
 	unset_env_var("SECURITYSESSIONID=", &env_cpy);
 	unset_env_var("_=", &env_cpy);
+	unset_env_var("COLORTERM=", &env_cpy);
+	unset_env_var("SECURITYSESSIONID=", &env_cpy);
+	unset_env_var("USER=", &env_cpy);
+	unset_env_var("COMMAND_MODE=", &env_cpy);
+	unset_env_var("VSCODE_GIT_ASKPASS_EXTRA_ARGS=", &env_cpy);
+	unset_env_var("XPC_FLAGS=", &env_cpy);
+	unset_env_var("XPC_SERVICE_NAME=", &env_cpy);
+	unset_env_var("SECURITYSESSIONID=", &env_cpy);
 	unset_env_var("_=", &env_cpy);
 	unset_env_var("COLORTERM=", &env_cpy);
 	unset_env_var("SECURITYSESSIONID=", &env_cpy);
@@ -110,16 +121,21 @@ int	main(int argc, char **argv, char **env)
 	unset_env_var("SSH_AUTH_SOCK=", &env_cpy);
 	unset_env_var("__CF_USER_TEXT_ENCODING=", &env_cpy);
 	unset_env_var("GIT_ASKPASS=", &env_cpy);
+	// special cases
+	unset_env_var(NULL, &env_cpy);
+	unset_env_var("NO EXIST 0", &env_cpy);
+	unset_env_var("NO EXIST 1", &env_cpy);
+	unset_env_var("NO EXIST 2", &env_cpy);
 
-	// // no existing
-	// unset_env_var("NO EXIST 0", &env_cpy);
-	// unset_env_var("NO EXIST 1", &env_cpy);
-	// unset_env_var("NO EXIST 2", &env_cpy);
-
-	// // NULL
-	// unset_env_var(NULL, &env_cpy);
-
-	ft_printf("\n__ NEW ENV __\n");
+	ft_printf("\n__AFETR REMOVING EVERYTHING__\n");
+	unset_env_var("VSCODE_GIT_ASKPASS_MAIN=", &env_cpy);
+	unset_env_var("HOMEBREW_CACHE=", &env_cpy);
+	unset_env_var("LaunchInstanceID=", &env_cpy);
+	unset_env_var("LANG=", &env_cpy);
+	unset_env_var("VSCODE_GIT_IPC_HANDLE=", &env_cpy);
+	ft_printf("SIZE [%d]\n\n", env_cpy->size);
 	print_env(env_cpy);
+
+
 	return (0);
 }

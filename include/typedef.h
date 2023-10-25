@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/25 10:32:48 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/25 10:51:52 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,28 +38,5 @@ typedef struct	s_token
 	char			*content;
 	struct s_token	*next;
 }	t_token;
-
-// ------------------------------------------------------------------ ENV DLIST
-typedef struct	s_dlist
-{
-	void			*content;
-	struct s_dlist	*next;
-	struct s_dlist	*prev;
-}				t_dlist;
-
-typedef struct	s_env
-{
-	struct s_dlist	*head;
-	struct s_dlist	*tail;
-	int				size;
-}				t_env;
-
-typedef struct	s_var
-{
-	char	*name;
-	char	*value;
-	int		name_len;
-	int		value_len;
-}			t_var;
 
 #endif

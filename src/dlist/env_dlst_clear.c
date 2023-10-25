@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dlst_new.c                                         :+:      :+:    :+:   */
+/*   env_dlst_clear.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/10 18:34:43 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/23 11:05:35 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/04/12 09:47:06 by fahmadia          #+#    #+#             */
+/*   Updated: 2023/10/25 11:05:19 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+// void	ft_lstclear(t_list **lst, void (*del)(void *))
+// {
+// 	t_list	*current;
 
-t_dlist	*dlst_new(void *content)
-{
-	t_dlist	*new_list;
-
-	new_list = (t_dlist *)malloc(sizeof(t_dlist));
-	if (!new_list)
-		return (NULL);
-	new_list->content = content;
-	new_list->next = NULL;
-	new_list->prev = NULL;
-	return (new_list);
-}
+// 	while (*lst)
+// 	{
+// 		current = *lst;
+// 		*lst = (*lst)-> next;
+// 		ft_lstdelone(current, del);
+// 	}
+// }

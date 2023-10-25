@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dlst_size.c                                        :+:      :+:    :+:   */
+/*   env_dlst_new.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/11 17:35:38 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/23 11:03:26 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/04/10 18:34:43 by fahmadia          #+#    #+#             */
+/*   Updated: 2023/10/25 10:54:29 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_lstsize(t_list *lst)
-{
-	t_list	*current;
-	int		i;
+#include "minishell.h"
 
-	i = 0;
-	current = lst;
-	while (current)
-	{
-		current = current -> next;
-		i++;
-	}
-	return (i);
+t_var	*env_dlst_new(t_var *content)
+{
+	t_var	*new_node;
+
+	new_node = malloc(sizeof(t_var));
+	if (!new_node)
+		return (NULL);
+	new_node->name = content->name;
+	new_node->name_len = content->name_len;
+	new_node->value = content->value;
+	new_node->value_len = content->value_len;
+	new_node->next = NULL;
+	new_node->prev = NULL;
+	return (new_node);
 }

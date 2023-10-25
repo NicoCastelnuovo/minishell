@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/25 10:23:30 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/25 11:23:45 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "typedef.h"
+# include "env.h"
 
 t_token	*create_node(void *content, int type);
 t_token	*add_node_to_linked_list(t_token *head, void *content, int type);
@@ -36,17 +37,8 @@ const char	*get_wd(char *opt);
 int			cd(char *path, char **env);
 void		export(char *new_var);
 
-// ------------------------------------------------------------------------ ENV
-t_dlist		*init_env(char **env);
-void		print_env(t_dlist *env);
-t_var		*search_var(char *name, t_list *env);			// replicates getenv() function
-void		update_env_var(char *name, char *value, char **env);
-void		unset_env_var(char *name, t_dlist **env);
 
-// ---------------------------------------------------------------------- UTILS
-t_dlist		*dlst_new(void *content);
-t_dlist		*dlst_last(t_dlist *lst);
-void		dlst_append(t_dlist **lst, t_dlist *new);
-void		dlist_delnode(t_dlist **node, void (*del)(void *));
+// void		update_env_var(char *name, char *value, char **env);
+// t_var		*search_var(char *name, t_list *env);
 
 #endif
