@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:56:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/23 17:05:02 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/25 10:17:43 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,102 +74,52 @@
 // --------- UNSET ----------
 int	main(int argc, char **argv, char **env)
 {
-	// t_dlist	*env_cpy = NULL;
-	// t_var 	*cont;
-
-
-	// cont = ft_calloc(1, sizeof(t_var));
-	// cont->name = ft_strdup("Monkey=");
-	// cont->name_len = ft_strlen("Monkey=");
-	// cont->value = ft_strdup("AAAAA");
-	// dlst_append(&env_cpy, dlst_new(cont));
-
-	// cont = ft_calloc(1, sizeof(t_var));
-	// cont->name = ft_strdup("Dog=");
-	// cont->name_len = ft_strlen("Dog=");
-	// cont->value = ft_strdup("BBBB");
-	// dlst_append(&env_cpy, dlst_new(cont));
-
-	// cont = ft_calloc(1, sizeof(t_var));
-	// cont->name = ft_strdup("Cat=");
-	// cont->name_len = ft_strlen("Cat=");
-	// cont->value = ft_strdup("CCC");
-	// dlst_append(&env_cpy, dlst_new(cont));
-
 	t_dlist	*env_cpy = init_env(env);
-
 	print_env(env_cpy);
 
-	// // first element remove
-	// unset_env_var("TERM_PROGRAM=", &env_cpy);
-	// print_env(env_cpy);
-	// unset_env_var("TERM=", &env_cpy);
-	// print_env(env_cpy);
-	// unset_env_var("HOMEBREW_TEMP=", &env_cpy);
-	// print_env(env_cpy);
-	// unset_env_var("SHELL=", &env_cpy);
-	// print_env(env_cpy);
-				// unset_env_var("TMPDIR=", &env_cpy);
-				// unset_env_var("TERM_PROGRAM_VERSION=", &env_cpy);
-	// print_env(env_cpy);
-	// unset_env_var("ORIGINAL_XDG_CURRENT_DESKTOP=", &env_cpy); // ????
-	// print_env(env_cpy);
-	// unset_env_var("MallocNanoZone=", &env_cpy);
-	// print_env(env_cpy);
-
-	// // // // mid remove
-	// unset_env_var("PATH=", &env_cpy);
-	// print_env(env_cpy);
-	// unset_env_var("SHLVL=", &env_cpy);
-	// unset_env_var("HOME=", &env_cpy);
-	// print_env(env_cpy);
-	// unset_env_var("LOGNAME=", &env_cpy);
-	// print_env(env_cpy);
-	// unset_env_var("PWD=", &env_cpy);
-	// print_env(env_cpy);
-
-	// 2 PROBLEMS
-	// Qualsiasi siano MID o LAST, se li rimuovo in orinde si sputtanano
-	// // // remove last elements - NOT WORK
-	// unset_env_var("COLORTERM=", &env_cpy);
-	// unset_env_var("SECURITYSESSIONID=", &env_cpy);
-	// unset_env_var("_=", &env_cpy);
-	// // // remove last elements - WORK
-	// unset_env_var("_=", &env_cpy);
-	// unset_env_var("COLORTERM=", &env_cpy);
-	// unset_env_var("SECURITYSESSIONID=", &env_cpy);
-
-	// // remove all
-	// unset_env_var("USER=", &env_cpy);
-	// unset_env_var("COMMAND_MODE=", &env_cpy);
-	// unset_env_var("SSH_AUTH_SOCK=", &env_cpy);
-	// unset_env_var("__CF_USER_TEXT_ENCODING=", &env_cpy);
-	// // unset_env_var("HOMEBREW_CACHE=", &env_cpy);
-	// unset_env_var("LaunchInstanceID=", &env_cpy);
-	// unset_env_var("LANG=", &env_cpy);
-
-	// unset_env_var("VSCODE_GIT_ASKPASS_EXTRA_ARGS=", &env_cpy);
-	// unset_env_var("XPC_FLAGS=", &env_cpy);
-	// // unset_env_var("XPC_SERVICE_NAME=", &env_cpy);
-	// // unset_env_var("VSCODE_GIT_ASKPASS_MAIN=", &env_cpy);
-	// unset_env_var("VSCODE_GIT_IPC_HANDLE=", &env_cpy);
-	// unset_env_var("VSCODE_GIT_ASKPASS_NODE=", &env_cpy);
-	// unset_env_var("GIT_ASKPASS=", &env_cpy);
+	unset_env_var("TERM_PROGRAM=", &env_cpy);
+	unset_env_var("TERM=", &env_cpy);
+	unset_env_var("HOMEBREW_TEMP=", &env_cpy);
+	unset_env_var("SHELL=", &env_cpy);
+	unset_env_var("TMPDIR=", &env_cpy);
+	unset_env_var("TERM_PROGRAM_VERSION=", &env_cpy);
+	unset_env_var("ORIGINAL_XDG_CURRENT_DESKTOP=", &env_cpy);
+	unset_env_var("MallocNanoZone=", &env_cpy);
+	unset_env_var("PATH=", &env_cpy);
+	unset_env_var("SHLVL=", &env_cpy);
+	unset_env_var("HOME=", &env_cpy);
+	unset_env_var("LOGNAME=", &env_cpy);
+	unset_env_var("PWD=", &env_cpy);
+	unset_env_var("COLORTERM=", &env_cpy);
+	unset_env_var("SECURITYSESSIONID=", &env_cpy);
+	unset_env_var("_=", &env_cpy);
+	unset_env_var("_=", &env_cpy);
+	unset_env_var("COLORTERM=", &env_cpy);
+	unset_env_var("SECURITYSESSIONID=", &env_cpy);
+	unset_env_var("USER=", &env_cpy);
+	unset_env_var("COMMAND_MODE=", &env_cpy);
+	unset_env_var("VSCODE_GIT_ASKPASS_EXTRA_ARGS=", &env_cpy);
+	unset_env_var("XPC_FLAGS=", &env_cpy);
+	unset_env_var("XPC_SERVICE_NAME=", &env_cpy);
+	unset_env_var("VSCODE_GIT_ASKPASS_MAIN=", &env_cpy);
+	unset_env_var("HOMEBREW_CACHE=", &env_cpy);
+	unset_env_var("LaunchInstanceID=", &env_cpy);
+	unset_env_var("LANG=", &env_cpy);
+	unset_env_var("VSCODE_GIT_IPC_HANDLE=", &env_cpy);
+	unset_env_var("VSCODE_GIT_ASKPASS_NODE=", &env_cpy);
+	unset_env_var("SSH_AUTH_SOCK=", &env_cpy);
+	unset_env_var("__CF_USER_TEXT_ENCODING=", &env_cpy);
+	unset_env_var("GIT_ASKPASS=", &env_cpy);
 
 	// // no existing
 	// unset_env_var("NO EXIST 0", &env_cpy);
 	// unset_env_var("NO EXIST 1", &env_cpy);
 	// unset_env_var("NO EXIST 2", &env_cpy);
 
-	// NULL
+	// // NULL
 	// unset_env_var(NULL, &env_cpy);
 
-	ft_printf("------------------------------------------\n");
-	if (((t_var *)env_cpy->content)->name)
-		ft_printf("NEW HEAD is %s\n", ((t_var *)env_cpy->content)->name);
-	else
-		ft_printf("- NO FUCKING HEAD -\n");
-	ft_printf("------------------------------------------\n");
+	ft_printf("\n__ NEW ENV __\n");
 	print_env(env_cpy);
 	return (0);
 }

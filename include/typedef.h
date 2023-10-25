@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/23 14:50:03 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/25 10:17:23 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,6 @@ typedef enum	s_type
 }	t_type;
 
 
-typedef struct	s_dlist
-{
-	void			*content;
-	struct s_dlist	*next;
-	struct s_dlist	*prev;
-}				t_dlist;
 
 typedef struct	s_token
 {
@@ -46,6 +40,13 @@ typedef struct	s_token
 	char			*content;
 	struct s_token	*next;
 }	t_token;
+
+typedef struct	s_dlist
+{
+	void			*content;
+	struct s_dlist	*next;
+	struct s_dlist	*prev;
+}				t_dlist;
 
 typedef struct	s_var
 {
