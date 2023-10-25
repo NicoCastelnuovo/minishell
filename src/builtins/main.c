@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:56:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/25 14:58:12 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/25 16:41:31 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,14 +136,26 @@
 
 // --------- ENV SET AND UNSET ----------
 /*
-	cc ./src/builtins/env.c ./src/builtins/unset.c ./src/builtins/main.c ./src/env_dlst/env_dlst_delcontent.c ./src/env_dlst/env_dlst_clear.c ./src/env_dlst/env_dlst_new.c ./src/env_dlst/env_dlst_delnode.c ./src/env_dlst/env_dlst_append.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/ -lmylib
+	cc ./src/env_dlst/env_dlst_update_value.c ./src/builtins/export.c ./src/builtins/env.c ./src/builtins/unset.c ./src/builtins/main.c ./src/env_dlst/env_dlst_delcontent.c ./src/env_dlst/env_dlst_clear.c ./src/env_dlst/env_dlst_new.c ./src/env_dlst/env_dlst_delnode.c ./src/env_dlst/env_dlst_append.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/ -lmylib
 */
 int	main(int argc, char **argv, char **env)
 {
 	t_env	*env_cpy = init_env(env);
+	ft_printf("__ BEFORE __\n");
 	print_env(env_cpy);
 
-	export("NEW_SHIT", "This is my new shit", env_cpy);
+	ft_printf("\n");
+	export("STOCAZZO", &env_cpy);
+	export("USER=Johnny", &env_cpy);
+	export("SHIT=This is a fully shit", &env_cpy);
+	export("PWD=This is just an update for the shit", &env_cpy);
+	export("_=?", &env_cpy);
+	export("SUPER_SHIT=====This is just an update for the shit", &env_cpy);
+	ft_printf("\n");
 
+	ft_printf("__ AFTER __\n");
+	print_env(env_cpy);
+
+	env_dlst_clear(&env_cpy);
 	return (0);
 }

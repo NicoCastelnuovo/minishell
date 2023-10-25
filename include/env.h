@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 10:51:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/25 14:57:49 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/25 16:33:06 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,14 @@ void		env_dlst_append(t_env **env, t_var *new);
 void		env_dlst_delcontent(t_var *var);
 void		env_dlst_delnode(t_var *node, t_env **env);
 void		env_dlst_clear(t_env **env);
+void		env_dlst_update_value(char *name_value, char *name, t_env **env);
 
 t_env		*init_env(char **env);
+t_var		*prepare_env_content(char *env_var);
 void		print_env(t_env *env);
 void		unset_env_var(char *name, t_env **env);
 
-void		export(char *name, char *value, t_env **env);
+void		export(char *name_value, t_env **env);
 
 
 #endif

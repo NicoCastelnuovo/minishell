@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 08:50:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/25 14:49:06 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/25 15:27:48 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ static char	*get_var_key(char *s)
 	return (key);
 }
 
-static t_var	*prepare_node_content(char *env_var)
+t_var	*prepare_env_content(char *env_var)
 {
 	t_var	*var;
 	char	*key;
@@ -156,7 +156,7 @@ t_env	*init_env(char **env)
 	new_node = NULL;
 	while (env[i])
 	{
-		content = prepare_node_content(env[i]);
+		content = prepare_env_content(env[i]);
 		if (!content)
 			return (env_dlst_clear(&env_cpy), NULL); // free()
 		new_node = env_dlst_new(content);
