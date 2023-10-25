@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_dlst_append.c                                  :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/11 18:33:39 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/25 12:41:12 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/10/25 14:54:01 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/10/25 14:56:58 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
-void	env_dlst_append(t_env **env, t_var *new)
-{
-	if (!(*env)->head)
-	{
-		(*env)->head = new;
-		(*env)->tail = new;
-		(*env)->size += 1;
-		return ;
-	}
-	(*env)->tail->next = new;
-	new->prev = (*env)->tail;
-	(*env)->tail = new;
-	(*env)->size += 1;
-}
+const char	*get_wd(char *opt);
+int			cd(char *path, char **env);
+
+
+// void		update_env_var(char *name, char *value, char **env);
+// t_var		*search_var(char *name, t_list *env);
+
+#endif

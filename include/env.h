@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 10:51:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/25 12:59:47 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/25 14:57:49 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,15 @@ typedef struct	s_env
 
 t_var		*env_dlst_new(t_var *content);
 void		env_dlst_append(t_env **env, t_var *new);
+void		env_dlst_delcontent(t_var *var);
 void		env_dlst_delnode(t_var *node, t_env **env);
+void		env_dlst_clear(t_env **env);
 
 t_env		*init_env(char **env);
 void		print_env(t_env *env);
 void		unset_env_var(char *name, t_env **env);
+
+void		export(char *name, char *value, t_env **env);
 
 
 #endif

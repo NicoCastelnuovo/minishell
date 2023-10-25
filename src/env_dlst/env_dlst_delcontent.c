@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_dlst_clear.c                                   :+:      :+:    :+:   */
+/*   env_dlst_delcontent.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/12 09:47:06 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/25 11:05:19 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/10/25 13:38:23 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/10/25 14:04:58 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// void	ft_lstclear(t_list **lst, void (*del)(void *))
-// {
-// 	t_list	*current;
+#include "minishell.h"
 
-// 	while (*lst)
-// 	{
-// 		current = *lst;
-// 		*lst = (*lst)-> next;
-// 		ft_lstdelone(current, del);
-// 	}
-// }
+void	env_dlst_delcontent(t_var *var)
+{
+	if (var->name)
+		free(var->name);
+	if (var->value)
+		free(var->value);
+	var->name_len = -1;
+	var->value_len = -1;
+	var->next = NULL;
+	var->prev = NULL;
+	free(var);
+}

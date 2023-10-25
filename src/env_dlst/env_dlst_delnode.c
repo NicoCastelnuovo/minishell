@@ -12,18 +12,6 @@
 
 #include "minishell.h"
 
-static void	env_dlst_delcontent(t_var *var)
-{
-	if (var->name)
-		free(var->name);
-	if (var->value)
-		free(var->value);
-	var->name_len = -1;
-	var->value_len = -1;
-	var->next = NULL;
-	var->prev = NULL;
-}
-
 void	env_dlst_delnode(t_var *node, t_env **env)
 {
 	if ((*env)->head == (*env)->tail)
@@ -51,6 +39,5 @@ void	env_dlst_delnode(t_var *node, t_env **env)
 		node->next->prev = node->prev;
 	}
 	env_dlst_delcontent(node);
-	free(node);
 	(*env)->size -= 1;
 }

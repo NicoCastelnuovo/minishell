@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 08:50:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/25 13:15:43 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/25 14:49:06 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,29 @@
 	its name, the desired value and the env itself. The function assumes
 	that the variable exist and doesn't handle the creation of a new one.
 */
-void	update_env_var(char *name, char *value, char **env)
-{
-	char	*is_found;
-	char	*tmp;
-	char	*name_value;
-	int		i;
+// void	update_env_var(char *name, char *value, char **env)
+// {
+// 	char	*is_found;
+// 	char	*tmp;
+// 	char	*name_value;
+// 	int		i;
 
-	i = 0;
-	while (env[i])
-	{
-		is_found = ft_strnstr(env[i], name, ft_strlen(name));
-		if (is_found)
-		{
-			name_value = ft_strjoin(name, value);
-			tmp = env[i];
-			env[i] = ft_strdup(name_value);
-			free(tmp);
-			free(name_value);
-			break ;
-		}
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (env[i])
+// 	{
+// 		is_found = ft_strnstr(env[i], name, ft_strlen(name));
+// 		if (is_found)
+// 		{
+// 			name_value = ft_strjoin(name, value);
+// 			tmp = env[i];
+// 			env[i] = ft_strdup(name_value);
+// 			free(tmp);
+// 			free(name_value);
+// 			break ;
+// 		}
+// 		i++;
+// 	}
+// }
 
 /*
 	The function replicate getenv() function from stdlib.h. Since getenv()
@@ -132,7 +132,8 @@ static t_var	*prepare_node_content(char *env_var)
 	char	*value;
 
 	var = ft_calloc(1, sizeof(t_var));
-	// protect
+	if (!var)
+		return (NULL);
 	var->name = get_var_key(env_var);
 	var->value = get_var_value(env_var);
 	var->name_len = ft_strlen(var->name);
@@ -142,22 +143,31 @@ static t_var	*prepare_node_content(char *env_var)
 
 t_env	*init_env(char **env)
 {
+	t_env	*env_cpy;
 	t_var	*content;
 	t_var	*new_node;
-	t_env	*env_cpy;
 	int		i;
 
 	env_cpy = ft_calloc(1, sizeof(t_env)); // protect
 	env_cpy->head = NULL;
 	env_cpy->tail = NULL;
 	env_cpy->size = 0;
+	content = NULL;
+	new_node = NULL;
 	while (env[i])
 	{
 		content = prepare_node_content(env[i]);
+		if (!content)
+			return (env_dlst_clear(&env_cpy), NULL); // free()
 		new_node = env_dlst_new(content);
 		if (!new_node)
-			return (NULL); // free()
+		{
+			free(content);
+			return (env_dlst_clear(&env_cpy), NULL); // free()
+		}
 		env_dlst_append(&env_cpy, new_node);
+		if (content)
+			free(content);
 		i++;
 	}
 	return (env_cpy);
