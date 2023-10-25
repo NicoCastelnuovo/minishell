@@ -6,14 +6,14 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:37:54 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/25 10:14:49 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/25 10:32:29 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-static void	dlist_deltop(t_dlist **node, void (*del)(void *))
+static void	dlst_deltop(t_dlist **node, void (*del)(void *))
 {
 	t_dlist	*tmp;
 
@@ -22,10 +22,9 @@ static void	dlist_deltop(t_dlist **node, void (*del)(void *))
 	(*node)->prev = NULL;
 	del(tmp->content);
 	free(tmp);
-	// add rule for the last element
 }
 
-static void	dlist_delmid(t_dlist **node, void (*del)(void *))
+static void	dlst_delmid(t_dlist **node, void (*del)(void *))
 {
 	t_dlist	*next_node;
 	t_dlist	*prev_node;
@@ -39,7 +38,7 @@ static void	dlist_delmid(t_dlist **node, void (*del)(void *))
 	free(*node);
 }
 
-static void	dlist_dellast(t_dlist *node, void (*del)(void *))
+static void	dlst_dellast(t_dlist *node, void (*del)(void *))
 {
 	ft_printf("LAST\n");
 	del(node->content);
@@ -66,11 +65,11 @@ void	unset_env_var(char *name, t_dlist **env)
 			ft_printf("- - - - - - - - - - - - - - - - - - - - - -\n");
 			ft_printf("need to remove [%s] len of %d \n", var->name, var->name_len);
 			if (!head->prev)
-				dlist_deltop(env, del_var_lst_content);
+				dlst_deltop(env, del_var_lst_content);
 			else if (!head->next)
-				dlist_dellast(head, del_var_lst_content);
+				dlst_dellast(head, del_var_lst_content);
 			else
-				dlist_delmid(&head, del_var_lst_content);
+				dlst_delmid(&head, del_var_lst_content);
 			break ;
 		}
 		head = head->next;
