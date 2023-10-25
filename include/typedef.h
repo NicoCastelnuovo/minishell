@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/20 15:03:27 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:48:46 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct	s_token_data
 	int		list_size;
 	int		string_length;
 	int		type;
+	int		position;
 	char	*string;
 }	t_token_data;
 

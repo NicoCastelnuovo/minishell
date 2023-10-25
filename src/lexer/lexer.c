@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:15:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/20 15:41:35 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/25 13:15:51 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	initialize_token_data(t_list *token_node, char *token_string, t_list **toke
 		token_head_data->list_size++;
 	token_data->list_size = token_head_data->list_size;
 	token_data->type = 0;
+	token_data->position = 0;
 	token_data->string_length = string_length;
 	// printf("token_head_data->length = %d\n", token_data->list_size);
 	// printf("token_head_data->content = %s\n", token_data->string);
@@ -129,27 +130,163 @@ char	*get_input(void)
 	return (input);
 }
 
+void	check_each_token_string(t_token_data *token_data)
+{
+	char token_first_char = *(token_data->string);
+	if (token_first_char == REDIRECT_IN)
+		token_data->type = REDIRECT_IN;
+	else if (token_first_char == REDIRECT_OUT)
+		token_data->type = REDIRECT_OUT;
+	else if (token_first_char == WHITESPACE)
+		token_data->type = WHITESPACE;
+	else if (token_first_char == NEW_LINE)
+		token_data->type = NEW_LINE;
+	else if (token_first_char == SINGLE_QUOTE)
+		token_data->type = SINGLE_QUOTE;
+	else if (token_first_char == DOUBLE_QUOTE)
+		token_data->type = DOUBLE_QUOTE;
+	else if (token_first_char == ESCAPE_CHAR)
+		token_data->type = ESCAPE_CHAR;
+	else if (token_first_char == PIPE)
+		token_data->type = PIPE;
+	else if (token_first_char == DOLLAR_CHAR)
+		token_data->type = DOLLAR_CHAR;
+	else
+		token_data->type = WORD;
+}
+
+void	assign_type_to_token(t_list *tokens_head)
+{
+	t_list			*temp;
+	t_token_data	*token_data;
+
+	temp = tokens_head;
+	while (temp)
+	{
+		token_data = (t_token_data *)(temp->content);
+		check_each_token_string(token_data);
+		temp = temp->next;
+	}
+}
+
+// void	detect_single_quotes(char token_first_char, bool *is_single_quote_open)
+// {
+// 	if (token_first_char == SINGLE_QUOTE && !*is_single_quote_open)
+// 	{
+// 		*is_single_quote_open = true;
+// 		printf("single quote is open\n");
+// 	}
+// 	else if (token_first_char == SINGLE_QUOTE && *is_single_quote_open)
+// 	{
+// 		*is_single_quote_open = false;
+// 		printf("single quote is closed\n");
+// 	}
+// }
+
+// void	detect_double_quotes(char token_first_char, bool *is_double_quote_open)
+// {
+// 	if (token_first_char == DOUBLE_QUOTE && !*is_double_quote_open)
+// 	{
+// 		*is_double_quote_open = true;
+// 		printf("double quote is open\n");
+// 	}
+// 	else if (token_first_char == DOUBLE_QUOTE && *is_double_quote_open)
+// 	{
+// 		*is_double_quote_open = false;
+// 		printf("double quote is closed\n");
+// 	}
+// }
+
+void	detect_quote(char token_first_char, bool *is_double_quote_open, bool *is_single_quote_open, t_position *position)
+{
+	if (token_first_char == DOUBLE_QUOTE && !*is_double_quote_open && !*is_single_quote_open)
+	{
+		*is_double_quote_open = true;
+		*position = IN_DOUBLE_QUOTE;
+		printf("double quote is open\n");
+	}
+	else if (token_first_char == DOUBLE_QUOTE && *is_double_quote_open && *position == IN_DOUBLE_QUOTE)
+	{
+		*is_double_quote_open = false;
+		*position = NOT_QUOTED;
+		printf("double quote is closed\n");
+	}
+	else if (token_first_char == SINGLE_QUOTE && !*is_single_quote_open && !*is_double_quote_open)
+	{
+		*is_single_quote_open = true;
+		*position = IN_SINGLE_QUOTE;
+		printf("single quote is open\n");
+	}
+	else if (token_first_char == SINGLE_QUOTE && *is_single_quote_open && *position == IN_SINGLE_QUOTE)
+	{
+		*is_single_quote_open = false;
+		*position = NOT_QUOTED;
+		printf("single quote is closed\n");
+	}
+}
+
+void	assign_position_to_token(t_list *tokens_head)
+{
+	bool		is_single_quote_open;
+	bool		is_double_quote_open;
+	t_list		*current_node;
+	char		token_first_char;
+	t_position	position;
+
+	position = NOT_QUOTED;
+	is_single_quote_open = false;
+	is_double_quote_open = false;
+	current_node = tokens_head;
+	while (current_node)
+	{
+		token_first_char = *(((t_token_data *)(current_node->content))->string);
+		// if (is_single_quote_open)
+		// {
+		// 	((t_token_data *)(current_node->content))->position = IN_SINGLE_QUOTE;
+		// 	printf("%s in %d\n", ((t_token_data *)(current_node->content))->string, ((t_token_data *)(current_node->content))->position);
+		// }
+		// if (is_double_quote_open)
+		// {
+		// 	((t_token_data *)(current_node->content))->position = IN_DOUBLE_QUOTE;
+		// 	printf("%s in %d\n",((t_token_data *)(current_node->content))->string, ((t_token_data *)(current_node->content))->position);
+		// }
+		// detect_single_quotes(token_first_char, &is_single_quote_open);
+		// detect_double_quotes(token_first_char, &is_double_quote_open);
+		detect_quote(token_first_char, &is_double_quote_open, &is_single_quote_open, &position);
+		((t_token_data *)(current_node->content))->position = position;
+		if (((t_token_data *)(current_node->content))->position == IN_SINGLE_QUOTE && token_first_char == SINGLE_QUOTE)
+			((t_token_data *)(current_node->content))->position = NOT_QUOTED;
+		if (((t_token_data *)(current_node->content))->position == IN_DOUBLE_QUOTE && token_first_char == DOUBLE_QUOTE)
+			((t_token_data *)(current_node->content))->position = NOT_QUOTED;
+		current_node = current_node->next;
+	}
+}
+
+
 int	main(void)
 {
 	char	*input;
-	t_list	*token_head;
+	t_list	*tokens_head;
 	
 	// input = get_input();
-	input = "<<   < cat | <infile1 ls -l < infile2 > outfile | grep test | cat -e >outfile2 | wc -l >>outfile2 | grep -e >>";
+	// input = "<'<'   < cat | <infile1 ls -l < infile2 > outfile | grep test | cat -e >outfile2 | wc -l >>outfile2 | grep -e >> '\"$var\"'";
+	input = "\"'$USER\"\"''\"\"\"'\"'test\"'$\"";
 	// input = "ls | cat > outfile";
-	token_head = NULL;
-	tokenize_input(input, &token_head);
+	tokens_head = NULL;
+	tokenize_input(input, &tokens_head);
 	// free(input);
-	t_list *temp = token_head;
+	assign_type_to_token(tokens_head);
+	assign_position_to_token(tokens_head);
+	t_list *temp = tokens_head;
 	while (temp)
 	{
-		printf("string = %s\n",((t_token_data *)temp->content)->string);
-		printf("list_size = %d\n",((t_token_data *)temp->content)->list_size);
-		printf("type = %d\n",((t_token_data *)temp->content)->type);
-		printf("string_length = %u\n",((t_token_data *)temp->content)->string_length);
+		// printf("string = %s\n",((t_token_data *)temp->content)->string);
+		// printf("list_size = %d\n",((t_token_data *)temp->content)->list_size);
+		// printf("type = %d\n",((t_token_data *)temp->content)->type);
+		// printf("string_length = %u\n",((t_token_data *)temp->content)->string_length);
+		printf("%s => position = %d\n", ((t_token_data *)temp->content)->string, ((t_token_data *)temp->content)->position);
 		temp = temp->next;
 	}
-	
-	free_tokens(&token_head);
+	free_tokens(&tokens_head);
 	return (0);
 }
