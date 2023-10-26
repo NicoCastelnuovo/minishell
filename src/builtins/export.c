@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/25 17:22:22 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/26 10:19:41 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static int	env_var_already_set(char *name, t_env **env)
 	NOTES:
 	-	export should work with more than one variable (pd)
 	-	unspecified result if no argument
-	-	what shoul do a part of setting a varible?
+	-	what should do a part of setting a varible? It is exported to a subprocess
+		but what how can I prove it? Should we handle the VAR=value syntax ??
 */
 void	export(char *name_value, t_env **env)
 {

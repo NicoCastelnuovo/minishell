@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:56:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/25 17:15:51 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/26 10:50:59 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,15 +144,10 @@ int	main(int argc, char **argv, char **env)
 	ft_printf("__ BEFORE __\n");
 	print_env(env_cpy);
 
-	ft_printf("\n");
-	export("STOCAZZO", &env_cpy);
-	export("USER=Johnny", &env_cpy);
-	export("SHIT=This is a fully shit", &env_cpy);
-	export("PWD=This is just an update for the shit", &env_cpy);
-	export("_=?", &env_cpy);
-	export("SUPER_SHIT=====This is just an update for the shit", &env_cpy);
-	export("====================================", &env_cpy);
-	ft_printf("\n");
+	export("ABC=shit", &env_cpy);
+	export("ABC=SHIT", &env_cpy);
+	export("ABC=BIGMEGASHIT", &env_cpy);
+	ft_printf("\n\n\n");
 
 	ft_printf("__ AFTER __\n");
 	print_env(env_cpy);
