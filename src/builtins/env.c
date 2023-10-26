@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 08:50:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/26 15:10:57 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:35:00 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ t_var	*prepare_env_content(char *env_var)
 t_env	*init_env(char **env)
 {
 	t_env	*env_cpy;
-	t_var	*content;
 	t_var	*new_node;
 	int		i;
 
@@ -103,22 +102,13 @@ t_env	*init_env(char **env)
 	env_cpy->head = NULL;
 	env_cpy->tail = NULL;
 	env_cpy->size = 0;
-	content = NULL;
 	new_node = NULL;
 	while (env[i])
 	{
-		content = prepare_env_content(env[i]);
-		if (!content)
-			return (env_dlst_clear(&env_cpy), NULL); // free()
-		new_node = env_dlst_new(content);
+		new_node = env_dlst_new(env[i]);
 		if (!new_node)
-		{
-			free(content);
 			return (env_dlst_clear(&env_cpy), NULL); // free()
-		}
 		env_dlst_append(&env_cpy, new_node);
-		if (content)
-			free(content);
 		i++;
 	}
 	return (env_cpy);

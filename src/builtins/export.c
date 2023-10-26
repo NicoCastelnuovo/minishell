@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/26 14:47:25 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:39:31 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,16 @@ void	print_exported_env(t_env *env)
 	The function returns (1) if finds an already set environment variable
 	with the same name as new_content->name.
 */
-static int	env_var_already_set(t_var *new_content, t_env **env)
+static int	env_var_already_set(t_var *new_node, t_env **env)
 {
 	t_var	*head;
 
-	// ft_printf("NEW CONTENT\n");
-	// ft_printf("name [%s]\n", new_content->name);
-	// ft_printf("name_len [%d]\n", new_content->name_len);
-	// ft_printf("value [%s]\n", new_content->value);
-	// ft_printf("value_len [%d]\n", new_content->value_len);
 	head = (*env)->head;
 	while (head)
 	{
-		if (ft_strncmp(head->name, new_content->name, head->name_len) == 0) // used to check ex. USER and USERUSER
+		if (ft_strncmp(head->name, new_node->name, head->name_len) == 0) // used to check ex. USER and USERUSER
 		{
-			if (head->name_len == new_content->name_len)
+			if (head->name_len == new_node->name_len)
 				return (1);
 		}
 		head = head->next;
@@ -81,7 +76,6 @@ static int	env_var_already_set(t_var *new_content, t_env **env)
 */
 void	export(char *arg, t_env **env)
 {
-	t_var	*new_content;
 	t_var	*new_node;
 
 	if (!arg)
@@ -89,27 +83,17 @@ void	export(char *arg, t_env **env)
 		print_exported_env(*env);
 		return ;
 	}
-	new_content = prepare_env_content(arg);
-	if (env_var_already_set(new_content, env)) // assumes that input ends with =
+	new_node = env_dlst_new(arg);
+	if (env_var_already_set(new_node, env))
 	{
-		// ft_printf("EXISTING VARIABLE! ", arg);
-		if (new_content->value)
-		{
-			// ft_printf("[%s] need to update!\n", arg);
-			env_dlst_update(new_content, env);
-		}
+		if (new_node->value)
+			env_dlst_update(new_node, env);
 		else
-		{
-			// ft_printf("[%s] NO need to update!\n", arg);
-			env_dlst_delcontent(new_content);
-		}
+			free_node(new_node);
 		return ;
 	}
-	else // create but pay attention how
+	else
 	{
-		// ft_printf("NEW VARIABLE!\n", arg);
-		new_node = env_dlst_new(new_content); // protect
 		env_dlst_append(env, new_node);
-		free(new_content);
 	}
 }

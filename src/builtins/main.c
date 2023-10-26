@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:56:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/26 15:09:41 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:47:44 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@
 
 // --------- ENV SET AND UNSET ----------
 /*
-	cc ./src/env_dlst/env_dlst_update.c ./src/builtins/export.c ./src/builtins/env.c ./src/builtins/unset.c ./src/builtins/main.c ./src/env_dlst/env_dlst_delcontent.c ./src/env_dlst/env_dlst_clear.c ./src/env_dlst/env_dlst_new.c ./src/env_dlst/env_dlst_delnode.c ./src/env_dlst/env_dlst_append.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/ -lmylib
+	cc ./src/env_dlst/env_dlst_update.c ./src/builtins/export.c ./src/builtins/env.c ./src/builtins/unset.c ./src/builtins/main.c ./src/env_dlst/env_dlst_clear.c ./src/env_dlst/env_dlst_new.c ./src/env_dlst/env_dlst_delnode.c ./src/env_dlst/env_dlst_append.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/ -lmylib
 */
 int	main(int argc, char **argv, char **env)
 {
@@ -147,10 +147,10 @@ int	main(int argc, char **argv, char **env)
 	print_exported_env(env_cpy);
 
 	export("USER=JohnnyBGood", &env_cpy);
-	export("USER", &env_cpy);
-	export("USER=", &env_cpy);
+	// export("USER", &env_cpy);
+	// export("USER=", &env_cpy);
 
-	export("NEW", &env_cpy);
+	// export("NEW", &env_cpy);
 	ft_printf("\n\n- - - - - - - - - - - - - - - - - - - - - - - - - - - -\n\n");
 
 	ft_printf("__________________ ENV AFTER __________________\n");

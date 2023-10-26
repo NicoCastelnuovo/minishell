@@ -12,14 +12,30 @@
 
 #include "minishell.h"
 
+void	free_node(t_var *node)
+{
+	if (node->name)
+		free(node->name);
+	if (node->value)
+		free(node->value);
+	node->name_len = -1;
+	node->value_len = -1;
+	node->next = NULL;
+	node->prev = NULL;
+	free(node);
+}
+
+/*
+	The function removes the node from the dlst and reset the next and prev
+	nodes, so that the dlst is not broken.
+*/
 void	env_dlst_delnode(t_var *node, t_env **env)
 {
 	if ((*env)->head == (*env)->tail)
 	{
 		(*env)->head = NULL;
 		(*env)->tail = NULL;
-		env_dlst_delcontent(node);
-		free(node);
+		free_node(node);
 		(*env)->size -= 1;
 		return ;
 	}
@@ -38,6 +54,6 @@ void	env_dlst_delnode(t_var *node, t_env **env)
 		node->prev->next = node->next;
 		node->next->prev = node->prev;
 	}
-	env_dlst_delcontent(node);
+	free_node(node);
 	(*env)->size -= 1;
 }

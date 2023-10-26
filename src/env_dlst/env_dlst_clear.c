@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 09:47:06 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/25 14:15:10 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:44:02 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	env_dlst_clear(t_env **env)
 	while ((*env)->head)
 	{
 		next = (*env)->head->next;
-		env_dlst_delcontent((*env)->head);
+		env_dlst_delnode((*env)->head, env);
 		(*env)->head = next;
 	}
 	free(*env);
