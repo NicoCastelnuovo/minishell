@@ -6,12 +6,12 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/10/25 13:47:02 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/10/26 14:19:23 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # GENERAL INSTRUCTIONS
-# Installing readline in Debian: libreadline-dev
+# Installing readline in Debian: apt-get install libreadline-dev
 
 VPATH = ./src/lexer\
 	./src/helpers/linked_lists

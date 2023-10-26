@@ -6,12 +6,22 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 10:51:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/26 12:20:01 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:06:45 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_H
 # define ENV_H
+
+/*
+	NOTES and STUFF TO DO:
+	• EXPORT
+		- Why _=[last_cmd] is not exported ???
+		- Still need to order as ASCII char
+	• ENV
+		- Verify with empty env, or decide what happend in case there is nothing - env_cpy still exist?
+
+*/
 
 typedef struct	s_var
 {
@@ -35,7 +45,7 @@ void		env_dlst_append(t_env **env, t_var *new);
 void		env_dlst_delcontent(t_var *var);
 void		env_dlst_delnode(t_var *node, t_env **env);
 void		env_dlst_clear(t_env **env);
-void		env_dlst_update(char *arg, t_env **env);
+void		env_dlst_update(t_var *new_content, t_env **env);
 
 t_env		*init_env(char **env);
 t_var		*prepare_env_content(char *env_var);

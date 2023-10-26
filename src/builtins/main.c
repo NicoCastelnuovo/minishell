@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:56:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/26 13:21:54 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:09:41 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,21 +141,26 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_env	*env_cpy = init_env(env);
-	ft_printf("__________________ ENV BEFORE __________________\n");
+	ft_printf("\n__________________ ENV BEFORE __________________\n");
 	print_env(env_cpy);
 	ft_printf("\n__________________ EXPORT BEFORE __________________\n");
 	print_exported_env(env_cpy);
 
-	// ft_printf("\n- - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
-	// export("USER=", &env_cpy);
-	// export("USER", &env_cpy);
-	// ft_printf("- - - - - - - - - - - - - - - - - - - - - - - - - - -\n\n");
+	export("USER=JohnnyBGood", &env_cpy);
+	export("USER", &env_cpy);
+	export("USER=", &env_cpy);
 
-	// ft_printf("__________________ ENV BEFORE __________________\n");
-	// print_env(env_cpy);
-	// ft_printf("\n__________________ EXPORT BEFORE __________________\n");
-	// print_exported_env(env_cpy);
+	export("NEW", &env_cpy);
+	ft_printf("\n\n- - - - - - - - - - - - - - - - - - - - - - - - - - - -\n\n");
+
+	ft_printf("__________________ ENV AFTER __________________\n");
+	print_env(env_cpy);
+	ft_printf("\n__________________ EXPORT AFTER __________________\n");
+	print_exported_env(env_cpy);
 
 	env_dlst_clear(&env_cpy);
 	return (0);
 }
+
+
+// NO new value
