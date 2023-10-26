@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:15:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/25 13:15:51 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/26 11:33:01 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	initialize_token_data(t_list *token_node, char *token_string, t_list **toke
 	token_data->type = 0;
 	token_data->position = 0;
 	token_data->string_length = string_length;
-	// printf("token_head_data->length = %d\n", token_data->list_size);
-	// printf("token_head_data->content = %s\n", token_data->string);
 }
 
 char	*store_special_char_as_token(char *c, t_list **token_head)
@@ -41,8 +39,12 @@ char	*store_special_char_as_token(char *c, t_list **token_head)
 	t_list	*special_char_node;
 	
 	special_char_string = malloc((1 + 1) * sizeof(char));
+	if (!special_char_string)
+		return (NULL);
 	special_char_string[1] = '\0';
 	special_char_node = malloc(1 * sizeof(t_list));
+	if (!special_char_node)
+		return (NULL);
 	special_char_node->content = NULL;
 	special_char_node->next = NULL;
 	ft_memset(special_char_string, *c, 1);
@@ -60,8 +62,12 @@ char	*store_previous_chars_as_token(char *reference, int token_counter, t_list *
 	if (token_counter < 2)
 		return (NULL);
 	last_token_string = malloc((token_counter) * sizeof(char));
+	if (!last_token_string)
+		return (NULL);
 	last_token_string[token_counter - 1] = '\0';
 	last_token_node = malloc(1 * sizeof(t_list));
+	if (!last_token_node)
+		return (NULL);
 	last_token_node->content = NULL;
 	last_token_node->next = NULL;
 	ft_strlcpy(last_token_string, reference, token_counter);
@@ -81,9 +87,9 @@ char	*check_is_special_char(char c)
 	return (result);
 }
 
-void	read_input_char_by_char(char cuurent_input, char **reference, int *token_counter, t_list **token_head)
+void	read_input_char_by_char(char current_input, char **reference, int *token_counter, t_list **token_head)
 {
-	if (check_is_special_char(cuurent_input))
+	if (check_is_special_char(current_input))
 	{
 		if (*token_counter > 1)
 		{
@@ -108,7 +114,7 @@ void	tokenize_input(char *input, t_list **token_head)
 	int		token_counter;
 	char	*reference;
 
-	reference = (char *)input;
+	reference = input;
 	input_counter = 0;
 	token_counter = 1;
 	while (input[input_counter])
@@ -169,34 +175,6 @@ void	assign_type_to_token(t_list *tokens_head)
 	}
 }
 
-// void	detect_single_quotes(char token_first_char, bool *is_single_quote_open)
-// {
-// 	if (token_first_char == SINGLE_QUOTE && !*is_single_quote_open)
-// 	{
-// 		*is_single_quote_open = true;
-// 		printf("single quote is open\n");
-// 	}
-// 	else if (token_first_char == SINGLE_QUOTE && *is_single_quote_open)
-// 	{
-// 		*is_single_quote_open = false;
-// 		printf("single quote is closed\n");
-// 	}
-// }
-
-// void	detect_double_quotes(char token_first_char, bool *is_double_quote_open)
-// {
-// 	if (token_first_char == DOUBLE_QUOTE && !*is_double_quote_open)
-// 	{
-// 		*is_double_quote_open = true;
-// 		printf("double quote is open\n");
-// 	}
-// 	else if (token_first_char == DOUBLE_QUOTE && *is_double_quote_open)
-// 	{
-// 		*is_double_quote_open = false;
-// 		printf("double quote is closed\n");
-// 	}
-// }
-
 void	detect_quote(char token_first_char, bool *is_double_quote_open, bool *is_single_quote_open, t_position *position)
 {
 	if (token_first_char == DOUBLE_QUOTE && !*is_double_quote_open && !*is_single_quote_open)
@@ -240,18 +218,6 @@ void	assign_position_to_token(t_list *tokens_head)
 	while (current_node)
 	{
 		token_first_char = *(((t_token_data *)(current_node->content))->string);
-		// if (is_single_quote_open)
-		// {
-		// 	((t_token_data *)(current_node->content))->position = IN_SINGLE_QUOTE;
-		// 	printf("%s in %d\n", ((t_token_data *)(current_node->content))->string, ((t_token_data *)(current_node->content))->position);
-		// }
-		// if (is_double_quote_open)
-		// {
-		// 	((t_token_data *)(current_node->content))->position = IN_DOUBLE_QUOTE;
-		// 	printf("%s in %d\n",((t_token_data *)(current_node->content))->string, ((t_token_data *)(current_node->content))->position);
-		// }
-		// detect_single_quotes(token_first_char, &is_single_quote_open);
-		// detect_double_quotes(token_first_char, &is_double_quote_open);
 		detect_quote(token_first_char, &is_double_quote_open, &is_single_quote_open, &position);
 		((t_token_data *)(current_node->content))->position = position;
 		if (((t_token_data *)(current_node->content))->position == IN_SINGLE_QUOTE && token_first_char == SINGLE_QUOTE)
@@ -269,9 +235,12 @@ int	main(void)
 	t_list	*tokens_head;
 	
 	// input = get_input();
-	// input = "<'<'   < cat | <infile1 ls -l < infile2 > outfile | grep test | cat -e >outfile2 | wc -l >>outfile2 | grep -e >> '\"$var\"'";
-	input = "\"'$USER\"\"''\"\"\"'\"'test\"'$\"";
+	// input = "<'<'   <\" cat | <infile1 ls ' -l < infile2 >' \"outfile | 'grep test | cat \"\"\" -e >outfile2 '\" | wc -l\" >>outfile2 '|' grep -e >> '\"$var\"'";
+	// input = "\"'$USER\"\"''\"\"\"'\"'test\"'$\"";
 	// input = "ls | cat > outfile";
+	input = "<f";
+	if (!input)
+		return (1);
 	tokens_head = NULL;
 	tokenize_input(input, &tokens_head);
 	// free(input);
@@ -280,10 +249,10 @@ int	main(void)
 	t_list *temp = tokens_head;
 	while (temp)
 	{
-		// printf("string = %s\n",((t_token_data *)temp->content)->string);
+		printf("string = %s\n",((t_token_data *)temp->content)->string);
 		// printf("list_size = %d\n",((t_token_data *)temp->content)->list_size);
-		// printf("type = %d\n",((t_token_data *)temp->content)->type);
-		// printf("string_length = %u\n",((t_token_data *)temp->content)->string_length);
+		printf("type = %d\n",((t_token_data *)temp->content)->type);
+		printf("string_length = %u\n",((t_token_data *)temp->content)->string_length);
 		printf("%s => position = %d\n", ((t_token_data *)temp->content)->string, ((t_token_data *)temp->content)->position);
 		temp = temp->next;
 	}
