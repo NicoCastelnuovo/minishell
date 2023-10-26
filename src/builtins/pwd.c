@@ -6,47 +6,58 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:52:18 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/20 15:03:11 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/26 17:03:02 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_blank_str(char *s)
-{
-	while (*s)
-	{
-		if (*s != ' ' && *s != '\n' && *s != '\t')
-			return (0);
-		s++;
-	}
-	return (1);
-}
-
 /*
-	pwd command returns the current working path. As the subject states, it has
-	not to handle any option (-P and -L) like the original Shell buil-in. In
-	those case an error is returned.
-	ATTENTION: the dir returned is not allocated on the heap!
+	pwd command returns the current working path. The function getcwd()
+	allocates
 */
-const char	*get_wd(char *opt)
+
+char	*get_wd(void)
 {
 	char	*dir;
 	char	*buff;
 	size_t	size;
 
-	// if (opt && !is_blank_str(opt))
-	// 	return (E2BIG); // set argument error ???
+	buff = NULL;
 	size = 1;
-	buff = ft_calloc(size + 1, sizeof(char)); // protect --- create err function!
-	dir = getcwd(buff, size);
-	while (!dir)
-	{
-		free(buff);
-		size += 1;
-		buff = ft_calloc(size + 1, sizeof(char)); // protect --- create err function
-		dir = getcwd(buff, size);
-	}
-	free (buff);
-	return (dir);
+	// buff = ;
+	// while (!buff)
+	// {
+	// 	size += 1;
+	// 	buff = getcwd(buff, size);
+	// }
+	return (getcwd(NULL, 0));
 }
+
+/*
+	WWWWWWWWWWWWWWWWWWWW
+	TTTTTTTTTTTTTTTTTTTT
+	FFFFFFFFFFFFFFFFFFFF
+	FFFFFFFFFFFFFFFFFFFF
+*/
+// char	*get_wd(void)
+// {
+// 	char	*dir;
+// 	char	*buff;
+// 	size_t	size;
+
+// 	size = 1;
+// 	buff = ft_calloc(size + 1, sizeof(char)); // protect --- create err function!
+// 	dir = getcwd(buff, size);
+// 	while (!dir)
+// 	{
+// 		free(buff);
+// 		size += 1;
+// 		buff = ft_calloc(size + 1, sizeof(char)); // protect --- create err function
+// 		dir = getcwd(buff, size);
+// 	}
+// 	// free (buff);
+// 	// buff = NULL;
+// 	ft_printf("[%p] and [%p]\n", buff, dir);
+// 	return (dir);
+// }
