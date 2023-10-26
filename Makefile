@@ -6,7 +6,7 @@
 #    By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/10/20 12:14:45 by fahmadia         ###   ########.fr        #
+#    Updated: 2023/10/26 15:34:42 by fahmadia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,15 @@ VPATH = ./src/lexer\
 	./src/helpers/linked_lists\
 	./src/memory_management
 	
-SRCS = lexer.c\
+SRCS = main.c\
 	create_node.c\
 	add_node_to_linked_list.c\
-	free_tokens.c
+	free_tokens.c\
+	store_tokens_in_nodes.c\
+	read_each_char.c\
+	check_each_token_string.c\
+	handle_quotes.c\
+	assign_position_and_type_to_tokens.c\
 
 OBJS_PATH = ./objs
 OBJS = $(patsubst %.c, $(OBJS_PATH)/%.o, $(SRCS))

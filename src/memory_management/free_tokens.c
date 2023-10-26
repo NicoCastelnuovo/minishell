@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:05:34 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/20 15:21:48 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:48:14 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	free_token_data(void *content)
 	t_token_data	*token_data;
 
 	token_data = (t_token_data *)content;
-	// if (!token_data)
-	// 	return ;
-	free(token_data->string);
+	if (!token_data)
+		return ;
+	free(token_data->str);
 	free(token_data);
 }
 
