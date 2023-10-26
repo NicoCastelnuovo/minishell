@@ -6,25 +6,54 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/26 10:19:41 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/26 13:20:02 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	env_var_already_set(char *name, t_env **env)
+/*
+	As env builtin does, it prints out the env variables, but in ASCII
+	order, including the variables which are not initialized.
+*/
+void	print_exported_env(t_env *env)
 {
 	t_var	*head;
 
+	head = env->head;
+	if (env->size)
+	{
+		while (head)
+		{
+			if (head->name)
+				ft_putstr_fd(head->name, 1);
+			if (head->value)
+				ft_putstr_fd(head->value, 1);
+			ft_putchar_fd('\n', 1);
+			head = head->next;
+		}
+	}
+}
+
+static int	env_var_already_set(char *arg, t_env **env)
+{
+	int		name_len;
+	char	*name;
+	t_var	*head;
+	char	*tmp;
+
+	name_len = get_substr_len(arg, '=');
+	name = ft_substr(arg, 0, name_len + 1); // + 1 take the =
 	head = (*env)->head;
 	while (head)
 	{
 		if (ft_strncmp(head->name, name, head->name_len) == 0)
-			return (1);
+			return (free(name), 1);
 		head = head->next;
 	}
-	return (0);
+	return (free(name), 0);
 }
+
 /*
 	NOTES:
 	-	export should work with more than one variable (pd)
@@ -32,7 +61,13 @@ static int	env_var_already_set(char *name, t_env **env)
 	-	what should do a part of setting a varible? It is exported to a subprocess
 		but what how can I prove it? Should we handle the VAR=value syntax ??
 */
-void	export(char *name_value, t_env **env)
+/*
+	Exports the specified variable to the subshells and child processes.
+	@line	if (name[name_len - 1] == '='): prevents the variable to be
+			modified by a non-initialized variable (example:
+			export HELLO=world; export HELLO)'
+*/
+void	export(char *arg, t_env **env)
 {
 	char	*name;
 	char	*value;
@@ -40,22 +75,22 @@ void	export(char *name_value, t_env **env)
 	t_var	*new_content;
 	t_var	*new_node;
 
-	name_len = get_substr_len(name_value, '=');
-	if (ft_strlen(name_value) == name_len)
-		return ;
-	name = ft_substr(name_value, 0, name_len + 1); // + 1 take the =
-	if (env_var_already_set(name, env))
+	if (!arg)
 	{
-		env_dlst_update_value(name_value, name, env);
-		free(name);
+		print_exported_env(*env);
 		return ;
 	}
-	else
+	if (env_var_already_set(arg, env)) // assumes that input ends with =
 	{
-		free(name);
-		new_content = prepare_env_content(name_value); // protect
-		new_node = env_dlst_new(new_content); // protect
-		free(new_content);
-		env_dlst_append(env, new_node);
+		env_dlst_update(arg, env);
+		return ;
+	}
+	else // create but pay attention how
+	{
+		// free(name);
+		// new_content = prepare_env_content(arg); // protect
+		// new_node = env_dlst_new(new_content); // protect
+		// free(new_content);
+		// env_dlst_append(env, new_node);
 	}
 }

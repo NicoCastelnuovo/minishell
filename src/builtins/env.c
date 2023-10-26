@@ -6,12 +6,16 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 08:50:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/25 17:14:24 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/26 13:22:11 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+	Outputs the environment variables which are at least an empty string. The
+	uninitalized env var are not output.
+*/
 void	print_env(t_env *env)
 {
 	t_var	*head;
@@ -21,10 +25,11 @@ void	print_env(t_env *env)
 	{
 		while (head)
 		{
-			if (head->name)
+			if (head->name && head->value)
+			{
 				ft_putstr_fd(head->name, 1);
-			if (head->value)
 				ft_putendl_fd(head->value, 1);
+			}
 			head = head->next;
 		}
 	}
@@ -32,7 +37,8 @@ void	print_env(t_env *env)
 
 /*
 	Given c as a divider, returns the length of the substring which is on the
-	left of it. Example. Hello=world!!!, if the divider is =, it returns 5.
+	left of it including the divider. Example. Hello=world!!!, if the divider
+	is =, it returns 6.
 */
 int	get_substr_len(char *s, char c)
 {
@@ -42,7 +48,7 @@ int	get_substr_len(char *s, char c)
 	while (s[i])
 	{
 		if (s[i] == c)
-			return (i);
+			return (i + 1);
 		i++;
 	}
 	return (i);
@@ -58,10 +64,24 @@ t_var	*prepare_env_content(char *env_var)
 	if (!var)
 		return (NULL);
 	var->name_len = get_substr_len(env_var, '=');
+	ft_printf("ENV VAR = %s\n", env_var);
+	ft_printf("VAR NAME LEN = %d\n", var->name_len);
 	var->name = ft_calloc(var->name_len + 1, sizeof(char)); //protect
-	ft_strlcpy(var->name, env_var, var->name_len + 2);
-	var->value = ft_substr(env_var, var->name_len + 1, ft_strlen(env_var) - var->name_len);
-	var->value_len = ft_strlen(var->value);
+	ft_strlcpy(var->name, env_var, var->name_len + 1);
+	ft_printf("NAME = %s\n", var->name);
+	ft_printf("Last char {%c}\n", var->name[var->name_len - 1]);
+	if (var->name[var->name_len - 1] == '=')
+	{
+		var->value = ft_substr(env_var, var->name_len, ft_strlen(env_var) - var->name_len);
+		var->value_len = ft_strlen(var->value);
+	}
+	else
+	{
+		var->value = NULL;
+		var->value_len = -1;
+	}
+	ft_printf("NAME=VALUE [%s|%s]\n", var->name, var->value);
+	ft_printf("NAME=VALUE [%d|%d]\n\n", var->name_len, var->value_len);
 	return (var);
 }
 

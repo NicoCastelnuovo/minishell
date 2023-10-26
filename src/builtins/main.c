@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:56:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/26 10:50:59 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/26 13:21:54 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@
 // int	main(int argc, char **argv, char **env)
 // {
 // 	t_env	*env_cpy = init_env(env);
-// 	ft_printf("__INIT ENVIRONMENT__\n");
+// 	ft_printf("__________________INIT ENVIRONMENT__________________\n");
 // 	print_env(env_cpy);
 
 // 	unset_env_var("_=", &env_cpy);
@@ -83,7 +83,7 @@
 // 	unset_env_var("SHLVL=", &env_cpy);
 // 	unset_env_var("HOME=", &env_cpy);
 
-// 	ft_printf("\n__AFTER REMOVING__\n");
+// 	ft_printf("\n__________________AFTER REMOVING__________________\n");
 // 	print_env(env_cpy);
 // 	env_dlst_clear(&env_cpy);
 
@@ -116,7 +116,7 @@
 // 	// unset_env_var("VSCODE_GIT_IPC_HANDLE=", &env_cpy);
 // 	// unset_env_var("VSCODE_GIT_ASKPASS_NODE=", &env_cpy);
 // 	// unset_env_var("SSH_AUTH_SOCK=", &env_cpy);
-// 	// unset_env_var("__CF_USER_TEXT_ENCODING=", &env_cpy);
+// 	// unset_env_var("__________________CF_USER_TEXT_ENCODING=", &env_cpy);
 // 	// unset_env_var("GIT_ASKPASS=", &env_cpy);
 // 	// // special cases
 // 	// unset_env_var(NULL, &env_cpy);
@@ -124,7 +124,7 @@
 // 	// unset_env_var("NO EXIST 1", &env_cpy);
 // 	// unset_env_var("NO EXIST 2", &env_cpy);
 
-// 	// ft_printf("\n__AFETR REMOVING EVERYTHING__\n");
+// 	// ft_printf("\n__________________AFETR REMOVING EVERYTHING__________________\n");
 // 	// unset_env_var("VSCODE_GIT_ASKPASS_MAIN=", &env_cpy);
 // 	// unset_env_var("HOMEBREW_CACHE=", &env_cpy);
 // 	// unset_env_var("LaunchInstanceID=", &env_cpy);
@@ -136,21 +136,25 @@
 
 // --------- ENV SET AND UNSET ----------
 /*
-	cc ./src/env_dlst/env_dlst_update_value.c ./src/builtins/export.c ./src/builtins/env.c ./src/builtins/unset.c ./src/builtins/main.c ./src/env_dlst/env_dlst_delcontent.c ./src/env_dlst/env_dlst_clear.c ./src/env_dlst/env_dlst_new.c ./src/env_dlst/env_dlst_delnode.c ./src/env_dlst/env_dlst_append.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/ -lmylib
+	cc ./src/env_dlst/env_dlst_update.c ./src/builtins/export.c ./src/builtins/env.c ./src/builtins/unset.c ./src/builtins/main.c ./src/env_dlst/env_dlst_delcontent.c ./src/env_dlst/env_dlst_clear.c ./src/env_dlst/env_dlst_new.c ./src/env_dlst/env_dlst_delnode.c ./src/env_dlst/env_dlst_append.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/ -lmylib
 */
 int	main(int argc, char **argv, char **env)
 {
 	t_env	*env_cpy = init_env(env);
-	ft_printf("__ BEFORE __\n");
+	ft_printf("__________________ ENV BEFORE __________________\n");
 	print_env(env_cpy);
+	ft_printf("\n__________________ EXPORT BEFORE __________________\n");
+	print_exported_env(env_cpy);
 
-	export("ABC=shit", &env_cpy);
-	export("ABC=SHIT", &env_cpy);
-	export("ABC=BIGMEGASHIT", &env_cpy);
-	ft_printf("\n\n\n");
+	// ft_printf("\n- - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
+	// export("USER=", &env_cpy);
+	// export("USER", &env_cpy);
+	// ft_printf("- - - - - - - - - - - - - - - - - - - - - - - - - - -\n\n");
 
-	ft_printf("__ AFTER __\n");
-	print_env(env_cpy);
+	// ft_printf("__________________ ENV BEFORE __________________\n");
+	// print_env(env_cpy);
+	// ft_printf("\n__________________ EXPORT BEFORE __________________\n");
+	// print_exported_env(env_cpy);
 
 	env_dlst_clear(&env_cpy);
 	return (0);
