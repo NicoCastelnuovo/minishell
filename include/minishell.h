@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/27 12:30:50 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/27 19:01:17 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ void	check_each_tkn_str(t_token_data *tkn_data);
 void	detect_quote(char tkn_first_char, t_quotation *position);
 void	assign_type_to_tkn(t_list *tkns_head);
 void	assign_quotation_to_tkn(t_list *tkns_head);
-int		lexer(void);
+void	find_consecutive_less_or_greater_than(t_list *tkns_head);
+void	free_tkn_str(void *content);
+void	delete_spaces(t_list **tkns_head);
 
 void			free_tokens(t_list **token_head);
 

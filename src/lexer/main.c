@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:15:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/27 11:38:03 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/27 19:31:27 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,33 +43,40 @@ void	tokenize_input(char *input, t_list **tkn_head)
 int	main(void)
 {
 	char	*input;
-	t_list	*tokens_head;
+	t_list	*tkns_head;
 	t_list	*temp;
 
-	input = get_input();
-	// input = "<'<'   <\" cat | <infile1 ls ' -l < infile2 >' \"outfile | 'grep test | cat \"\"\" -e >outfile2 '\" | wc -l\" >>outfile2 '|' grep -e >> '\"$var\"''";
+	// input = get_input();
+	input = "<'<' \"<<<\"'>>>'  <\" cat | <infile1 ls ' -l < infile2 >' \"outfile | 'grep test | cat \"\"\" -e >outfile2 '\" | wc -l\" >>outfile2 '|' grep -e >> '\"$var\"''";
 	// input = "\"'$USER\"\"''\"\"\"'\"'test\"'$\"\"";
 	// input = "ls | cat > outfile";
 	// input = "<f";
 	// input = "ls		'\"'\"	'\"''''\"		<< $var	-la | \\ --version \n";
+	// input = ">'><<<";
+	// input = ">>< > < ASD asd ' \" > < <<< >>><>>< >";
+	// input = "	";
 	if (!input)
 		return (1);
-	tokens_head = NULL;
-	tokenize_input(input, &tokens_head);
-	free(input);
-	assign_type_to_tkn(tokens_head);
-	assign_quotation_to_tkn(tokens_head);
-	temp = tokens_head;
+	tkns_head = NULL;
+	tokenize_input(input, &tkns_head);
+	// free(input);
+	assign_type_to_tkn(tkns_head);
+	assign_quotation_to_tkn(tkns_head);
+	find_consecutive_less_or_greater_than(tkns_head);
+	// delete_spaces(&tkns_head);
+	temp = tkns_head;
 	while (temp)
 	{
-		printf("string = %15s     ", ((t_token_data *)temp->content)->str);
-		// printf("list_size = %d\n",((t_token_data *)temp->content)->list_size);
-		printf("%3d     ",((t_token_data *)temp->content)->type);
-		printf("%3u     ",((t_token_data *)temp->content)->str_len);
-		printf("%s => position = %d\n", ((t_token_data *)temp->content)->str, ((t_token_data *)temp->content)->quotation);
+		printf("string = %s\n", ((t_token_data *)temp->content)->str);
+		printf("list_size = %d\n",((t_token_data *)temp->content)->list_size);
+		printf("type = %d\n",((t_token_data *)temp->content)->type);
+		printf("length = %u\n",((t_token_data *)temp->content)->str_len);
+		printf("position = %d\n", ((t_token_data *)temp->content)->quotation);
+		printf("------------------------------\n");
 		temp = temp->next;
 	}
-	free_tokens(&tokens_head);
+	if (tkns_head)
+		free_tokens(&tkns_head);
 	return (0);
 }
 
