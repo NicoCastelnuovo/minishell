@@ -6,16 +6,20 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/10/27 14:38:31 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/10/27 16:36:26 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # GENERAL INSTRUCTIONS
 # Installing readline in Debian: apt-get install libreadline-dev
 
-VPATH = ./src/lexer\
+VPATH = ./src/ \
+	./src/lexer\
 	./src/helpers/linked_lists\
-	./src/memory_management
+	./src/memory_management \
+	./src/builtins \
+	./src/env_dlst \
+	./src/signals
 
 # SRCS = main.c\
 # 	free_tokens.c\
@@ -25,7 +29,14 @@ VPATH = ./src/lexer\
 # 	handle_quotes.c\
 # 	assign_position_and_type_to_tokens.c\
 
-SRCS = minishell.c
+SRCS = minishell.c \
+	env.c \
+	env_dlst_append.c \
+	env_dlst_clear.c \
+	env_dlst_delnode.c \
+	env_dlst_new.c \
+	env_dlst_update.c \
+	sig_handler.c
 
 OBJS_PATH = ./objs
 OBJS = $(patsubst %.c, $(OBJS_PATH)/%.o, $(SRCS))

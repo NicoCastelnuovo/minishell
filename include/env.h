@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 10:51:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/27 11:12:09 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/27 15:09:22 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /*
 	NOTES and STUFF TO DO:
 	• EXPORT
-		- Why _=[last_cmd] is not exported ???
+		- Why _=[last_cmd] is not shown/exported ???
 		- Still need to order as ASCII char
 		- multiple args handling
 		- Each node maybe need a boolean which signs as exportable or non-exportable (and change init_env)
@@ -26,6 +26,7 @@
 	• UNSET
 		- make VARNAME= not a valid input
 		- multiple args handling
+	• env -i && when creating env_cpy: set $PWD, update $SHLVL accordingly
 */
 
 typedef struct	s_var

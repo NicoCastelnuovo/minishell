@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 18:34:43 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/27 08:40:00 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/27 15:09:24 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ static int	get_substr_len(char *s, char c)
 t_var	*env_dlst_new(char *env_var)
 {
 	t_var	*var;
-	char	*key;
-	char	*value;
 
 	var = ft_calloc(1, sizeof(t_var));
 	if (!var)

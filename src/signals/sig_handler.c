@@ -1,43 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   sig_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/27 17:09:20 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/10/27 16:35:30 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/10/27 17:10:33 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_empty_line(char *s)
+static void	handle_exit(int sig_n)
 {
-	size_t	i;
-
-	i = 0;
-	while (s[i] == ' ')
-		i++;
-	if (ft_strlen(s) == i)
-		return (1);
-	return (0);
+	ft_printf("Exit\n");
 }
 
-int	main(int argc, char **argv, char **env)
+static void	handle_new_line(int sig_n)
 {
-	char	*line;
-	t_env	*env_cpy;
+	ft_printf("New line!\n");
+	exit(1) ;
+}
 
-	init_sig_handling();
-	env_cpy = init_env(env);
-	while (1)
-	{
-		line = readline("minishell $ ");
-		if (line && !is_empty_line(line))
-			add_history(line);
-		if (line)
-			free(line);
-	}
-	return (0);
+static void	handle_nothing(int sig_n)
+{
+	ft_printf("Hello signals\n");
+}
+
+void	init_sig_handling(void)
+{
+	struct sigaction	nl;
+	int				i;
+
+	nl.sa_handler = &handle_new_line;
+	sigaction(SIGINT, &nl, NULL);
 }

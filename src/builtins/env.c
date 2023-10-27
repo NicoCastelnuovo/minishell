@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 08:50:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/27 08:42:48 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:45:58 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_env	*init_env(char **env)
 	env_cpy->tail = NULL;
 	env_cpy->size = 0;
 	new_node = NULL;
+	i = 0;
 	while (env[i])
 	{
 		new_node = env_dlst_new(env[i]);

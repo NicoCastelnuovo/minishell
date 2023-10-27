@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/27 12:30:50 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/27 17:07:49 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "stdbool.h"
 # include "lexer.h"
 # include "env.h"
+# include <signal.h>
 
 char	*store_special_char_as_tkn(char *c, t_list **tkn_head);
 char	*store_prev_chars_as_tkn(char *ref, int tkn_counter, t_list **tkn_head);
@@ -33,6 +34,9 @@ void	assign_quotation_to_tkn(t_list *tkns_head);
 int		lexer(void);
 
 void			free_tokens(t_list **token_head);
+
+// -------------------------------------------------------------------- SIGNALS
+void	init_sig_handling(void);
 
 // ------------------------------------------------------------------ EXPANSION
 char	*build_str(char *old_str, t_list *var_lst);
