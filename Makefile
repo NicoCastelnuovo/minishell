@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/10/27 12:32:19 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/10/27 14:38:31 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,15 @@ VPATH = ./src/lexer\
 	./src/helpers/linked_lists\
 	./src/memory_management
 
-SRCS = main.c\
-	free_tokens.c\
-	store_tokens_in_nodes.c\
-	read_each_char.c\
-	check_each_token_string.c\
-	handle_quotes.c\
-	assign_position_and_type_to_tokens.c\
+# SRCS = main.c\
+# 	free_tokens.c\
+# 	store_tokens_in_nodes.c\
+# 	read_each_char.c\
+# 	check_each_token_string.c\
+# 	handle_quotes.c\
+# 	assign_position_and_type_to_tokens.c\
+
+SRCS = minishell.c
 
 OBJS_PATH = ./objs
 OBJS = $(patsubst %.c, $(OBJS_PATH)/%.o, $(SRCS))
