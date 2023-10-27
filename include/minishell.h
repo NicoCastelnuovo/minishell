@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/27 11:47:19 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/27 12:30:50 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # include <readline/history.h>
 # include "libft.h"
 # include "ft_printf.h"
-# include "typedef.h"
-# include "env.h"
 # include "stdbool.h"
+# include "lexer.h"
+# include "env.h"
 
 char	*store_special_char_as_tkn(char *c, t_list **tkn_head);
 char	*store_prev_chars_as_tkn(char *ref, int tkn_counter, t_list **tkn_head);

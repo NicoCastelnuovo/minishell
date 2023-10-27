@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/10/27 11:46:44 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/10/27 12:32:19 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,6 @@ VPATH = ./src/lexer\
 	./src/memory_management
 
 SRCS = main.c\
-	create_node.c\
-	add_node_to_linked_list.c\
 	free_tokens.c\
 	store_tokens_in_nodes.c\
 	read_each_char.c\

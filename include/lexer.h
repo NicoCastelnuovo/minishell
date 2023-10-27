@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   typedef.h                                          :+:      :+:    :+:   */
+/*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/27 11:47:30 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/27 12:31:16 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TYPEDEF_H
-# define TYPEDEF_H
+#ifndef LEXER_H
+# define LEXER_H
 
 # define SPECIAL_CHAR_NUM 10
 
@@ -48,11 +48,5 @@ typedef struct s_token_data
 	int		quotation;
 	char	*str;
 }	t_token_data;
-
-// typedef struct	s_token
-// {
-// 	t_token_data	*content;
-// 	struct s_token	*next;
-// }	t_token;
 
 #endif
