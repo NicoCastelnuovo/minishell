@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:56:58 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/26 17:03:52 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/27 08:52:18 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@
 	cc ./src/builtins/main.c ./src/builtins/pwd.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/ -lmylib
 */
 // --------- PWD ----------
-int	main(int argc, char **argv, char **env)
-{
-	char *wd = get_wd();
-	ft_printf("Custom PWD: [%s]\n", wd);
-	free(wd);
-}
+// int	main(int argc, char **argv, char **env)
+// {
+// 	char *wd = get_wd();
+// 	ft_printf("Custom PWD: [%s]\n", wd);
+// 	free(wd);
+// }
 
 // --------- CD ----------
 // int	main(int argc, char **argv, char **env)
@@ -132,26 +132,23 @@ int	main(int argc, char **argv, char **env)
 /*
 	cc ./src/env_dlst/env_dlst_update.c ./src/builtins/export.c ./src/builtins/env.c ./src/builtins/unset.c ./src/builtins/main.c ./src/env_dlst/env_dlst_clear.c ./src/env_dlst/env_dlst_new.c ./src/env_dlst/env_dlst_delnode.c ./src/env_dlst/env_dlst_append.c -I./include/ -I./mylib/libft/ -I./mylib/ft_printf/ -I./mylib/get_next_line/ -L./mylib/ -lmylib
 */
-// int	main(int argc, char **argv, char **env)
-// {
-// 	t_env	*env_cpy = init_env(env);
-// 	ft_printf("\n__________________ ENV BEFORE __________________\n");
-// 	print_env(env_cpy);
-// 	ft_printf("\n__________________ EXPORT BEFORE __________________\n");
-// 	print_exported_env(env_cpy);
+int	main(int argc, char **argv, char **env)
+{
+	t_env	*env_cpy = init_env(env);
+	ft_printf("\n__________________ ENV BEFORE __________________\n");
+	print_env(env_cpy);
+	ft_printf("\n__________________ EXPORT BEFORE __________________\n");
+	print_exported_env(env_cpy);
 
-// 	export("USER=JohnnyBGood", &env_cpy);
-// 	// export("USER", &env_cpy);
-// 	// export("USER=", &env_cpy);
+	ft_printf("\n\n- - - - - - - - - - - - - - - - - - - - - - - - - - - -\n\n");
+	unset_env_var(NULL, &env_cpy);
+	ft_printf("\n\n- - - - - - - - - - - - - - - - - - - - - - - - - - - -\n\n");
 
-// 	// export("NEW", &env_cpy);
-// 	ft_printf("\n\n- - - - - - - - - - - - - - - - - - - - - - - - - - - -\n\n");
+	ft_printf("__________________ ENV AFTER __________________\n");
+	print_env(env_cpy);
+	ft_printf("\n__________________ EXPORT AFTER __________________\n");
+	print_exported_env(env_cpy);
 
-// 	ft_printf("__________________ ENV AFTER __________________\n");
-// 	print_env(env_cpy);
-// 	ft_printf("\n__________________ EXPORT AFTER __________________\n");
-// 	print_exported_env(env_cpy);
-
-// 	env_dlst_clear(&env_cpy);
-// 	return (0);
-// }
+	env_dlst_clear(&env_cpy);
+	return (0);
+}

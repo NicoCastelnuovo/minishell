@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 10:51:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/26 15:44:12 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/27 09:21:15 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,14 @@
 	• EXPORT
 		- Why _=[last_cmd] is not exported ???
 		- Still need to order as ASCII char
+		- multiple args handling
+		- Each node maybe need a boolean which signs as exportable or non-exportable (and change init_env)
 	• ENV
 		- Verify with empty env, or decide what happend in case there is nothing - env_cpy still exist?
-
+		- Pay attention on whatsend to child ps
+	• UNSET
+		- make VARNAME= not a valid input
+		- multiple args handling
 */
 
 typedef struct	s_var
@@ -31,6 +36,7 @@ typedef struct	s_var
 	int				value_len;
 	struct s_var	*next;
 	struct s_var	*prev;
+	int				to_export;
 }				t_var;
 
 typedef struct	s_env
@@ -48,14 +54,11 @@ void		env_dlst_clear(t_env **env);
 void		env_dlst_update(t_var *new_content, t_env **env);
 
 t_env		*init_env(char **env);
-t_var		*prepare_env_content(char *env_var);
 void		print_env(t_env *env);
 void		unset_env_var(char *name, t_env **env);
 
 void		export(char *name_value, t_env **env);
 void		print_exported_env(t_env *env);
-
-int			get_substr_len(char *s, char c);
 
 
 #endif

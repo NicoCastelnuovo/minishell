@@ -31,7 +31,7 @@ void	free_node(t_var *node)
 */
 void	env_dlst_delnode(t_var *node, t_env **env)
 {
-	if ((*env)->head == (*env)->tail)
+	if ((*env)->head == (*env)->tail) // (*env)->size = 1
 	{
 		(*env)->head = NULL;
 		(*env)->tail = NULL;
@@ -54,6 +54,6 @@ void	env_dlst_delnode(t_var *node, t_env **env)
 		node->prev->next = node->next;
 		node->next->prev = node->prev;
 	}
-	free_node(node);
 	(*env)->size -= 1;
+	free_node(node);
 }
