@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/10/26 14:19:23 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/10/27 11:46:44 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,18 @@
 # Installing readline in Debian: apt-get install libreadline-dev
 
 VPATH = ./src/lexer\
-	./src/helpers/linked_lists
+	./src/helpers/linked_lists\
+	./src/memory_management
 
-SRCS = lexer.c\
+SRCS = main.c\
 	create_node.c\
-	add_node_to_linked_list.c
+	add_node_to_linked_list.c\
+	free_tokens.c\
+	store_tokens_in_nodes.c\
+	read_each_char.c\
+	check_each_token_string.c\
+	handle_quotes.c\
+	assign_position_and_type_to_tokens.c\
 
 OBJS_PATH = ./objs
 OBJS = $(patsubst %.c, $(OBJS_PATH)/%.o, $(SRCS))
