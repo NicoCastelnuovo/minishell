@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 10:51:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/27 09:21:15 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/27 11:12:09 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,5 @@ void		unset_env_var(char *name, t_env **env);
 
 void		export(char *name_value, t_env **env);
 void		print_exported_env(t_env *env);
-
 
 #endif
