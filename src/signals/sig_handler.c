@@ -6,33 +6,43 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:35:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/27 17:10:33 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/28 09:30:16 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handle_exit(int sig_n)
+static void	handle_sa_int(int sig_n)
 {
-	ft_printf("Exit\n");
-}
-
-static void	handle_new_line(int sig_n)
-{
-	ft_printf("New line!\n");
-	exit(1) ;
-}
-
-static void	handle_nothing(int sig_n)
-{
-	ft_printf("Hello signals\n");
+	ft_putchar_fd('\n', 1);
+	rl_on_new_line();
+	rl_replace_line("", 1);
+	rl_redisplay();
 }
 
 void	init_sig_handling(void)
 {
-	struct sigaction	nl;
-	int				i;
+	struct sigaction	sa_int;
+	struct sigaction	sa_quit;
+	struct sigaction	sa_abrt;
+	int					i;
+	sigset_t			set;
 
-	nl.sa_handler = &handle_new_line;
-	sigaction(SIGINT, &nl, NULL);
+	// init set
+	sigemptyset(&set);
+	sigaddset(&set, SIGINT);	// C
+	sigaddset(&set, SIGQUIT);	// <backsl>
+	sigaddset(&set, SIGABRT);	// D
+
+	// ctrl C
+	sa_int.sa_handler = &handle_sa_int;
+	sa_int.sa_flags = 0;
+	sa_int.sa_mask = set;
+	sigaction(SIGINT, &sa_int, NULL);
+
+	// ctrl <backsl> --- nothing
+	sa_quit.sa_handler = SIG_IGN;
+	sa_quit.sa_flags = 0;
+	sa_quit.sa_mask = set;
+	sigaction(SIGQUIT, &sa_quit, NULL);
 }
