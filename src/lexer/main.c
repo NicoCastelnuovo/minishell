@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:15:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/28 16:31:01 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/28 18:17:22 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(void)
 	t_list	*temp;
 
 	// input = get_input();
-	// input = "<'<	' \"<<<\"'>>>'  <\" cat | <infile1 ls ' -l < infile2 >' \"outfile | 'grep test | cat \"\"\" -e >outfile2 '\" | wc -l\" >>outfile2 '|' grep -e >> '\"$var\"''	 '	 ";
+	input = "<'<	' \"<<<\"'>>>$USER123?_ads$test'  <\" cat | <infile1 ls '$PATH$new -l < infile2 >' \"outfile | 'grep test | cat \"$my var\"\" -e >outfile2 '\" | wc -l\" >>outfile2 '|' grep -e >> '\"$var\"'$last_var123_!-'	 '	 ";
 	// input = "\"'$USER\"\"''\"\"\"'\"'test\"'$\"\"";
 	// input = "ls | cat > outfile";
 	// input = "<f";
@@ -61,7 +61,8 @@ int	main(void)
 	// input = " 	$USER123_!@#123123'< $PATH_123?\\	'	";
 	// input = "\"$USER21_'@#!'$USER123__)+(123dsa)\"";
 	// input = "Hello '\"\"\" some tokens 	' continue after quotation is closed";
-	input = "'hello world some more 	text $data'  ";
+	// input = "\"'hello world some \"more\" 	text $data'\"";
+	// input = "$USER";
 	if (!input)
 		return (1);
 	tkns_head = NULL;

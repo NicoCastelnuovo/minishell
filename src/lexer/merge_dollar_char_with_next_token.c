@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:52:43 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/28 11:14:13 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/28 18:30:12 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	merge_dollar_char_with_next_token(t_list *tkns_head)
 			free(temp_str);
 			ft_lstdelone(temp_node->next, free_tkn_str);
 			temp_node->next = temp_node->next->next;
+			cur_tkn_data->type = ENV_VAR;
+			cur_tkn_data->str_len = ft_strlen(cur_tkn_data->str);
 			((t_token_data *)(tkns_head->content))->list_size--;
 		}
 		temp_node = temp_node->next;

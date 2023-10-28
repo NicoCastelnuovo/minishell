@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/28 12:33:49 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/28 18:47:11 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@
 typedef enum s_type
 {
 	WORD = 1,
+	S_QUOTED_STR = 2,
+	D_QUOTED_STR = 3,
 	// FILE_NAME = 2,
-	// ENV_VAR = 3,
-	REDIRECT_OUT_CONCAT = 4,
-	HERE_DOC = 5,
+	ENV_VAR = 4,
+	REDIRECT_OUT_CONCAT = 5,
+	HERE_DOC = 6,
 	REDIRECT_IN = '<',
 	REDIRECT_OUT = '>',
 	SPACE_CAHR = ' ',
@@ -46,6 +48,7 @@ typedef enum s_quote_status
 	NO_QUOTE = -1,
 	CLOSED_QUOTE = 0,
 	OPEN_QUOTE = 1,
+	OPEN_AND_CLOSE_PAIRS = 2,
 }	t_quote_status;
 
 typedef struct s_token_data
