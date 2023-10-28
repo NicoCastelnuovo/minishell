@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:46:14 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/27 19:17:22 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/28 19:26:42 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	free_tkn_str(void *content)
 {
 	t_token_data	*tkn_data;
+
 	tkn_data = (t_token_data *)content;
 	free(tkn_data->str);
 	tkn_data->str = NULL;
@@ -26,7 +27,7 @@ static void	merge_less_or_greater_than(t_list *tkns_head, t_list *node, char red
 	t_list			*temp;
 
 	free(((t_token_data *)(node->content))->str);
-	((t_token_data *)(node->content))->str = malloc( 3 * sizeof(char));
+	((t_token_data *)(node->content))->str = malloc(3 * sizeof(char));
 	tkn_data = (t_token_data *)node->content;
 	tkn_data->str[2] = '\0';
 	ft_memset(tkn_data->str, redirect, 2);
@@ -37,7 +38,7 @@ static void	merge_less_or_greater_than(t_list *tkns_head, t_list *node, char red
 	tkn_data->str_len++;
 	temp = node->next;
 	node->next = node->next->next;
-	ft_lstdelone(temp, free_tkn_str);
+	ft_lstdelone(temp, free_token_data);
 	((t_token_data *)(tkns_head->content))->list_size--;
 }
 

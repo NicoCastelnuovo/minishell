@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:30:47 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/28 09:36:48 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/28 19:40:33 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	del_space_node_as_first_tkn(t_list **tkns_head)
 		{
 			list_size = ((t_token_data *)((*tkns_head)->content))->list_size - 1;
 			*tkns_head = (*tkns_head)->next;
-			ft_lstdelone(temp, free_tkn_str);
+			ft_lstdelone(temp, free_token_data);
 			temp = *tkns_head;
 			if (*tkns_head)
 				((t_token_data *)((*tkns_head)->content))->list_size = list_size;
@@ -63,6 +63,7 @@ void	del_space_node_as_first_tkn(t_list **tkns_head)
 void	del_space_node_in_middle_or_end(t_list *tkns_head)
 {
 	t_list			*temp;
+	t_list			*temp2;
 	t_list			*before_white_space;
 	t_token_data	*cur_tkn_data;
 	
@@ -82,8 +83,11 @@ void	del_space_node_in_middle_or_end(t_list *tkns_head)
 			// 	return ;
 			// }
 			before_white_space->next = temp->next;
-			ft_lstdelone(temp, free_tkn_str);
+			temp2 = temp->next;
+			ft_lstdelone(temp, free_token_data);
 			((t_token_data *)((tkns_head)->content))->list_size--;
+			temp = temp2;
+			continue ;
 		}
 		temp = temp->next;
 	}
