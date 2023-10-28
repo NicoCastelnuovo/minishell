@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:15:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/28 11:29:50 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/28 16:31:01 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ int	main(void)
 	// input = "  		 	 f  	 	'	\"	 '	 	 	 ";
 	// input = "f>";
 	// input = " 	$USER123_!@#123123'< $PATH_123?\\	'	";
-	input = "\"$USER21_@#!$USER123__)+(123dsa)\"";
+	// input = "\"$USER21_'@#!'$USER123__)+(123dsa)\"";
+	// input = "Hello '\"\"\" some tokens 	' continue after quotation is closed";
+	input = "'hello world some more 	text $data'  ";
 	if (!input)
 		return (1);
 	tkns_head = NULL;
@@ -70,6 +72,7 @@ int	main(void)
 	find_consecutive_less_or_greater_than(tkns_head);
 	delete_spaces(&tkns_head);
 	merge_dollar_char_with_next_token(tkns_head);
+	merge_quotations(tkns_head);
 	temp = tkns_head;
 	while (temp)
 	{
@@ -77,7 +80,8 @@ int	main(void)
 		printf("list_size = %d\n",((t_token_data *)temp->content)->list_size);
 		printf("type = %d\n",((t_token_data *)temp->content)->type);
 		printf("length = %u\n",((t_token_data *)temp->content)->str_len);
-		printf("position = %d\n", ((t_token_data *)temp->content)->quotation);
+		printf("quotation = %d\n", ((t_token_data *)temp->content)->quotation);
+		printf("quote_status = %d\n", ((t_token_data *)temp->content)->quote_status);
 		printf("------------------------------\n");
 		temp = temp->next;
 	}

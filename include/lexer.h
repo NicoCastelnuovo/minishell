@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/28 12:14:02 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/28 12:33:49 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,21 @@ typedef enum s_quotation
 	IN_D_QUOTE,
 }	t_quotation;
 
+typedef enum s_quote_status
+{
+	NO_QUOTE = -1,
+	CLOSED_QUOTE = 0,
+	OPEN_QUOTE = 1,
+}	t_quote_status;
+
 typedef struct s_token_data
 {
-	int		list_size;
-	int		str_len;
-	int		type;
-	int		quotation;
-	char	*str;
+	int				list_size;
+	int				str_len;
+	int				type;
+	int				quotation;
+	char			*str;
+	t_quote_status	quote_status;
 }	t_token_data;
 
 #endif
