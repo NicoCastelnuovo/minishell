@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:15:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/27 19:31:27 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/28 11:29:50 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	tokenize_input(char *input, t_list **tkn_head)
 		tkn_counter++;
 	}
 	store_prev_chars_as_tkn(ref, tkn_counter, tkn_head);
-	ref += tkn_counter;
+	if (*ref != '\0')
+		ref += tkn_counter;
 	tkn_counter = 0;
 }
 
@@ -47,14 +48,18 @@ int	main(void)
 	t_list	*temp;
 
 	// input = get_input();
-	input = "<'<' \"<<<\"'>>>'  <\" cat | <infile1 ls ' -l < infile2 >' \"outfile | 'grep test | cat \"\"\" -e >outfile2 '\" | wc -l\" >>outfile2 '|' grep -e >> '\"$var\"''";
+	// input = "<'<	' \"<<<\"'>>>'  <\" cat | <infile1 ls ' -l < infile2 >' \"outfile | 'grep test | cat \"\"\" -e >outfile2 '\" | wc -l\" >>outfile2 '|' grep -e >> '\"$var\"''	 '	 ";
 	// input = "\"'$USER\"\"''\"\"\"'\"'test\"'$\"\"";
 	// input = "ls | cat > outfile";
 	// input = "<f";
 	// input = "ls		'\"'\"	'\"''''\"		<< $var	-la | \\ --version \n";
 	// input = ">'><<<";
 	// input = ">>< > < ASD asd ' \" > < <<< >>><>>< >";
-	// input = "	";
+	// input = "  '\"a\"'";
+	// input = "  		 	 f  	 	'	\"	 '	 	 	 ";
+	// input = "f>";
+	// input = " 	$USER123_!@#123123'< $PATH_123?\\	'	";
+	input = "\"$USER21_@#!$USER123__)+(123dsa)\"";
 	if (!input)
 		return (1);
 	tkns_head = NULL;
@@ -63,7 +68,8 @@ int	main(void)
 	assign_type_to_tkn(tkns_head);
 	assign_quotation_to_tkn(tkns_head);
 	find_consecutive_less_or_greater_than(tkns_head);
-	// delete_spaces(&tkns_head);
+	delete_spaces(&tkns_head);
+	merge_dollar_char_with_next_token(tkns_head);
 	temp = tkns_head;
 	while (temp)
 	{

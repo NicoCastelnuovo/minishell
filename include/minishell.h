@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/27 19:01:17 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/28 11:04:56 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	assign_quotation_to_tkn(t_list *tkns_head);
 void	find_consecutive_less_or_greater_than(t_list *tkns_head);
 void	free_tkn_str(void *content);
 void	delete_spaces(t_list **tkns_head);
+void	merge_dollar_char_with_next_token(t_list *tkns_head);
 
 void			free_tokens(t_list **token_head);
 
