@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/27 17:07:49 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/28 10:58:47 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include "lexer.h"
 # include "env.h"
 # include <signal.h>
+
+volatile int	sig_global = 0;
 
 char	*store_special_char_as_tkn(char *c, t_list **tkn_head);
 char	*store_prev_chars_as_tkn(char *ref, int tkn_counter, t_list **tkn_head);
