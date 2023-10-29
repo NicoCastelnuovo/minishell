@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/29 10:55:14 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 13:28:03 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	merge_quotations(t_list *tkns_head);
 void	free_token_data(void *content);
 void	free_tokens(t_list **token_head);
 void	assign_following_space(t_list *tkns_head);
+char	*join_two_strs(char **cur_str, char *next_str);
+void	remove_next_node(t_list *cur_node);
 
 // ------------------------------------------------------------------ EXPANSION
 char	*build_str(char *old_str, t_list *var_lst);

@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:30:47 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/28 19:40:33 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 16:06:19 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ static t_list	*get_prev_node(t_list *tkns_head)
 	temp = tkns_head;
 	while (temp && temp->next)
 	{
-		// if (((t_token_data *)(tkns_head->content))->list_size == 1)
-		// 	return (NULL);
 		next_tkn_data = (t_token_data *)(temp->next->content);
 		if ((*(next_tkn_data->str) == SPACE_CAHR
 			|| *(next_tkn_data->str) == TAB_CHAR)
@@ -62,44 +60,30 @@ void	del_space_node_as_first_tkn(t_list **tkns_head)
 
 void	del_space_node_in_middle_or_end(t_list *tkns_head)
 {
-	t_list			*temp;
-	t_list			*temp2;
+	t_list			*cur_node;
 	t_list			*before_white_space;
 	t_token_data	*cur_tkn_data;
 	
-	temp = tkns_head;
-	while (temp)
+	cur_node = tkns_head;
+	while (cur_node)
 	{
-		cur_tkn_data = (t_token_data *)(temp->content);
+		cur_tkn_data = (t_token_data *)(cur_node->content);
 		if ((*(cur_tkn_data->str) == SPACE_CAHR
 			|| *(cur_tkn_data->str) == TAB_CHAR)
 			&& cur_tkn_data->quotation == NOT_QUOTED)
 		{
 			before_white_space = get_prev_node(tkns_head);
-			// if (((t_token_data *)((tkns_head)->content))->list_size == 1)
-			// {
-			// 	ft_lstdelone(temp, free_tkn_str);
-			// 	tkns_head = NULL;
-			// 	return ;
-			// }
-			before_white_space->next = temp->next;
-			temp2 = temp->next;
-			ft_lstdelone(temp, free_token_data);
+			remove_next_node(before_white_space);
+			cur_node = before_white_space->next;
 			((t_token_data *)((tkns_head)->content))->list_size--;
-			temp = temp2;
 			continue ;
 		}
-		temp = temp->next;
+		cur_node = cur_node->next;
 	}
 }
 
 void	delete_spaces(t_list **tkns_head)
 {
-	// t_list			*temp;
-	// t_list			*before_white_space;
-	// t_token_data	*cur_tkn_data;
-	
 	del_space_node_as_first_tkn(tkns_head);
 	del_space_node_in_middle_or_end(*tkns_head);
-	
 }

@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:15:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/29 11:34:09 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 16:11:46 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,18 @@ int	main(void)
 	// input = "$_";
 	// input = "$ USER";
 	// input = "\"HELLO	\"	'WORLD  '	";
-	input = "";
-	// input = get_input();
+	// input = "";
+	// input = "$123>";
+	// input = "$ USER";
+	// input = "<<<>>>>>";
+	// input = "''";
+	// input = " ";
+	input = get_input();
 	if (!input)
 		return (1);
 	tkns_head = NULL;
 	tokenize_input(input, &tkns_head);
-	// free(input);
+	free(input);
 	assign_type_to_tkn(tkns_head);
 	assign_quotation_to_tkn(tkns_head);
 	merge_consecutive_less_or_greater_than(tkns_head);
