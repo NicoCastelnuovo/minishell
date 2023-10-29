@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:52:43 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/29 13:20:07 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 17:37:52 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	is_needed_to_merge(char first_char)
 {
-	if (!(ft_isalpha(first_char)) || ft_isdigit(first_char) || (first_char == '_'))
+	if (!((ft_isalpha(first_char)) || ft_isdigit(first_char) || (first_char == '_')))
 		return (false);
 	else
 		return (true);

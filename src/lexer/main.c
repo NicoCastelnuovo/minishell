@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:15:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/29 16:41:50 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 17:40:27 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	main(void)
 	// input = "\"'$\"\"";
 	// input = "$12das___<";
 	// input = "$_ads123!";
+	// input = "$!a1_ads123!";
 	// input = "\"$\"\"";
 	// input = "$_";
 	// input = "$ USER";
