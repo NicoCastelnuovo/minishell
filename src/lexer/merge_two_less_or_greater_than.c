@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:46:14 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/28 19:26:42 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 10:55:14 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	merge_less_or_greater_than(t_list *tkns_head, t_list *node, char red
 	((t_token_data *)(tkns_head->content))->list_size--;
 }
 
-void	find_consecutive_less_or_greater_than(t_list *tkns_head)
+void	merge_consecutive_less_or_greater_than(t_list *tkns_head)
 {
 	t_list			*temp;
 	t_token_data	*cur_tkn_data;

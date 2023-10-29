@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:03:49 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/28 20:38:36 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 09:03:13 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,19 @@ void	merge_two_str_node(t_list *tkns_head, t_list *temp1, t_list *temp2, t_token
 	ft_lstdelone(temp2, free_token_data);
 	((t_token_data *)(tkns_head->content))->list_size--;
 	(temp1_tkn_data)->str_len = ft_strlen((temp1_tkn_data)->str);
-	(temp1_tkn_data)->quote_status = OPEN_AND_CLOSE_PAIRS;
-	if (tkn_type == S_QUOTE)
-		(temp1_tkn_data)->type = S_QUOTED_STR;
-	else if (tkn_type == D_QUOTE)
-		(temp1_tkn_data)->type = D_QUOTED_STR;
+	// (temp1_tkn_data)->quote_status = OPEN_AND_CLOSE_PAIRS;
+	if (tkn_type == S_QUOTE && temp2_tkn_data->quote_status != CLOSED_QUOTE)
+	{
+		(temp1_tkn_data)->type = NOT_CLOSED_S_QUOTE_STR;
+		(temp1_tkn_data)->quotation = IN_S_QUOTE;
+
+	}
+	else if (tkn_type == D_QUOTE && temp2_tkn_data->quote_status !=CLOSED_QUOTE)
+	{
+		(temp1_tkn_data)->type = NOT_CLOSED_D_QUOTE_STR;
+		(temp1_tkn_data)->quotation = IN_D_QUOTE;
+
+	}
 }
 
 void	merge_closing_quote(t_list *tkns_head, t_list *temp1, t_list *temp2, char tkn_type)
@@ -49,7 +57,7 @@ void	merge_closing_quote(t_list *tkns_head, t_list *temp1, t_list *temp2, char t
 	}
 }
 
-bool	is_closing_quote_pair(t_list *temp2, char tkn_type)
+bool	is_closing_quote_pair(t_token_data *temp1_tkn_data, t_list *temp2, char tkn_type)
 {
 	t_token_data	*temp2_tkn_data;
 
@@ -58,7 +66,22 @@ bool	is_closing_quote_pair(t_list *temp2, char tkn_type)
 	temp2_tkn_data = (t_token_data *)(temp2->content);
 	if (((temp2_tkn_data->str)[0] == tkn_type
 		&& (temp2_tkn_data)->quote_status == CLOSED_QUOTE))
+	{
+		(temp1_tkn_data)->quote_status = OPEN_AND_CLOSED_PAIRS;
+		if (tkn_type == S_QUOTE)
+		{
+			(temp1_tkn_data)->type = S_QUOTED_STR;
+			(temp1_tkn_data)->quotation = IN_S_QUOTE;
+
+		}
+		else if (tkn_type == D_QUOTE)
+		{
+			(temp1_tkn_data)->type = D_QUOTED_STR;
+			(temp1_tkn_data)->quotation = IN_D_QUOTE;
+
+		}
 		return (true);
+	}
 	return (false);
 }
 
@@ -84,11 +107,14 @@ void	merge_quotations(t_list *tkns_head)
 			while (temp2)
 			{
 				temp3 = temp2->next;
-				merge_two_str_node(tkns_head, temp1, temp2, temp1_tkn_data, tkn_type);
-				temp2 = temp3;
+				if (((t_token_data *)(temp2->content))->quote_status != CLOSED_QUOTE)
+				{
+					merge_two_str_node(tkns_head, temp1, temp2, temp1_tkn_data, tkn_type);
+					temp2 = temp3;
+				}
 				// if (!temp2)
 				// 	break ;
-				if (is_closing_quote_pair(temp2, tkn_type))
+				if (is_closing_quote_pair(temp1_tkn_data, temp2, tkn_type))
 					break ;
 			}
 			merge_closing_quote(tkns_head, temp1, temp2, tkn_type);

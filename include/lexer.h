@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/28 18:47:11 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 11:11:52 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ typedef enum s_type
 	WORD = 1,
 	S_QUOTED_STR = 2,
 	D_QUOTED_STR = 3,
+	NOT_CLOSED_S_QUOTE_STR = 4,
+	NOT_CLOSED_D_QUOTE_STR = 5,
 	// FILE_NAME = 2,
-	ENV_VAR = 4,
-	REDIRECT_OUT_CONCAT = 5,
-	HERE_DOC = 6,
+	ENV_VAR = 6,
+	REDIRECT_OUT_CONCAT = 7,
+	HERE_DOC = 8,
 	REDIRECT_IN = '<',
 	REDIRECT_OUT = '>',
 	SPACE_CAHR = ' ',
@@ -48,8 +50,16 @@ typedef enum s_quote_status
 	NO_QUOTE = -1,
 	CLOSED_QUOTE = 0,
 	OPEN_QUOTE = 1,
-	OPEN_AND_CLOSE_PAIRS = 2,
+	OPEN_AND_CLOSED_PAIRS = 2,
 }	t_quote_status;
+
+typedef enum s_white_space
+{
+	UNKNOWN_WHITE_SPACE = -1,
+	NOT_FOLLOWED_BY_WHITE_SPACE = 0,
+	FOLLOWED_BY_WHITE_SPACE = 1,
+
+}	t_white_space;
 
 typedef struct s_token_data
 {
@@ -59,6 +69,7 @@ typedef struct s_token_data
 	int				quotation;
 	char			*str;
 	t_quote_status	quote_status;
+	t_white_space	white_space;
 }	t_token_data;
 
 #endif

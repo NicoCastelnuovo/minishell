@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:01:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/28 12:26:23 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 10:45:44 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	init_tkn_data(t_list *tkn_node, char *tkn_str, t_list **tkn_head)
 	tkn_data->quotation = 0;
 	tkn_data->str_len = str_len;
 	tkn_data->quote_status = NO_QUOTE;
+	tkn_data->white_space = UNKNOWN_WHITE_SPACE;
 }
 
 char	*store_special_char_as_tkn(char *c, t_list **tkn_head)

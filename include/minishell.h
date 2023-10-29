@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/28 19:26:23 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 10:55:14 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,14 @@ void	check_each_tkn_str(t_token_data *tkn_data);
 void	detect_quote(t_token_data *tkn_data, char tkn_first_char, t_quotation *position);
 void	assign_type_to_tkn(t_list *tkns_head);
 void	assign_quotation_to_tkn(t_list *tkns_head);
-void	find_consecutive_less_or_greater_than(t_list *tkns_head);
+void	merge_consecutive_less_or_greater_than(t_list *tkns_head);
 void	free_tkn_str(void *content);
 void	delete_spaces(t_list **tkns_head);
 void	merge_dollar_char_with_next_token(t_list *tkns_head);
 void	merge_quotations(t_list *tkns_head);
 void	free_token_data(void *content);
 void	free_tokens(t_list **token_head);
+void	assign_following_space(t_list *tkns_head);
 
 // ------------------------------------------------------------------ EXPANSION
 char	*build_str(char *old_str, t_list *var_lst);

@@ -6,7 +6,7 @@
 #    By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/10/28 12:04:40 by fahmadia         ###   ########.fr        #
+#    Updated: 2023/10/29 10:34:31 by fahmadia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS = main.c\
 	delete_spaces.c\
 	merge_dollar_char_with_next_token.c\
 	merge_open_and_close_quotations_with_between_chars.c\
+	check_following_space.c\
 
 OBJS_PATH = ./objs
 OBJS = $(patsubst %.c, $(OBJS_PATH)/%.o, $(SRCS))

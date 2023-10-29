@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:52:43 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/28 19:55:55 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 09:49:31 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	merge_dollar_char_with_next_token(t_list *tkns_head)
 		if ((cur_tkn_data->str)[0] == DOLLAR_CHAR)
 		{
 			temp_str = cur_tkn_data->str;
+			if (!(ft_isalpha(*(next_tkn_data->str)) || ft_isdigit(*(next_tkn_data->str)) || (next_tkn_data->str)[0] == '_'))
+				return ;
 			cur_tkn_data->str = ft_strjoin(cur_tkn_data->str, next_tkn_data->str); //next_tkn_data->str == NULL?
 			free(temp_str);
 			temp_node2 = temp_node->next->next;

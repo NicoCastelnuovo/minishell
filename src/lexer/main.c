@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:15:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/28 20:11:04 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 11:00:59 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,15 @@ int	main(void)
 	// input = "Hello '\"\"\" some tokens 	' continue after quotation is closed";
 	// input = "\"'hello world some \"more\" 	text $data'\"";
 	// input = "$USER";
+	// input = " 	''";
+	// input = "\"\"\"";
+	// input = "\"'$\"\"";
+	// input = "$12das___<";
+	// input = "$_ads123!";
+	// input = "\"$\"\"";
+	// input = "$_";
+	// input = "$ USER";
+	// input = "\"HELLO	\"	'WORLD  '	";
 	if (!input)
 		return (1);
 	tkns_head = NULL;
@@ -70,10 +79,11 @@ int	main(void)
 	// free(input);
 	assign_type_to_tkn(tkns_head);
 	assign_quotation_to_tkn(tkns_head);
-	find_consecutive_less_or_greater_than(tkns_head);
-	delete_spaces(&tkns_head);
+	merge_consecutive_less_or_greater_than(tkns_head);
 	merge_dollar_char_with_next_token(tkns_head);
 	merge_quotations(tkns_head);
+	assign_following_space(tkns_head);
+	delete_spaces(&tkns_head);
 	temp = tkns_head;
 	while (temp)
 	{
@@ -83,6 +93,7 @@ int	main(void)
 		printf("length = %u\n",((t_token_data *)temp->content)->str_len);
 		printf("quotation = %d\n", ((t_token_data *)temp->content)->quotation);
 		printf("quote_status = %d\n", ((t_token_data *)temp->content)->quote_status);
+		printf("white_space_status = %d\n", ((t_token_data *)temp->content)->white_space);
 		printf("------------------------------\n");
 		temp = temp->next;
 	}
