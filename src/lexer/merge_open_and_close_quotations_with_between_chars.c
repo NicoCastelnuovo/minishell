@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:03:49 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/29 14:45:33 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 16:55:14 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,16 @@ bool	is_closing_quote_pair(t_token_data *temp1_tkn_data, t_list *temp2, char tkn
 	return (false);
 }
 
-bool	is_closing_quote_found(t_list *tkns_head, t_list *cur_node, t_list **cur_quoted_node, char tkn_type)
+bool	loop_over_quoted_tokens(t_list *tkns_head, t_list *cur_node, t_list **cur_quoted_node, char tkn_type)
 {
 	t_list			*temp;
 	t_token_data	*cur_tkn_data;
+	t_token_data	*cur_quoted_tkn_data;
 
 	cur_tkn_data = (t_token_data *)(cur_node->content);
+	cur_quoted_tkn_data = (t_token_data *)((*cur_quoted_node)->content);
 	temp = (*cur_quoted_node)->next;
-	if (((t_token_data *)((*cur_quoted_node)->content))->quote_status != CLOSED_QUOTE)
+	if ((cur_quoted_tkn_data)->quote_status != CLOSED_QUOTE)
 	{
 		merge_two_str_node(tkns_head, cur_node, *cur_quoted_node, tkn_type);
 		*cur_quoted_node = temp;
@@ -90,30 +92,44 @@ bool	is_closing_quote_found(t_list *tkns_head, t_list *cur_node, t_list **cur_qu
 	return (false);
 }
 
+bool	is_opening_quote(t_token_data *cur_tkn_data)
+{
+
+	if ((*(cur_tkn_data->str) == S_QUOTE || (cur_tkn_data->str)[0] == D_QUOTE)
+		&& cur_tkn_data->quote_status == OPEN_QUOTE)
+		return (true);
+	else
+		return (false);
+}
+
+void	find_quote(t_list *tkns_head, t_list *cur_node, t_list *cur_quoted_node)
+{
+	t_token_data	*cur_tkn_data;
+	char			tkn_type;
+	
+	cur_tkn_data = (t_token_data *)(cur_node->content);
+	if (!is_opening_quote(cur_tkn_data))
+		return ;
+	cur_quoted_node = cur_node->next;
+	tkn_type = *(cur_tkn_data->str);
+	while (cur_quoted_node)
+	{
+		if (loop_over_quoted_tokens(tkns_head, cur_node, &cur_quoted_node, tkn_type))
+			break ;
+	}
+	merge_closing_quote(tkns_head, cur_node, cur_quoted_node, tkn_type);
+}
+
 void	merge_quotations(t_list *tkns_head)
 {
 	t_list			*cur_node;
 	t_list			*cur_quoted_node;
-	t_token_data	*cur_tkn_data;
-	char			tkn_type;
 
 	cur_node = tkns_head;
 	cur_quoted_node = tkns_head;
 	while (cur_node)
 	{
-		cur_tkn_data = (t_token_data *)(cur_node->content);
-		if ((*(cur_tkn_data->str) == S_QUOTE || (cur_tkn_data->str)[0] == D_QUOTE)
-			&& cur_tkn_data->quote_status == OPEN_QUOTE)
-		{
-			cur_quoted_node = cur_node->next;
-			tkn_type = *(cur_tkn_data->str);
-			while (cur_quoted_node)
-			{
-				if (is_closing_quote_found(tkns_head, cur_node, &cur_quoted_node, tkn_type))
-					break ;
-			}
-			merge_closing_quote(tkns_head, cur_node, cur_quoted_node, tkn_type);
-		}
+		find_quote(tkns_head, cur_node, cur_quoted_node);
 		cur_node = cur_node->next;
 	}
 }

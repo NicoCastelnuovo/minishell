@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:15:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/29 16:11:46 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 16:41:50 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(void)
 	t_list	*tkns_head;
 	t_list	*temp;
 
-	// input = "<'<	' \"<<<\"'>>>$USER123?_ads$test'  <\" cat | <infile1 ls '$PATH$new -l < infile2 >' \"outfile | 'grep test | cat \"$my var\"\" -e >outfile2 '\" | wc -l\" >>outfile2 '|' grep -e >> '\"$var\"'$last_var123_!-'	 '	 ";
+	input = "<'<	' \"<<<\"'>>>$USER123?_ads$test'  <\" cat | <infile1 ls '$PATH$new -l < infile2 >' \"outfile | 'grep test | cat \"$my var\"\" -e >outfile2 '\" | wc -l\" >>outfile2 '|' grep -e >> '\"$var\"'$last_var123_!-'	 '	 ";
 	// input = "\"'$USER\"\"''\"\"\"'\"'test\"'$\"\"";
 	// input = "ls | cat > outfile";
 	// input = "<f";
@@ -77,12 +77,12 @@ int	main(void)
 	// input = "<<<>>>>>";
 	// input = "''";
 	// input = " ";
-	input = get_input();
+	// input = get_input();
 	if (!input)
 		return (1);
 	tkns_head = NULL;
 	tokenize_input(input, &tkns_head);
-	free(input);
+	// free(input);
 	assign_type_to_tkn(tkns_head);
 	assign_quotation_to_tkn(tkns_head);
 	merge_consecutive_less_or_greater_than(tkns_head);
