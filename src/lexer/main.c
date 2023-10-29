@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:15:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/29 11:00:59 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 11:34:09 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ int	main(void)
 	t_list	*tkns_head;
 	t_list	*temp;
 
-	// input = get_input();
-	input = "<'<	' \"<<<\"'>>>$USER123?_ads$test'  <\" cat | <infile1 ls '$PATH$new -l < infile2 >' \"outfile | 'grep test | cat \"$my var\"\" -e >outfile2 '\" | wc -l\" >>outfile2 '|' grep -e >> '\"$var\"'$last_var123_!-'	 '	 ";
+	// input = "<'<	' \"<<<\"'>>>$USER123?_ads$test'  <\" cat | <infile1 ls '$PATH$new -l < infile2 >' \"outfile | 'grep test | cat \"$my var\"\" -e >outfile2 '\" | wc -l\" >>outfile2 '|' grep -e >> '\"$var\"'$last_var123_!-'	 '	 ";
 	// input = "\"'$USER\"\"''\"\"\"'\"'test\"'$\"\"";
 	// input = "ls | cat > outfile";
 	// input = "<f";
@@ -72,6 +71,8 @@ int	main(void)
 	// input = "$_";
 	// input = "$ USER";
 	// input = "\"HELLO	\"	'WORLD  '	";
+	input = "";
+	// input = get_input();
 	if (!input)
 		return (1);
 	tkns_head = NULL;
