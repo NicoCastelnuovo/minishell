@@ -6,7 +6,7 @@
 #    By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/10/29 13:04:54 by fahmadia         ###   ########.fr        #
+#    Updated: 2023/10/30 15:08:16 by fahmadia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,19 +15,22 @@
 
 VPATH = ./src/lexer\
 	./src/helpers/linked_lists\
-	./src/memory_management
+	./src/memory_management\
+	./test\
 
 SRCS = main.c\
-	free_tokens.c\
+	tokenize_input.c\
+	free.c\
 	store_tokens_in_nodes.c\
 	read_each_char.c\
 	check_each_token_string.c\
 	handle_quotes.c\
-	assign_position_and_type_to_tokens.c\
+	assign_quote_status_to_tokens.c\
+	assign_type_to_tokens.c\
 	merge_two_less_or_greater_than.c\
 	delete_spaces.c\
 	merge_dollar_char_with_next_token.c\
-	merge_open_and_close_quotations_with_between_chars.c\
+	merge_quoted_tokens.c\
 	check_following_space.c\
 	join_content_str_of_two_nodes.c\
 	remove_a_token_node.c\

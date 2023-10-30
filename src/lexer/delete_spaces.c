@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:30:47 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/29 20:04:47 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/30 09:47:41 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static t_list	*get_prev_node(t_list *tkns_head)
 	return (NULL);
 }
 
-void	del_space_node_as_first_tkn(t_list **tkns_head)
+static void	del_space_node_as_first_tkn(t_list **tkns_head)
 {
 	t_list			*temp;
 	t_tkn_data		*tkns_head_data;
@@ -58,7 +58,7 @@ void	del_space_node_as_first_tkn(t_list **tkns_head)
 	}
 }
 
-void	del_space_node_in_middle_or_end(t_list *tkns_head)
+static void	del_space_node_in_middle_or_end(t_list *tkns_head)
 {
 	t_list			*cur_node;
 	t_list			*before_white_space;
@@ -82,7 +82,7 @@ void	del_space_node_in_middle_or_end(t_list *tkns_head)
 	}
 }
 
-void	delete_spaces(t_list **tkns_head)
+void	delete_not_quoted_spaces(t_list **tkns_head)
 {
 	del_space_node_as_first_tkn(tkns_head);
 	del_space_node_in_middle_or_end(*tkns_head);

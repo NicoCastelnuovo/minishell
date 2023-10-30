@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_tokens.c                                      :+:      :+:    :+:   */
+/*   tokenize_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/20 12:05:34 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/29 19:56:33 by fahmadia         ###   ########.fr       */
+/*   Created: 2023/10/30 09:54:11 by fahmadia          #+#    #+#             */
+/*   Updated: 2023/10/30 09:58:14 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_token_data(void *content)
+void	tokenize_input(char *input, t_list **tkn_head)
 {
-	t_tkn_data	*token_data;
+	int		input_counter;
+	int		tkn_counter;
+	char	*ref;
 
-	token_data = (t_tkn_data *)content;
-	if (!token_data)
-		return ;
-	free(token_data->str);
-	free(token_data);
-}
-
-void	free_tokens(t_list **token_head)
-{
-	ft_lstclear(token_head, free_token_data);
+	ref = input;
+	input_counter = 0;
+	tkn_counter = 1;
+	while (input[input_counter])
+	{
+		read_char(input[input_counter], &ref, &tkn_counter, tkn_head);
+		input_counter++;
+		tkn_counter++;
+	}
+	store_prev_chars_as_tkn(ref, tkn_counter, tkn_head);
+	if (*ref != '\0')
+		ref += tkn_counter;
+	tkn_counter = 0;
 }
