@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/29 11:11:52 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 20:00:50 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ typedef enum s_type
 	DOLLAR_CHAR = '$',
 }	t_type;
 
-typedef enum s_quotation
+typedef enum s_quote
 {
 	NOT_QUOTED = 1,
 	IN_S_QUOTE,
 	IN_D_QUOTE,
-}	t_quotation;
+}	t_quote;
 
 typedef enum s_quote_status
 {
@@ -61,15 +61,15 @@ typedef enum s_white_space
 
 }	t_white_space;
 
-typedef struct s_token_data
+typedef struct s_tkn_data
 {
 	int				list_size;
 	int				str_len;
 	int				type;
-	int				quotation;
+	int				quote;
 	char			*str;
 	t_quote_status	quote_status;
 	t_white_space	white_space;
-}	t_token_data;
+}	t_tkn_data;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:01:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/29 10:45:44 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 20:11:58 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 static void	init_tkn_data(t_list *tkn_node, char *tkn_str, t_list **tkn_head)
 {
-	t_token_data	*tkn_data;
-	t_token_data	*tkn_head_data;
-	size_t			str_len;
+	t_tkn_data	*tkn_data;
+	t_tkn_data	*tkn_head_data;
+	size_t		str_len;
 
 	str_len = ft_strlen(tkn_str);
-	tkn_data = malloc(1 * sizeof(t_token_data));
+	tkn_data = malloc(1 * sizeof(t_tkn_data));
 	tkn_node->content = tkn_data;
-	tkn_head_data = ((t_token_data *)(*tkn_head)->content);
+	tkn_head_data = ((t_tkn_data *)(*tkn_head)->content);
 	tkn_data->str = tkn_str;
 	if (tkn_node == *tkn_head)
 	{
@@ -32,7 +32,7 @@ static void	init_tkn_data(t_list *tkn_node, char *tkn_str, t_list **tkn_head)
 		tkn_head_data->list_size++;
 	tkn_data->list_size = tkn_head_data->list_size;
 	tkn_data->type = 0;
-	tkn_data->quotation = 0;
+	tkn_data->quote = 0;
 	tkn_data->str_len = str_len;
 	tkn_data->quote_status = NO_QUOTE;
 	tkn_data->white_space = UNKNOWN_WHITE_SPACE;

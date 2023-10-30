@@ -6,13 +6,13 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:07:54 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/27 19:25:22 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 19:56:33 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_each_tkn_str(t_token_data *tkn_data)
+void	check_each_tkn_str(t_tkn_data *tkn_data)
 {
 	char	tkn_first_char;
 

@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/29 13:28:03 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 20:00:28 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 char	*store_special_char_as_tkn(char *c, t_list **tkn_head);
 char	*store_prev_chars_as_tkn(char *ref, int tkn_counter, t_list **tkn_head);
 void	read_char(char cur_char, char **ref, int *tkn_ctr, t_list **tkn_head);
-void	check_each_tkn_str(t_token_data *tkn_data);
-void	detect_quote(t_token_data *tkn_data, char tkn_first_char, t_quotation *position);
+void	check_each_tkn_str(t_tkn_data *tkn_data);
+void	detect_quote(t_tkn_data *tkn_data, char tkn_first_char, t_quote *position);
 void	assign_type_to_tkn(t_list *tkns_head);
 void	assign_quotation_to_tkn(t_list *tkns_head);
 void	merge_consecutive_less_or_greater_than(t_list *tkns_head);

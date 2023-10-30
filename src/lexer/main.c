@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:15:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/29 17:40:27 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/29 20:00:50 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,13 @@ int	main(void)
 	temp = tkns_head;
 	while (temp)
 	{
-		printf("string = %s\n", ((t_token_data *)temp->content)->str);
-		printf("list_size = %d\n",((t_token_data *)temp->content)->list_size);
-		printf("type = %d\n",((t_token_data *)temp->content)->type);
-		printf("length = %u\n",((t_token_data *)temp->content)->str_len);
-		printf("quotation = %d\n", ((t_token_data *)temp->content)->quotation);
-		printf("quote_status = %d\n", ((t_token_data *)temp->content)->quote_status);
-		printf("white_space_status = %d\n", ((t_token_data *)temp->content)->white_space);
+		printf("string = %s\n", ((t_tkn_data *)temp->content)->str);
+		printf("list_size = %d\n",((t_tkn_data *)temp->content)->list_size);
+		printf("type = %d\n",((t_tkn_data *)temp->content)->type);
+		printf("length = %u\n",((t_tkn_data *)temp->content)->str_len);
+		printf("quotation = %d\n", ((t_tkn_data *)temp->content)->quote);
+		printf("quote_status = %d\n", ((t_tkn_data *)temp->content)->quote_status);
+		printf("white_space_status = %d\n", ((t_tkn_data *)temp->content)->white_space);
 		printf("------------------------------\n");
 		temp = temp->next;
 	}
