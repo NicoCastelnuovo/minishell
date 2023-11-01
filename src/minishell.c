@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/01 10:16:37 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/01 12:50:29 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int	main(int argc, char **argv, char **env)
 {
 	char	*line;
 	t_env	*env_cpy;
-
-
 
 	init_sig_handling();
 	env_cpy = init_env(env);

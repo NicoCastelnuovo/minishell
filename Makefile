@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2023/10/28 11:12:50 by ncasteln         ###   ########.fr        #
-=======
-#    Updated: 2023/10/30 15:08:16 by fahmadia         ###   ########.fr        #
->>>>>>> a76193577c0ac34361ef1ab1f4f8e330e5b0ff55
+#    Updated: 2023/11/01 12:50:39 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +20,9 @@ VPATH = ./src/ \
 	./test\
 	./src/builtins \
 	./src/env_dlst \
-	./src/signals
+	./src/signals \
 
-SRCS = main.c\
-	tokenize_input.c\
+SRCS = tokenize_input.c\
 	free.c\
 	store_tokens_in_nodes.c\
 	read_each_char.c\
@@ -49,7 +44,7 @@ SRCS = main.c\
 	env_dlst_delnode.c \
 	env_dlst_new.c \
 	env_dlst_update.c \
-	sig_handler.c
+	sig_handler.c\
 
 OBJS_PATH = ./objs
 OBJS = $(patsubst %.c, $(OBJS_PATH)/%.o, $(SRCS))

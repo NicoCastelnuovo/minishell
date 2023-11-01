@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/01 12:31:21 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/01 12:50:21 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ typedef struct s_pipe
 // TYPE CMD
 enum e_redir
 {
-	IN,			// <
-	OUT,		// >
-	HERE_DOC,	// <<
-	APPEND		// >>
+	IS_IN,			// <
+	IS_OUT,			// >
+	IS_HERE_DOC,	// <<
+	IS_APPEND		// >>
 };
 
 typedef struct s_redir
