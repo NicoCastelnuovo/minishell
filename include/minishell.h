@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/31 16:20:12 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/01 10:30:52 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "stdbool.h"
 # include "lexer.h"
 # include "env.h"
+# include "executor.h"
 # include <signal.h>
 # include <termcap.h>
 # include <fcntl.h>
