@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/10/28 10:47:44 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/10/28 11:12:50 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ COLOR_END = \033[0m
 all: $(NAME)
 
 $(NAME): $(OBJS) $(MYLIB) Makefile
-	@$(CC) $(OBJS) -L$(MYLIB_PATH) -lmylib -lreadline -o $(NAME)
+	@$(CC) $(OBJS) -L$(MYLIB_PATH) -lmylib -lreadline -ltermcap -o $(NAME)
 	@echo "$(COLOR_GREEN)minishell is created.$(COLOR_END)"
 
 $(OBJS_PATH)/%.o: %.c

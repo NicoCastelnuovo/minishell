@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:35:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/28 11:03:14 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/28 11:06:19 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ static void	handle_sa_newline(int sig_n)
 
 static void	handle_sa_exit(int sig_n)
 {
-	sig_global = 1;
-	ft_putstr_fd("exit\n", 1);
-	if (sig_global)
-		exit(0);
+
 }
 
 void	init_sig_handling(void)

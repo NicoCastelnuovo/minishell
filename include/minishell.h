@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/28 10:58:47 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/10/31 16:20:12 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,23 @@
 # include "lexer.h"
 # include "env.h"
 # include <signal.h>
+# include <termcap.h>
+# include <fcntl.h>
 
-volatile int	sig_global = 0;
+/*
+	NOTE / TODO
+	• SIGNALS
+		- ctrl-D cause segfault
+*/
+
+typedef union i_need_all_of_those_possibility
+{
+	int		i;
+	char	c;
+	char	*s;
+	long	l;
+}	t_i_need;
+
 
 char	*store_special_char_as_tkn(char *c, t_list **tkn_head);
 char	*store_prev_chars_as_tkn(char *ref, int tkn_counter, t_list **tkn_head);
@@ -45,10 +60,6 @@ char	*build_str(char *old_str, t_list *var_lst);
 char	*expansion(char *s, int exit_code, char **env);
 void	del_var_lst_content(void *content);
 void	print_var_lst(t_list *var_lst);
-
-// ------------------------------------------------------------------- BUILTINS
-char	*get_wd(void);
-int		cd(char *path, char **env);
 
 // void		update_env_var(char *name, char *value, char **env);
 // t_var		*search_var(char *name, t_list *env);
