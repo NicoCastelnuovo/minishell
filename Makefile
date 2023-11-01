@@ -3,10 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
+#    By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2023/10/28 11:12:50 by ncasteln         ###   ########.fr        #
+=======
+#    Updated: 2023/10/30 15:08:16 by fahmadia         ###   ########.fr        #
+>>>>>>> a76193577c0ac34361ef1ab1f4f8e330e5b0ff55
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,20 +20,29 @@
 VPATH = ./src/ \
 	./src/lexer\
 	./src/helpers/linked_lists\
-	./src/memory_management \
+	./src/memory_management\
+	./test\
 	./src/builtins \
 	./src/env_dlst \
 	./src/signals
 
-# SRCS = main.c\
-# 	free_tokens.c\
-# 	store_tokens_in_nodes.c\
-# 	read_each_char.c\
-# 	check_each_token_string.c\
-# 	handle_quotes.c\
-# 	assign_position_and_type_to_tokens.c\
-
-SRCS = minishell.c \
+SRCS = main.c\
+	tokenize_input.c\
+	free.c\
+	store_tokens_in_nodes.c\
+	read_each_char.c\
+	check_each_token_string.c\
+	handle_quotes.c\
+	assign_quote_status_to_tokens.c\
+	assign_type_to_tokens.c\
+	merge_two_less_or_greater_than.c\
+	delete_spaces.c\
+	merge_dollar_char_with_next_token.c\
+	merge_quoted_tokens.c\
+	check_following_space.c\
+	join_content_str_of_two_nodes.c\
+	remove_a_token_node.c\
+	minishell.c \
 	env.c \
 	env_dlst_append.c \
 	env_dlst_clear.c \

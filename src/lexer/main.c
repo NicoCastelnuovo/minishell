@@ -6,13 +6,13 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:15:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/27 11:38:03 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/10/30 15:32:09 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_input(void)
+static char	*get_input(void)
 {
 	char	*input;
 
@@ -20,57 +20,46 @@ char	*get_input(void)
 	return (input);
 }
 
-void	tokenize_input(char *input, t_list **tkn_head)
+static void	lexer(char *input, t_list **tkns_head)
 {
-	int		input_counter;
-	int		tkn_counter;
-	char	*ref;
-
-	ref = input;
-	input_counter = 0;
-	tkn_counter = 1;
-	while (input[input_counter])
-	{
-		read_char(input[input_counter], &ref, &tkn_counter, tkn_head);
-		input_counter++;
-		tkn_counter++;
-	}
-	store_prev_chars_as_tkn(ref, tkn_counter, tkn_head);
-	ref += tkn_counter;
-	tkn_counter = 0;
+	tokenize_input(input, tkns_head);
+	free(input);
+	assign_type_to_tkn(*tkns_head);
+	assign_quote_status_to_tkn(*tkns_head);
+	merge_consecutive_less_or_greater_than(*tkns_head);
+	merge_dollar_char_with_next_token(*tkns_head);
+	merge_quoted_tokens(*tkns_head);
+	assign_following_space_status(*tkns_head);
+	delete_not_quoted_spaces(tkns_head);
 }
 
 int	main(void)
 {
-	char	*input;
-	t_list	*tokens_head;
-	t_list	*temp;
+	char		*input;
+	t_list		*tkns_head;
+	t_list		*temp;
+	t_tkn_data	*tkn_data;
 
 	input = get_input();
-	// input = "<'<'   <\" cat | <infile1 ls ' -l < infile2 >' \"outfile | 'grep test | cat \"\"\" -e >outfile2 '\" | wc -l\" >>outfile2 '|' grep -e >> '\"$var\"''";
-	// input = "\"'$USER\"\"''\"\"\"'\"'test\"'$\"\"";
-	// input = "ls | cat > outfile";
-	// input = "<f";
-	// input = "ls		'\"'\"	'\"''''\"		<< $var	-la | \\ --version \n";
 	if (!input)
 		return (1);
-	tokens_head = NULL;
-	tokenize_input(input, &tokens_head);
-	free(input);
-	assign_type_to_tkn(tokens_head);
-	assign_quotation_to_tkn(tokens_head);
-	temp = tokens_head;
+	tkns_head = NULL;
+	lexer(input, &tkns_head);
+	temp = tkns_head;
 	while (temp)
 	{
-		printf("string = %15s     ", ((t_token_data *)temp->content)->str);
-		// printf("list_size = %d\n",((t_token_data *)temp->content)->list_size);
-		printf("%3d     ",((t_token_data *)temp->content)->type);
-		printf("%3u     ",((t_token_data *)temp->content)->str_len);
-		printf("%s => position = %d\n", ((t_token_data *)temp->content)->str, ((t_token_data *)temp->content)->quotation);
+		tkn_data = (t_tkn_data *)temp->content;
+		printf("string = %s\n", tkn_data->str);
+		printf("list_size = %d\n", tkn_data->list_size);
+		printf("type = %d\n", tkn_data->type);
+		printf("length = %u\n", tkn_data->str_len);
+		printf("quote = %d\n", tkn_data->quote);
+		printf("quote_status = %d\n", tkn_data->quote_status);
+		printf("white_space_status = %d\n", tkn_data->white_space);
+		printf("------------------------------\n");
 		temp = temp->next;
 	}
-	free_tokens(&tokens_head);
+	if (tkns_head)
+		ft_lstclear(&tkns_head, free_token_data);
 	return (0);
 }
-
-
