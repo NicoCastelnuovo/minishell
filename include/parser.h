@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/02 12:13:51 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:24:08 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,11 @@ enum e_node
 	IS_CMD
 };
 
-// union u_content
-// {
-// 	struct s_pipe	*pipe;
-// 	struct s_cmd	*cmd;
-// };
-
 typedef struct s_node
 {
 	int			n;
-	enum e_node	type;
 	void		*content;
-	// union u_content	*content;
+	enum e_node	type;
 }	t_node;
 
 
@@ -41,7 +34,6 @@ typedef struct s_pipe
 	struct s_node	*left;
 	struct s_node	*right;
 }	t_pipe;
-
 
 // TYPE CMD
 enum e_redir
@@ -61,7 +53,7 @@ typedef struct s_redir
 
 typedef struct s_cmd
 {
-	t_list			*block;		// <in1 cat -e
+	t_list			*block;		// NO NEEDED at the end probably
 	char			*name;		// cat
 	char			**args;		// top cat -e ls
 	struct s_redir	*in_out;	// in1(<) - out4(>) - temp1(<<) - temp2(<<) - temp3(<<) - (null or "")(>)
@@ -69,8 +61,9 @@ typedef struct s_cmd
 	int				fd_out;
 }	t_cmd;
 
-t_node	*parse(t_list *token, int n);
+t_node	*build_syntax_tree(t_list *token, int n);
 void	print_block(t_list *block);
 void	print_syntax_tree(t_node *root);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/02 10:34:39 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:08:58 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,43 @@ int	main(int argc, char **argv, char **env)
 	char	*line;
 	t_env	*env_cpy;
 	t_list	*tokens;
+	t_node 	*root;
 
 	init_sig_handling();
 	env_cpy = init_env(env);
+
+
+	// line = ft_strdup(" << EOF | < >\">\" >< \"<>>>\" > | echo -n Beautiful -n"); // redirection tries
+	// line = ft_strdup("<in1 cat -e | tail -3 | wc | >out1 cat b");
+	line = ft_strdup("<in1 cat -e | tail -3 | << EOF wc | >out1 cat b | echo \"    FckU! \" | head -3 >>out2");
+	// line = ft_strdup("<<      $USER   | cat -e");
+	// line = ft_strdup("echo \"   $USER \"     >     out1|   echo      Hello     World");
+	// line = ft_strdup("echo Hello World, just one command > out1");
+	// line = ft_strdup("empty pipes |  |  |  |  | >out1 cat b");
+	// line = ft_strdup(" |  |  |  |  |  ");
+
+	// lexer
 	tokens = NULL;
-
-
-
-	line = ft_strdup("<in1 cat -e | tail -3 | wc | >out1 cat b");
 	lexer(line, &tokens);
-	t_node *root = parse(tokens, 0);
-	print_syntax_tree(root);
-	// ft_printf("PIPE LEFT ---> [%s]\n", ((t_tkn_data *)root->content->pipe->left->content->cmd->block->content)->str);
-	// ft_printf("PIPE LEFT ---> [%s]\n", ((t_tkn_data *)root->content->pipe->left->content->cmd->block->next->content)->str);
-	// ft_printf("PIPE LEFT ---> [%s]\n", ((t_tkn_data *)root->content->pipe->left->content->cmd->block->next->next->content)->str);
+	print_tokens(tokens);
 
-	// while (1)
-	// {
-		// line = readline("minishell $ ");
-		// if (line && !is_empty_line(line))
-		// 	add_history(line);
-		// if (line)
-		// 	free(line);
-	// }
+	// parser
+	root = NULL;
+	root = build_syntax_tree(tokens, 0);
+	print_syntax_tree(root);
+
 	return (0);
 }
+
+
+
+
+
+// while (1)
+// {
+	// line = readline("minishell $ ");
+	// if (line && !is_empty_line(line))
+	// 	add_history(line);
+	// if (line)
+	// 	free(line);
+// }

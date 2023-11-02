@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   store_tokens_in_nodes.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:01:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/29 20:11:58 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:59:00 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

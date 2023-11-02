@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/29 20:00:50 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:25:55 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 
 # define SPECIAL_CHAR_NUM 10
 
-typedef enum s_type
+typedef enum s_tkn_type
 {
 	WORD = 1,
 	S_QUOTED_STR = 2,
 	D_QUOTED_STR = 3,
 	NOT_CLOSED_S_QUOTE_STR = 4,
 	NOT_CLOSED_D_QUOTE_STR = 5,
-	// FILE_NAME = 2,
 	ENV_VAR = 6,
 	REDIRECT_OUT_CONCAT = 7,
 	HERE_DOC = 8,
@@ -36,7 +35,7 @@ typedef enum s_type
 	ESCAPE_CHAR = '\\',
 	PIPE = '|',
 	DOLLAR_CHAR = '$',
-}	t_type;
+}	t_tkn_type;
 
 typedef enum s_quote
 {
@@ -63,13 +62,32 @@ typedef enum s_white_space
 
 typedef struct s_tkn_data
 {
-	int				list_size;
-	int				str_len;
-	int				type;
-	int				quote;
 	char			*str;
+	t_tkn_type		type;
+	t_quote			quote;
 	t_quote_status	quote_status;
 	t_white_space	white_space;
+	int				str_len;
+	int				list_size;		// just in the first node of the list
 }	t_tkn_data;
+
+void	lexer(char *input, t_list **tkns_head);
+void	tokenize_input(char *input, t_list **tkn_head);
+char	*store_special_char_as_tkn(char *c, t_list **tkn_head);
+char	*store_prev_chars_as_tkn(char *ref, int tkn_counter, t_list **tkn_head);
+void	read_char(char cur_char, char **ref, int *tkn_ctr, t_list **tkn_head);
+void	check_each_tkn_str(t_tkn_data *tkn_data);
+void	detect_quote(t_tkn_data *tkn_data, char tkn_first_char, t_quote *position);
+void	assign_type_to_tkn(t_list *tkns_head);
+void	assign_quote_status_to_tkn(t_list *tkns_head);
+void	merge_consecutive_less_or_greater_than(t_list *tkns_head);
+void	delete_not_quoted_spaces(t_list **tkns_head);
+void	merge_dollar_char_with_next_token(t_list *tkns_head);
+void	merge_quoted_tokens(t_list *tkns_head);
+void	free_token_data(void *content);
+void	assign_following_space_status(t_list *tkns_head);
+char	*join_two_strs(char **cur_str, char *next_str);
+void	remove_next_node(t_list *cur_node);
+void	print_tokens(t_list *tokens);
 
 #endif

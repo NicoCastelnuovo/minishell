@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assign_type_to_tokens.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:33:17 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/30 12:33:55 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:58:48 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/02 12:14:18 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/02 16:26:11 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,17 +15,40 @@
 #	kill -9 $(jobs -ps) - kill all the suspended job, done with ctrl-Z
 
 VPATH = ./src/ \
-	./src/lexer\
-	./src/parser\
-	./src/helpers/linked_lists\
-	./src/memory_management\
-	./test\
 	./src/builtins \
+	./src/lexer \
+	./src/expansion \
+	./src/parser \
 	./src/env_dlst \
-	./src/signals \
 	./src/print_utils \
+	./src/signals \
+	./test \
 
-SRCS = lexer.c \
+BUILTINS = cd.c \
+	echo.c \
+	env.c \
+	export.c \
+	pwd.c \
+	unset.c
+
+ENV_DLST = env_dlst_append.c \
+	env_dlst_clear.c \
+	env_dlst_delnode.c \
+	env_dlst_new.c \
+	env_dlst_update.c
+
+EXPANSION = build_str.c \
+	expansion.c \
+	utils.c
+
+PARSER = parser.c
+
+PRINT_UTILS = print_syntax_tree.c \
+	print_tokens.c
+
+SIGNALS = sig_handler.c
+
+LEXER = lexer.c \
 	tokenize_input.c\
 	free.c\
 	store_tokens_in_nodes.c\
@@ -41,17 +64,15 @@ SRCS = lexer.c \
 	check_following_space.c\
 	join_content_str_of_two_nodes.c\
 	remove_a_token_node.c\
-	minishell.c \
-	env.c \
-	env_dlst_append.c \
-	env_dlst_clear.c \
-	env_dlst_delnode.c \
-	env_dlst_new.c \
-	env_dlst_update.c \
-	sig_handler.c\
-	parser.c\
-	print_syntax_tree.c\
-	print_tokens.c\
+
+SRCS = minishell.c \
+	$(BUILTINS) \
+	$(ENV_DLST) \
+	$(EXPANSION) \
+	$(LEXER) \
+	$(PARSER) \
+	$(PRINT_UTILS) \
+	$(SIGNALS) \
 
 OBJS_PATH = ./objs
 OBJS = $(patsubst %.c, $(OBJS_PATH)/%.o, $(SRCS))
