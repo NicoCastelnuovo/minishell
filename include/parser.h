@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/02 08:32:14 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/02 12:13:51 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_cmd
 }	t_cmd;
 
 t_node	*parse(t_list *token, int n);
+void	print_block(t_list *block);
 void	print_syntax_tree(t_node *root);
 
 #endif

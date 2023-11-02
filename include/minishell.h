@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/01 12:54:20 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/02 12:14:02 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	free_token_data(void *content);
 void	assign_following_space_status(t_list *tkns_head);
 char	*join_two_strs(char **cur_str, char *next_str);
 void	remove_next_node(t_list *cur_node);
+void	print_tokens(t_list *tokens);
 
 // -------------------------------------------------------------------- SIGNALS
 void	init_sig_handling(void);
