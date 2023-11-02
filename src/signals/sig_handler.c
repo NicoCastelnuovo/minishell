@@ -6,15 +6,11 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:35:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/28 11:06:19 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/01 13:06:01 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-	kill -9 $(jobs -ps) - kill all the suspended job, done with ctrl-Z
-*/
 
 /*
 	SIGINT prints a new line.

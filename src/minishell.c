@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/01 12:50:29 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/02 10:34:39 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,29 @@ int	main(int argc, char **argv, char **env)
 {
 	char	*line;
 	t_env	*env_cpy;
+	t_list	*tokens;
 
 	init_sig_handling();
 	env_cpy = init_env(env);
-	while (1)
-	{
-		line = readline("minishell $ ");
-		if (ft_strncmp(line, "clear", ft_strlen("clear")) == 0)
-			rl_clear_history();
-		if (line && !is_empty_line(line))
-			add_history(line);
-		if (line)
-			free(line);
-	}
+	tokens = NULL;
+
+
+
+	line = ft_strdup("<in1 cat -e | tail -3 | wc | >out1 cat b");
+	lexer(line, &tokens);
+	t_node *root = parse(tokens, 0);
+	print_syntax_tree(root);
+	// ft_printf("PIPE LEFT ---> [%s]\n", ((t_tkn_data *)root->content->pipe->left->content->cmd->block->content)->str);
+	// ft_printf("PIPE LEFT ---> [%s]\n", ((t_tkn_data *)root->content->pipe->left->content->cmd->block->next->content)->str);
+	// ft_printf("PIPE LEFT ---> [%s]\n", ((t_tkn_data *)root->content->pipe->left->content->cmd->block->next->next->content)->str);
+
+	// while (1)
+	// {
+		// line = readline("minishell $ ");
+		// if (line && !is_empty_line(line))
+		// 	add_history(line);
+		// if (line)
+		// 	free(line);
+	// }
 	return (0);
 }

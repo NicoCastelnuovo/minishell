@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/01 12:50:21 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/02 08:32:14 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,18 @@ enum e_node
 	IS_CMD
 };
 
-union u_content
-{
-	struct s_pipe	*pipe;
-	struct s_cmd	*cmd;
-};
+// union u_content
+// {
+// 	struct s_pipe	*pipe;
+// 	struct s_cmd	*cmd;
+// };
 
 typedef struct s_node
 {
-	enum e_node		type;
-	union u_content	*content;
+	int			n;
+	enum e_node	type;
+	void		*content;
+	// union u_content	*content;
 }	t_node;
 
 
@@ -59,12 +61,15 @@ typedef struct s_redir
 
 typedef struct s_cmd
 {
-	char			*block;		// <in1 cat -e
+	t_list			*block;		// <in1 cat -e
 	char			*name;		// cat
 	char			**args;		// top cat -e ls
 	struct s_redir	*in_out;	// in1(<) - out4(>) - temp1(<<) - temp2(<<) - temp3(<<) - (null or "")(>)
 	int				fd_in; 		// still necessary ???
 	int				fd_out;
 }	t_cmd;
+
+t_node	*parse(t_list *token, int n);
+void	print_syntax_tree(t_node *root);
 
 #endif

@@ -6,23 +6,27 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/01 12:50:39 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/02 08:32:04 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # GENERAL INSTRUCTIONS
-# Installing readline in Debian: apt-get install libreadline-dev
+#	Installing readline in Debian: apt-get install libreadline-dev
+#	kill -9 $(jobs -ps) - kill all the suspended job, done with ctrl-Z
 
 VPATH = ./src/ \
 	./src/lexer\
+	./src/parser\
 	./src/helpers/linked_lists\
 	./src/memory_management\
 	./test\
 	./src/builtins \
 	./src/env_dlst \
 	./src/signals \
+	./src/print_utils \
 
-SRCS = tokenize_input.c\
+SRCS = lexer.c \
+	tokenize_input.c\
 	free.c\
 	store_tokens_in_nodes.c\
 	read_each_char.c\
@@ -45,6 +49,8 @@ SRCS = tokenize_input.c\
 	env_dlst_new.c \
 	env_dlst_update.c \
 	sig_handler.c\
+	parser.c\
+	print_syntax_tree.c\
 
 OBJS_PATH = ./objs
 OBJS = $(patsubst %.c, $(OBJS_PATH)/%.o, $(SRCS))

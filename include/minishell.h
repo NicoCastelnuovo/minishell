@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/01 12:45:03 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/01 12:54:20 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef union i_need_all_of_those_possibility
 }	t_i_need;
 
 
+void	lexer(char *input, t_list **tkns_head);
 void	tokenize_input(char *input, t_list **tkn_head);
 char	*store_special_char_as_tkn(char *c, t_list **tkn_head);
 char	*store_prev_chars_as_tkn(char *ref, int tkn_counter, t_list **tkn_head);

@@ -1,0 +1,37 @@
+[<in1 cat -e]   <---|--->   [tail -3]   <---|--->   [wc]   <---|--->   [>out1 cat b]
+
+<in1 cat -e
+|
+tail -3
+|
+wc
+|
+>out1 cat b
+
+
+
+t_node	parse(t_list *tkn)
+{
+	t_list	*block; ---> inside CMD
+	t_node	*pipe
+	t_node	*cmd
+
+	while (tkn->content != '|' && tkn->next)
+	{
+		add_tkn_to_block_list(tkn);
+		tkn = tkn->next;
+	}
+	// tkn->content == '|'    OR    the last tkn
+
+	cmd = malloc (t_node)
+	cmd->block = block;
+	if (tkn->next) // last round condition
+	{
+		pipe = malloc (t_node)
+		pipe->left = cmd;
+		pipe->right = parse(tkn->next)
+	}
+	if (pipe == NULL)
+		return (block)
+	return (pipe)
+}
