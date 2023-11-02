@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/02 16:24:08 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:53:21 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ typedef struct s_redir
 	char			*name;
 	enum e_redir	type;
 	struct s_redir	*next;
-}	t_file;
+}	t_redir;
 
 typedef struct s_cmd
 {
 	t_list			*block;		// NO NEEDED at the end probably
 	char			*name;		// cat
 	char			**args;		// top cat -e ls
-	struct s_redir	*in_out;	// in1(<) - out4(>) - temp1(<<) - temp2(<<) - temp3(<<) - (null or "")(>)
+	struct s_redir	*file;	// in1(<) - out4(>) - temp1(<<) - temp2(<<) - temp3(<<) - (null or "")(>)
 	int				fd_in; 		// still necessary ???
 	int				fd_out;
 }	t_cmd;

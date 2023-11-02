@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/02 15:08:58 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:29:03 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(int argc, char **argv, char **env)
 	// lexer
 	tokens = NULL;
 	lexer(line, &tokens);
-	print_tokens(tokens);
+	// print_tokens(tokens);
 
 	// parser
 	root = NULL;
