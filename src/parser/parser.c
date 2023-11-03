@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/02 17:00:07 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 09:33:28 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	is_redirection(int tkn_type)
 	Process the token and its directly next one, checking for syntax errors.
 	If everything is good, the node->content is populated with the t_cmd data.
 */
-int	*parse_single_tkn(t_list *token, t_cmd **cmd)
+static int	*parse_single_tkn(t_list *token)
 {
 	t_tkn_data	*tkn_data;
 
@@ -61,61 +61,41 @@ int	*parse_single_tkn(t_list *token, t_cmd **cmd)
 	@param n - just a number to identify which node of the tree it is
 	and better visualize it when printed.
 */
+// ATTENTION !!!
+//	- Im'm moving the tkn_list pointer
+//	- Need to separate the functions AN maintain the move of tkn_list
+//	- [MAYBE] --- create cmd and assign, after creation, to node_c->content
+// create cmd
 t_node	*build_syntax_tree(t_list *tkn_list, int n)
 {
-	t_node		*node_p;
 	t_node		*node_c;
-	t_cmd		*cmd;
 	t_tkn_data	*tkn_content;
-	t_list		*new_block_item;
+	t_list		*tkn_sublist;
+	t_node		*node_p;
 
-	// ATTENTION !!!
-	//	- Im'm moving the tkn_list pointer
-	//	- Need to separate the functions AN maintain the move of tkn_list
-	//	- [MAYBE] --- create cmd and assign, after creation, to node_c->content
-	// create cmd
-	cmd = ft_calloc(1, sizeof(t_cmd));
+
+	// init_node_c(&node_c);
 	node_c = NULL;
 	node_c = ft_calloc (1, sizeof(t_node)); // prtct
 	node_c->type = IS_CMD;
 	node_c->n = n;
-	node_c->content = cmd;
+	node_c->content = ft_calloc(1, sizeof(t_cmd)); // prtct
+
+
+
 	tkn_content = (t_tkn_data *)tkn_list->content;
 	while (tkn_list && tkn_content->type != '|')
 	{
 		tkn_content = (t_tkn_data *)tkn_list->content;
-		new_block_item = ft_lstnew(tkn_content->str); // protect --- // create block JUST to visualize
-		ft_lstadd_back(&((t_cmd *)node_c->content)->block, new_block_item);
-		if (parse_single_tkn(tkn_list, &cmd));
-			return (NULL); //error
-		// append tkn_list element ---> append_tkn() ---> identify another time & append in correct field (can be done directly)
-		// check error
+		tkn_sublist = ft_lstnew(tkn_content); // protect
+		ft_lstadd_back(&((t_cmd *)node_c->content)->tkn_sublist, tkn_sublist);
+		parse_single_tkn(tkn_list);
 		if (tkn_list->next)
 			tkn_list = tkn_list->next;
 		else
 			break ;
 	}
 	ft_printf("------------------------\n");
-
-	// node_c = NULL;
-	// node_c = ft_calloc (1, sizeof(t_node)); // prtct
-	// node_c->type = IS_CMD;
-	// node_c->n = n;
-	// node_c->content = ft_calloc(1, sizeof(t_cmd)); // prtct
-	// tkn_content = (t_tkn_data *)tkn_list->content;
-	// while (tkn_list && tkn_content->type != '|')
-	// {
-	// 	tkn_content = (t_tkn_data *)tkn_list->content;
-	// 	new_block_item = ft_lstnew(tkn_content->str); // protect --- // create block JUST to visualize
-	// 	ft_lstadd_back(&((t_cmd *)node_c->content)->block, new_block_item);
-	// 	parse_single_tkn(tkn_list);
-	// 	// check error
-	// 	if (tkn_list->next)
-	// 		tkn_list = tkn_list->next;
-	// 	else
-	// 		break ;
-	// }
-	// ft_printf("------------------------\n");
 
 
 
