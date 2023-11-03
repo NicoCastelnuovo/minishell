@@ -6,13 +6,13 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/03 09:15:09 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 12:43:50 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
-
+#include "lexer.h"
 /*
 	SYNTAX TREE
 	The tree is composed by t_node items. Each t_node can be either of type
@@ -50,12 +50,11 @@ typedef struct s_pipe
 */
 typedef struct s_cmd
 {
-	t_list		*tkn_sublist;
-	char		*name;			// cat
-	char		**args;			// top cat -e ls
-	t_list		*redir;			// in1(<) - out4(>) - temp1(<<) - temp2(<<) - temp3(<<) - (null or "")(>)
-	int			fd_in;			// still necessary ???
-	int			fd_out;
+	t_list			*tkn_sublist;
+	char			**args;			// top cat -e ls
+	t_list			*redir;			// in1(<) - out4(>) - temp1(<<) - temp2(<<) - temp3(<<) - (null or "")(>)
+	int				fd_in;			// still necessary ???
+	int				fd_out;
 }	t_cmd;
 
 enum e_redir
@@ -73,6 +72,7 @@ typedef struct s_redir
 }	t_redir;
 
 t_node	*build_syntax_tree(t_list *token, int n);
+int		*parse_tkn(t_list *token, t_cmd *cmd);
 void	print_tkn_sublist(t_list *block);
 void	print_syntax_tree(t_node *root);
 

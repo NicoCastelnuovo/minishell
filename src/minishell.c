@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/02 16:29:03 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 13:13:39 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,17 @@ int	main(int argc, char **argv, char **env)
 	env_cpy = init_env(env);
 
 
-	// line = ft_strdup(" << EOF | < >\">\" >< \"<>>>\" > | echo -n Beautiful -n"); // redirection tries
+	// PIPECHAIN
 	// line = ft_strdup("<in1 cat -e | tail -3 | wc | >out1 cat b");
-	line = ft_strdup("<in1 cat -e | tail -3 | << EOF wc | >out1 cat b | echo \"    FckU! \" | head -3 >>out2");
+	line = ft_strdup("<in1 cat -e | tail -3 | << EOF wc | < > | >out1 cat b | echo \"    FckU! \" | head -3 >>out2");
+	// line = ft_strdup(" << EOF | < >\">\" >< \"<>>>\" > | echo -n Beautiful -n"); // redirection tries
 	// line = ft_strdup("<<      $USER   | cat -e");
 	// line = ft_strdup("echo \"   $USER \"     >     out1|   echo      Hello     World");
+
+	// SINGLE CMD
 	// line = ft_strdup("echo Hello World, just one command > out1");
+
+	// EMPTY PIPES
 	// line = ft_strdup("empty pipes |  |  |  |  | >out1 cat b");
 	// line = ft_strdup(" |  |  |  |  |  ");
 
@@ -54,10 +59,9 @@ int	main(int argc, char **argv, char **env)
 	root = build_syntax_tree(tokens, 0);
 	print_syntax_tree(root);
 
+
 	return (0);
 }
-
-
 
 
 
