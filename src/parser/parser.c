@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:06:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/03 14:08:37 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 14:58:16 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ int	*parse_tkn(t_list **tkn, t_cmd *cmd)
 		if (tkn_curr->type == TKN_FILE_NAME)
 		{
 			update_cmd_tab_redir_filename(cmd, tkn_curr);
+			return (0);
+		}
+		if (tkn_curr->type == TKN_WORD || tkn_curr->type == TKN_D_QUOTED_STR || tkn_curr->type == TKN_S_QUOTED_STR)
+		{
+			update_cmd_tab_args(cmd, tkn_curr);
 			return (0);
 		}
 	}

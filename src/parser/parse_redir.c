@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 13:22:05 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/03 14:07:14 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:00:34 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_redir_syntax_err(t_tkn_data *curr, t_tkn_data *next)
 {
-	ft_printf("   • Check if [%s] & [%s] are valid\n", curr->str, next->str);
+	ft_printf("   • Check if [%s] & [%s] are valid...\n", curr->str, next->str);
 	return (0);
 }
 

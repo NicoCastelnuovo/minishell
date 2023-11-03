@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/03 13:59:57 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/03 14:56:28 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,9 +44,10 @@ EXPANSION = build_str.c \
 PARSER = build_syntax_tree.c \
 	parser.c \
 	parse_redir.c \
+	parse_args.c
 
 PRINT_UTILS = print_syntax_tree.c \
-	print_tokens.c
+	print_tokens.c \
 
 SIGNALS = sig_handler.c
 

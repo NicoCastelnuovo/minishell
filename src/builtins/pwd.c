@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:52:18 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/28 11:15:23 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:18:03 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*get_wd(void)
 	}
 	// free (buff);
 	// buff = NULL;
-	ft_printf("[%p] and [%p]\n", buff, dir);
+	// ft_printf("[%p] and [%p]\n", buff, dir);
+	ft_printf("[%s]\n", dir);
 	return (dir);
 }

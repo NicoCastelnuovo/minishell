@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/03 14:08:38 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 14:54:24 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ void	update_cmd_tab_redir_type(t_cmd *cmd, t_tkn_data *tkn_curr, t_tkn_data *tkn
 void	update_cmd_tab_redir_filename(t_cmd *cmd, t_tkn_data *tkn_curr);
 int		is_redir_syntax_err(t_tkn_data *curr, t_tkn_data *next);
 int		is_redir(int tkn_type);
+
+// ----------------------------------------------------------------- PARSE ARGS
+void	update_cmd_tab_args(t_cmd *cmd, t_tkn_data *tkn_curr);
 
 // ---------------------------------------------------------------- PRINT UTILS
 void	print_tkn_sublist(t_list *block);

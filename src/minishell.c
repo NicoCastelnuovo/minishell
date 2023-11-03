@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/03 14:16:26 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:22:44 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	main(int argc, char **argv, char **env)
 	root = build_syntax_tree(tokens, 0);
 	if (root)
 		print_syntax_tree(root);
+
 
 
 	return (0);
