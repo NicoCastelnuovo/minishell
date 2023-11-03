@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_following_space.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 10:34:06 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/30 14:02:29 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/11/03 09:57:06 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	assign_following_space_status(t_list *tkns_head)
 	{
 		cur_tkn_data = (t_tkn_data *)(cur_node->content);
 		next_tkn_data = (t_tkn_data *)(cur_node->next->content);
-		if ((next_tkn_data->str)[0] == SPACE_CAHR
-			|| (next_tkn_data->str)[0] == TAB_CHAR)
+		if ((next_tkn_data->str)[0] == TKN_SPACE_CAHR
+			|| (next_tkn_data->str)[0] == TKN_TAB_CHAR)
 			cur_tkn_data->white_space = FOLLOWED_BY_WHITE_SPACE;
 		else
 			cur_tkn_data->white_space = NOT_FOLLOWED_BY_WHITE_SPACE;

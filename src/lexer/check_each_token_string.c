@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:07:54 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/02 13:59:44 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 09:59:14 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,26 @@ void	check_each_tkn_str(t_tkn_data *tkn_data)
 	char	tkn_first_char;
 
 	tkn_first_char = *(tkn_data->str);
-	if (tkn_first_char == REDIRECT_IN)
-		tkn_data->type = REDIRECT_IN;
-	else if (tkn_first_char == REDIRECT_OUT)
-		tkn_data->type = REDIRECT_OUT;
-	else if (tkn_first_char == SPACE_CAHR)
-		tkn_data->type = SPACE_CAHR;
-	else if (tkn_first_char == TAB_CHAR)
-		tkn_data->type = TAB_CHAR;
-	else if (tkn_first_char == NEW_LINE)
-		tkn_data->type = NEW_LINE;
-	else if (tkn_first_char == S_QUOTE)
-		tkn_data->type = S_QUOTE;
-	else if (tkn_first_char == D_QUOTE)
-		tkn_data->type = D_QUOTE;
-	else if (tkn_first_char == ESCAPE_CHAR)
-		tkn_data->type = ESCAPE_CHAR;
-	else if (tkn_first_char == PIPE)
-		tkn_data->type = PIPE;
-	else if (tkn_first_char == DOLLAR_CHAR)
-		tkn_data->type = DOLLAR_CHAR;
+	if (tkn_first_char == TKN_REDIRECT_IN)
+		tkn_data->type = TKN_REDIRECT_IN;
+	else if (tkn_first_char == TKN_REDIRECT_OUT)
+		tkn_data->type = TKN_REDIRECT_OUT;
+	else if (tkn_first_char == TKN_SPACE_CAHR)
+		tkn_data->type = TKN_SPACE_CAHR;
+	else if (tkn_first_char == TKN_TAB_CHAR)
+		tkn_data->type = TKN_TAB_CHAR;
+	else if (tkn_first_char == TKN_NEW_LINE)
+		tkn_data->type = TKN_NEW_LINE;
+	else if (tkn_first_char == TKN_S_QUOTE)
+		tkn_data->type = TKN_S_QUOTE;
+	else if (tkn_first_char == TKN_D_QUOTE)
+		tkn_data->type = TKN_D_QUOTE;
+	else if (tkn_first_char == TKN_ESCAPE_CHAR)
+		tkn_data->type = TKN_ESCAPE_CHAR;
+	else if (tkn_first_char == TKN_PIPE)
+		tkn_data->type = TKN_PIPE;
+	else if (tkn_first_char == TKN_DOLLAR_CHAR)
+		tkn_data->type = TKN_DOLLAR_CHAR;
 	else
-		tkn_data->type = WORD;
+		tkn_data->type = TKN_WORD;
 }

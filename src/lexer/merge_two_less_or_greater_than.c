@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   merge_two_less_or_greater_than.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:46:14 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/29 20:11:54 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/11/03 09:56:53 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static void	merge_tokens(t_list *tkns_head, t_list *cur_node, char redirect)
 	next_tkn_data = (t_tkn_data *)cur_node->next->content;
 	join_two_strs(&(cur_tkn_data->str), next_tkn_data->str);
 	remove_next_node(cur_node);
-	if (redirect == REDIRECT_IN)
-		cur_tkn_data->type = HERE_DOC;
-	else if (redirect == REDIRECT_OUT)
-		cur_tkn_data->type = REDIRECT_OUT_CONCAT;
+	if (redirect == TKN_REDIRECT_IN)
+		cur_tkn_data->type = TKN_HERE_DOC;
+	else if (redirect == TKN_REDIRECT_OUT)
+		cur_tkn_data->type = TKN_REDIRECT_OUT_CONCAT;
 	cur_tkn_data->str_len++;
 	((t_tkn_data *)(tkns_head->content))->list_size--;
 }
@@ -43,10 +43,10 @@ void	merge_consecutive_less_or_greater_than(t_list *tkns_head)
 		next_tkn_data = (t_tkn_data *)(cur_node->next->content);
 		tkn_first_char = cur_tkn_data->str[0];
 		if ((cur_tkn_data->str_len == 1 && next_tkn_data->str_len == 1)
-			&& (((cur_tkn_data->str)[0] == REDIRECT_OUT
-				&& (next_tkn_data->str)[0] == REDIRECT_OUT)
-			|| ((cur_tkn_data->str)[0] == REDIRECT_IN
-			&& (next_tkn_data->str)[0] == REDIRECT_IN)))
+			&& (((cur_tkn_data->str)[0] == TKN_REDIRECT_OUT
+				&& (next_tkn_data->str)[0] == TKN_REDIRECT_OUT)
+			|| ((cur_tkn_data->str)[0] == TKN_REDIRECT_IN
+			&& (next_tkn_data->str)[0] == TKN_REDIRECT_IN)))
 			merge_tokens(tkns_head, cur_node, tkn_first_char);
 		cur_node = cur_node->next;
 	}

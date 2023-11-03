@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/03 09:33:28 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 09:59:14 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 */
 static int	is_redirection(int tkn_type)
 {
-	if (tkn_type == REDIRECT_OUT_CONCAT ||
-		tkn_type == HERE_DOC ||
-		tkn_type == REDIRECT_IN ||
-		tkn_type == REDIRECT_OUT )
+	if (tkn_type == TKN_REDIRECT_OUT_CONCAT ||
+		tkn_type == TKN_HERE_DOC ||
+		tkn_type == TKN_REDIRECT_IN ||
+		tkn_type == TKN_REDIRECT_OUT )
 		return (1);
 	return (0);
 }
@@ -49,13 +49,23 @@ static int	*parse_single_tkn(t_list *token)
 		// check REDIRECTIONS sytax errors
 		// if (!ok) return (0);
 	}
-	if (tkn_data->type == PIPE)
+	if (tkn_data->type == TKN_PIPE)
 	{
 		// check PIPES sytax errors
 	}
 	return (0);
 }
 
+static t_node	*init_node_c(int n)
+{
+	t_node	*node_c;
+
+	node_c = ft_calloc (1, sizeof(t_node)); // prtct
+	node_c->type = IS_CMD;
+	node_c->n = n;
+	node_c->content = ft_calloc(1, sizeof(t_cmd)); // prtct
+	return (node_c);
+}
 
 /*
 	@param n - just a number to identify which node of the tree it is
@@ -73,13 +83,8 @@ t_node	*build_syntax_tree(t_list *tkn_list, int n)
 	t_list		*tkn_sublist;
 	t_node		*node_p;
 
-
-	// init_node_c(&node_c);
-	node_c = NULL;
-	node_c = ft_calloc (1, sizeof(t_node)); // prtct
-	node_c->type = IS_CMD;
-	node_c->n = n;
-	node_c->content = ft_calloc(1, sizeof(t_cmd)); // prtct
+	// init_node_c(&node_c, n);
+	node_c = init_node_c(n);
 
 
 

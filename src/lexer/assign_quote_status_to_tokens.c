@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:12:23 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/02 13:58:54 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 09:57:55 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	assign_quote_status_to_tkn(t_list *tkns_head)
 		tkn_first_char = *(tkn_data->str);
 		detect_quote(tkn_data, tkn_first_char, &position);
 		tkn_data->quote = position;
-		if (tkn_data->quote == IN_S_QUOTE && tkn_first_char == S_QUOTE)
+		if (tkn_data->quote == IN_S_QUOTE && tkn_first_char == TKN_S_QUOTE)
 			tkn_data->quote = NOT_QUOTED;
-		if (tkn_data->quote == IN_D_QUOTE && tkn_first_char == D_QUOTE)
+		if (tkn_data->quote == IN_D_QUOTE && tkn_first_char == TKN_D_QUOTE)
 			tkn_data->quote = NOT_QUOTED;
 		current_node = current_node->next;
 	}

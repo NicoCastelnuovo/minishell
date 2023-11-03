@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete_spaces.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:30:47 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/30 09:47:41 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/11/03 09:57:06 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static t_list	*get_prev_node(t_list *tkns_head)
 	while (temp && temp->next)
 	{
 		next_tkn_data = (t_tkn_data *)(temp->next->content);
-		if ((*(next_tkn_data->str) == SPACE_CAHR
-				|| *(next_tkn_data->str) == TAB_CHAR)
+		if ((*(next_tkn_data->str) == TKN_SPACE_CAHR
+				|| *(next_tkn_data->str) == TKN_TAB_CHAR)
 			&& next_tkn_data->quote == NOT_QUOTED)
 			return (temp);
 		temp = temp->next;
@@ -40,8 +40,8 @@ static void	del_space_node_as_first_tkn(t_list **tkns_head)
 	while (temp)
 	{
 		tkns_head_data = (t_tkn_data *)((*tkns_head)->content);
-		if (((tkns_head_data->str)[0] == SPACE_CAHR
-			|| *(tkns_head_data->str) == TAB_CHAR)
+		if (((tkns_head_data->str)[0] == TKN_SPACE_CAHR
+			|| *(tkns_head_data->str) == TKN_TAB_CHAR)
 			&& tkns_head_data->quote == NOT_QUOTED)
 		{
 			list_size = ((t_tkn_data *)((*tkns_head)->content))->list_size - 1;
@@ -68,8 +68,8 @@ static void	del_space_node_in_middle_or_end(t_list *tkns_head)
 	while (cur_node)
 	{
 		cur_tkn_data = (t_tkn_data *)(cur_node->content);
-		if ((*(cur_tkn_data->str) == SPACE_CAHR
-				|| *(cur_tkn_data->str) == TAB_CHAR)
+		if ((*(cur_tkn_data->str) == TKN_SPACE_CAHR
+				|| *(cur_tkn_data->str) == TKN_TAB_CHAR)
 			&& cur_tkn_data->quote == NOT_QUOTED)
 		{
 			before_white_space = get_prev_node(tkns_head);

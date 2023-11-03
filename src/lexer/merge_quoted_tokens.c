@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   merge_quoted_tokens.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:03:49 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/30 13:21:25 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/11/03 09:57:55 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ bool	is_close_pair(t_list *cur_node, t_list *cur_quoted_node, char tkn_type)
 		&& (cur_quoted_tkn_data)->quote_status == CLOSED_QUOTE))
 	{
 		(cur_tkn_data)->quote_status = OPEN_AND_CLOSED_PAIRS;
-		if (tkn_type == S_QUOTE)
+		if (tkn_type == TKN_S_QUOTE)
 		{
-			(cur_tkn_data)->type = S_QUOTED_STR;
+			(cur_tkn_data)->type = TKN_S_QUOTED_STR;
 			(cur_tkn_data)->quote = IN_S_QUOTE;
 		}
-		else if (tkn_type == D_QUOTE)
+		else if (tkn_type == TKN_D_QUOTE)
 		{
-			(cur_tkn_data)->type = D_QUOTED_STR;
+			(cur_tkn_data)->type = TKN_D_QUOTED_STR;
 			(cur_tkn_data)->quote = IN_D_QUOTE;
 		}
 		return (true);
@@ -47,23 +47,23 @@ void	merge(t_list *cur_node, t_list *cur_quoted_node, char tkn_type)
 
 	cur_tkn_data = (t_tkn_data *)(cur_node->content);
 	cur_quoted_tkn_data = (t_tkn_data *)(cur_quoted_node->content);
-	if (tkn_type == S_QUOTE
+	if (tkn_type == TKN_S_QUOTE
 		&& cur_quoted_tkn_data->quote_status != CLOSED_QUOTE)
 	{
-		(cur_tkn_data)->type = NOT_CLOSED_S_QUOTE_STR;
+		(cur_tkn_data)->type = TKN_NOT_CLOSED_S_QUOTE_STR;
 		(cur_tkn_data)->quote = IN_S_QUOTE;
 	}
-	else if (tkn_type == D_QUOTE
+	else if (tkn_type == TKN_D_QUOTE
 		&& cur_quoted_tkn_data->quote_status != CLOSED_QUOTE)
 	{
-		(cur_tkn_data)->type = NOT_CLOSED_D_QUOTE_STR;
+		(cur_tkn_data)->type = TKN_NOT_CLOSED_D_QUOTE_STR;
 		(cur_tkn_data)->quote = IN_D_QUOTE;
 	}
 }
 
 bool	is_opening_quote(t_tkn_data *cur_tkn_data)
 {
-	if ((*(cur_tkn_data->str) == S_QUOTE || (cur_tkn_data->str)[0] == D_QUOTE)
+	if ((*(cur_tkn_data->str) == TKN_S_QUOTE || (cur_tkn_data->str)[0] == TKN_D_QUOTE)
 		&& cur_tkn_data->quote_status == OPEN_QUOTE)
 		return (true);
 	else
