@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/03 14:54:24 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 16:41:05 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_cmd
 	t_list			*redir;			// in1(<) - out4(>) - temp1(<<) - temp2(<<) - temp3(<<) - (null or "")(>)
 	int				fd_in;			// still necessary ???
 	int				fd_out;
+	int				err_code;
 }	t_cmd;
 
 enum e_redir
@@ -85,6 +86,9 @@ int		is_redir(int tkn_type);
 
 // ----------------------------------------------------------------- PARSE ARGS
 void	update_cmd_tab_args(t_cmd *cmd, t_tkn_data *tkn_curr);
+
+// ----------------------------------------------------------------- PARSE PIPE
+int		is_pipe_syntax_err(t_tkn_data *curr, t_tkn_data *next);
 
 // ---------------------------------------------------------------- PRINT UTILS
 void	print_tkn_sublist(t_list *block);

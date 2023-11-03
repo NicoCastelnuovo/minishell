@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/03 15:22:44 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 16:53:27 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,21 @@ int	main(int argc, char **argv, char **env)
 	char	*line;
 	t_env	*env_cpy;
 	t_list	*tokens;
-	t_node 	*root;
+	t_node	*root;
 
-	init_sig_handling();
+	// init_sig_handling();
 	env_cpy = init_env(env);
 
 
 	// PIPECHAIN
-	// line = ft_strdup("<in1 cat -e | tail -3 | wc | >out1 cat b");
-	line = ft_strdup("<in1 cat -e | tail -3 | << EOF wc | < > | >out1 cat b | echo \"    FckU! \" | head -3 >>out2");
-	// line = ft_strdup(" << EOF | < >\">\" >< \"<>>>\" > | echo -n Beautiful -n"); // redirection tries
+	// line = ft_strdup("<in1 cat -e |  tail -3 | wc | cat b");
+	line = ft_strdup("<in1 cat -e | tail -3 | << EOF wc | >out1 cat b | echo \"    FckU! \" | head -3 >>out2");
 	// line = ft_strdup("<<      $USER   | cat -e");
 	// line = ft_strdup("echo \"   $USER \"     >     out1|   echo      Hello     World");
+
+	// REDIRECTION/PIPE ERRORS
+	// line = ft_strdup("<in1 cat -e | > | tail -3 | wc | >out1 cat b");
+	// line = ft_strdup(" << EOF | < >\">\" >< \"<>>>\" > | echo -n Beautiful -n");
 
 	// SINGLE CMD
 	// line = ft_strdup("echo Hello World, just one command > out1");
@@ -49,17 +52,29 @@ int	main(int argc, char **argv, char **env)
 	// line = ft_strdup("empty pipes |  |  |  |  | >out1 cat b");
 	// line = ft_strdup(" |  |  |  |  |  ");
 
+	// ERRORS
+	/*
+		Understand when the error is found, how return it and store in the big data
+		so that it can be printed in case of $?
+	*/
+
 	// lexer
-	tokens = NULL;
-	lexer(line, &tokens);
-	// print_tokens(tokens);
+	if (line)
+	{
+		tokens = NULL;
+		lexer(line, &tokens);
+		// print_tokens(tokens);
+	}
 
 	// parser
-	root = NULL;
-	root = build_syntax_tree(tokens, 0);
-	if (root)
-		print_syntax_tree(root);
+	if (tokens)
+	{
+		root = NULL;
+		root = build_syntax_tree(tokens, 0);
 
+		if (root)
+			print_syntax_tree(root);
+	}
 
 
 	return (0);

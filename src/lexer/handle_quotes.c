@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:09:32 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/03 09:57:55 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:43:32 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,23 @@ void	detect_quote(t_tkn_data *tkn_data, char tkn_first_char, t_quote *quote)
 	if (tkn_first_char == TKN_D_QUOTE && !is_d_quote_open && !is_s_quote_open)
 	{
 		open_d_quote(tkn_data, &is_d_quote_open, quote);
-		printf("double quote is open\n");
+		// printf("double quote is open\n");
 	}
 	else if (tkn_first_char == TKN_D_QUOTE && is_d_quote_open
 		&& *quote == IN_D_QUOTE)
 	{
 		close_d_quote(tkn_data, &is_d_quote_open, quote);
-		printf("double quote is closed\n");
+		// printf("double quote is closed\n");
 	}
 	else if (tkn_first_char == TKN_S_QUOTE && !is_s_quote_open && !is_d_quote_open)
 	{
 		open_s_quote(tkn_data, &is_s_quote_open, quote);
-		printf("single quote is open\n");
+		// printf("single quote is open\n");
 	}
 	else if (tkn_first_char == TKN_S_QUOTE && is_s_quote_open
 		&& *quote == IN_S_QUOTE)
 	{
 		close_s_quote(tkn_data, &is_s_quote_open, quote);
-		printf("single quote is closed\n");
+		// printf("single quote is closed\n");
 	}
 }

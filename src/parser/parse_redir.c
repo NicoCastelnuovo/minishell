@@ -6,17 +6,11 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 13:22:05 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/03 15:00:34 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 16:44:51 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_redir_syntax_err(t_tkn_data *curr, t_tkn_data *next)
-{
-	ft_printf("   • Check if [%s] & [%s] are valid...\n", curr->str, next->str);
-	return (0);
-}
 
 int	is_redir(int tkn_type)
 {
@@ -25,6 +19,17 @@ int	is_redir(int tkn_type)
 		tkn_type == TKN_REDIRECT_IN ||
 		tkn_type == TKN_REDIRECT_OUT )
 		return (tkn_type);
+	return (0);
+}
+
+int	is_redir_syntax_err(t_tkn_data *curr, t_tkn_data *next)
+{
+	ft_printf("   • Check if [%s] & [%s] are valid...\n", curr->str, next->str);
+	if (is_redir(next->type))
+	{
+		ft_printf("   ❌ error near unexpected token \'%s\'\n", curr->str);
+		return (258);
+	}
 	return (0);
 }
 
@@ -44,7 +49,12 @@ void	update_cmd_tab_redir_type(t_cmd *cmd, t_tkn_data *tkn_curr, t_tkn_data *tkn
 	new_redir = ft_lstnew(redir_content);
 	tkn_next->type = TKN_FILE_NAME;
 	ft_lstadd_back(&cmd->redir, new_redir);
-	ft_printf("   • Added type [%c] to redir\n", redir_content->type);
+	if (redir_content->type == TKN_HERE_DOC)
+		ft_printf("   • Added type [<<] to redir\n");
+	else if (redir_content->type == TKN_REDIRECT_OUT_CONCAT)
+		ft_printf("   • Added type [>>] to redir\n");
+	else
+		ft_printf("   • Added type [%c] to redir\n", redir_content->type);
 }
 
 void	update_cmd_tab_redir_filename(t_cmd *cmd, t_tkn_data *tkn_curr)

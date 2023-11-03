@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 08:30:02 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/03 13:31:02 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:31:35 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	print_syntax_tree(t_node *root)
 			ft_printf("[pipe][%d] ------> [cmd][%d] ", root->n, pipe->right->n);
 			print_tkn_sublist(tkn_sublist);
 			ft_printf("\n  |\n  |\n  |\n");
-			ft_printf("   -------------> [cmd][%d] ", pipe->left->n);
+			ft_printf("   --------------> [cmd][%d] ", pipe->left->n);
 			tkn_sublist = ((t_cmd *)pipe->right->content)->tkn_sublist;
 			print_tkn_sublist(tkn_sublist);
 			ft_printf("\n");
