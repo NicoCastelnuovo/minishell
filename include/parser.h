@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/03 12:43:50 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 14:08:38 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ typedef struct s_cmd
 
 enum e_redir
 {
-	IS_IN,			// <
-	IS_OUT,			// >
+	IS_IN = '<',	// <
+	IS_OUT = '>',	// >
 	IS_HERE_DOC,	// <<
 	IS_APPEND		// >>
 };
@@ -71,8 +71,19 @@ typedef struct s_redir
 	enum e_redir	type;
 }	t_redir;
 
+// ---------------------------------------------------------------- SYNTAX TREE
 t_node	*build_syntax_tree(t_list *token, int n);
-int		*parse_tkn(t_list *token, t_cmd *cmd);
+
+// -------------------------------------------------------------------- PARSING
+int		*parse_tkn(t_list **token, t_cmd *cmd);
+
+// ---------------------------------------------------------------- PARSE REDIR
+void	update_cmd_tab_redir_type(t_cmd *cmd, t_tkn_data *tkn_curr, t_tkn_data *tkn_next);
+void	update_cmd_tab_redir_filename(t_cmd *cmd, t_tkn_data *tkn_curr);
+int		is_redir_syntax_err(t_tkn_data *curr, t_tkn_data *next);
+int		is_redir(int tkn_type);
+
+// ---------------------------------------------------------------- PRINT UTILS
 void	print_tkn_sublist(t_list *block);
 void	print_syntax_tree(t_node *root);
 

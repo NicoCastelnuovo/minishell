@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/03 13:14:36 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 14:16:04 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static t_list	*build_tkn_sublist(t_list *tkn_list, t_node *node_c)
 		ft_lstadd_back(&((t_cmd *)node_c->content)->tkn_sublist, tkn_sublist);
 		// - Pass the address of tkn_list
 		// - Change the type to FILE_NAME
-		parse_tkn(tkn_list, node_c->content);
+		parse_tkn(&tkn_list, node_c->content);
 		ft_printf("\n");
 		if (tkn_list->next)
 			tkn_list = tkn_list->next;
@@ -80,6 +80,12 @@ t_node	*build_syntax_tree(t_list *tkn_list, int n)
 	node_c = NULL;
 	node_c = init_node_c(n);
 	tkn_list = build_tkn_sublist(tkn_list, node_c);
+	if (!((t_cmd *)node_c->content)->tkn_sublist)
+	{
+		// free stuff
+		ft_printf("   • syntax error: empty pipes!\n");
+		return (NULL);
+	}
 	ft_printf("------------------------\n");
 	node_p = NULL;
 	if (tkn_list->next)
@@ -87,6 +93,11 @@ t_node	*build_syntax_tree(t_list *tkn_list, int n)
 		node_p = init_node_p(n);
 		((t_pipe *)node_p->content)->left = node_c;
 		((t_pipe *)node_p->content)->right = build_syntax_tree(tkn_list, n + 2);
+		if (!((t_pipe *)node_p->content)->right)
+		{
+			// free current t_node
+			return (NULL);
+		}
 	}
 	if (node_p)
 		return (node_p);

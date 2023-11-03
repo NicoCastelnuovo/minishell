@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/03 09:59:14 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/03 13:33:27 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef enum s_tkn_type
 	TKN_ESCAPE_CHAR = '\\',
 	TKN_PIPE = '|',
 	TKN_DOLLAR_CHAR = '$',
+	TKN_FILE_NAME,
 }	t_tkn_type;
 
 typedef enum s_quote
