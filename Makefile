@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/06 10:28:47 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/06 12:03:22 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ VPATH = ./src/ \
 	./src/parser \
 	./src/env_dlst \
 	./src/print_utils \
+	./src/utils \
 	./src/signals \
 	./test \
 
@@ -42,8 +43,6 @@ EXPANSION = build_str.c \
 	expansion.c \
 	utils.c
 
-SYNTAX_TREE = build_syntax_tree.c \
-	free_syntax_tree.c
 
 PARSER = parser.c \
 	parse_redir.c \
@@ -55,9 +54,14 @@ PRINT_UTILS = print_syntax_tree.c \
 
 SIGNALS = sig_handler.c
 
+SYNTAX_TREE = build_syntax_tree.c \
+	free_syntax_tree.c
+
+UTILS = free_data.c
+
 LEXER = lexer.c \
 	tokenize_input.c\
-	free.c\
+	del_tokens.c\
 	store_tokens_in_nodes.c\
 	read_each_char.c\
 	check_each_token_string.c\
@@ -81,6 +85,7 @@ SRCS = minishell.c \
 	$(SYNTAX_TREE) \
 	$(PRINT_UTILS) \
 	$(SIGNALS) \
+	$(UTILS)
 
 OBJS_PATH = ./objs
 OBJS = $(patsubst %.c, $(OBJS_PATH)/%.o, $(SRCS))

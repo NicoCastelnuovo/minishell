@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   free_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/20 12:05:34 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/02 13:59:04 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/11/06 11:43:44 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/11/06 12:49:18 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_token_data(void *content)
+void	free_data(t_data *data)
 {
-	t_tkn_data	*token_data;
-
-	token_data = (t_tkn_data *)content;
-	if (!token_data)
+	if (!data)
 		return ;
-	free(token_data->str);
-	free(token_data);
+	if (data->tokens)
+		ft_lstclear(&data->tokens, del_tokens);
+	if (data->env)
+		env_dlst_clear(&data->env);
+	if (data->tree)
+		free_tree(data->tree);
 }

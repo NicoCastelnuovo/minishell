@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/06 11:11:50 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/06 15:00:54 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ typedef struct s_pipe
 */
 typedef struct s_cmd
 {
-	t_list			*tokens;
-	char			**args;			// top cat -e ls
+	t_list			*block;
+	char			**args;			// top cat -e ls      ftsplit("ls -la Makefile", ' ');
 	t_list			*redir;			// in1(<) - out4(>) - temp1(<<) - temp2(<<) - temp3(<<) - (null or "")(>)
 	int				fd_in;			// still necessary ???
 	int				fd_out;
@@ -75,6 +75,7 @@ typedef struct s_redir
 // ---------------------------------------------------------------- SYNTAX TREE
 t_node	*build_syntax_tree(t_list *token, int n);
 void	free_tree(t_node *tree);
+void	free_node_c(t_node *node_c);
 
 // -------------------------------------------------------------------- PARSING
 void	parse(t_node *tree);

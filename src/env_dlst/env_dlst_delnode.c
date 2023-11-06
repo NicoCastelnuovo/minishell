@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	free_node(t_var *node)
+void	free_env_node(t_var *node)
 {
 	if (node->name)
 		free(node->name);
@@ -35,7 +35,7 @@ void	env_dlst_delnode(t_var *node, t_env **env)
 	{
 		(*env)->head = NULL;
 		(*env)->tail = NULL;
-		free_node(node);
+		free_env_node(node);
 		(*env)->size -= 1;
 		return ;
 	}
@@ -55,5 +55,5 @@ void	env_dlst_delnode(t_var *node, t_env **env)
 		node->next->prev = node->prev;
 	}
 	(*env)->size -= 1;
-	free_node(node);
+	free_env_node(node);
 }

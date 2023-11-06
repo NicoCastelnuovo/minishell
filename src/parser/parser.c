@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:06:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/06 09:59:58 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:20:34 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ static int	*parse_tkn(t_list *tokens)
 
 static void	parse_node(t_cmd *cmd)
 {
-	while (cmd->tokens)
+	while (cmd->block)
 	{
-		parse_tkn(cmd->tokens);
-		cmd->tokens = cmd->tokens->next;
+		parse_tkn(cmd->block);
+		cmd->block = cmd->block->next;
 	}
 }
 

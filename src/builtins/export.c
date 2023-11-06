@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/27 09:04:15 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/06 12:21:15 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	export(char *arg, t_env **env)
 		if (new_node->value)
 			env_dlst_update(new_node, env);
 		else
-			free_node(new_node);
+			free_env_node(new_node);
 		return ;
 	}
 	else

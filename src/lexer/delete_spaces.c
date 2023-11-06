@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:30:47 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/03 09:57:06 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/06 12:04:55 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	del_space_node_as_first_tkn(t_list **tkns_head)
 		{
 			list_size = ((t_tkn_data *)((*tkns_head)->content))->list_size - 1;
 			*tkns_head = (*tkns_head)->next;
-			ft_lstdelone(temp, free_token_data);
+			ft_lstdelone(temp, del_tokens);
 			temp = *tkns_head;
 			if (*tkns_head)
 				((t_tkn_data *)((*tkns_head)->content))->list_size = list_size;

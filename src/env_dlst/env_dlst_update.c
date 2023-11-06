@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:27:56 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/26 15:41:29 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/06 12:20:47 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	env_dlst_update(t_var *new_node, t_env **env)
 			new_node->next = head->next;
 			new_node->prev->next = new_node;
 			new_node->next->prev = new_node;
-			free_node(head);
+			free_env_node(head);
 			head = new_node;
 			return ;
 		}

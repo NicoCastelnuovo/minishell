@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 13:22:05 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/06 09:53:13 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/06 11:28:06 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,21 @@ int	is_redir_syntax_err(t_tkn_data *curr, t_tkn_data *next)
 */
 void	update_cmd_tab_redir_type(t_cmd *cmd, t_tkn_data *tkn_curr, t_tkn_data *tkn_next)
 {
-	t_redir	*redir_content;
-	t_list	*new_redir;
+	// t_redir	*redir_content;
+	// t_list	*new_redir;
 
-	redir_content = ft_calloc(1, sizeof(t_redir)); // prtct
-	redir_content->file_name = tkn_next->str;
-	redir_content->type = tkn_curr->type; // correct names
-	new_redir = ft_lstnew(redir_content);
-	tkn_next->type = TKN_FILE_NAME;
-	ft_lstadd_back(&cmd->redir, new_redir);
-	if (redir_content->type == TKN_HERE_DOC)
-		ft_printf("   • Added type [<<] to redir\n");
-	else if (redir_content->type == TKN_REDIR_APPEND)
-		ft_printf("   • Added type [>>] to redir\n");
-	else
-		ft_printf("   • Added type [%c] to redir\n", redir_content->type);
+	// redir_content = ft_calloc(1, sizeof(t_redir)); // prtct
+	// redir_content->file_name = tkn_next->str;
+	// redir_content->type = tkn_curr->type; // correct names
+	// new_redir = ft_lstnew(redir_content);
+	// tkn_next->type = TKN_FILE_NAME;
+	// ft_lstadd_back(&cmd->redir, new_redir);
+	// if (redir_content->type == TKN_HERE_DOC)
+	// 	ft_printf("   • Added type [<<] to redir\n");
+	// else if (redir_content->type == TKN_REDIR_APPEND)
+	// 	ft_printf("   • Added type [>>] to redir\n");
+	// else
+	// 	ft_printf("   • Added type [%c] to redir\n", redir_content->type);
 }
 
 void	update_cmd_tab_redir_filename(t_cmd *cmd, t_tkn_data *tkn_curr)

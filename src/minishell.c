@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/06 11:13:58 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:35:34 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,25 @@ int	main(int argc, char **argv, char **env)
 	char	*line;
 
 	init_data(&data);
-	// init_sig_handling();
 	data.env = init_env(env);
 
+	line = ft_strdup("<in1 cat -e |  tail -3 | wc | cat b");
+	// line = ft_strdup("   ls -la  |  cat     -e ");
+	// line = ft_strdup("     |     |     |   "); // to handle
 
 	// lexer
-	// add a pre-check for line
 	if (line)
 		lexer(line, &data.tokens);
+	free(line);
 
-	// tree
-	// data.tree = ftcalloc (...)
 	data.tree = build_syntax_tree(data.tokens, 0);
-	// check if data.tree
 	print_syntax_tree(data.tree);
 
+	ft_lstclear(&data.tokens, del_tokens);
+	env_dlst_clear(&data.env);
+	free_tree(data.tree);
+
+	// free_data(&data);
 	return (0);
 }
 
@@ -91,7 +95,6 @@ int	main(int argc, char **argv, char **env)
 
 
 	// PIPECHAIN
-	line = ft_strdup("<in1 cat -e |  tail -3 | wc | cat b");
 	// line = ft_strdup("<in1 cat -e | tail -3 | << EOF wc | >out1 cat b | echo \"    FckU! \" | head -3 >>out2");
 	// line = ft_strdup("<<      $USER   | cat -e");
 	// line = ft_strdup("echo \"   $USER \"     >     out1|   echo      Hello     World");

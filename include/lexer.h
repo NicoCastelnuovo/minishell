@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/06 09:28:12 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/06 12:03:03 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	merge_consecutive_less_or_greater_than(t_list *tkns_head);
 void	delete_not_quoted_spaces(t_list **tkns_head);
 void	merge_dollar_char_with_next_token(t_list *tkns_head);
 void	merge_quoted_tokens(t_list *tkns_head);
-void	free_token_data(void *content);
+void	del_tokens(void *content);
 void	assign_following_space_status(t_list *tkns_head);
 char	*join_two_strs(char **cur_str, char *next_str);
 void	remove_next_node(t_list *cur_node);

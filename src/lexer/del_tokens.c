@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_dlst_clear.c                                   :+:      :+:    :+:   */
+/*   del_tokens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/12 09:47:06 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/06 12:20:36 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/10/20 12:05:34 by fahmadia          #+#    #+#             */
+/*   Updated: 2023/11/06 14:18:12 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env_dlst_clear(t_env **env)
+void	del_tokens(void *content)
 {
-	t_var	*next;
+	t_tkn_data	*token_data;
 
-	next = NULL;
-	if (!*env)
+	token_data = (t_tkn_data *)content;
+	if (!token_data)
 		return ;
-	while ((*env)->head)
-	{
-		next = (*env)->head->next;
-		env_dlst_delnode((*env)->head, env);
-		(*env)->head = next;
-	}
-	free(*env);
+	if (token_data->str)
+		free(token_data->str);
+	free(token_data);
 }

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/06 10:09:39 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:16:18 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,8 @@ void	del_var_lst_content(void *content);
 void	print_var_lst(t_list *var_lst);
 // void		update_env_var(char *name, char *value, char **env);
 // t_var	*search_var(char *name, t_list *env);
+
+// ---------------------------------------------------------------------- UTILS
+void	free_data(t_data *data);
 
 #endif
