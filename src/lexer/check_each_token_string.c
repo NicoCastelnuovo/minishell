@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:07:54 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/03 09:59:14 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/06 09:28:12 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	check_each_tkn_str(t_tkn_data *tkn_data)
 	char	tkn_first_char;
 
 	tkn_first_char = *(tkn_data->str);
-	if (tkn_first_char == TKN_REDIRECT_IN)
-		tkn_data->type = TKN_REDIRECT_IN;
-	else if (tkn_first_char == TKN_REDIRECT_OUT)
-		tkn_data->type = TKN_REDIRECT_OUT;
+	if (tkn_first_char == TKN_REDIR_IN)
+		tkn_data->type = TKN_REDIR_IN;
+	else if (tkn_first_char == TKN_REDIR_OUT)
+		tkn_data->type = TKN_REDIR_OUT;
 	else if (tkn_first_char == TKN_SPACE_CAHR)
 		tkn_data->type = TKN_SPACE_CAHR;
 	else if (tkn_first_char == TKN_TAB_CHAR)

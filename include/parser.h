@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/03 16:41:05 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/06 11:11:50 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_pipe
 */
 typedef struct s_cmd
 {
-	t_list			*tkn_sublist;
+	t_list			*tokens;
 	char			**args;			// top cat -e ls
 	t_list			*redir;			// in1(<) - out4(>) - temp1(<<) - temp2(<<) - temp3(<<) - (null or "")(>)
 	int				fd_in;			// still necessary ???
@@ -60,10 +60,10 @@ typedef struct s_cmd
 
 enum e_redir
 {
-	IS_IN = '<',	// <
-	IS_OUT = '>',	// >
-	IS_HERE_DOC,	// <<
-	IS_APPEND		// >>
+	REDIR_IN = '<',		// <
+	REDIR_OUT = '>',	// >
+	REDIR_HERE_DOC,		// <<
+	REDIR_APPEND		// >>
 };
 
 typedef struct s_redir
@@ -74,15 +74,16 @@ typedef struct s_redir
 
 // ---------------------------------------------------------------- SYNTAX TREE
 t_node	*build_syntax_tree(t_list *token, int n);
+void	free_tree(t_node *tree);
 
 // -------------------------------------------------------------------- PARSING
-int		*parse_tkn(t_list **token, t_cmd *cmd);
+void	parse(t_node *tree);
 
 // ---------------------------------------------------------------- PARSE REDIR
 void	update_cmd_tab_redir_type(t_cmd *cmd, t_tkn_data *tkn_curr, t_tkn_data *tkn_next);
 void	update_cmd_tab_redir_filename(t_cmd *cmd, t_tkn_data *tkn_curr);
 int		is_redir_syntax_err(t_tkn_data *curr, t_tkn_data *next);
-int		is_redir(int tkn_type);
+int		is_redir(t_tkn_type tkn_type);
 
 // ----------------------------------------------------------------- PARSE ARGS
 void	update_cmd_tab_args(t_cmd *cmd, t_tkn_data *tkn_curr);
@@ -91,7 +92,6 @@ void	update_cmd_tab_args(t_cmd *cmd, t_tkn_data *tkn_curr);
 int		is_pipe_syntax_err(t_tkn_data *curr, t_tkn_data *next);
 
 // ---------------------------------------------------------------- PRINT UTILS
-void	print_tkn_sublist(t_list *block);
 void	print_syntax_tree(t_node *root);
 
 #endif

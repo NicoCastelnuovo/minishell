@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/03 16:15:32 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/06 10:28:47 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@
 VPATH = ./src/ \
 	./src/builtins \
 	./src/lexer \
+	./src/syntax_tree \
 	./src/expansion \
 	./src/parser \
 	./src/env_dlst \
@@ -41,8 +42,10 @@ EXPANSION = build_str.c \
 	expansion.c \
 	utils.c
 
-PARSER = build_syntax_tree.c \
-	parser.c \
+SYNTAX_TREE = build_syntax_tree.c \
+	free_syntax_tree.c
+
+PARSER = parser.c \
 	parse_redir.c \
 	parse_args.c \
 	parse_pipe.c
@@ -75,6 +78,7 @@ SRCS = minishell.c \
 	$(EXPANSION) \
 	$(LEXER) \
 	$(PARSER) \
+	$(SYNTAX_TREE) \
 	$(PRINT_UTILS) \
 	$(SIGNALS) \
 

@@ -6,18 +6,18 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 13:22:05 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/03 16:44:51 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/06 09:53:13 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_redir(int tkn_type)
+int	is_redir(t_tkn_type tkn_type)
 {
-	if (tkn_type == TKN_REDIRECT_OUT_CONCAT ||
+	if (tkn_type == TKN_REDIR_APPEND ||
 		tkn_type == TKN_HERE_DOC ||
-		tkn_type == TKN_REDIRECT_IN ||
-		tkn_type == TKN_REDIRECT_OUT )
+		tkn_type == TKN_REDIR_IN ||
+		tkn_type == TKN_REDIR_OUT )
 		return (tkn_type);
 	return (0);
 }
@@ -51,7 +51,7 @@ void	update_cmd_tab_redir_type(t_cmd *cmd, t_tkn_data *tkn_curr, t_tkn_data *tkn
 	ft_lstadd_back(&cmd->redir, new_redir);
 	if (redir_content->type == TKN_HERE_DOC)
 		ft_printf("   • Added type [<<] to redir\n");
-	else if (redir_content->type == TKN_REDIRECT_OUT_CONCAT)
+	else if (redir_content->type == TKN_REDIR_APPEND)
 		ft_printf("   • Added type [>>] to redir\n");
 	else
 		ft_printf("   • Added type [%c] to redir\n", redir_content->type);

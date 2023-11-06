@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/03 13:33:27 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/06 09:28:12 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ typedef enum s_tkn_type
 	TKN_NOT_CLOSED_S_QUOTE_STR = 4,
 	TKN_NOT_CLOSED_D_QUOTE_STR = 5,
 	TKN_ENV_VAR = 6,
-	TKN_REDIRECT_OUT_CONCAT = 7,
+	TKN_REDIR_APPEND = 7,
 	TKN_HERE_DOC = 8,
-	TKN_REDIRECT_IN = '<',
-	TKN_REDIRECT_OUT = '>',
+	TKN_REDIR_IN = '<',
+	TKN_REDIR_OUT = '>',
 	TKN_SPACE_CAHR = ' ',
 	TKN_TAB_CHAR = '\t',
 	TKN_NEW_LINE = '\n',

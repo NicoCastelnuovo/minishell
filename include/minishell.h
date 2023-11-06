@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/03 15:22:34 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/06 10:09:39 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,15 @@
 # include "env.h"
 # include "parser.h"
 # include "executor.h"
+
+typedef struct s_data
+{
+	t_env	*env;
+	t_list	*tokens;
+	t_node	*tree;
+	// int		tree_size;
+}	t_data;
+
 
 // -------------------------------------------------------------------- SIGNALS
 void	init_sig_handling(void);
