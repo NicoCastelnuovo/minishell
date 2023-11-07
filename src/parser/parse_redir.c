@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 13:22:05 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/06 11:28:06 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/07 10:30:09 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,11 @@ int	is_redir(t_tkn_type tkn_type)
 	return (0);
 }
 
-int	is_redir_syntax_err(t_tkn_data *curr, t_tkn_data *next)
+int	is_redir_syntax_err(t_tkn_data *curr_tkn, t_tkn_data *next_tkn)
 {
-	ft_printf("   • Check if [%s] & [%s] are valid...\n", curr->str, next->str);
-	if (is_redir(next->type))
+	if (is_redir(next_tkn->type))
 	{
-		ft_printf("   ❌ error near unexpected token \'%s\'\n", curr->str);
+		ft_printf("   ❌ error near unexpected token \'%s\'\n", next_tkn->str);
 		return (258);
 	}
 	return (0);

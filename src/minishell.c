@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/07 09:21:48 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/07 10:37:57 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int	main(int argc, char **argv, char **env)
 	init_data(&data);
 	data.env = init_env(env);
 
-	line = ft_strdup("<in1 cat -e |  tail -3 | wc | cat b");
 	// TESTED
+	line = ft_strdup("<in1 cat -e |  tail -3 | wc | cat b");
 	// line = ft_strdup("   ls -la  |  cat     -e ");
 	// line = ft_strdup("   ls    \"|\"  |  cat -e "); 	// works??
 	// line = ft_strdup("     |     |     |   "); 		// to handle
@@ -50,10 +50,26 @@ int	main(int argc, char **argv, char **env)
 	// line = ft_strdup("	\"\"  '    \"\"		'''			");
 	// line = NULL;
 
+
+	// TO HANDLE
+	// line = ft_strdup("  ls   >|   ");		// to handle ???
+
+	// SYNTAX ERR:
+	// line = ft_strdup("|");
+	// line = ft_strdup(" ls  |  |");
+	// line = ft_strdup("   |  |   ");
+	// line = ft_strdup("   >   ");
+	// line = ft_strdup("  ls   ><   ");
+	// line = ft_strdup("  ls   >|   ");		// to handle ???
+	// line = ft_strdup("  ls   >  |   ");		// to handle ???
+	// line = ft_strdup("  ls   >   ");
+
+
 	// lexer
 	if (line)
 		lexer(line, &data.tokens);
 	free(line);
+	print_tokens(data.tokens);
 
 	data.tree = build_syntax_tree(data.tokens, 0);
 	if (!data.tree)
@@ -61,7 +77,10 @@ int	main(int argc, char **argv, char **env)
 	else
 		print_syntax_tree(data.tree);
 
-	free_data(&data);
+	// if (data.tree)
+	// 	parse(data.tree);
+
+	// free_data(&data);
 	return (0);
 }
 

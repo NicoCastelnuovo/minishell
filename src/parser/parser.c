@@ -6,24 +6,27 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:06:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/06 14:20:34 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/07 10:34:20 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	*parse_tkn(t_list *tokens)
+static int	parse_tkn(t_tkn_data *curr_tkn, t_tkn_data  *next_tkn)
 {
 	t_tkn_type	type;
 
-	type = ((t_tkn_data *)tokens->content)->type;
-	ft_printf("PARSE [%s]\n", ((t_tkn_data *)tokens->content)->str);
-	if (is_redir(type))
+	if (next_tkn)
 	{
+		ft_printf("PARSE [%s] and [%s]\n", curr_tkn->str, next_tkn->str);
+		if (is_redir(curr_tkn->type) && is_redir_syntax_err(curr_tkn, next_tkn))
+		{
 
+		}
 	}
-	else if (type == TKN_PIPE)
+	else
 	{
+		ft_printf("PARSE [%s] with (end or pipe)\n", curr_tkn->str);
 
 	}
 	return (0);
@@ -31,11 +34,33 @@ static int	*parse_tkn(t_list *tokens)
 
 static void	parse_node(t_cmd *cmd)
 {
+	t_tkn_data	*curr_tkn;
+	t_tkn_data	*next_tkn;
+
 	while (cmd->block)
 	{
-		parse_tkn(cmd->block);
+		curr_tkn = NULL;
+		next_tkn = NULL;
+		curr_tkn = cmd->block->content;
+		if (cmd->block->next)
+			next_tkn = cmd->block->next->content;
+		parse_tkn(curr_tkn, next_tkn);
 		cmd->block = cmd->block->next;
 	}
+}
+
+void	parse_tree(t_node *tree)
+{
+	t_pipe	*pipe;
+
+	while (tree->type == IS_PIPE)
+	{
+		pipe = (t_pipe *)tree->content;
+		parse_node(pipe->left->content);
+		ft_printf("------------------------\n");
+		tree = pipe->right;
+	}
+	parse_node(tree->content);
 }
 
 void	parse(t_node *tree)
@@ -44,56 +69,10 @@ void	parse(t_node *tree)
 	t_list	*tkn_sublist;
 	t_cmd	*cmd;
 
-	pipe = (t_pipe *)tree->content;
-	while (pipe->right->type == IS_PIPE)
-	{
-		pipe = (t_pipe *)tree->content;
-		parse_node(pipe->left->content);
-		ft_printf("------------------------\n");
-		tree = pipe->right;
-	}
-	parse_node(pipe->right->content);
+	if (tree->type == IS_PIPE)
+		parse_tree(tree);
+	// else
+	// 	parse_node(tree);
+
 	ft_printf("\n");
 }
-
-
-
-
-
-	// t_tkn_data	*tkn_curr;
-	// t_tkn_data	*tkn_next;
-
-	// tkn_curr = ((t_tkn_data *)(*tkn)->content);
-	// if ((*tkn)->next)
-	// {
-	// 	tkn_next = ((t_tkn_data *)(*tkn)->next->content);
-	// 	ft_printf("PARSE: [%s]\n", tkn_curr->str);
-	// 	if (is_redir(tkn_curr->type))
-	// 	{
-	// 		cmd->err_code = is_redir_syntax_err(tkn_curr, tkn_next);
-	// 		if (!cmd->err_code)
-	// 		{
-	// 			update_cmd_tab_redir_type(cmd, tkn_curr, tkn_next); // prtct
-	// 			return (0);
-	// 		}
-	// 		else
-	// 			return (1);
-	// 	}
-	// 	if (tkn_curr->type == TKN_FILE_NAME)
-	// 	{
-	// 		update_cmd_tab_redir_filename(cmd, tkn_curr);
-	// 		return (0);
-	// 	}
-	// 	if (tkn_curr->type == TKN_WORD ||
-	// 		tkn_curr->type == TKN_D_QUOTED_STR ||
-	// 		tkn_curr->type == TKN_S_QUOTED_STR)
-	// 	{
-	// 		update_cmd_tab_args(cmd, tkn_curr);
-	// 		return (0);
-	// 	}
-	// }
-	// else // final tkn of the input
-	// {
-	// 	ft_printf("PARSE: [%s] (last)\n", tkn_curr->str);
-	// 	return (0);
-	// }

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/07 09:22:30 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/07 10:30:37 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ t_node	*build_syntax_tree(t_list *tokens, int n)
 	if (!node_c)
 		return (NULL);
 	tokens = copy_tokens_block(tokens, node_c);
-	print_tokens(tokens);
 	if (!tokens)
 		return (free_cmd_node(node_c), NULL);
 	node_p = NULL;
