@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/07 10:37:57 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/07 17:01:36 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static void	init_data(t_data *data)
 	data->env = NULL;
 	data->tokens = NULL;
 	data->tree = NULL;
+	data->err = NULL;
+	data->e_code = 0;
 }
 
 int	main(int argc, char **argv, char **env)
@@ -39,46 +41,37 @@ int	main(int argc, char **argv, char **env)
 	init_data(&data);
 	data.env = init_env(env);
 
-	// TESTED
-	line = ft_strdup("<in1 cat -e |  tail -3 | wc | cat b");
-	// line = ft_strdup("   ls -la  |  cat     -e ");
-	// line = ft_strdup("   ls    \"|\"  |  cat -e "); 	// works??
-	// line = ft_strdup("     |     |     |   "); 		// to handle
-	// line = ft_strdup("   ls  -la   ./Makefile  ");	// leaks
-	// line = ft_strdup("   |   ls");
-	// line = ft_strdup("        ");
-	// line = ft_strdup("	\"\"  '    \"\"		'''			");
-	// line = NULL;
-
-
-	// TO HANDLE
-	// line = ft_strdup("  ls   >|   ");		// to handle ???
-
-	// SYNTAX ERR:
-	// line = ft_strdup("|");
-	// line = ft_strdup(" ls  |  |");
-	// line = ft_strdup("   |  |   ");
-	// line = ft_strdup("   >   ");
-	// line = ft_strdup("  ls   ><   ");
-	// line = ft_strdup("  ls   >|   ");		// to handle ???
-	// line = ft_strdup("  ls   >  |   ");		// to handle ???
-	// line = ft_strdup("  ls   >   ");
+	// line = ft_strdup("<in1 cat -e |  tail -3 | wc | cat b");
+	line = ft_strdup("ls <in -la <in2 cat -e >out1 |  tail -3 | wc | cat b");
+	// line = ft_strdup(" >out1 >out2 >out3 >>out4 >ok <in3 |  tail -3 | wc | cat b");
+	// line = ft_strdup(" >out1 >out2 >out3 >>out4 >ok <<EOF <in3 <<EOF|  tail -3 | wc | cat b>out9999");
+	// line = ft_strdup("<in <<EOF | >out<in");
+	// line = ft_strdup("<in>out|>out<in");
 
 
 	// lexer
 	if (line)
 		lexer(line, &data.tokens);
 	free(line);
+	ft_printf("• TOKENS ---> ");
 	print_tokens(data.tokens);
+	ft_printf("\n");
+
+	// parse
+	if (data.tokens)
+	{
+		data.err = parse(data.tokens);
+		if (data.err)
+		{
+			data.e_code = 258;
+			ft_printf(" ❌ syntax error near unexpected token `%s'\n", data.err);
+			return (1);
+		}
+	}
 
 	data.tree = build_syntax_tree(data.tokens, 0);
-	if (!data.tree)
-		ft_printf("____!!! NO SYNTAX TREE !!!____\n");
-	else
-		print_syntax_tree(data.tree);
+	print_syntax_tree(data.tree);
 
-	// if (data.tree)
-	// 	parse(data.tree);
 
 	// free_data(&data);
 	return (0);
@@ -92,51 +85,3 @@ int	main(int argc, char **argv, char **env)
 	// if (line)
 	// 	free(line);
 // }
-
-
-
-
-
-
-	// line = ft_strdup(">");
-	// line = ft_strdup("<");
-	// line = ft_strdup("<<");
-	// line = ft_strdup("> > > > >");
-	// line = ft_strdup(">> >> >> >>");
-	// line = ft_strdup(">>>>>>>>>");
-	// line = ft_strdup("<<<<<<<<<");
-	// line = ft_strdup("~");
-	// line = ft_strdup("< < < < < <");
-	// line = ft_strdup("/bin/cat ><");
-	// line = ft_strdup("/bin/cat <Makefile >");
-	// line = ft_strdup("cat 42 42");
-	// line = ft_strdup("echo >");
-	// line = ft_strdup("echo > <");
-	// line = ft_strdup(".");
-	// line = ft_strdup("..");
-	// line = ft_strdup("echo | |");
-	// line = ft_strdup("EechoE");
-	// line = ft_strdup(".echo.");
-
-
-	// PIPECHAIN
-	// line = ft_strdup("<in1 cat -e | tail -3 | << EOF wc | >out1 cat b | echo \"    FckU! \" | head -3 >>out2");
-	// line = ft_strdup("<<      $USER   | cat -e");
-	// line = ft_strdup("echo \"   $USER \"     >     out1|   echo      Hello     World");
-
-	// REDIRECTION/PIPE ERRORS
-	// line = ft_strdup("<in1 cat -e | > | tail -3 | wc | >out1 cat b");
-	// line = ft_strdup(" << EOF | < >\">\" >< \"<>>>\" > | echo -n Beautiful -n");
-
-	// SINGLE CMD
-	// line = ft_strdup("echo Hello World, just one command > out1");
-
-	// EMPTY PIPES
-	// line = ft_strdup("empty pipes |  |  |  |  | >out1 cat b");
-	// line = ft_strdup(" |  |  |  |  |  ");
-
-	// ERRORS
-	/*
-		Understand when the error is found, how return it and store in the big data
-		so that it can be printed in case of $?
-	*/

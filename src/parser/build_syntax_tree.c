@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/07 10:30:37 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/07 17:03:01 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,30 +30,66 @@ static t_tkn_data	*cpy_tkn_content(t_tkn_data *content)
 	The tokens are divided into blocks.	Block means a set of tokens seaprated
 	by the pipes, like the folowing: [ BLOCK_1 ] | [ BLOCK_2 ] | [ BLOCK_3 ]
 */
-static t_list	*copy_tokens_block(t_list *tokens, t_node *node_c)
+static t_list	*copy_tokens_block(t_list *curr_tkn, t_node *node_c)
 {
 	t_tkn_data	*tkn_content;
 	t_tkn_data	*tkn_content_cpy;
 	t_list		*tkn_node_cpy;
+	t_list		*prev_tkn;
+	t_list		*tmp;
 
 	tkn_node_cpy = NULL;
 	tkn_content_cpy = NULL;
-	while (tokens) //tkn_content->type != '|' check after
+	prev_tkn = NULL;
+	while (curr_tkn) // !!!!  After distributing in each filed the tokens, block could be deleted....
 	{
-		tkn_content = (t_tkn_data *)tokens->content;
+		tkn_content = (t_tkn_data *)curr_tkn->content;
 		if (ft_strncmp(tkn_content->str, "|", 1) == 0)
-			return (tokens);
+			return (curr_tkn);
 		tkn_content_cpy = cpy_tkn_content(tkn_content); // protect
 		tkn_node_cpy = ft_lstnew(tkn_content_cpy); // protect
 		if (!tkn_node_cpy)
 			return (NULL);
 		ft_lstadd_back(&((t_cmd *)node_c->content)->block, tkn_node_cpy);
-		if (tokens->next)
-			tokens = tokens->next;
+		// first iter, prev_token doesn't exist
+					if (prev_tkn)
+						ft_printf("prev[%s] <-- ", ((t_tkn_data*)prev_tkn->content)->str);
+					else
+						ft_printf("prev(null) <-- ");
+					ft_printf("curr[%s]", ((t_tkn_data*)curr_tkn->content)->str);
+					if (curr_tkn->next)
+						ft_printf(" --> next[%s]", ((t_tkn_data*)curr_tkn->next->content)->str);
+					else
+						ft_printf(" --> next(null)");
+					// if (curr_tkn->next->next)
+					// 	ft_printf(" --> next[%s]", ((t_tkn_data*)curr_tkn->next->next->content)->str);
+					// else
+					// 	ft_printf(" --> next(null)");
+					ft_printf("\n");
+		tmp = update_cmd_node(curr_tkn, prev_tkn, node_c); // make this jump 1 place if needed
+
+
+
+		if (tmp != curr_tkn) // jump to do
+		{
+			ft_printf("	-JUMP!-\n");
+			prev_tkn = NULL; // bug
+			if (curr_tkn->next->next)
+				curr_tkn = curr_tkn->next->next;
+			else
+				break ;
+		}
 		else
-			break ;
+		{
+			prev_tkn = curr_tkn;
+			if (curr_tkn->next)
+				curr_tkn = curr_tkn->next;
+			else
+				break ;
+		}
+		ft_printf("\n");
 	}
-	return (tokens);
+	return (curr_tkn);
 }
 
 static t_node	*init_pipe_node(int n)
@@ -89,7 +125,7 @@ static t_node	*init_cmd_node(int n)
 	cmd = (t_cmd *)node_c->content;
 	cmd->block = NULL;
 	cmd->args = NULL;
-	cmd->redir = NULL;
+	cmd->redir = NULL; // proctect // modifed
 	cmd->fd_in = STDIN_FILENO;
 	cmd->fd_out = STDOUT_FILENO;
 	return (node_c);
@@ -108,8 +144,7 @@ t_node	*build_syntax_tree(t_list *tokens, int n)
 	if (!node_c)
 		return (NULL);
 	tokens = copy_tokens_block(tokens, node_c);
-	if (!tokens)
-		return (free_cmd_node(node_c), NULL);
+	ft_printf(" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
 	node_p = NULL;
 	if (ft_strncmp(((t_tkn_data *)tokens->content)->str, "|", 1) == 0)
 	{

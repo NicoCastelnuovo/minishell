@@ -6,73 +6,66 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:06:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/07 10:34:20 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/07 15:31:48 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	parse_tkn(t_tkn_data *curr_tkn, t_tkn_data  *next_tkn)
+int	is_redir(t_tkn_type tkn_type)
 {
-	t_tkn_type	type;
-
-	if (next_tkn)
-	{
-		ft_printf("PARSE [%s] and [%s]\n", curr_tkn->str, next_tkn->str);
-		if (is_redir(curr_tkn->type) && is_redir_syntax_err(curr_tkn, next_tkn))
-		{
-
-		}
-	}
-	else
-	{
-		ft_printf("PARSE [%s] with (end or pipe)\n", curr_tkn->str);
-
-	}
+	if (tkn_type == TKN_REDIR_APPEND ||
+		tkn_type == TKN_HERE_DOC ||
+		tkn_type == TKN_REDIR_IN ||
+		tkn_type == TKN_REDIR_OUT )
+		return (tkn_type);
 	return (0);
 }
 
-static void	parse_node(t_cmd *cmd)
+static int	is_redir_syntax_err(t_tkn_data *curr_tkn, t_tkn_data *next_tkn)
+{
+	if (next_tkn->type != TKN_WORD)
+		return (1);
+	return (0);
+}
+
+static int	is_pipe_syntax_err(t_tkn_data *curr_tkn, t_tkn_data *next_tkn)
+{
+	if (!next_tkn)
+		return (1);
+	if (next_tkn->type == TKN_PIPE)
+		return (1);
+	return (0);
+}
+
+char	*parse(t_list *tkn)
 {
 	t_tkn_data	*curr_tkn;
 	t_tkn_data	*next_tkn;
 
-	while (cmd->block)
+	while (tkn)
 	{
 		curr_tkn = NULL;
 		next_tkn = NULL;
-		curr_tkn = cmd->block->content;
-		if (cmd->block->next)
-			next_tkn = cmd->block->next->content;
-		parse_tkn(curr_tkn, next_tkn);
-		cmd->block = cmd->block->next;
+		curr_tkn = tkn->content;
+		if (curr_tkn->quote_status == OPEN_QUOTE)
+			return ("quotes");
+		if (tkn->next) // check current-next
+		{
+			next_tkn = tkn->next->content;
+			if (is_redir(curr_tkn->type) && is_redir_syntax_err(curr_tkn, next_tkn))
+				return (next_tkn->str);
+			if (curr_tkn->type == TKN_PIPE && is_pipe_syntax_err(curr_tkn, next_tkn))
+				return (next_tkn->str);
+		}
+		else // check current with end-line
+		{
+			if (is_redir(curr_tkn->type)) // ------------------ big question: should append a newline during lexing?
+				return ("newLine");
+			if (curr_tkn->type == TKN_PIPE)
+				return (curr_tkn->str);
+		}
+		tkn = tkn->next;
 	}
-}
-
-void	parse_tree(t_node *tree)
-{
-	t_pipe	*pipe;
-
-	while (tree->type == IS_PIPE)
-	{
-		pipe = (t_pipe *)tree->content;
-		parse_node(pipe->left->content);
-		ft_printf("------------------------\n");
-		tree = pipe->right;
-	}
-	parse_node(tree->content);
-}
-
-void	parse(t_node *tree)
-{
-	t_pipe	*pipe;
-	t_list	*tkn_sublist;
-	t_cmd	*cmd;
-
-	if (tree->type == IS_PIPE)
-		parse_tree(tree);
-	// else
-	// 	parse_node(tree);
-
-	ft_printf("\n");
+	return (NULL);
 }
