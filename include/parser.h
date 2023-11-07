@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/06 15:00:54 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/07 09:26:42 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ typedef struct s_redir
 // ---------------------------------------------------------------- SYNTAX TREE
 t_node	*build_syntax_tree(t_list *token, int n);
 void	free_tree(t_node *tree);
-void	free_node_c(t_node *node_c);
+void	free_cmd_node(t_node *node_c);
+void	free_pipe_node(t_node *node_p);
 
 // -------------------------------------------------------------------- PARSING
 void	parse(t_node *tree);

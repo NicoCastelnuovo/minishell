@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/06 16:55:05 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/07 09:22:30 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static t_list	*copy_tokens_block(t_list *tokens, t_node *node_c)
 	return (tokens);
 }
 
-static t_node	*init_node_p(int n)
+static t_node	*init_pipe_node(int n)
 {
 	t_node	*node_p;
 
@@ -67,16 +67,13 @@ static t_node	*init_node_p(int n)
 	node_p->n = n + 1;
 	node_p->content = ft_calloc(1, sizeof(t_pipe)); // prtct
 	if (!node_p->content)
-	{
-		// free(node_p);
-		return (NULL);
-	}
+		return (free(node_p), NULL);
 	((t_pipe *)node_p->content)->left = NULL;
 	((t_pipe *)node_p->content)->right = NULL;
 	return (node_p);
 }
 
-static t_node	*init_node_c(int n)
+static t_node	*init_cmd_node(int n)
 {
 	t_node	*node_c;
 	t_cmd	*cmd;
@@ -88,112 +85,52 @@ static t_node	*init_node_c(int n)
 	node_c->n = n;
 	node_c->content = ft_calloc(1, sizeof(t_cmd)); // prtct
 	if (!node_c->content)
-	{
-		// free(node_c);
-		return (NULL);
-	}
+		return (free(node_c), NULL);
 	cmd = (t_cmd *)node_c->content;
 	cmd->block = NULL;
 	cmd->args = NULL;
 	cmd->redir = NULL;
-	cmd->fd_in = 0;
-	cmd->fd_out = 1;
+	cmd->fd_in = STDIN_FILENO;
+	cmd->fd_out = STDOUT_FILENO;
 	return (node_c);
 }
 
-
 /*
 	@param n - just a number to identify which node of the tree it is
-	and better visualize it when printed.
+	and visualize it when printed.
 */
 t_node	*build_syntax_tree(t_list *tokens, int n)
 {
 	t_node		*node_c;
 	t_node		*node_p;
 
-
-	node_c = init_node_c(n);
+	node_c = init_cmd_node(n);
 	if (!node_c)
-		return (NULL);	// free stuff
-
-
+		return (NULL);
 	tokens = copy_tokens_block(tokens, node_c);
+	print_tokens(tokens);
 	if (!tokens)
-		return (NULL);	// free stuff
-
-
+		return (free_cmd_node(node_c), NULL);
 	node_p = NULL;
 	if (ft_strncmp(((t_tkn_data *)tokens->content)->str, "|", 1) == 0)
 	{
-		ft_printf("_Create a pipe\n");
-		tokens = tokens->next;
-		node_p = init_node_p(n);
+		tokens = tokens->next; // this line skips the pipe, which is not stored
+		node_p = init_pipe_node(n);
 		if (!node_p)
 		{
-			//free node_c / free tokens
+			free_cmd_node(node_c);
+			free_pipe_node(node_p);
 			return (NULL);
 		}
 		((t_pipe *)node_p->content)->left = node_c;
 		((t_pipe *)node_p->content)->right = build_syntax_tree(tokens, n + 2);
 		if (!((t_pipe *)node_p->content)->right)
 		{
-			//free node_c / free tokens // free_p
-			return (NULL); // free current t_node
+			free_cmd_node(node_c);
+			free_pipe_node(node_p);
+			return (NULL);
 		}
 		return (node_p);
 	}
-	// if (node_p)
-	// {
-	// 	ft_printf("returned a PIPE\n");
-	// }
-	// ft_printf("returned a NODE\n");
 	return (node_c);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	// t_node		*node_c;
-	// t_node		*node_p;
-
-
-	// node_c = init_node_c(n);
-	// if (!node_c)
-	// 	return (NULL);	// free stuff
-
-
-	// tokens = copy_tokens_block(tokens, node_c);
-	// if (!tokens)
-	// 	return (NULL);	// free stuff
-
-	// node_p = NULL;
-	// print_tokens(tokens);
-	// if (tokens->next)
-	// {
-	// 	node_p = init_node_p(n);
-	// 	if (!node_p)
-	// 	{
-	// 		//free node_c / free tokens
-	// 		return (NULL);
-	// 	}
-	// 	((t_pipe *)node_p->content)->left = node_c;
-	// 	((t_pipe *)node_p->content)->right = build_syntax_tree(tokens, n + 2);
-	// 	if (!((t_pipe *)node_p->content)->right)
-	// 	{
-	// 		//free node_c / free tokens // free_p
-	// 		return (NULL); // free current t_node
-	// 	}
-	// }
-	// if (node_p)
-	// 	return (node_p);
-	// return (node_c);

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 10:28:35 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/06 16:57:14 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/07 09:16:15 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,11 @@ static void	del_redir(void *content)
 	}
 }
 
-void	free_node_c(t_node *node_c)
+void	free_cmd_node(t_node *node_c)
 {
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *)node_c->content;
-	print_tokens(((t_cmd *)node_c->content)->block); // remove
 	if (cmd->block)
 		ft_lstclear(&cmd->block, del_block);
 	if (cmd->args)
@@ -67,10 +66,9 @@ void	free_node_c(t_node *node_c)
 	cmd->fd_out = -1;
 	free(cmd);
 	free(node_c);
-	ft_printf(" W T F! \n");
 }
 
-void	free_node_p(t_node *node_p)
+void	free_pipe_node(t_node *node_p)
 {
 	t_pipe	*pipe;
 
@@ -95,13 +93,13 @@ void	free_tree(t_node *tree)
 		while (tree->type == IS_PIPE)
 		{
 			pipe = (t_pipe *)tree->content;
-			free_node_c(pipe->left); // left
+			free_cmd_node(pipe->left); // left
 			temp = pipe->right;
-			free_node_p(tree);
+			free_pipe_node(tree);
 			tree = temp;
 		}
-		free_node_c(tree);
+		free_cmd_node(tree);
 	}
-	// else
-	// 	free_node_c(tree->content);
+	else
+		free_cmd_node(tree);
 }
