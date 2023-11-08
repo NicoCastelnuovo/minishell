@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 09:05:26 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/08 09:46:08 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,7 @@ char	*parse(t_list *tkn);
 int		is_redir(t_tkn_type tkn_type);
 
 // ----------------------------------------------------------- UPDATE CMD TABLE
-t_list	*update_cmd_node(t_list *curr_tkn, t_list *prev_tkn, t_node *node);
-// void	update_cmd_tab_redir_type(t_cmd *cmd, t_tkn_data *tkn_curr, t_tkn_data *tkn_next);
-// void	update_cmd_tab_redir_filename(t_cmd *cmd, t_tkn_data *tkn_curr);
-// void	update_cmd_tab_args(t_cmd *cmd, t_tkn_data *tkn_curr);
+void	update_cmd_node(t_list *curr_tkn, t_list *prev_tkn, t_node *node);
 
 // ---------------------------------------------------------------- PRINT UTILS
 void	print_syntax_tree(t_node *root);

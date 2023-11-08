@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 09:10:37 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/08 09:54:08 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,26 +56,26 @@ static t_list	*copy_tokens_block(t_list *curr_tkn, t_node *node_c)
 
 		// first iter, prev_token doesn't exist
 		if (prev_tkn)
-			ft_printf("prev[%s] <-- ", ((t_tkn_data*)prev_tkn->content)->str);
+			ft_printf("\x1b[32mprev[%s] <-- ", ((t_tkn_data*)prev_tkn->content)->str);
 		else
-			ft_printf("prev(null) <-- ");
+			ft_printf("\x1b[32mprev(null) <-- ");
 		ft_printf("curr[%s]", ((t_tkn_data*)curr_tkn->content)->str);
 		if (curr_tkn->next)
-			ft_printf(" --> next[%s]", ((t_tkn_data*)curr_tkn->next->content)->str);
+			ft_printf(" --> next[%s]\x1b[0m", ((t_tkn_data*)curr_tkn->next->content)->str);
 		else
-			ft_printf(" --> next(null)");
+			ft_printf(" --> next(null)\x1b[0m");
 		ft_printf("\n");
 
 
 
 
-		tmp = update_cmd_node(curr_tkn, prev_tkn, node_c); // make this jump 1 place if needed
+		update_cmd_node(curr_tkn, prev_tkn, node_c); // make this jump 1 place if needed
+		ft_printf("\n");
 		prev_tkn = curr_tkn;
 		if (curr_tkn->next)
 			curr_tkn = curr_tkn->next;
 		else
 			break ;
-		ft_printf("\n");
 	}
 	return (curr_tkn);
 }

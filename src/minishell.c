@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 09:02:26 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:56:38 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,14 @@ int	main(int argc, char **argv, char **env)
 	init_data(&data);
 	data.env = init_env(env);
 
-	// line = ft_strdup("<in1 cat -e |  tail -3 | wc | cat b");
-	line = ft_strdup("ls <in -la <in2 cat -e >out1 |  tail -3 | wc | cat b");
+	line = ft_strdup(" >>\"$USER\" | cat -eb");
+	// line = ft_strdup(" \n\t> \n <<\t\b  | echo$USR ");
+
+	// line = ft_strdup(" \n\t \n <<Hello\t\b  | echo$USR ");
+	// line = ft_strdup("$USER <<EOF | cat | abc   $   HOME | \"abc   $ SHLVL   $USER\" >	out2");
+	// line = ft_strdup("<<123	<in1<in2  | << EOF<<EOFEFOEF $USER >out3 >>HOME  | cat | cat -e>out2>out1");
+	// line = ft_strdup("<in1 cat -e |  tail >out1 <out2 >in3 -3 | <<EOF wc -l | cat b >out2");
+	// line = ft_strdup("ls <in -la <in2 cat -e >out1 |  tail -3 | wc | cat b");
 	// line = ft_strdup(" >out1 >out2 >out3 >>out4 >ok <in3 |  tail -3 | wc | cat b");
 	// line = ft_strdup(" >out1 >out2 >out3 >>out4 >ok <<EOF <in3 <<EOF|  tail -3 | wc | cat b>out9999");
 	// line = ft_strdup("<in <<EOF | >out<in");
@@ -69,7 +75,10 @@ int	main(int argc, char **argv, char **env)
 		}
 	}
 
+
+
 	data.tree = build_syntax_tree(data.tokens, 0);
+	print_tokens(data.tokens);
 	print_syntax_tree(data.tree);
 
 

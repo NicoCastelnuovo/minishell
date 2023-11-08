@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:06:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/07 15:31:48 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/08 09:54:01 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,12 @@ int	is_redir(t_tkn_type tkn_type)
 {
 	if (tkn_type == TKN_REDIR_APPEND ||
 		tkn_type == TKN_HERE_DOC ||
-		tkn_type == TKN_REDIR_IN ||
-		tkn_type == TKN_REDIR_OUT )
+		tkn_type == TKN_REDIR_IN || // change !!!
+		tkn_type == TKN_REDIR_OUT) // ||
+		// tkn_type == REDIR_APPEND ||
+		// tkn_type == REDIR_HERE_DOC ||
+		// tkn_type == REDIR_IN ||
+		// tkn_type == REDIR_OUT )
 		return (tkn_type);
 	return (0);
 }
