@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 12:09:07 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/08 16:28:38 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ static t_list	*get_var_names(char *s, int n)
 	Just perform the expansion on a string which needs it. The check to
 	understand if the string needs to be expanded is done before.
 */
-char	*expansion(char *s, int exit_code, char **env)
+char	*expand(char *s, int exit_code, char **env)
 {
 	int		n;
 	t_list	*var_lst;
@@ -138,3 +138,36 @@ char	*expansion(char *s, int exit_code, char **env)
 	ft_lstclear(&var_lst, del_var_lst_content);
 	return (new_str);
 }
+
+void	expansion(t_list *tkn, t_env *env)
+{
+	while (tkn)
+	{
+
+		tkn = tkn->next;
+	}
+
+}
+
+
+
+
+
+// char	*expansion(char *s, int exit_code, char **env)
+// {
+// 	int		n;
+// 	t_list	*var_lst;
+// 	char	*new_str;
+
+// 	n = get_n_dollars(s);
+// 	var_lst = get_var_names(s, n);
+// 	get_var_values(var_lst, n, exit_code);
+// 	new_str = build_str(s, var_lst);
+
+// 	print_var_lst(var_lst); // remove
+// 	ft_printf("old_str: [%s]\n", s);
+// 	ft_printf("new_str: [%s]\n", new_str);
+
+// 	ft_lstclear(&var_lst, del_var_lst_content);
+// 	return (new_str);
+// }
