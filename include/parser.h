@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/07 16:29:03 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/08 09:05:26 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ typedef struct s_pipe
 */
 typedef struct s_cmd
 {
-	t_list			*block;
-	char			**args;			// top cat -e ls      ftsplit("ls -la Makefile", ' ');
-	t_list			*redir;			// in1(<) - out4(>) - temp1(<<) - temp2(<<) - temp3(<<) - (null or "")(>)
-	int				fd_in;			// still necessary ???
-	int				fd_out;
-	int				err_code;
+	t_list		*block;
+	char		**args;			// top cat -e ls      ftsplit("ls -la Makefile", ' ');
+	t_list		*redir;			// in1(<) - out4(>) - temp1(<<) - temp2(<<) - temp3(<<) - (null or "")(>)
+	int			fd_in;			// still necessary ???
+	int			fd_out;
+	int			err_code;
 }	t_cmd;
 
 enum e_redir
@@ -91,5 +91,7 @@ t_list	*update_cmd_node(t_list *curr_tkn, t_list *prev_tkn, t_node *node);
 
 // ---------------------------------------------------------------- PRINT UTILS
 void	print_syntax_tree(t_node *root);
+void	print_redir_list(t_list *redir);
+void	print_args(char **args);
 
 #endif

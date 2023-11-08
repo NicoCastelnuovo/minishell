@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/07 17:03:01 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/08 09:10:37 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,49 +44,37 @@ static t_list	*copy_tokens_block(t_list *curr_tkn, t_node *node_c)
 	while (curr_tkn) // !!!!  After distributing in each filed the tokens, block could be deleted....
 	{
 		tkn_content = (t_tkn_data *)curr_tkn->content;
-		if (ft_strncmp(tkn_content->str, "|", 1) == 0)
+		if (((t_tkn_data *)curr_tkn->content)->type == TKN_PIPE)
 			return (curr_tkn);
 		tkn_content_cpy = cpy_tkn_content(tkn_content); // protect
 		tkn_node_cpy = ft_lstnew(tkn_content_cpy); // protect
 		if (!tkn_node_cpy)
 			return (NULL);
 		ft_lstadd_back(&((t_cmd *)node_c->content)->block, tkn_node_cpy);
+
+
+
 		// first iter, prev_token doesn't exist
-					if (prev_tkn)
-						ft_printf("prev[%s] <-- ", ((t_tkn_data*)prev_tkn->content)->str);
-					else
-						ft_printf("prev(null) <-- ");
-					ft_printf("curr[%s]", ((t_tkn_data*)curr_tkn->content)->str);
-					if (curr_tkn->next)
-						ft_printf(" --> next[%s]", ((t_tkn_data*)curr_tkn->next->content)->str);
-					else
-						ft_printf(" --> next(null)");
-					// if (curr_tkn->next->next)
-					// 	ft_printf(" --> next[%s]", ((t_tkn_data*)curr_tkn->next->next->content)->str);
-					// else
-					// 	ft_printf(" --> next(null)");
-					ft_printf("\n");
-		tmp = update_cmd_node(curr_tkn, prev_tkn, node_c); // make this jump 1 place if needed
-
-
-
-		if (tmp != curr_tkn) // jump to do
-		{
-			ft_printf("	-JUMP!-\n");
-			prev_tkn = NULL; // bug
-			if (curr_tkn->next->next)
-				curr_tkn = curr_tkn->next->next;
-			else
-				break ;
-		}
+		if (prev_tkn)
+			ft_printf("prev[%s] <-- ", ((t_tkn_data*)prev_tkn->content)->str);
 		else
-		{
-			prev_tkn = curr_tkn;
-			if (curr_tkn->next)
-				curr_tkn = curr_tkn->next;
-			else
-				break ;
-		}
+			ft_printf("prev(null) <-- ");
+		ft_printf("curr[%s]", ((t_tkn_data*)curr_tkn->content)->str);
+		if (curr_tkn->next)
+			ft_printf(" --> next[%s]", ((t_tkn_data*)curr_tkn->next->content)->str);
+		else
+			ft_printf(" --> next(null)");
+		ft_printf("\n");
+
+
+
+
+		tmp = update_cmd_node(curr_tkn, prev_tkn, node_c); // make this jump 1 place if needed
+		prev_tkn = curr_tkn;
+		if (curr_tkn->next)
+			curr_tkn = curr_tkn->next;
+		else
+			break ;
 		ft_printf("\n");
 	}
 	return (curr_tkn);
