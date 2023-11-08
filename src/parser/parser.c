@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:06:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 12:39:36 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/08 16:38:37 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ char	*parse(t_list *tkn)
 		}
 		else // check current with end-line
 		{
+			// CHECH FOR OPEN QUOTES!!!
 			if (is_redir(curr_tkn->type)) // ------------------ big question: should append a newline during lexing?
 				return ("newLine");
 			if (curr_tkn->type == TKN_PIPE)

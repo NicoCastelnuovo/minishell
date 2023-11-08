@@ -1,36 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_data.c                                        :+:      :+:    :+:   */
+/*   get_env_custom.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/06 11:43:44 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 17:05:55 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/11/08 16:53:39 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/11/08 17:46:01 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_data(t_data *data)
+char	*get_env_custom(char *name, t_env *env)
 {
-	if (!data)
-		return ;
-	if (data->input)
+	t_var	*head;
+
+	head = env->head; // maybe no need
+	if (env->size)
 	{
-		free(data->input);
-		data->input = NULL;
+		while (head)
+		{
+			if (ft_strncmp(head->name, name, ft_strlen(head->name)) == 0)
+				return (head->value);
+			head = head->next;
+		}
 	}
-	if (data->tokens)
-	{
-		ft_lstclear(&data->tokens, del_tokens);
-		data->tokens = NULL;
-	}
-	if (data->tree)
-	{
-		free_tree(data->tree);
-		data->tree = NULL;
-	}
-	data->err = NULL;
-	data->e_code = 0;
+	return (NULL);
 }

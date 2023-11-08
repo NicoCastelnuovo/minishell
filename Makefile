@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/07 13:06:25 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/08 16:56:10 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,28 +16,28 @@
 
 VPATH = ./src/ \
 	./src/builtins \
-	./src/lexer \
-	./src/syntax_tree \
+	./src/env \
 	./src/expansion \
+	./src/lexer \
 	./src/parser \
-	./src/env_dlst \
 	./src/print_utils \
-	./src/utils \
 	./src/signals \
-	./test \
+	./src/utils \
+	./test
 
 BUILTINS = cd.c \
 	echo.c \
-	env.c \
 	export.c \
 	pwd.c \
 	unset.c
 
-ENV_DLST = env_dlst_append.c \
+ENV = env.c \
+	env_dlst_append.c \
 	env_dlst_clear.c \
 	env_dlst_delnode.c \
 	env_dlst_new.c \
-	env_dlst_update.c
+	env_dlst_update.c \
+	get_env_custom.c
 
 EXPANSION = build_str.c \
 	expansion.c \
@@ -52,7 +52,6 @@ PRINT_UTILS = print_syntax_tree.c \
 	print_tokens.c \
 
 SIGNALS = sig_handler.c
-
 
 UTILS = free_data.c
 
@@ -75,7 +74,7 @@ LEXER = lexer.c \
 
 SRCS = minishell.c \
 	$(BUILTINS) \
-	$(ENV_DLST) \
+	$(ENV) \
 	$(EXPANSION) \
 	$(LEXER) \
 	$(PARSER) \

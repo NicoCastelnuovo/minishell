@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 16:28:38 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:54:15 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ static int	get_n_dollars(char *s)
 }
 
 /*
-	For each variable name in the list, getenv() is applied, and the value is
+	For each variable name in the list, get_env_custom() is applied, and the value is
 	duplicated into the node. If the variable doesn't exist, an empty string
 	is duplicated.
 */
-static void	get_var_values(t_list *var_lst, int n, int exit_code)
+static void	get_var_values(t_list *var_lst, t_env *env, int e_code)
 {
 	char	*expanded;
 	t_var	*var;
@@ -65,15 +65,12 @@ static void	get_var_values(t_list *var_lst, int n, int exit_code)
 		else
 		{
 			if (ft_strncmp(var->name, "?", 1) == 0)
-				expanded = ft_itoa(exit_code);
+				expanded = ft_itoa(e_code);
 			else
-			{
-				if (getenv(var->name))
-					expanded = ft_strdup(getenv((var->name)));
-				else
-					expanded = ft_strdup("");
-			}
+				expanded = get_env_custom(var->name, env);
 		}
+		if (!expanded)
+			expanded = ft_strdup("");
 		var->value = expanded;
 		var->value_len = ft_strlen(var->value);
 		var_lst = var_lst->next;
@@ -120,40 +117,56 @@ static t_list	*get_var_names(char *s, int n)
 	Just perform the expansion on a string which needs it. The check to
 	understand if the string needs to be expanded is done before.
 */
-char	*expand(char *s, int exit_code, char **env)
+void	expand(t_tkn_data *tkn, t_env *env, int e_code)
 {
 	int		n;
 	t_list	*var_lst;
+	char	*old_str;
 	char	*new_str;
 
-	n = get_n_dollars(s);
-	var_lst = get_var_names(s, n);
-	get_var_values(var_lst, n, exit_code);
-	new_str = build_str(s, var_lst);
+	// cases
+	/*
+		$USER
+		"$USER"
+		"$USER   $HOME"
+		$USER$HOME
+		$USER$?
+	*/
+
+	old_str = tkn->str;
+	n = get_n_dollars(old_str);
+	var_lst = get_var_names(old_str, n);
+	get_var_values(var_lst, env, e_code);
+	new_str = build_str(old_str, var_lst);
 
 	print_var_lst(var_lst); // remove
-	ft_printf("old_str: [%s]\n", s);
+	ft_printf("old_str: [%s]\n", old_str);
 	ft_printf("new_str: [%s]\n", new_str);
 
 	ft_lstclear(&var_lst, del_var_lst_content);
-	return (new_str);
+	tkn->str = ft_strdup(new_str);
 }
 
-void	expansion(t_list *tkn, t_env *env)
+static int	has_to_be_expanded(t_tkn_data *tkn)
+{
+	if (tkn->type == TKN_ENV_VAR)
+		return (1);
+	if (tkn->type == TKN_D_QUOTED_STR && ft_strchr(tkn->str, '$'))
+		return (1);
+	return (0);
+}
+
+void	expansion(t_list *tkn, t_env *env, int e_code)
 {
 	while (tkn)
 	{
-
+		if (has_to_be_expanded(tkn->content))
+			expand(tkn->content, env, e_code);
 		tkn = tkn->next;
 	}
-
 }
 
-
-
-
-
-// char	*expansion(char *s, int exit_code, char **env)
+// char	*expansion(char *s, int e_code, char **env)
 // {
 // 	int		n;
 // 	t_list	*var_lst;
@@ -161,7 +174,7 @@ void	expansion(t_list *tkn, t_env *env)
 
 // 	n = get_n_dollars(s);
 // 	var_lst = get_var_names(s, n);
-// 	get_var_values(var_lst, n, exit_code);
+// 	get_var_values(var_lst, n, e_code);
 // 	new_str = build_str(s, var_lst);
 
 // 	print_var_lst(var_lst); // remove

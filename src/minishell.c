@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 16:28:58 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:51:52 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ static void	init_data(t_data *data, char **env)
 static void	process_input(t_data *data)
 {
 	lexer(data->input, &data->tokens);
+	ft_printf("• TOKENS ----> ");
 	print_tokens(data->tokens);
-	// expansion ??
+	// expansion(data->tokens, data->env, data->e_code);
 	if (data->tokens) // can be false ?
 	{
 		data->err = parse(data->tokens);
@@ -67,9 +68,6 @@ int	main(int argc, char **argv, char **env)
 	init_data(&data, env);
 	if (!data.env)
 		return (1); // custom err
-
-
-
 	while (1)
 	{
 		data.input = readline("minishell $ "); // ft_strdup("<in cat -e | wc -l -o  -i >out2 | iuhe"); // readinput("minishell $ ");
