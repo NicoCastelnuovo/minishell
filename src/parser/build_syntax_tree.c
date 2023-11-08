@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 09:54:08 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/08 13:51:27 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static t_list	*copy_tokens_block(t_list *curr_tkn, t_node *node_c)
 	t_tkn_data	*tkn_content_cpy;
 	t_list		*tkn_node_cpy;
 	t_list		*prev_tkn;
-	t_list		*tmp;
 
 	tkn_node_cpy = NULL;
 	tkn_content_cpy = NULL;

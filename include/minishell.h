@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/07 12:55:03 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/08 12:45:00 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 typedef struct s_data
 {
 	t_env	*env;
+	char	*line;
 	t_list	*tokens;
 	t_node	*tree;
 	char	*err;

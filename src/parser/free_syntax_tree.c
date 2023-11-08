@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 10:28:35 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/07 16:45:50 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/08 13:33:14 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_dptr(char **p)
 	free(p);
 }
 
-static void	del_block(void *content)
+static void	del_block(void *content) // change / substitute
 {
 	t_tkn_data	*token;
 
@@ -83,11 +83,9 @@ void	free_pipe_node(t_node *node_p)
 
 void	free_tree(t_node *tree)
 {
-	t_node	*root;
 	t_pipe	*pipe;
-	t_pipe	*temp;
+	t_node	*temp;
 
-	root = tree;
 	if (tree->type == IS_PIPE)
 	{
 		while (tree->type == IS_PIPE)
@@ -98,8 +96,6 @@ void	free_tree(t_node *tree)
 			free_pipe_node(tree);
 			tree = temp;
 		}
-		free_cmd_node(tree);
 	}
-	else
-		free_cmd_node(tree);
+	free_cmd_node(tree);
 }
