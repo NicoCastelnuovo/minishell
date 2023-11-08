@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/07 09:26:42 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/08 09:46:08 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ typedef struct s_pipe
 */
 typedef struct s_cmd
 {
-	t_list			*block;
-	char			**args;			// top cat -e ls      ftsplit("ls -la Makefile", ' ');
-	t_list			*redir;			// in1(<) - out4(>) - temp1(<<) - temp2(<<) - temp3(<<) - (null or "")(>)
-	int				fd_in;			// still necessary ???
-	int				fd_out;
-	int				err_code;
+	t_list		*block;
+	char		**args;			// top cat -e ls      ftsplit("ls -la Makefile", ' ');
+	t_list		*redir;			// in1(<) - out4(>) - temp1(<<) - temp2(<<) - temp3(<<) - (null or "")(>)
+	int			fd_in;			// still necessary ???
+	int			fd_out;
+	int			err_code;
 }	t_cmd;
 
 enum e_redir
@@ -66,34 +66,29 @@ enum e_redir
 	REDIR_APPEND		// >>
 };
 
-typedef struct s_redir
+typedef struct s_redir_data
 {
 	char			*file_name;
 	enum e_redir	type;
-}	t_redir;
+}	t_redir_data;
 
 // ---------------------------------------------------------------- SYNTAX TREE
 t_node	*build_syntax_tree(t_list *token, int n);
 void	free_tree(t_node *tree);
 void	free_cmd_node(t_node *node_c);
 void	free_pipe_node(t_node *node_p);
+void	free_dptr(char **p);
 
 // -------------------------------------------------------------------- PARSING
-void	parse(t_node *tree);
-
-// ---------------------------------------------------------------- PARSE REDIR
-void	update_cmd_tab_redir_type(t_cmd *cmd, t_tkn_data *tkn_curr, t_tkn_data *tkn_next);
-void	update_cmd_tab_redir_filename(t_cmd *cmd, t_tkn_data *tkn_curr);
-int		is_redir_syntax_err(t_tkn_data *curr, t_tkn_data *next);
+char	*parse(t_list *tkn);
 int		is_redir(t_tkn_type tkn_type);
 
-// ----------------------------------------------------------------- PARSE ARGS
-void	update_cmd_tab_args(t_cmd *cmd, t_tkn_data *tkn_curr);
-
-// ----------------------------------------------------------------- PARSE PIPE
-int		is_pipe_syntax_err(t_tkn_data *curr, t_tkn_data *next);
+// ----------------------------------------------------------- UPDATE CMD TABLE
+void	update_cmd_node(t_list *curr_tkn, t_list *prev_tkn, t_node *node);
 
 // ---------------------------------------------------------------- PRINT UTILS
 void	print_syntax_tree(t_node *root);
+void	print_redir_list(t_list *redir);
+void	print_args(char **args);
 
 #endif

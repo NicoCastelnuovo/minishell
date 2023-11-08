@@ -6,13 +6,13 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 10:28:35 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/07 09:16:15 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/07 16:45:50 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	free_dptr(char **p)
+void	free_dptr(char **p)
 {
 	int	i;
 
@@ -39,9 +39,9 @@ static void	del_block(void *content)
 
 static void	del_redir(void *content)
 {
-	t_redir	*redir;
+	t_redir_data	*redir;
 
-	redir = (t_redir *)content;
+	redir = (t_redir_data *)content;
 	if (redir)
 	{
 		if (redir->file_name)
