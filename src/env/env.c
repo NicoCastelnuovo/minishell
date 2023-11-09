@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 08:50:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 17:46:05 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:45:47 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	print_env(t_env *env)
 	t_var	*head;
 
 	head = env->head;
+	ft_printf("\033[0;36m============= ENVIRONMENT =============\033[0;37m\n");
 	if (env->size)
 	{
 		while (head)
@@ -34,6 +35,7 @@ void	print_env(t_env *env)
 			head = head->next;
 		}
 	}
+	ft_printf("\033[0;36m=======================================\033[0;37m\n");
 }
 
 /*

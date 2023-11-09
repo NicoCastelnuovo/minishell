@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/09 14:07:29 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:03:40 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	del_to_expand(void *content)
 		var->prev = NULL;
 		var->to_export = -1;
 	}
-	// free(var); // ?
-	// var = NULL; // ?
+	free(var);
+	var = NULL;
 }
 
 /*
@@ -77,22 +77,29 @@ static void	get_var_values(t_list *var_lst, t_env *env, int e_code)
 {
 	char	*expanded;
 	t_var	*var;
+	char	*env_var;
 
+	env_var = NULL;
+	expanded = NULL;
 	while (var_lst)
 	{
 		var = (t_var *)var_lst->content;
 		if (ft_strncmp(var->name, "$", 1) == 0)
-			expanded = "$";
+			expanded = ft_strdup("$");
 		else
 		{
 			if (ft_strncmp(var->name, "?", 1) == 0)
-				expanded = ft_itoa(e_code);
+				expanded = ft_itoa(e_code); // allocates@@
 			else
-				expanded = get_env_custom(var->name, env);
+			{
+				env_var = get_env_custom(var->name, env);
+				if (env_var)
+					expanded = ft_strdup(env_var);
+			}
 		}
 		if (!expanded)
-			expanded = "";
-		var->value = ft_strdup(expanded);
+			expanded = ft_strdup("");
+		var->value = expanded;
 		var->value_len = ft_strlen(var->value);
 		var_lst = var_lst->next;
 	}
@@ -124,6 +131,8 @@ static t_list	*get_var_names(char *s, int n)
 		var->value = NULL;
 		var->value_len = -1;
 		new_node = ft_lstnew(var); // protect
+		if (!new_node)
+			return (ft_lstclear(&var_lst, del_to_expand), NULL);
 		ft_lstadd_back(&var_lst, new_node);
 		i++;
 	}
@@ -131,10 +140,12 @@ static t_list	*get_var_names(char *s, int n)
 }
 
 /*
-	Count the number of expansino to be performed and create a list with
-	key value pairs (var_lst).
+	In order: get n of pssible expansion to perform ("$$$" are still counted
+	as three potential expansion to be done), extract the variable names
+	("$" is still a variable name), get the variable values and build the
+	new string which will replace the origial one.
 */
-void	expand(char *old_str, t_env *env, int e_code)
+char	*expand(char *old_str, t_env *env, int e_code)
 {
 	int		n;
 	t_list	*to_expand;
@@ -145,18 +156,23 @@ void	expand(char *old_str, t_env *env, int e_code)
 	get_var_values(to_expand, env, e_code);
 	new_str = build_str(old_str, to_expand);
 
-	// print_expansion(to_expand); // remove
-	ft_printf("\033[34mold_str: [%s]\033[0m -->", old_str);
+	print_expansion(to_expand); // remove
+	ft_printf("\033[34mold_str: [%s]\033[0m --> ", old_str);
 	if (new_str)
 		ft_printf("\033[35m[%s]\033[0m\n", new_str);
 	else
 		ft_printf("\033[35m[<null>]\033[0m\n");
 
 	ft_lstclear(&to_expand, del_to_expand);
-	free(old_str); 	// nedd to free tkn->str ???
-	old_str = ft_strdup(new_str);
+	free(old_str); 	// need to free tkn->str ???
+	return (new_str); //???
 }
 
+/*
+	Iterate through the args and redirections od t_cmd structure, checking
+	if there issomething to expand. In case of here_doc, the variable is not
+	expanded!
+*/
 static int	check_expansion(t_cmd *cmd, t_env *env, int e_code)
 {
 	int				i;
@@ -169,7 +185,13 @@ static int	check_expansion(t_cmd *cmd, t_env *env, int e_code)
 		while (cmd->args[i])
 		{
 			if (ft_strchr(cmd->args[i], '$') && cmd->args[i][0] != TKN_S_QUOTE)
-				expand(cmd->args[i], env, e_code);
+			{
+				cmd->args[i] = expand(cmd->args[i], env, e_code);
+				if (cmd->args[i] == NULL)
+				{
+					// custom error
+				}
+			}
 			i++;
 		}
 	}
@@ -179,7 +201,7 @@ static int	check_expansion(t_cmd *cmd, t_env *env, int e_code)
 		if (redir->type != REDIR_HERE_DOC)
 		{
 			if (ft_strchr(redir->file_name, '$') && redir->file_name[0] != TKN_S_QUOTE)
-				expand(redir->file_name, env, e_code);
+				redir->file_name = expand(redir->file_name, env, e_code);
 		}
 		cmd->redir = cmd->redir->next;
 	}

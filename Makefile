@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/09 08:19:27 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/09 15:19:08 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ BUILTINS = cd.c \
 	echo.c \
 	export.c \
 	pwd.c \
-	unset.c
+	unset.c \
+	exit.c
 
 ENV = env.c \
 	env_dlst_append.c \
@@ -41,6 +42,8 @@ ENV = env.c \
 
 EXPANSION = build_str.c \
 	expansion.c
+
+HERE_DOC = here_doc.c
 
 PARSER = parser.c \
 	build_syntax_tree.c \

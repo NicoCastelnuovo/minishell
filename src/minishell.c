@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/09 14:03:27 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:01:48 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static void	process_input(t_data *data)
 		expansion(data->tree, data->env, data->e_code);
 	add_history(data->input); // not always to do
 	free_data(data);
+	exit(1);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -74,7 +75,7 @@ int	main(int argc, char **argv, char **env)
 		data.input = readline("minishell $ "); // ft_strdup("<in cat -e | wc -l -o  -i >out2 | iuhe"); // readinput("minishell $ ");
 		if (data.input && !is_empty_input(data.input)) // nest if condition inside
 			process_input(&data);
-		ft_printf("\033[0;35m===============================================================\033[0m\n");
+		ft_printf("\033[0;35m=========================================================================\033[0m\n");
 	}
 	if (data.env)
 	{
