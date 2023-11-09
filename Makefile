@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/08 16:56:10 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/09 08:19:27 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,8 +40,7 @@ ENV = env.c \
 	get_env_custom.c
 
 EXPANSION = build_str.c \
-	expansion.c \
-	utils.c
+	expansion.c
 
 PARSER = parser.c \
 	build_syntax_tree.c \
@@ -50,6 +49,7 @@ PARSER = parser.c \
 
 PRINT_UTILS = print_syntax_tree.c \
 	print_tokens.c \
+	print_expansion.c
 
 SIGNALS = sig_handler.c
 

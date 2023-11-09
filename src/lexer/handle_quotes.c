@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:09:32 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/03 15:43:32 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/09 13:46:27 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,31 +40,33 @@ void	close_s_quote(t_tkn_data *tkn_data, bool *is_s_q_open, t_quote *quote)
 	tkn_data->quote_status = CLOSED_QUOTE;
 }
 
-void	detect_quote(t_tkn_data *tkn_data, char tkn_first_char, t_quote *quote)
+t_quote_open	*detect_quote(t_tkn_data *tkn_data, char tkn_first_char, t_quote *quote)
 {
-	static bool	is_s_quote_open = false;
-	static bool	is_d_quote_open = false;
+	// static bool	quote_open.is_s_quote_open = false;
+	// static bool	quote_open.is_d_quote_open = false;
+	static t_quote_open	quote_open;
 
-	if (tkn_first_char == TKN_D_QUOTE && !is_d_quote_open && !is_s_quote_open)
+	if (tkn_first_char == TKN_D_QUOTE && !quote_open.is_d_quote_open && !quote_open.is_s_quote_open)
 	{
-		open_d_quote(tkn_data, &is_d_quote_open, quote);
+		open_d_quote(tkn_data, &quote_open.is_d_quote_open, quote);
 		// printf("double quote is open\n");
 	}
-	else if (tkn_first_char == TKN_D_QUOTE && is_d_quote_open
+	else if (tkn_first_char == TKN_D_QUOTE && quote_open.is_d_quote_open
 		&& *quote == IN_D_QUOTE)
 	{
-		close_d_quote(tkn_data, &is_d_quote_open, quote);
+		close_d_quote(tkn_data, &quote_open.is_d_quote_open, quote);
 		// printf("double quote is closed\n");
 	}
-	else if (tkn_first_char == TKN_S_QUOTE && !is_s_quote_open && !is_d_quote_open)
+	else if (tkn_first_char == TKN_S_QUOTE && !quote_open.is_s_quote_open && !quote_open.is_d_quote_open)
 	{
-		open_s_quote(tkn_data, &is_s_quote_open, quote);
+		open_s_quote(tkn_data, &quote_open.is_s_quote_open, quote);
 		// printf("single quote is open\n");
 	}
-	else if (tkn_first_char == TKN_S_QUOTE && is_s_quote_open
+	else if (tkn_first_char == TKN_S_QUOTE && quote_open.is_s_quote_open
 		&& *quote == IN_S_QUOTE)
 	{
-		close_s_quote(tkn_data, &is_s_quote_open, quote);
+		close_s_quote(tkn_data, &quote_open.is_s_quote_open, quote);
 		// printf("single quote is closed\n");
 	}
+	return (&quote_open);
 }

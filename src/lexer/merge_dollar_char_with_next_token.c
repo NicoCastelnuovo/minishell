@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:52:43 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/08 16:35:42 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/09 13:41:36 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,11 @@ bool	is_needed_to_merge(char first_char)
 	bool	is_alpha;
 	bool	is_digit;
 	bool	is_under_score;
-	bool	is_question_mark;
 
 	is_alpha = ft_isalpha(first_char);
 	is_digit = ft_isdigit(first_char);
 	is_under_score = first_char == '_'; // norminette ??????
-	if (!(is_alpha || is_digit || is_under_score || first_char == '?')) // changed
+	if (!(is_alpha || is_digit || is_under_score || first_char == '?')) // added || first_char == '?'
 		return (false);
 	else
 		return (true);
@@ -42,7 +41,12 @@ void	merge_dollar_char_with_next_token(t_list *tkns_head)
 		if ((cur_tkn_data->str)[0] == TKN_DOLLAR_CHAR)
 		{
 			if (!is_needed_to_merge(*(next_tkn_data->str)))
-				return ;
+			{
+				cur_node = cur_node->next;
+				continue ;
+			}
+			// if (!is_needed_to_merge(*(next_tkn_data->str)))
+			// 	return ;
 			cur_tkn_data->str = join_two_strs(&(cur_tkn_data->str),
 					next_tkn_data->str);
 			remove_next_node(cur_node);

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/08 12:09:18 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/09 13:46:42 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ typedef enum s_white_space
 	FOLLOWED_BY_WHITE_SPACE = 1,
 }	t_white_space;
 
+typedef struct s_quote_open
+{
+	bool	is_s_quote_open;
+	bool	is_d_quote_open;
+}	t_quote_open;
+
 typedef struct s_tkn_data
 {
 	char			*str;
@@ -77,7 +83,7 @@ char	*store_special_char_as_tkn(char *c, t_list **tkn_head);
 char	*store_prev_chars_as_tkn(char *ref, int tkn_counter, t_list **tkn_head);
 void	read_char(char cur_char, char **ref, int *tkn_ctr, t_list **tkn_head);
 void	check_each_tkn_str(t_tkn_data *tkn_data);
-void	detect_quote(t_tkn_data *tkn_data, char tkn_first_char, t_quote *position);
+t_quote_open	*detect_quote(t_tkn_data *tkn_data, char tkn_first_char, t_quote *position);
 void	assign_type_to_tkn(t_list *tkns_head);
 void	assign_quote_status_to_tkn(t_list *tkns_head);
 void	merge_consecutive_less_or_greater_than(t_list *tkns_head);

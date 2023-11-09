@@ -6,11 +6,32 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 17:54:15 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/09 14:07:29 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	del_to_expand(void *content)
+{
+	t_var	*var;
+
+	var = (t_var *)content;
+	if (var)
+	{
+		if (var->name)
+			free(var->name);
+		if (var->value)
+			free(var->value);
+		var->name_len = -1;
+		var->value_len = -1;
+		var->next = NULL;
+		var->prev = NULL;
+		var->to_export = -1;
+	}
+	// free(var); // ?
+	// var = NULL; // ?
+}
 
 /*
 	Take as argument a string without dollar sign included. It checks
@@ -61,7 +82,7 @@ static void	get_var_values(t_list *var_lst, t_env *env, int e_code)
 	{
 		var = (t_var *)var_lst->content;
 		if (ft_strncmp(var->name, "$", 1) == 0)
-			expanded = ft_strdup("$");
+			expanded = "$";
 		else
 		{
 			if (ft_strncmp(var->name, "?", 1) == 0)
@@ -70,17 +91,13 @@ static void	get_var_values(t_list *var_lst, t_env *env, int e_code)
 				expanded = get_env_custom(var->name, env);
 		}
 		if (!expanded)
-			expanded = ft_strdup("");
-		var->value = expanded;
+			expanded = "";
+		var->value = ft_strdup(expanded);
 		var->value_len = ft_strlen(var->value);
 		var_lst = var_lst->next;
 	}
 }
 
-/*
-	Based on the number of $ sign found in the string, the function returns
-	a list whose content has the variable name to expand, and the length of it.
-*/
 static t_list	*get_var_names(char *s, int n)
 {
 	t_list	*var_lst;
@@ -94,7 +111,7 @@ static t_list	*get_var_names(char *s, int n)
 	{
 		var = ft_calloc(1, sizeof(t_var));
 		if (!var)
-			return (ft_lstclear(&var_lst, del_var_lst_content), NULL);
+			return (ft_lstclear(&var_lst, del_to_expand), NULL);
 		s = ft_strchr(s, '$');
 		s++;
 		var->name_len = get_var_name_len(s);
@@ -103,7 +120,7 @@ static t_list	*get_var_names(char *s, int n)
 		else
 			var->name = ft_substr(s, 0, var->name_len);
 		if (!var->name)
-			return (ft_lstclear(&var_lst, del_var_lst_content), NULL);
+			return (ft_lstclear(&var_lst, del_to_expand), NULL);
 		var->value = NULL;
 		var->value_len = -1;
 		new_node = ft_lstnew(var); // protect
@@ -114,73 +131,73 @@ static t_list	*get_var_names(char *s, int n)
 }
 
 /*
-	Just perform the expansion on a string which needs it. The check to
-	understand if the string needs to be expanded is done before.
+	Count the number of expansino to be performed and create a list with
+	key value pairs (var_lst).
 */
-void	expand(t_tkn_data *tkn, t_env *env, int e_code)
+void	expand(char *old_str, t_env *env, int e_code)
 {
 	int		n;
-	t_list	*var_lst;
-	char	*old_str;
+	t_list	*to_expand;
 	char	*new_str;
 
-	// cases
-	/*
-		$USER
-		"$USER"
-		"$USER   $HOME"
-		$USER$HOME
-		$USER$?
-	*/
-
-	old_str = tkn->str;
 	n = get_n_dollars(old_str);
-	var_lst = get_var_names(old_str, n);
-	get_var_values(var_lst, env, e_code);
-	new_str = build_str(old_str, var_lst);
+	to_expand = get_var_names(old_str, n);
+	get_var_values(to_expand, env, e_code);
+	new_str = build_str(old_str, to_expand);
 
-	print_var_lst(var_lst); // remove
-	ft_printf("old_str: [%s]\n", old_str);
-	ft_printf("new_str: [%s]\n", new_str);
+	// print_expansion(to_expand); // remove
+	ft_printf("\033[34mold_str: [%s]\033[0m -->", old_str);
+	if (new_str)
+		ft_printf("\033[35m[%s]\033[0m\n", new_str);
+	else
+		ft_printf("\033[35m[<null>]\033[0m\n");
 
-	ft_lstclear(&var_lst, del_var_lst_content);
-	tkn->str = ft_strdup(new_str);
+	ft_lstclear(&to_expand, del_to_expand);
+	free(old_str); 	// nedd to free tkn->str ???
+	old_str = ft_strdup(new_str);
 }
 
-static int	has_to_be_expanded(t_tkn_data *tkn)
+static int	check_expansion(t_cmd *cmd, t_env *env, int e_code)
 {
-	if (tkn->type == TKN_ENV_VAR)
-		return (1);
-	if (tkn->type == TKN_D_QUOTED_STR && ft_strchr(tkn->str, '$'))
-		return (1);
+	int				i;
+	t_redir_data	*redir;
+
+	i = 0;
+	redir = NULL;
+	if (cmd->args)
+	{
+		while (cmd->args[i])
+		{
+			if (ft_strchr(cmd->args[i], '$') && cmd->args[i][0] != TKN_S_QUOTE)
+				expand(cmd->args[i], env, e_code);
+			i++;
+		}
+	}
+	while (cmd->redir)
+	{
+		redir = (t_redir_data *)cmd->redir->content;
+		if (redir->type != REDIR_HERE_DOC)
+		{
+			if (ft_strchr(redir->file_name, '$') && redir->file_name[0] != TKN_S_QUOTE)
+				expand(redir->file_name, env, e_code);
+		}
+		cmd->redir = cmd->redir->next;
+	}
 	return (0);
 }
 
-void	expansion(t_list *tkn, t_env *env, int e_code)
+void	expansion(t_node *tree, t_env *env, int e_code)
 {
-	while (tkn)
+	t_pipe	*pipe;
+	t_cmd	*cmd;
+
+	while (tree->type == IS_PIPE)
 	{
-		if (has_to_be_expanded(tkn->content))
-			expand(tkn->content, env, e_code);
-		tkn = tkn->next;
+		pipe = (t_pipe *)tree->content;
+		cmd = (t_cmd *)pipe->left->content;
+		check_expansion(cmd, env, e_code);
+		tree = pipe->right;
 	}
+	cmd = (t_cmd *)tree->content; // check last one OOORRR the only-one
+	check_expansion(cmd, env, e_code);
 }
-
-// char	*expansion(char *s, int e_code, char **env)
-// {
-// 	int		n;
-// 	t_list	*var_lst;
-// 	char	*new_str;
-
-// 	n = get_n_dollars(s);
-// 	var_lst = get_var_names(s, n);
-// 	get_var_values(var_lst, n, e_code);
-// 	new_str = build_str(s, var_lst);
-
-// 	print_var_lst(var_lst); // remove
-// 	ft_printf("old_str: [%s]\n", s);
-// 	ft_printf("new_str: [%s]\n", new_str);
-
-// 	ft_lstclear(&var_lst, del_var_lst_content);
-// 	return (new_str);
-// }

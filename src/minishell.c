@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 17:51:52 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/09 14:03:27 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,13 @@ static void	process_input(t_data *data)
 	lexer(data->input, &data->tokens);
 	ft_printf("• TOKENS ----> ");
 	print_tokens(data->tokens);
-	// expansion(data->tokens, data->env, data->e_code);
 	if (data->tokens) // can be false ?
 	{
 		data->err = parse(data->tokens);
 		if (data->err)
 		{
 			data->e_code = 258;
-			ft_printf("\033[91msyntax error near unexpected token `%s'\033[0m\n", data->err);
+			ft_printf("\033[91mminishell: syntax error near unexpected token `%s'\033[0m\n", data->err);
 		}
 	}
 	if (!data->err)
@@ -55,7 +54,9 @@ static void	process_input(t_data *data)
 		print_tokens(data->tokens);
 		print_syntax_tree(data->tree);
 	}
-	add_history(data->input);
+	if (data->tree)
+		expansion(data->tree, data->env, data->e_code);
+	add_history(data->input); // not always to do
 	free_data(data);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:06:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 16:38:37 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/09 14:04:26 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,22 @@ char	*parse(t_list *tkn)
 		next_tkn = NULL;
 		curr_tkn = tkn->content;
 		if (curr_tkn->quote_status == OPEN_QUOTE)
-			return ("quotes");
+			return (ft_strdup("quotes"));
 		if (tkn->next) // check current-next
 		{
 			next_tkn = tkn->next->content;
 			if (is_redir(curr_tkn->type) && is_redir_syntax_err(next_tkn))
-				return (next_tkn->str);
+				return (ft_strdup(next_tkn->str));
 			if (curr_tkn->type == TKN_PIPE && is_pipe_syntax_err(next_tkn))
-				return (next_tkn->str);
+				return (ft_strdup(next_tkn->str));
 		}
 		else // check current with end-line
 		{
 			// CHECH FOR OPEN QUOTES!!!
 			if (is_redir(curr_tkn->type)) // ------------------ big question: should append a newline during lexing?
-				return ("newLine");
+				return (ft_strdup("newLine"));
 			if (curr_tkn->type == TKN_PIPE)
-				return (curr_tkn->str);
+				return (ft_strdup(curr_tkn->str));
 		}
 		tkn = tkn->next;
 	}

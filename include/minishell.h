@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/08 16:44:58 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/09 10:06:10 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ typedef struct s_data
 void	init_sig_handling(void);
 
 // ------------------------------------------------------------------ EXPANSION
-void	expansion(t_list *tkn, t_env *env, int e_code);
+void	expansion(t_node *tree, t_env *env, int e_code);
 char	*build_str(char *old_str, t_list *var_lst);
-void	expand(t_tkn_data *tkn, t_env *env, int e_code);
-void	del_var_lst_content(void *content);
-void	print_var_lst(t_list *var_lst);
+void	expand(char *s, t_env *env, int e_code);
+void	del_to_expand(void *content);
+void	print_expansion(t_list *var_lst);
 
 // ---------------------------------------------------------------------- UTILS
 void	free_data(t_data *data);

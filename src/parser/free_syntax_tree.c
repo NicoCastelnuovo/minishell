@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 10:28:35 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 13:33:14 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/09 12:50:25 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,6 @@ void	free_dptr(char **p)
 		i++;
 	}
 	free(p);
-}
-
-static void	del_block(void *content) // change / substitute
-{
-	t_tkn_data	*token;
-
-	token = (t_tkn_data *)content;
-	if (!token)
-		return ;
-	if (token->str)
-		free(token->str);
-	free(token);
 }
 
 static void	del_redir(void *content)
@@ -57,7 +45,7 @@ void	free_cmd_node(t_node *node_c)
 
 	cmd = (t_cmd *)node_c->content;
 	if (cmd->block)
-		ft_lstclear(&cmd->block, del_block);
+		ft_lstclear(&cmd->block, del_tokens);
 	if (cmd->args)
 		free_dptr(cmd->args);
 	if (cmd->redir)
