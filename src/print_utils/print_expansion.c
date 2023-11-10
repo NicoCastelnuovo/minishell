@@ -1,36 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   print_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 08:02:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/10/25 10:32:00 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/11/09 08:14:18 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/11/09 08:15:12 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	del_var_lst_content(void *content)
-{
-	t_var	*var;
+/*
 
-	var = (t_var *)content;
-	if (var)
-	{
-		if (var->name)
-			free(var->name);
-		if (var->value)
-			free(var->value);
-		var->name_len = -1;
-		var->value_len = -1;
-	}
-	// free(var); // ?
-	// var = NULL; // ?
-}
-
-void	print_var_lst(t_list *var_lst)
+*/
+void	print_expansion(t_list *var_lst)
 {
 	t_var	*var;
 

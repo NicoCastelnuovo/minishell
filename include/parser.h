@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 09:46:08 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/10 07:27:29 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,18 @@ typedef struct s_cmd
 	int			err_code;
 }	t_cmd;
 
-enum e_redir
+typedef enum e_redir_type
 {
 	REDIR_IN = '<',		// <
 	REDIR_OUT = '>',	// >
 	REDIR_HERE_DOC,		// <<
 	REDIR_APPEND		// >>
-};
+}	t_redir_type;
 
 typedef struct s_redir_data
 {
 	char			*file_name;
-	enum e_redir	type;
+	t_redir_type	type;
 }	t_redir_data;
 
 // ---------------------------------------------------------------- SYNTAX TREE
@@ -90,5 +90,6 @@ void	update_cmd_node(t_list *curr_tkn, t_list *prev_tkn, t_node *node);
 void	print_syntax_tree(t_node *root);
 void	print_redir_list(t_list *redir);
 void	print_args(char **args);
+void	print_tree_construction(char *prev_tkn, char *curr_tkn, char *next);
 
 #endif

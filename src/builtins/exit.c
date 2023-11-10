@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_dlst_clear.c                                   :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/12 09:47:06 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/06 12:20:36 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/11/09 15:06:46 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/11/10 07:20:45 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env_dlst_clear(t_env **env)
+void	exit_custom(t_data *data)
 {
-	t_var	*next;
-
-	next = NULL;
-	if (!*env)
-		return ;
-	while ((*env)->head)
-	{
-		next = (*env)->head->next;
-		env_dlst_delnode((*env)->head, env);
-		(*env)->head = next;
-	}
-	free(*env);
+	free_data(data);
+	// free env !!!!!
+	ft_putstr_fd("exit", 1);
+	exit(EXIT_SUCCESS);
 }

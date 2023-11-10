@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/07 12:55:03 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/10 10:30:59 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 typedef struct s_data
 {
 	t_env	*env;
+	char	*input;
 	t_list	*tokens;
 	t_node	*tree;
 	char	*err;
@@ -43,12 +44,17 @@ typedef struct s_data
 void	init_sig_handling(void);
 
 // ------------------------------------------------------------------ EXPANSION
+void	expansion(t_node *tree, t_env *env, int e_code);
 char	*build_str(char *old_str, t_list *var_lst);
-char	*expansion(char *s, int exit_code, char **env);
-void	del_var_lst_content(void *content);
-void	print_var_lst(t_list *var_lst);
-// void		update_env_var(char *name, char *value, char **env);
-// t_var	*search_var(char *name, t_list *env);
+char	*expand(char *s, t_env *env, int e_code);
+void	del_to_expand(void *content);
+void	print_expansion(t_list *var_lst);
+
+// ------------------------------------------------------------------- BUILTINS
+void	here_doc(t_node *tree);
+
+// ------------------------------------------------------------------- BUILTINS
+void	exit_custom(t_data *data);
 
 // ---------------------------------------------------------------------- UTILS
 void	free_data(t_data *data);

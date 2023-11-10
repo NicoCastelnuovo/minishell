@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/07 13:06:25 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/10 15:01:48 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,32 +16,35 @@
 
 VPATH = ./src/ \
 	./src/builtins \
-	./src/lexer \
-	./src/syntax_tree \
+	./src/env \
 	./src/expansion \
+	./src/here_doc \
+	./src/lexer \
 	./src/parser \
-	./src/env_dlst \
 	./src/print_utils \
-	./src/utils \
 	./src/signals \
-	./test \
+	./src/utils \
+	./test
 
 BUILTINS = cd.c \
 	echo.c \
-	env.c \
 	export.c \
 	pwd.c \
-	unset.c
+	unset.c \
+	exit.c
 
-ENV_DLST = env_dlst_append.c \
+ENV = env.c \
+	env_dlst_append.c \
 	env_dlst_clear.c \
 	env_dlst_delnode.c \
 	env_dlst_new.c \
-	env_dlst_update.c
+	env_dlst_update.c \
+	get_env_custom.c
 
 EXPANSION = build_str.c \
-	expansion.c \
-	utils.c
+	expansion.c
+
+HERE_DOC = here_doc.c \
 
 PARSER = parser.c \
 	build_syntax_tree.c \
@@ -50,33 +53,35 @@ PARSER = parser.c \
 
 PRINT_UTILS = print_syntax_tree.c \
 	print_tokens.c \
+	print_expansion.c \
+	print_tree_construction.c
 
 SIGNALS = sig_handler.c
-
 
 UTILS = free_data.c
 
 LEXER = lexer.c \
-	tokenize_input.c\
-	del_tokens.c\
-	store_tokens_in_nodes.c\
-	read_each_char.c\
-	check_each_token_string.c\
-	handle_quotes.c\
-	assign_quote_status_to_tokens.c\
-	assign_type_to_tokens.c\
-	merge_two_less_or_greater_than.c\
-	delete_spaces.c\
-	merge_dollar_char_with_next_token.c\
-	merge_quoted_tokens.c\
-	check_following_space.c\
-	join_content_str_of_two_nodes.c\
-	remove_a_token_node.c\
+	tokenize_input.c \
+	del_tokens.c \
+	store_tokens_in_nodes.c \
+	read_each_char.c \
+	check_each_token_string.c \
+	handle_quotes.c \
+	assign_quote_status_to_tokens.c \
+	assign_type_to_tokens.c \
+	merge_two_less_or_greater_than.c \
+	delete_spaces.c \
+	merge_dollar_char_with_next_token.c \
+	merge_quoted_tokens.c \
+	check_following_space.c \
+	join_content_str_of_two_nodes.c \
+	remove_a_token_node.c \
 
 SRCS = minishell.c \
 	$(BUILTINS) \
-	$(ENV_DLST) \
+	$(ENV) \
 	$(EXPANSION) \
+	$(HERE_DOC) \
 	$(LEXER) \
 	$(PARSER) \
 	$(SYNTAX_TREE) \

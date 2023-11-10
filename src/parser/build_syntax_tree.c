@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 09:54:08 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/10 10:23:39 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,41 +36,23 @@ static t_list	*copy_tokens_block(t_list *curr_tkn, t_node *node_c)
 	t_tkn_data	*tkn_content_cpy;
 	t_list		*tkn_node_cpy;
 	t_list		*prev_tkn;
-	t_list		*tmp;
 
 	tkn_node_cpy = NULL;
 	tkn_content_cpy = NULL;
 	prev_tkn = NULL;
-	while (curr_tkn) // !!!!  After distributing in each filed the tokens, block could be deleted....
+	while (curr_tkn)
 	{
-		tkn_content = (t_tkn_data *)curr_tkn->content;
-		if (((t_tkn_data *)curr_tkn->content)->type == TKN_PIPE)
-			return (curr_tkn);
-		tkn_content_cpy = cpy_tkn_content(tkn_content); // protect
-		tkn_node_cpy = ft_lstnew(tkn_content_cpy); // protect
-		if (!tkn_node_cpy)
-			return (NULL);
-		ft_lstadd_back(&((t_cmd *)node_c->content)->block, tkn_node_cpy);
-
-
-
-		// first iter, prev_token doesn't exist
-		if (prev_tkn)
-			ft_printf("\x1b[32mprev[%s] <-- ", ((t_tkn_data*)prev_tkn->content)->str);
-		else
-			ft_printf("\x1b[32mprev(null) <-- ");
-		ft_printf("curr[%s]", ((t_tkn_data*)curr_tkn->content)->str);
-		if (curr_tkn->next)
-			ft_printf(" --> next[%s]\x1b[0m", ((t_tkn_data*)curr_tkn->next->content)->str);
-		else
-			ft_printf(" --> next(null)\x1b[0m");
-		ft_printf("\n");
-
-
-
-
-		update_cmd_node(curr_tkn, prev_tkn, node_c); // make this jump 1 place if needed
-		ft_printf("\n");
+		// !!!!  After distributing in each filed the tokens, block could be deleted....
+				tkn_content = (t_tkn_data *)curr_tkn->content;
+				if (((t_tkn_data *)curr_tkn->content)->type == TKN_PIPE)
+					return (curr_tkn);
+				tkn_content_cpy = cpy_tkn_content(tkn_content); // protect
+				tkn_node_cpy = ft_lstnew(tkn_content_cpy); // protect
+				if (!tkn_node_cpy)
+					return (NULL);
+				ft_lstadd_back(&((t_cmd *)node_c->content)->block, tkn_node_cpy);
+		// !!!!  After distributing in each filed the tokens, block could be deleted....
+		update_cmd_node(curr_tkn, prev_tkn, node_c);
 		prev_tkn = curr_tkn;
 		if (curr_tkn->next)
 			curr_tkn = curr_tkn->next;
@@ -113,7 +95,7 @@ static t_node	*init_cmd_node(int n)
 	cmd = (t_cmd *)node_c->content;
 	cmd->block = NULL;
 	cmd->args = NULL;
-	cmd->redir = NULL; // proctect // modifed
+	cmd->redir = NULL;
 	cmd->fd_in = STDIN_FILENO;
 	cmd->fd_out = STDOUT_FILENO;
 	return (node_c);
@@ -132,7 +114,6 @@ t_node	*build_syntax_tree(t_list *tokens, int n)
 	if (!node_c)
 		return (NULL);
 	tokens = copy_tokens_block(tokens, node_c);
-	ft_printf(" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
 	node_p = NULL;
 	if (ft_strncmp(((t_tkn_data *)tokens->content)->str, "|", 1) == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 10:51:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/06 12:23:59 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/09 09:20:04 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,20 @@ typedef struct	s_env
 	int				size;
 }				t_env;
 
-t_var		*env_dlst_new(char *env_var);
-void		env_dlst_append(t_env **env, t_var *new);
-void		free_env_node(t_var *node);
-void		env_dlst_delnode(t_var *node, t_env **env);
-void		env_dlst_clear(t_env **env);
-void		env_dlst_update(t_var *new_content, t_env **env);
+char	*get_env_custom(char *name, t_env *env);
 
-t_env		*init_env(char **env);
-void		print_env(t_env *env);
-void		unset_env_var(char *name, t_env **env);
+t_var	*env_dlst_new(char *env_var);
+void	env_dlst_append(t_env **env, t_var *new);
+void	free_env_node(t_var *node);
+void	env_dlst_delnode(t_var *node, t_env **env);
+void	env_dlst_clear(t_env **env);
+void	env_dlst_update(t_var *new_content, t_env **env);
 
-void		export(char *name_value, t_env **env);
-void		print_exported_env(t_env *env);
+t_env	*init_env(char **env);
+void	print_env(t_env *env);
+void	unset_env_var(char *name, t_env **env);
+
+void	export(char *name_value, t_env **env);
+void	print_exported_env(t_env *env);
 
 #endif

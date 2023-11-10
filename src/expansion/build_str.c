@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 15:45:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/02 16:24:05 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/11/09 16:49:20 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/11/10 07:01:21 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,32 @@ static int	get_varvalue_len(t_list *var_lst)
 	return (len);
 }
 
-int		get_total_len(t_list *var_lst, char *old_str)
+// static char	*trim_quotes(char *s)
+// {
+// 	char	*new;
+// 	int		old_len;
+// 	int		i;
+// 	int		j;
+
+// 	old_len = ft_strlen(s);
+// 	new = ft_calloc(ft_strlen(s) - 2, sizeof(char)); //protect
+// 	i = 0;
+// 	j = 0;
+// 	while (s[i])
+// 	{
+// 		if (i == 0 || i == old_len - 1)
+// 			i++;
+// 		else
+// 		{
+// 			new[j] = s[i];
+// 			j++;
+// 			i++;
+// 		}
+// 	}
+// 	return (new);
+// }
+
+static int	get_total_len(t_list *var_lst, char *old_str)
 {
 	int		tot_varname_len;
 	int		tot_varvalue_len;
@@ -60,8 +85,9 @@ static char	*create_new_str(t_list *var_lst, int total_len, char *old_str)
 	int		i;
 	t_var	*var;
 
-	new_str = ft_calloc(total_len + 1, sizeof(char)); // protect
-	// new_str[total_len] = '\0'; // not necessary
+	new_str = ft_calloc(total_len + 1, sizeof(char));
+	if (!new_str)
+		return (NULL);
 	i = 0;
 	while (i < total_len)
 	{
