@@ -6,95 +6,83 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:19:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/10 15:21:51 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/10 17:27:08 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	create_new_name(char *name)
+static char	*get_tmp_name(int n)
 {
+	char	*tmp_name;
 	char	*digits;
-	int		i;
 
-	digits = ft_calloc(5, sizeof(char)); // protect
-	i = 0;
-	while (!ft_isdigit(name[i]))
-		i++;
-	while (name[i])
-	{
-		digits[i] = name[i];
-		i++;
-	}
+	digits = ft_itoa(n); // protect
+	tmp_name = ft_strjoin("tmp_", digits); // protect
+	free(digits);
+	return(tmp_name);
 }
 
-static int	create_tmp_file(void)
-{
-	int		fd_tmp;
-	char	*name;
-
-	name = ft_strdup("tmp_0000");
-	fd_tmp = open(name, O_CREAT | O_EXCL | O_RDWR, S_IRUSR); // change options
-	while (fd_tmp == -1 && errno == EEXIST)
-	{
-		ft_printf("\033[0;34m ********* NEW NAME REQUIRED ********* \033[0;37m\n");
-		name = create_new_name(name);
-		fd_tmp = open(name, O_CREAT | O_EXCL | O_RDWR, S_IRUSR); // change options
-		if (fd_tmp == -1 && errno != EEXIST)
-		{
-			ft_printf("\033[0;31m ********* ERROR OPENING FILE ********* \033[0;37m\n");
-			return ;
-		}
-	}
-	return (fd_tmp);
-}
-
-static void	get_input(t_redir_data *redir_content)
+static int	get_interactive_input(t_redir_data *redir_content, int n)
 {
 	char	*line;
 	char	*eof;
 	int		fd_tmp;
+	char	*tmp_name;
 
-	fd_tmp = create_tmp_file();
-
-	fd_tmp = open("tmp", O_CREAT | O_EXCL | O_RDWR, S_IRUSR); // change options
-	while (fd_tmp == -1 && errno == EEXIST)
+	tmp_name = get_tmp_name(n);
+	fd_tmp = open(tmp_name, O_CREAT | O_EXCL | O_WRONLY, S_IRUSR);  //ONLY THIS SESSION
+	if (fd_tmp == -1)
 	{
-		// new name
-		ft_printf("\033[0;34m ********* NEW NAME REQUIRED ********* \033[0;37m\n");
-		char	*new_name = "tmp_2";
-		fd_tmp = open(new_name, O_CREAT | O_EXCL | O_RDWR, S_IRUSR); // change options
-		if (fd_tmp == -1 && errno != EEXIST)
-		{
-			ft_printf("\033[0;31m ********* ERROR OPENING FILE ********* \033[0;37m\n");
-			return ;
-		}
+		if (errno == EEXIST)
+			return (free(tmp_name), 1); // 1 means need a new name // -1 means real error
+		return (-1);
 	}
 	line = NULL;
 	eof = redir_content->file_name;
 	while (1)
 	{
-		if (line)
-			free(line);
 		line = readline("> "); // protect
 		if (ft_strncmp(line, eof, ft_strlen(eof)) == 0)
 			break ;
 		else
+		{
 			ft_putendl_fd(line, fd_tmp);
+			if (line)
+				free(line);
+		}
 	}
-	ft_printf("DONE\n");
-	exit(1);
+	if (line)
+		free(line);
+	free(redir_content->file_name);
+	redir_content->file_name = ft_strdup(tmp_name);
+	free(tmp_name);
+	close(fd_tmp);
+	return (0);
 }
 
 static void	check_here_doc(t_list *redir)
 {
 	t_redir_data	*redir_content;
+	int				err_check;
+	int				n; // n to append
 
+	// in(<) - out(>) - EOF(<<) - EOF2(<<) ============= in(<) - out (>) - tmp_0(<<) - tmp_1(<<)
+	n = 0;
 	while (redir)
 	{
 		redir_content = redir->content;
 		if (redir_content->type == REDIR_HERE_DOC)
-			get_input(redir_content);
+		{
+			err_check = 1; // 1 == needs a name
+			while (err_check != 0)
+			{
+				err_check = get_interactive_input(redir_content, n);
+				if (err_check == -1)
+					return ; // real error
+				n++;
+			}
+		}
 		redir = redir->next;
 	}
 }
@@ -112,7 +100,6 @@ void	here_doc(t_node *tree)
 			check_here_doc(cmd->redir);
 		tree = pipe->right;
 	}
-	// check tree
 	cmd = (t_cmd *)tree->content;
 	if (cmd->redir)
 		check_here_doc(cmd->redir);
