@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/10 07:25:52 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/10 15:01:48 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ VPATH = ./src/ \
 	./src/builtins \
 	./src/env \
 	./src/expansion \
+	./src/here_doc \
 	./src/lexer \
 	./src/parser \
 	./src/print_utils \
@@ -43,7 +44,7 @@ ENV = env.c \
 EXPANSION = build_str.c \
 	expansion.c
 
-HERE_DOC = here_doc.c
+HERE_DOC = here_doc.c \
 
 PARSER = parser.c \
 	build_syntax_tree.c \
@@ -60,26 +61,27 @@ SIGNALS = sig_handler.c
 UTILS = free_data.c
 
 LEXER = lexer.c \
-	tokenize_input.c\
-	del_tokens.c\
-	store_tokens_in_nodes.c\
-	read_each_char.c\
-	check_each_token_string.c\
-	handle_quotes.c\
-	assign_quote_status_to_tokens.c\
-	assign_type_to_tokens.c\
-	merge_two_less_or_greater_than.c\
-	delete_spaces.c\
-	merge_dollar_char_with_next_token.c\
-	merge_quoted_tokens.c\
-	check_following_space.c\
-	join_content_str_of_two_nodes.c\
-	remove_a_token_node.c\
+	tokenize_input.c \
+	del_tokens.c \
+	store_tokens_in_nodes.c \
+	read_each_char.c \
+	check_each_token_string.c \
+	handle_quotes.c \
+	assign_quote_status_to_tokens.c \
+	assign_type_to_tokens.c \
+	merge_two_less_or_greater_than.c \
+	delete_spaces.c \
+	merge_dollar_char_with_next_token.c \
+	merge_quoted_tokens.c \
+	check_following_space.c \
+	join_content_str_of_two_nodes.c \
+	remove_a_token_node.c \
 
 SRCS = minishell.c \
 	$(BUILTINS) \
 	$(ENV) \
 	$(EXPANSION) \
+	$(HERE_DOC) \
 	$(LEXER) \
 	$(PARSER) \
 	$(SYNTAX_TREE) \

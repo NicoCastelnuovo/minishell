@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/10 10:22:54 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/10 15:01:13 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ static void	process_input(t_data *data)
 	}
 	if (data->tree)
 		expansion(data->tree, data->env, data->e_code);
+
+	here_doc(data->tree);
+
 	add_history(data->input); // not always to do
 	free_data(data);
 }
