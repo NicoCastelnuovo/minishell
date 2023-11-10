@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:49:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/10 07:01:21 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/10 17:33:40 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,31 +43,6 @@ static int	get_varvalue_len(t_list *var_lst)
 	}
 	return (len);
 }
-
-// static char	*trim_quotes(char *s)
-// {
-// 	char	*new;
-// 	int		old_len;
-// 	int		i;
-// 	int		j;
-
-// 	old_len = ft_strlen(s);
-// 	new = ft_calloc(ft_strlen(s) - 2, sizeof(char)); //protect
-// 	i = 0;
-// 	j = 0;
-// 	while (s[i])
-// 	{
-// 		if (i == 0 || i == old_len - 1)
-// 			i++;
-// 		else
-// 		{
-// 			new[j] = s[i];
-// 			j++;
-// 			i++;
-// 		}
-// 	}
-// 	return (new);
-// }
 
 static int	get_total_len(t_list *var_lst, char *old_str)
 {

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:19:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/10 17:27:08 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/10 17:51:25 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,56 @@ static char	*get_tmp_name(int n)
 	char	*digits;
 
 	digits = ft_itoa(n); // protect
-	tmp_name = ft_strjoin("tmp_", digits); // protect
+	tmp_name = ft_strjoin(".tmp_", digits); // protect
 	free(digits);
 	return(tmp_name);
+}
+
+static void	write_into_tmp_file(int fd_tmp, char *eof)
+{
+	char	*line;
+
+	line = NULL;
+	while (1)
+	{
+		line = readline("> "); // protect
+		if (ft_strncmp(line, eof, ft_strlen(eof)) == 0)
+			break ;
+		else
+		{
+			ft_putendl_fd(line, fd_tmp);
+			if (line)
+				free(line);
+		}
+	}
+	if (line)
+		free(line);
+}
+
+static char	*trim_quotes(char *old_str)
+{
+	char	*new;
+	int		old_len;
+	int		i;
+	int		j;
+
+	old_len = ft_strlen(old_str);
+	new = ft_calloc(ft_strlen(old_str) - 1, sizeof(char)); //protect
+	i = 0;
+	j = 0;
+	while (old_str[i])
+	{
+		if (i == 0 || i == old_len - 1)
+			i++;
+		else
+		{
+			new[j] = old_str[i];
+			i++;
+			j++;
+		}
+	}
+	ft_printf(" NEW = { %s }\n", new);
+	return (new);
 }
 
 static int	get_interactive_input(t_redir_data *redir_content, int n)
@@ -40,20 +87,9 @@ static int	get_interactive_input(t_redir_data *redir_content, int n)
 	}
 	line = NULL;
 	eof = redir_content->file_name;
-	while (1)
-	{
-		line = readline("> "); // protect
-		if (ft_strncmp(line, eof, ft_strlen(eof)) == 0)
-			break ;
-		else
-		{
-			ft_putendl_fd(line, fd_tmp);
-			if (line)
-				free(line);
-		}
-	}
-	if (line)
-		free(line);
+	if (eof[0] == '\'' || eof[0] == '\"')
+		eof = trim_quotes(redir_content->file_name);
+	write_into_tmp_file(fd_tmp, eof);
 	free(redir_content->file_name);
 	redir_content->file_name = ft_strdup(tmp_name);
 	free(tmp_name);
@@ -79,7 +115,11 @@ static void	check_here_doc(t_list *redir)
 			{
 				err_check = get_interactive_input(redir_content, n);
 				if (err_check == -1)
-					return ; // real error
+				{
+					// real error
+					// need to clean up
+					return ;
+				}
 				n++;
 			}
 		}

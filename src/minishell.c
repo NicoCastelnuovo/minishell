@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/10 17:22:22 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/10 17:51:38 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ static void	process_input(t_data *data)
 	if (data->tree)
 		expansion(data->tree, data->env, data->e_code);
 	here_doc(data->tree);
+	/*
+		// to do:
+			history available for here_doc
+			variable expansion inside
+	*/
 	add_history(data->input); // not always to do
 	free_data(data);
 	exit(1);
