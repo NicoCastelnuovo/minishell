@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/09 18:03:40 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/10 06:51:39 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	del_to_expand(void *content)
 		var->next = NULL;
 		var->prev = NULL;
 		var->to_export = -1;
+		free(var);
+		var = NULL;
 	}
-	free(var);
-	var = NULL;
 }
 
 /*
@@ -84,20 +84,13 @@ static void	get_var_values(t_list *var_lst, t_env *env, int e_code)
 	while (var_lst)
 	{
 		var = (t_var *)var_lst->content;
-		if (ft_strncmp(var->name, "$", 1) == 0)
+		if (var->name_len == 0)
 			expanded = ft_strdup("$");
+		else if (var->name[0] == '?' && var->name_len == 1)
+			expanded = ft_itoa(e_code);
+		else if (get_env_custom(var->name, env))
+			expanded = ft_strdup(get_env_custom(var->name, env));
 		else
-		{
-			if (ft_strncmp(var->name, "?", 1) == 0)
-				expanded = ft_itoa(e_code); // allocates@@
-			else
-			{
-				env_var = get_env_custom(var->name, env);
-				if (env_var)
-					expanded = ft_strdup(env_var);
-			}
-		}
-		if (!expanded)
 			expanded = ft_strdup("");
 		var->value = expanded;
 		var->value_len = ft_strlen(var->value);
