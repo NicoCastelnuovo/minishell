@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/10 06:51:39 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/10 10:09:59 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,7 @@ static void	get_var_values(t_list *var_lst, t_env *env, int e_code)
 {
 	char	*expanded;
 	t_var	*var;
-	char	*env_var;
 
-	env_var = NULL;
 	expanded = NULL;
 	while (var_lst)
 	{
@@ -148,17 +146,15 @@ char	*expand(char *old_str, t_env *env, int e_code)
 	to_expand = get_var_names(old_str, n);
 	get_var_values(to_expand, env, e_code);
 	new_str = build_str(old_str, to_expand);
-
-	print_expansion(to_expand); // remove
-	ft_printf("\033[34mold_str: [%s]\033[0m --> ", old_str);
-	if (new_str)
-		ft_printf("\033[35m[%s]\033[0m\n", new_str);
-	else
-		ft_printf("\033[35m[<null>]\033[0m\n");
-
+	// print_expansion(to_expand); // remove
+	// ft_printf("\033[34mold_str: [%s]\033[0m --> ", old_str);
+	// if (new_str)
+	// 	ft_printf("\033[35m[%s]\033[0m\n", new_str);
+	// else
+	// 	ft_printf("\033[35m[<null>]\033[0m\n");
 	ft_lstclear(&to_expand, del_to_expand);
-	free(old_str); 	// need to free tkn->str ???
-	return (new_str); //???
+	free(old_str);
+	return (new_str);
 }
 
 /*
@@ -169,10 +165,10 @@ char	*expand(char *old_str, t_env *env, int e_code)
 static int	check_expansion(t_cmd *cmd, t_env *env, int e_code)
 {
 	int				i;
-	t_redir_data	*redir;
+	t_list			*redir;
+	t_redir_data	*redir_content;
 
 	i = 0;
-	redir = NULL;
 	if (cmd->args)
 	{
 		while (cmd->args[i])
@@ -188,15 +184,16 @@ static int	check_expansion(t_cmd *cmd, t_env *env, int e_code)
 			i++;
 		}
 	}
-	while (cmd->redir)
+	redir = (t_list *)cmd->redir;
+	while (redir)
 	{
-		redir = (t_redir_data *)cmd->redir->content;
-		if (redir->type != REDIR_HERE_DOC)
+		redir_content = (t_redir_data *)redir->content;
+		if (redir && redir_content->type != REDIR_HERE_DOC)
 		{
-			if (ft_strchr(redir->file_name, '$') && redir->file_name[0] != TKN_S_QUOTE)
-				redir->file_name = expand(redir->file_name, env, e_code);
+			if (ft_strchr(redir_content->file_name, '$') && redir_content->file_name[0] != TKN_S_QUOTE)
+				redir_content->file_name = expand(redir_content->file_name, env, e_code);
 		}
-		cmd->redir = cmd->redir->next;
+		redir = redir->next;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/09 15:19:08 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/10 07:25:52 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,8 @@ PARSER = parser.c \
 
 PRINT_UTILS = print_syntax_tree.c \
 	print_tokens.c \
-	print_expansion.c
+	print_expansion.c \
+	print_tree_construction.c
 
 SIGNALS = sig_handler.c
 

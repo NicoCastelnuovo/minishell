@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:53:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 13:56:09 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/10 09:45:02 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,27 @@ static t_redir_type	get_redir_type(t_tkn_type curr_tkn_type)
 */
 static void	update_cmd_redir(t_list *curr_tkn, t_cmd *cmd)
 {
-	t_tkn_data		*curr_content;
+	t_tkn_data		*tkn_content;
 	t_redir_data	*new_content;
 	t_list			*new_node;
 	t_list			*last;
 
 	last = NULL;
-	curr_content = (t_tkn_data *)curr_tkn->content;
-	if (is_redir(curr_content->type)) //== TKN_WORD
+	tkn_content = (t_tkn_data *)curr_tkn->content;
+	if (is_redir(tkn_content->type)) // == TKN_WORD
 	{
 		new_content = ft_calloc(1, sizeof(t_redir_data)); // protect
-		new_content->type = get_redir_type(curr_content->type);
+		new_content->type = get_redir_type(tkn_content->type);
 		new_content->file_name = NULL;
 		new_node = ft_lstnew(new_content); // protect
 		ft_lstadd_back(&cmd->redir, new_node);
-		ft_printf("	ADD REDIR type [ %s ]\n", curr_content->str);
+		ft_printf("REDIRECTION && ");
 	}
-	else
+	else // file name
 	{
+		ft_printf("FILE NAME\n");
 		last = ft_lstlast(cmd->redir);
-		((t_redir_data *)last->content)->file_name = ft_strdup(curr_content->str);
-		ft_printf("	ADD REDIR: filename[ %s ]\n", ((t_redir_data *)last->content)->file_name);
+		((t_redir_data *)last->content)->file_name = ft_strdup(tkn_content->str);
 	}
 }
 
@@ -75,7 +75,12 @@ static void	update_cmd_args(char *arg, t_cmd *cmd)
 	n_args = 0;
 	while (cmd->args[n_args])
 		n_args++;
-	new_args = ft_calloc(n_args + 2, sizeof(char *)); // protect
+	new_args = ft_calloc(n_args + 2, sizeof(char *));
+	if (!new_args)
+	{
+		free_dptr(cmd->args);
+		return ;
+	}
 	i = 0;
 	while (i < n_args)
 	{
@@ -85,7 +90,6 @@ static void	update_cmd_args(char *arg, t_cmd *cmd)
 	new_args[i] = ft_strdup(arg);
 	new_args[i + 1] = NULL;
 	free_dptr(cmd->args);
-	// ft_printf("	ADD ARGS: { %s }\n", arg);
 	cmd->args = new_args;
 }
 
@@ -96,28 +100,26 @@ static void	update_cmd_args(char *arg, t_cmd *cmd)
 */
 void	update_cmd_node(t_list *curr_tkn, t_list *prev_tkn, t_node *node)
 {
-	t_tkn_data	*curr_content;
+	t_tkn_data	*tkn_content;
 	t_tkn_data	*prev_content;
 
-	curr_content = NULL;
+	tkn_content = NULL;
 	prev_content = NULL;
 	if (curr_tkn)
-		curr_content = (t_tkn_data *)curr_tkn->content;
+		tkn_content = (t_tkn_data *)curr_tkn->content;
 	if (!prev_tkn) // first iter
 	{
-		ft_printf("	No prev: curr_tkn [%s]\n", curr_content->str);
-		if (is_redir(curr_content->type)) // in this case, curr_tkn is moved foreward
+		if (is_redir(tkn_content->type)) // in this case, curr_tkn is moved foreward
 			update_cmd_redir(curr_tkn, node->content);
 		else // if (curr_tkn_type == TKN_WORD)
-			update_cmd_args(curr_content->str, node->content);
+			update_cmd_args(tkn_content->str, node->content);
 	}
 	else
 	{
 		prev_content = (t_tkn_data *)prev_tkn->content;
-		ft_printf("	Check curr_tkn[%s] with prev_tkn[%s]\n", curr_content->str, prev_content->str);
-		if (!is_redir(curr_content->type) && !is_redir(prev_content->type))
-			update_cmd_args(curr_content->str, node->content);
-		else if (!is_redir(curr_content->type) && is_redir(curr_content->type))
+		if (!is_redir(tkn_content->type) && !is_redir(prev_content->type))
+			update_cmd_args(tkn_content->str, node->content);
+		else if (!is_redir(tkn_content->type) && is_redir(tkn_content->type))
 			update_cmd_redir(curr_tkn, node->content);
 		else
 			update_cmd_redir(curr_tkn, node->content);

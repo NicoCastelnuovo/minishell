@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:35:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 11:58:54 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/10 07:56:38 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	init_sig_handling(void)
 	struct sigaction	sa_newline;
 	struct sigaction	sa_ignore;
 	struct sigaction	sa_exit;
-	int					i;
 	sigset_t			set;
 
 	// init zero

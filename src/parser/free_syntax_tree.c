@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 10:28:35 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/09 12:50:25 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/10 10:10:29 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	free_cmd_node(t_node *node_c)
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *)node_c->content;
-	if (cmd->block)
+	if (cmd->block)	// remove fi removed
 		ft_lstclear(&cmd->block, del_tokens);
 	if (cmd->args)
 		free_dptr(cmd->args);
@@ -79,7 +79,7 @@ void	free_tree(t_node *tree)
 		while (tree->type == IS_PIPE)
 		{
 			pipe = (t_pipe *)tree->content;
-			free_cmd_node(pipe->left); // left
+			free_cmd_node(pipe->left);
 			temp = pipe->right;
 			free_pipe_node(tree);
 			tree = temp;

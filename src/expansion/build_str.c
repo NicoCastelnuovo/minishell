@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:49:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/10 06:31:16 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/10 07:01:21 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,30 +44,30 @@ static int	get_varvalue_len(t_list *var_lst)
 	return (len);
 }
 
-static char	*trim_quotes(char *s)
-{
-	char	*new;
-	int		old_len;
-	int		i;
-	int		j;
+// static char	*trim_quotes(char *s)
+// {
+// 	char	*new;
+// 	int		old_len;
+// 	int		i;
+// 	int		j;
 
-	old_len = ft_strlen(s);
-	new = ft_calloc(ft_strlen(s) - 2, sizeof(char)); //protect
-	i = 0;
-	j = 0;
-	while (s[i])
-	{
-		if (i == 0 || i == old_len - 1)
-			i++;
-		else
-		{
-			new[j] = s[i];
-			j++;
-			i++;
-		}
-	}
-	return (new);
-}
+// 	old_len = ft_strlen(s);
+// 	new = ft_calloc(ft_strlen(s) - 2, sizeof(char)); //protect
+// 	i = 0;
+// 	j = 0;
+// 	while (s[i])
+// 	{
+// 		if (i == 0 || i == old_len - 1)
+// 			i++;
+// 		else
+// 		{
+// 			new[j] = s[i];
+// 			j++;
+// 			i++;
+// 		}
+// 	}
+// 	return (new);
+// }
 
 static int	get_total_len(t_list *var_lst, char *old_str)
 {
@@ -84,7 +84,6 @@ static char	*create_new_str(t_list *var_lst, int total_len, char *old_str)
 	char	*new_str;
 	int		i;
 	t_var	*var;
-	char	*tmp;
 
 	new_str = ft_calloc(total_len + 1, sizeof(char));
 	if (!new_str)

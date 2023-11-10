@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:06:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/09 14:04:26 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/10 07:59:57 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int	is_redir(t_tkn_type tkn_type)
 	if (tkn_type == TKN_REDIR_APPEND ||
 		tkn_type == TKN_HERE_DOC ||
 		tkn_type == TKN_REDIR_IN ||
-		tkn_type == TKN_REDIR_OUT ||
-		tkn_type == REDIR_APPEND ||
-		tkn_type == REDIR_HERE_DOC ||
-		tkn_type == REDIR_IN ||
-		tkn_type == REDIR_OUT)
+		tkn_type == TKN_REDIR_OUT) // ||
+		// tkn_type == REDIR_APPEND ||
+		// tkn_type == REDIR_HERE_DOC ||
+		// tkn_type == REDIR_IN ||
+		// tkn_type == REDIR_OUT)
 		return (tkn_type);
 	return (0);
 }
@@ -69,7 +69,7 @@ char	*parse(t_list *tkn)
 		else // check current with end-line
 		{
 			// CHECH FOR OPEN QUOTES!!!
-			if (is_redir(curr_tkn->type)) // ------------------ big question: should append a newline during lexing?
+			if (is_redir(curr_tkn->type))
 				return (ft_strdup("newLine"));
 			if (curr_tkn->type == TKN_PIPE)
 				return (ft_strdup(curr_tkn->str));

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/10 06:28:52 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/10 10:22:54 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ static void	init_data(t_data *data, char **env)
 static void	process_input(t_data *data)
 {
 	lexer(data->input, &data->tokens);
-	ft_printf("• TOKENS ----> ");
-	print_tokens(data->tokens);
 	if (data->tokens) // can be false ?
 	{
 		data->err = parse(data->tokens);
@@ -51,14 +49,12 @@ static void	process_input(t_data *data)
 	if (!data->err)
 	{
 		data->tree = build_syntax_tree(data->tokens, 0);
-		print_tokens(data->tokens);
 		print_syntax_tree(data->tree);
 	}
 	if (data->tree)
 		expansion(data->tree, data->env, data->e_code);
 	add_history(data->input); // not always to do
 	free_data(data);
-	exit(1);
 }
 
 int	main(int argc, char **argv, char **env)
