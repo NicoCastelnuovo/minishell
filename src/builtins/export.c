@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/06 12:21:15 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/11 16:58:07 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_exported_env(t_env *env)
 	{
 		while (head)
 		{
-			if (head->name)
+			if (head->name) // change to if (is_exported)
 			{
 				ft_putstr_fd("declare -x ", 1);
 				ft_putstr_fd(head->name, 1);
@@ -54,11 +54,8 @@ static int	env_var_already_set(t_var *new_node, t_env **env)
 	head = (*env)->head;
 	while (head)
 	{
-		if (ft_strncmp(head->name, new_node->name, head->name_len) == 0) // used to check ex. USER and USERUSER
-		{
-			if (head->name_len == new_node->name_len)
-				return (1);
-		}
+		if (ft_strcmp(head->name, new_node->name) == 0) // used to check ex. USER and USERUSER
+			return (1);
 		head = head->next;
 	}
 	return (0);
@@ -74,24 +71,53 @@ static int	env_var_already_set(t_var *new_node, t_env **env)
 		is no update for the content.
 		- if doesn't exist, a new variable is created.
 */
-void	export(char *arg, t_env **env)
+static void	check_export(char *arg, t_env **env)
 {
 	t_var	*new_node;
 
-	if (!arg)
-	{
-		print_exported_env(*env);
-		return ;
-	}
 	new_node = env_dlst_new(arg);
 	if (env_var_already_set(new_node, env))
 	{
+		// ft_printf("--------------VAR SET, CHECK STATUS ----------------\n");
 		if (new_node->value)
+		{
+			// ft_printf("-------------- A NEW VALUE HAS TO BE SET ----------------\n");
 			env_dlst_update(new_node, env);
+			ft_printf("	PROBLEM HERE IN DLST UPDATE!!!!! THIS IS NOT PRINTED \n");
+		}
 		else
+		{
+			// ft_printf("-------------- {\033[0;31m NO \033[0;37m} VALUE TO BE SET ----------------\n");
 			free_env_node(new_node);
+		}
 		return ;
 	}
 	else
+	{
+		// ft_printf("{\033[0;31m I WANT TO APPEND A NEW VAR \033[0;37m}\n");
+		// problem with [export SHIT SHIT=MERDA]
 		env_dlst_append(env, new_node);
+	}
+}
+
+void	export(t_data *data)
+{
+	t_cmd	*cmd;
+	int		i;
+
+	cmd = (t_cmd *)data->tree->content;
+	if (!cmd->args[1])
+		print_exported_env(data->env);
+	else
+	{
+		i = 1;
+		while (cmd->args[i])
+		{
+			/*
+				NEED TO VALIDATE THE NAME FOR EXPORT
+			*/
+			check_export(cmd->args[i], &data->env); // needs expansion!
+			i++;
+		}
+	}
 }

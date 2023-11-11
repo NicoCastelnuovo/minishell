@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 18:34:43 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/11 13:07:37 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/11 14:32:15 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,6 @@ static int	get_substr_len(char *s, char c)
 	return (i);
 }
 
-static char	*increment_shlvl(char *env_var)
-{
-	// increment
-}
-
 static char	*get_env_var_value(char *env_var, t_var *var)
 {
 	char	*var_value;
@@ -54,6 +49,12 @@ static char	*get_env_var_value(char *env_var, t_var *var)
 		free(var_value);
 		var_value = ft_strdup("");
 		var->to_export = 0;
+	}
+	else if (ft_strcmp(var->name, "OLDPWD") == 0)
+	{
+		free(var_value);
+		var_value = NULL;
+		var->to_export = 1;
 	}
 	else
 		var->to_export = 1;
@@ -81,7 +82,9 @@ t_var	*env_dlst_new(char *env_var)
 	if (ft_strchr(env_var, '='))
 	{
 		var->value = get_env_var_value(env_var, var);
-		var->value_len = ft_strlen(var->value);
+		var->value_len = -1;
+		if (var->value)
+			var->value_len = ft_strlen(var->value);
 	}
 	else
 	{

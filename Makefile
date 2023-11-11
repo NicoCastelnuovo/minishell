@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/11 12:45:01 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/11 15:19:17 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,13 +27,14 @@ VPATH = ./src/ \
 	./test
 
 BUILTINS = cd.c \
+	env.c \
 	echo.c \
 	export.c \
 	pwd.c \
 	unset.c \
 	exit.c
 
-ENV = env.c \
+ENV = init_env.c \
 	env_dlst_append.c \
 	env_dlst_clear.c \
 	env_dlst_delnode.c \

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/11 13:04:12 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/11 16:53:02 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static void	init_data(t_data *data, char **env)
 static void	process_input(t_data *data)
 {
 	lexer(data->input, &data->tokens);
+	print_tokens(data->tokens);
 	if (data->tokens) // can be false ?
 	{
 		data->err = parse(data->tokens);
@@ -53,6 +54,22 @@ static void	process_input(t_data *data)
 	if (data->tree)
 		expansion(data->tree, data->env, data->e_code);
 	here_doc(data->tree, data);
+	//
+	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "cd") == 0)
+		cd(data);
+	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "pwd") == 0)
+		pwd();
+	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "env") == 0)
+		env(data->env);
+	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "export") == 0) // not properly right
+		export(data);
+	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "exit") == 0) // not properly right
+	{
+		free_data(data);
+		env_dlst_clear(&data->env);
+		exit(1);
+	}
+	//
 	add_history(data->input); // not always to do
 	print_syntax_tree(data->tree);
 	free_data(data);
@@ -67,7 +84,7 @@ int	main(int argc, char **argv, char **env)
 	init_data(&data, env);
 	if (!data.env)
 		return (1); // custom err
-	print_env(data.env);
+
 	while (1)
 	{
 		data.input = readline("minishell $ "); // ft_strdup("<in cat -e | wc -l -o  -i >out2 | iuhe"); // readinput("minishell $ ");
