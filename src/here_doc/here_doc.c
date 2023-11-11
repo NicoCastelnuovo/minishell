@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:19:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/10 17:51:25 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/11 11:58:12 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*get_tmp_name(int n)
 {
-	char	*tmp_name;
+	char	*tmp_name; // remember to throw an error in case of >".tmp_" something
 	char	*digits;
 
 	digits = ft_itoa(n); // protect
@@ -23,7 +23,7 @@ static char	*get_tmp_name(int n)
 	return(tmp_name);
 }
 
-static void	write_into_tmp_file(int fd_tmp, char *eof)
+static void	write_into_tmp_file(int fd_tmp, char *eof, t_data *data)
 {
 	char	*line;
 
@@ -32,9 +32,14 @@ static void	write_into_tmp_file(int fd_tmp, char *eof)
 	{
 		line = readline("> "); // protect
 		if (ft_strncmp(line, eof, ft_strlen(eof)) == 0)
+		{
+			// chceck if need to insert a newline
 			break ;
+		}
 		else
 		{
+			if (data)
+				line = expand(line, data->env, data->e_code);
 			ft_putendl_fd(line, fd_tmp);
 			if (line)
 				free(line);
@@ -66,11 +71,10 @@ static char	*trim_quotes(char *old_str)
 			j++;
 		}
 	}
-	ft_printf(" NEW = { %s }\n", new);
 	return (new);
 }
 
-static int	get_interactive_input(t_redir_data *redir_content, int n)
+static int	get_interactive_input(t_redir_data *redir_content, int n, t_data *data)
 {
 	char	*line;
 	char	*eof;
@@ -88,8 +92,12 @@ static int	get_interactive_input(t_redir_data *redir_content, int n)
 	line = NULL;
 	eof = redir_content->file_name;
 	if (eof[0] == '\'' || eof[0] == '\"')
+	{
 		eof = trim_quotes(redir_content->file_name);
-	write_into_tmp_file(fd_tmp, eof);
+		write_into_tmp_file(fd_tmp, eof, NULL);
+	}
+	else
+		write_into_tmp_file(fd_tmp, eof, data);
 	free(redir_content->file_name);
 	redir_content->file_name = ft_strdup(tmp_name);
 	free(tmp_name);
@@ -97,7 +105,7 @@ static int	get_interactive_input(t_redir_data *redir_content, int n)
 	return (0);
 }
 
-static void	check_here_doc(t_list *redir)
+static void	check_here_doc(t_list *redir, t_data *data)
 {
 	t_redir_data	*redir_content;
 	int				err_check;
@@ -113,7 +121,7 @@ static void	check_here_doc(t_list *redir)
 			err_check = 1; // 1 == needs a name
 			while (err_check != 0)
 			{
-				err_check = get_interactive_input(redir_content, n);
+				err_check = get_interactive_input(redir_content, n, data);
 				if (err_check == -1)
 				{
 					// real error
@@ -127,20 +135,21 @@ static void	check_here_doc(t_list *redir)
 	}
 }
 
-void	here_doc(t_node *tree)
+void	here_doc(t_node *tree, t_data *data)
 {
 	t_pipe	*pipe;
 	t_cmd	*cmd;
 
+	// add available history ????
 	while (tree->type == IS_PIPE)
 	{
 		pipe = tree->content;
 		cmd = (t_cmd *)pipe->left->content;
 		if (cmd->redir)
-			check_here_doc(cmd->redir);
+			check_here_doc(cmd->redir, data);
 		tree = pipe->right;
 	}
 	cmd = (t_cmd *)tree->content;
 	if (cmd->redir)
-		check_here_doc(cmd->redir);
+		check_here_doc(cmd->redir, data);
 }

@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/10 15:01:48 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/11 12:45:01 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,8 @@ PRINT_UTILS = print_syntax_tree.c \
 
 SIGNALS = sig_handler.c
 
-UTILS = free_data.c
+UTILS = free_data.c \
+	ft_strcmp.c
 
 LEXER = lexer.c \
 	tokenize_input.c \

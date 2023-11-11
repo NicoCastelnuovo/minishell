@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env_custom.c                                   :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 16:53:39 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/11 13:02:53 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/11/11 12:13:04 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/11/11 12:55:39 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_env_custom(char *name, t_env *env)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	t_var	*head;
+	int	i;
 
-	head = env->head; // maybe no need
-	if (env->size)
-	{
-		while (head)
-		{
-			if (ft_strcmp(head->name, name) == 0)
-				return (head->value);
-			head = head->next;
-		}
-	}
-	return (NULL);
+	i = 0;
+	while (s1[i] && s2[i] && (s1[i] == s2[i]))
+		i++;
+	if (s1[i] < s2[i])
+		return (-1);
+	else if (s1[i] > s2[i])
+		return (1);
+	return (0);
 }

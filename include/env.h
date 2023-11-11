@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 10:51:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/09 09:20:04 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/11 13:12:02 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,16 @@
 /*
 	NOTES and STUFF TO DO:
 	• EXPORT
-		- Why _=[last_cmd] is not shown/exported ???
 		- Still need to order as ASCII char
 		- multiple args handling
 		- Each node maybe need a boolean which signs as exportable or non-exportable (and change init_env)
 	• ENV
 		- Verify with empty env, or decide what happend in case there is nothing - env_cpy still exist?
 		- Pay attention on whatsend to child ps
+		- Everytime a cmd is executed set $_ except if pipechain
 	• UNSET
 		- make VARNAME= not a valid input
 		- multiple args handling
-	• env -i && when creating env_cpy: set $PWD, update $SHLVL accordingly
 */
 
 typedef struct	s_var

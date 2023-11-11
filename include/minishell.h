@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/10 10:30:59 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/11 12:47:34 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,13 @@ void	del_to_expand(void *content);
 void	print_expansion(t_list *var_lst);
 
 // ------------------------------------------------------------------- BUILTINS
-void	here_doc(t_node *tree);
+void	here_doc(t_node *tree, t_data *data);
 
 // ------------------------------------------------------------------- BUILTINS
 void	exit_custom(t_data *data);
 
 // ---------------------------------------------------------------------- UTILS
+int		ft_strcmp(const char *s1, const char *s2);
 void	free_data(t_data *data);
 
 #endif
