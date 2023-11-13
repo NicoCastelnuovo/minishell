@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 08:50:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/11 15:16:03 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 10:48:33 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,23 @@
 	Copies the environment variable of the parent process into a double
 	linked list, to be used in the current shell.
 */
-t_env	*init_env(char **env)
+t_list	*init_env(char **env)
 {
-	t_env	*env_cpy;
-	t_var	*new_node;
+	t_list	*env_cpy;
+	t_list	*new_node;
+	t_var	*new_content;
 	int		i;
 
-	env_cpy = ft_calloc(1, sizeof(t_env)); // protect
-	env_cpy->head = NULL;
-	env_cpy->tail = NULL;
-	env_cpy->size = 0;
+	env_cpy = NULL;
 	new_node = NULL;
 	i = 0;
 	while (env[i])
 	{
-		new_node = env_dlst_new(env[i]);
+		new_content = create_var_content(env[i]);
+		new_node = ft_lstnew(new_content);
 		if (!new_node)
-			return (env_dlst_clear(&env_cpy), NULL); // free()
-		env_dlst_append(&env_cpy, new_node);
+			return (ft_lstclear(&env_cpy, del_var_content), NULL); // free()
+		ft_lstadd_back(&env_cpy, new_node);
 		i++;
 	}
 	return (env_cpy);

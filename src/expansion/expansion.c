@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/11 11:37:42 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 10:39:28 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	del_to_expand(void *content)
 			free(var->value);
 		var->name_len = -1;
 		var->value_len = -1;
-		var->next = NULL;
-		var->prev = NULL;
+		// var->next = NULL;
+		// var->prev = NULL;
 		var->to_export = -1;
 		free(var);
 		var = NULL;
@@ -73,15 +73,15 @@ static int	get_n_dollars(char *s)
 	duplicated into the node. If the variable doesn't exist, an empty string
 	is duplicated.
 */
-static void	get_var_values(t_list *var_lst, t_env *env, int e_code)
+static void	get_var_values(t_list *var_to_expand, t_list *env, int e_code)
 {
 	char	*expanded;
 	t_var	*var;
 
 	expanded = NULL;
-	while (var_lst)
+	while (var_to_expand)
 	{
-		var = (t_var *)var_lst->content;
+		var = (t_var *)var_to_expand->content;
 		if (var->name_len == 0)
 			expanded = ft_strdup("$");
 		else if (var->name[0] == '?' && var->name_len == 1)
@@ -92,24 +92,24 @@ static void	get_var_values(t_list *var_lst, t_env *env, int e_code)
 			expanded = ft_strdup("");
 		var->value = expanded;
 		var->value_len = ft_strlen(var->value);
-		var_lst = var_lst->next;
+		var_to_expand = var_to_expand->next;
 	}
 }
 
 static t_list	*get_var_names(char *s, int n)
 {
-	t_list	*var_lst;
+	t_list	*var_to_expand;
 	t_list	*new_node;
 	t_var	*var;
 	int		i;
 
-	var_lst = NULL;
+	var_to_expand = NULL;
 	i = 0;
 	while (i < n)
 	{
 		var = ft_calloc(1, sizeof(t_var));
 		if (!var)
-			return (ft_lstclear(&var_lst, del_to_expand), NULL);
+			return (ft_lstclear(&var_to_expand, del_to_expand), NULL);
 		s = ft_strchr(s, '$');
 		s++;
 		var->name_len = get_var_name_len(s);
@@ -118,16 +118,16 @@ static t_list	*get_var_names(char *s, int n)
 		else
 			var->name = ft_substr(s, 0, var->name_len);
 		if (!var->name)
-			return (ft_lstclear(&var_lst, del_to_expand), NULL);
+			return (ft_lstclear(&var_to_expand, del_to_expand), NULL);
 		var->value = NULL;
 		var->value_len = -1;
 		new_node = ft_lstnew(var); // protect
 		if (!new_node)
-			return (ft_lstclear(&var_lst, del_to_expand), NULL);
-		ft_lstadd_back(&var_lst, new_node);
+			return (ft_lstclear(&var_to_expand, del_to_expand), NULL);
+		ft_lstadd_back(&var_to_expand, new_node);
 		i++;
 	}
-	return (var_lst);
+	return (var_to_expand);
 }
 
 /*
@@ -136,7 +136,7 @@ static t_list	*get_var_names(char *s, int n)
 	("$" is still a variable name), get the variable values and build the
 	new string which will replace the origial one.
 */
-char	*expand(char *old_str, t_env *env, int e_code)
+char	*expand(char *old_str, t_list *env, int e_code)
 {
 	int		n;
 	t_list	*to_expand;
@@ -162,7 +162,7 @@ char	*expand(char *old_str, t_env *env, int e_code)
 	if there issomething to expand. In case of here_doc, the variable is not
 	expanded!
 */
-static int	check_expansion(t_cmd *cmd, t_env *env, int e_code)
+static int	check_expansion(t_cmd *cmd, t_list *env, int e_code)
 {
 	int				i;
 	t_list			*redir;
@@ -198,7 +198,7 @@ static int	check_expansion(t_cmd *cmd, t_env *env, int e_code)
 	return (0);
 }
 
-void	expansion(t_node *tree, t_env *env, int e_code)
+void	expansion(t_node *tree, t_list *env, int e_code)
 {
 	t_pipe	*pipe;
 	t_cmd	*cmd;

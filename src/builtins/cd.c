@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:20:48 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/11 16:50:51 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 11:04:45 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,24 @@ static char	*get_wd(void)
 	return (buff);
 }
 
-/*
-	Updates both PWD and OLDPWD variables, depending on the name passed in.
-*/
-// static void	update_pwd_var(t_env *env, char *name)
-// {
-// 	t_var	*new_var;
-// 	char	*abs_path; // change fucntion to be more general ????
+static void	update_existing_var(char *name, char *new_value, t_list **env)
+{
+	t_list	*head;
+	t_var	*var;
 
-// 	abs_path = get_wd();
-// 	new_var = ft_calloc(1, sizeof(t_var)); // protect
-// 	new_var->name = ft_strdup(name);
-// 	new_var->name_len = ft_strlen(new_var->name);
-// 	new_var->value = abs_path;
-// 	new_var->value_len = ft_strlen(new_var->value);
-// 	new_var->to_export = 1; // change
-// 	env_dlst_update(new_var, &env);
-// }
+	head = (*env);
+	while (head)
+	{
+		var = (t_var *)head->content;
+		if (ft_strcmp(name, var->name) == 0)
+		{
+			var->value = new_value;
+			var->value_len = ft_strlen(new_value);
+			return ;
+		}
+		head = head->next;
+	}
+}
 
 /*
 	cd changes the current working directory of the current shell env. Only a
@@ -55,34 +56,24 @@ static char	*get_wd(void)
 */
 void	cd(t_data *data)
 {
-	char	*to_path;
-	char	*abs_path;
-	char	*key_value;
-	t_var	*new;
+	char	*destination;
+	char	*curr_pwd;
+	char	*new_abs_path;
 
-	// abs_path = get_wd();
-	// key_value = ft_strjoin("OLDPWD=", abs_path);
-	// if (abs_path)
-	// 	free(abs_path);
-	// new = env_dlst_new(key_value);
-	// env_dlst_update(new, &data->env);
-
-	// ---------------------------------------------
-
-	to_path = ((t_cmd *)data->tree->content)->args[1];
-	// if (ft_strcmp(to_path, "") == 0)
-	// {
-	// 	ft_printf("-----------GO TO ROOOOOOT -------------\n");
-	// }
-	if (chdir(to_path) == -1)
-		data->e_code = errno; // print error
+	curr_pwd = get_wd(); // alocated
+	destination = ((t_cmd *)data->tree->content)->args[1];
+	if (!destination)
+		destination = get_env_custom("HOME", data->env);
+	if (chdir(destination) == -1)
+	{
+		data->e_code = errno; // print error and return ??????
+		free(curr_pwd);
+		// return ????????
+	}
 	else
 	{
-		abs_path = get_wd();
-		key_value = ft_strjoin("PWD=", abs_path);
-		if (abs_path)
-			free(abs_path);
-		new = env_dlst_new(key_value);
-		env_dlst_update(new, &data->env);
+		update_existing_var("OLDPWD", curr_pwd, &data->env);
+		new_abs_path = get_wd(); // protect
+		update_existing_var("PWD", new_abs_path, &data->env);
 	}
 }

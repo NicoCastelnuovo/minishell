@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/13 10:01:10 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 11:30:26 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 typedef struct s_data
 {
-	t_env	*env;
+	t_list	*env;
 	char	*input;
 	t_list	*tokens;
 	t_node	*tree;
@@ -45,17 +45,17 @@ typedef struct s_data
 */
 enum e_custom_errors
 {
-	EINVARG = 107,
-	ECMDNOTFOUND = 127
+	CE_INVARG = 107,
+	CE_CMDNOTFOUND = 127
 };
 
 // -------------------------------------------------------------------- SIGNALS
 void	init_sig_handling(void);
 
 // ------------------------------------------------------------------ EXPANSION
-void	expansion(t_node *tree, t_env *env, int e_code);
+void	expansion(t_node *tree, t_list *env, int e_code);
 char	*build_str(char *old_str, t_list *var_lst);
-char	*expand(char *s, t_env *env, int e_code);
+char	*expand(char *s, t_list *env, int e_code);
 void	del_to_expand(void *content);
 void	print_expansion(t_list *var_lst);
 
@@ -63,11 +63,11 @@ void	print_expansion(t_list *var_lst);
 void	here_doc(t_node *tree, t_data *data);
 
 // ------------------------------------------------------------------- BUILTINS
-void	env(t_env *env);
+void	get_env(t_list *env);
 void	cd(t_data *data);
 void	pwd(void);
 void	exit_custom(t_data *data);
-void	unset_env_var(char *name, t_env **env);
+void	unset(t_data *data);
 void	print_exported_env(t_env *env);
 void	export(t_data *data);
 

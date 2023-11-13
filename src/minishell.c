@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 10:02:18 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 11:20:13 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,25 +48,25 @@ static void	process_input(t_data *data)
 		}
 	}
 	if (!data->err)
-	{
 		data->tree = build_syntax_tree(data->tokens, 0);
-	}
 	if (data->tree)
 		expansion(data->tree, data->env, data->e_code);
-	here_doc(data->tree, data);
+	// here_doc(data->tree, data);
 	//
 	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "cd") == 0)
 		cd(data);
 	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "pwd") == 0)
 		pwd();
 	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "env") == 0)
-		env(data->env);
+		get_env(data->env);
 	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "export") == 0)
 		export(data);
+	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "unset") == 0)
+		unset(data);
 	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "exit") == 0)
 	{
 		free_data(data);
-		env_dlst_clear(&data->env);
+		ft_lstclear(&data->env, del_var_content);
 		exit(1);
 	}
 	//
@@ -80,11 +80,9 @@ int	main(int argc, char **argv, char **env) // env[0] = NULL
 	t_data	data;
 
 	if (argc > 1 || argv[1])
-		return (1); // custom err
+		return (error("argc/argv", CE_INVARG), CE_INVARG);
 	init_data(&data, env);
-	if (!data.env)
-		return (1); // custom err
-
+	get_env(data.env);
 	while (1)
 	{
 		data.input = readline("minishell $ "); // ft_strdup("<in cat -e | wc -l -o  -i >out2 | iuhe"); // readinput("minishell $ ");
@@ -94,7 +92,7 @@ int	main(int argc, char **argv, char **env) // env[0] = NULL
 	}
 	if (data.env)
 	{
-		env_dlst_clear(&data.env);
+		ft_lstclear(&data.env, del_var_content);
 		data.env = NULL;
 	}
 	return (0);

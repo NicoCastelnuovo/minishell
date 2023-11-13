@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_dlst_append.c                                  :+:      :+:    :+:   */
+/*   del_var_content.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/11 18:33:39 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/11 16:57:09 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/11/13 11:30:03 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/11/13 11:30:09 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env_dlst_append(t_env **env, t_var *new)
+void	del_var_content(void *content)
 {
-	if (!(*env)->head)
+	t_var	*var;
+
+	var = (t_var *)content;
+	if (var)
 	{
-		(*env)->head = new;
-		(*env)->tail = new;
-		(*env)->size += 1;
-		return ;
+		if (var->name)
+		{
+			free(var->name);
+			var->name = NULL;
+		}
+		if (var->value)
+		{
+			free(var->value);
+			var->value = NULL;
+		}
+		var->name_len = -1;
+		var->value_len = -1;
+		var->to_export = -1;
+		free(var);
+		var = NULL;
 	}
-	(*env)->tail->next = new;
-	new->prev = (*env)->tail;
-	(*env)->tail = new;
-	(*env)->size += 1;
 }

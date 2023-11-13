@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_dlst_new.c                                     :+:      :+:    :+:   */
+/*   create_var_content.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/10 18:34:43 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/11 14:32:15 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/11/13 10:15:40 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/11/13 11:29:54 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,7 @@ static char	*get_env_var_value(char *env_var, t_var *var)
 	return (var_value);
 }
 
-/*
-	Returns a new t_var struct, which is the potential content for a new node.
-	The = sign is omitted and not stored.
-	Example. NEW_VAR=hello
-		name -> NEW_VAR | value -> hello
-*/
-t_var	*env_dlst_new(char *env_var)
+t_var	*create_var_content(char *env_var)
 {
 	t_var	*var;
 
@@ -91,7 +85,5 @@ t_var	*env_dlst_new(char *env_var)
 		var->value = NULL;
 		var->value_len = -1;
 	}
-	var->next = NULL;
-	var->prev = NULL;
 	return (var);
 }

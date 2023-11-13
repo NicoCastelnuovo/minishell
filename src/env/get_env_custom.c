@@ -6,24 +6,24 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:53:39 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/11 13:02:53 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 10:26:09 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_env_custom(char *name, t_env *env)
+char	*get_env_custom(char *name, t_list *env)
 {
-	t_var	*head;
+	t_var	*var;
 
-	head = env->head; // maybe no need
-	if (env->size)
+	if (env)
 	{
-		while (head)
+		while (env)
 		{
-			if (ft_strcmp(head->name, name) == 0)
-				return (head->value);
-			head = head->next;
+			var = (t_var *)env->content;
+			if (ft_strcmp(var->name, name) == 0)
+				return (var->value);
+			env = env->next;
 		}
 	}
 	return (NULL);
