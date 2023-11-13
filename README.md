@@ -21,10 +21,10 @@ free(tmp);
 # NICO
 8) Error handling
 1) Adjust add_history() -> no empty line, no after ctrl-C
-2) echo
 5) Signals
 7) cd: maybe add c dwithout arguments which goes to home
 
+2) echo
 3) exit (see eval sheet)
 6) export: need to merge arguments abd sort
 

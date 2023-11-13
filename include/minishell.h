@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/13 15:55:13 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:50:37 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 # include <readline/history.h>
 # include "stdbool.h"
 # include <signal.h>
-# include <termcap.h>
+# include <termcap.h> // ???
+# include <termios.h>
 # include <fcntl.h>
 
 # include "libft.h"

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 16:07:51 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:52:03 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,21 @@ static void	process_input(t_data *data)
 	if (data->tree)
 		expansion(data->tree, data->env, data->e_code);
 	here_doc(data->tree, data);
-	//
-	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "cd") == 0)
-		cd(data);
-	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "pwd") == 0)
-		pwd();
-	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "env") == 0)
-		get_env(data->env);
-	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "export") == 0)
-		export(data);
-	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "unset") == 0)
-		unset(data);
-	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "exit") == 0)
-		exit_custom(data);
-	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "echo") == 0)
-		echo(data);
-	//
+	// if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "cd") == 0)
+	// 	cd(data);
+	// if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "pwd") == 0)
+	// 	pwd();
+	// if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "env") == 0)
+	// 	get_env(data->env);
+	// if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "export") == 0)
+	// 	export(data);
+	// if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "unset") == 0)
+	// 	unset(data);
+	// if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "exit") == 0)
+	// 	exit_custom(data);
+	// if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "echo") == 0)
+	// 	echo(data);
+	// execute
 }
 
 static void	shell_loop(t_data *data)
@@ -62,11 +61,20 @@ static void	shell_loop(t_data *data)
 	while (1)
 	{
 		data->input = readline("minishell $ ");
+		if (!data->input)
+		{
+			struct termios t;
+			tcgetattr(STDIN_FILENO, &t);
+			t.c_lflag &= ~ICANON;  // Turn off canonical mode (line-buffered input)
+			t.c_cc[VMIN] = 0;      // Set VMIN to 0 for non-blocking read
+			tcsetattr(STDIN_FILENO, TCSANOW, &t);
+			ft_putendl_fd("FUCK YOU MINISHELL!", 1);
+			exit(1);
+		}
 		if (data->input && !is_empty_input(data->input)) //  && !is_empty_input(data->input)
 			process_input(data);
-		if (is_valid_for_history(data))
-			add_history(data->input); // not always to do
-		// print_syntax_tree(data->tree);
+		// if (is_valid_for_history(data))
+		// 	add_history(data->input); // not always to do
 		free_data(data);
 		ft_printf("\033[0;35m=========================================================================\033[0m\n");
 	}
@@ -79,8 +87,9 @@ int	main(int argc, char **argv, char **env) // env[0] = NULL
 	if (argc > 1 || argv[1])
 		return (error("argc/argv", CE_INVARG), CE_INVARG);
 	init_data(&data, env);
+	init_sig_handling();
 	shell_loop(&data);
-	if (data.env)
-		ft_lstclear(&data.env, del_var_content);
+	// if (data.env)
+	// 	ft_lstclear(&data.env, del_var_content);
 	return (0);
 }

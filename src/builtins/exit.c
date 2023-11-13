@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:06:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 15:25:08 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:40:25 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,15 @@ void	exit_custom(t_data *data)
 	t_cmd	*cmd;
 	int		last_e_code;
 
-	ft_putendl_fd("exit", 1);
+	if (!data->tree) // come from signal
+	{
+		ft_putstr_fd("exit", 1);
+		free_data(data);
+		ft_lstclear(&data->env, del_var_content);
+		exit(data->e_code);
+	}
 	cmd = (t_cmd *)data->tree->content;
+	ft_putendl_fd("exit", 1);
 	if (!cmd->args[1])
 	{
 		last_e_code = data->e_code;
@@ -33,7 +40,7 @@ void	exit_custom(t_data *data)
 			error("exit", CE_NUMREQUIRED);
 			free_data(data);
 			ft_lstclear(&data->env, del_var_content);
-			exit (255);
+			exit(255);
 		}
 	}
 	if (cmd->args[2])
@@ -45,6 +52,6 @@ void	exit_custom(t_data *data)
 	{
 		free_data(data);
 		ft_lstclear(&data->env, del_var_content);
-		exit (ft_atoi(cmd->args[1]) % 256);
+		exit(ft_atoi(cmd->args[1]) % 256);
 	}
 }
