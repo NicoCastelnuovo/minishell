@@ -22,10 +22,11 @@ free(tmp);
 8) Error handling
 1) Adjust add_history() -> no empty line, no after ctrl-C
 2) echo
-3) exit (see eval sheet)
 5) Signals
-6) export: need to merge arguments
 7) cd: maybe add c dwithout arguments which goes to home
+
+3) exit (see eval sheet)
+6) export: need to merge arguments abd sort
 
 # FARSHAD
 4) Executor:

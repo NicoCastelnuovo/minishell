@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 10:51:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 13:51:44 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 14:45:08 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@
 
 typedef struct	s_var
 {
-	char			*name;
-	int				name_len;
-	char			*value;
-	int				value_len;
-	int				to_export;
+	char	*name;
+	int		name_len;
+	char	*value;
+	int		value_len;
+	int		to_export;
 }				t_var;
 
 typedef struct	s_env

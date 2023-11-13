@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/13 13:24:05 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:55:13 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct s_data
 enum e_custom_errors
 {
 	CE_INVARG = 107,
+	CE_TOOMANYARGS = 108,
+	CE_NUMREQUIRED = 109,
 	CE_CMDNOTFOUND = 127
 };
 
@@ -70,11 +72,14 @@ void	exit_custom(t_data *data);
 void	unset(t_data *data);
 void	get_exported(t_list *env);
 void	export(t_data *data);
+void	echo(t_data *data);
 
 // ---------------------------------------------------------------------- UTILS
 void	error(char *msg, int n);
 int		ft_strcmp(const char *s1, const char *s2);
 void	free_data(t_data *data);
 int		get_substr_len(char *s, char c);
+int		is_valid_for_history(t_data *data);
+int		is_empty_input(char *s);
 
 #endif

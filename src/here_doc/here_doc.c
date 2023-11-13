@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:19:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 09:01:52 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:57:41 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ static void	check_here_doc(t_list *redir, t_data *data)
 	int				err_check;
 	int				n; // n to append
 
-	// in(<) - out(>) - EOF(<<) - EOF2(<<) ============= in(<) - out (>) - tmp_0(<<) - tmp_1(<<)
 	n = 0;
 	while (redir)
 	{
