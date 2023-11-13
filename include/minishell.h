@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/11 15:16:41 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 10:01:10 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,15 @@ typedef struct s_data
 	int		e_code;
 }	t_data;
 
+/*
+	Custom error values are in the range between 106 (max errno value) and
+	126 (min reserved exit code), excluded.
+*/
+enum e_custom_errors
+{
+	EINVARG = 107,
+	ECMDNOTFOUND = 127
+};
 
 // -------------------------------------------------------------------- SIGNALS
 void	init_sig_handling(void);
@@ -63,6 +72,7 @@ void	print_exported_env(t_env *env);
 void	export(t_data *data);
 
 // ---------------------------------------------------------------------- UTILS
+void	error(char *msg, int n);
 int		ft_strcmp(const char *s1, const char *s2);
 void	free_data(t_data *data);
 

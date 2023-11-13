@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/11 16:53:02 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 10:02:18 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ static void	process_input(t_data *data)
 		pwd();
 	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "env") == 0)
 		env(data->env);
-	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "export") == 0) // not properly right
+	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "export") == 0)
 		export(data);
-	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "exit") == 0) // not properly right
+	if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "exit") == 0)
 	{
 		free_data(data);
 		env_dlst_clear(&data->env);
@@ -75,7 +75,7 @@ static void	process_input(t_data *data)
 	free_data(data);
 }
 
-int	main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env) // env[0] = NULL
 {
 	t_data	data;
 

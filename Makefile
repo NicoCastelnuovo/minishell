@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/11 15:19:17 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/13 10:07:58 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,8 @@ BUILTINS = cd.c \
 	pwd.c \
 	unset.c \
 	exit.c
+
+ERROR = error.c \
 
 ENV = init_env.c \
 	env_dlst_append.c \
@@ -82,6 +84,7 @@ LEXER = lexer.c \
 SRCS = minishell.c \
 	$(BUILTINS) \
 	$(ENV) \
+	$(ERROR) \
 	$(EXPANSION) \
 	$(HERE_DOC) \
 	$(LEXER) \
