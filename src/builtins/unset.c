@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:37:54 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 12:18:44 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 14:21:14 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static void	unset_single_var(char *name, t_list **env)
 			if (ft_strcmp(((t_var *)next_node->content)->name, name) == 0)
 			{
 				head->next = next_node->next;
-				ft_printf("NOW env->next of {%s} is {%s}\n", ((t_var *)head->content)->name, ((t_var *)next_node->next->content)->name);
 				ft_lstdelone(next_node, del_var_content);
 				break ;
 			}
@@ -58,6 +57,11 @@ void	unset(t_data *data)
 	i = 1;
 	while (cmd->args[i])
 	{
+		if (!ft_strchr(cmd->args[i], '='))
+		{
+			// error invalid identifier
+			return ;
+		}
 		unset_single_var(cmd->args[i], &data->env);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 11:20:13 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 14:33:26 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	main(int argc, char **argv, char **env) // env[0] = NULL
 	if (argc > 1 || argv[1])
 		return (error("argc/argv", CE_INVARG), CE_INVARG);
 	init_data(&data, env);
-	get_env(data.env);
 	while (1)
 	{
 		data.input = readline("minishell $ "); // ft_strdup("<in cat -e | wc -l -o  -i >out2 | iuhe"); // readinput("minishell $ ");

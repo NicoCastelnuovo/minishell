@@ -24,7 +24,7 @@ free(tmp);
 2) echo
 3) exit (see eval sheet)
 5) Signals
-6) env/export/unset: check what happens with env -i
+6) export: need to merge arguments
 7) cd: maybe add c dwithout arguments which goes to home
 
 # FARSHAD

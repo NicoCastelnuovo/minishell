@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:15:40 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 11:29:54 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 14:04:44 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 /*
 	Given c as a divider, returns the length of the substring which is on the
-	left of it including the divider. Example. Hello=world!!!, if the divider
-	is =, it returns 6.
+	left. Example. Hello=world!!!, if the divider is =, it returns 5.
 */
-static int	get_substr_len(char *s, char c)
+int	get_substr_len(char *s, char c)
 {
 	int	i;
 
@@ -28,7 +27,7 @@ static int	get_substr_len(char *s, char c)
 			return (i);
 		i++;
 	}
-	return (i);
+	return (i); // changed
 }
 
 static char	*get_env_var_value(char *env_var, t_var *var)
@@ -44,17 +43,11 @@ static char	*get_env_var_value(char *env_var, t_var *var)
 		var_value = ft_itoa(shlvl);
 		var->to_export = 1;
 	}
-	else if (ft_strcmp(var->name, "_") == 0)
+	else if (ft_strcmp(var->name, "_") == 0) // change
 	{
 		free(var_value);
 		var_value = ft_strdup("");
 		var->to_export = 0;
-	}
-	else if (ft_strcmp(var->name, "OLDPWD") == 0)
-	{
-		free(var_value);
-		var_value = NULL;
-		var->to_export = 1;
 	}
 	else
 		var->to_export = 1;

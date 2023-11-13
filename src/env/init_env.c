@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 08:50:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 10:48:33 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 14:00:33 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,8 @@ t_list	*init_env(char **env)
 		ft_lstadd_back(&env_cpy, new_node);
 		i++;
 	}
+	// new_content = copy_variable("OLDPDW");
+	// new_node = ft_lstnew(new_content);
+	// ft_lstadd_back(&env_cpy, new_node);
 	return (env_cpy);
 }

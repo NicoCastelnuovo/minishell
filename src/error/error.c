@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 09:44:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 10:27:12 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:07:26 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	*custom_strerror(int n)
 {
 	if (n == CE_INVARG)
-		return ("command not found");
+		return ("invalid arguments");
 	if (n == CE_CMDNOTFOUND)
 		return ("command not found");
 	return ("unknow error");

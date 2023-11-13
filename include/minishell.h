@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/13 11:30:26 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:24:05 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,13 @@ void	cd(t_data *data);
 void	pwd(void);
 void	exit_custom(t_data *data);
 void	unset(t_data *data);
-void	print_exported_env(t_env *env);
+void	get_exported(t_list *env);
 void	export(t_data *data);
 
 // ---------------------------------------------------------------------- UTILS
 void	error(char *msg, int n);
 int		ft_strcmp(const char *s1, const char *s2);
 void	free_data(t_data *data);
+int		get_substr_len(char *s, char c);
 
 #endif
