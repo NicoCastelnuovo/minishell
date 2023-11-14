@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/13 16:50:37 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 08:51:25 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 # include "lexer.h"
 # include "env.h"
 # include "parser.h"
-# include "executor.h"
 
 typedef struct s_data
 {
@@ -38,6 +37,8 @@ typedef struct s_data
 	t_node	*tree;
 	char	*err;
 	int		e_code;
+	int		n_ps;
+	int		*pid;
 }	t_data;
 
 /*
@@ -64,6 +65,9 @@ void	print_expansion(t_list *var_lst);
 
 // ------------------------------------------------------------------- HERE_DOC
 void	here_doc(t_node *tree, t_data *data);
+
+// ------------------------------------------------------------------- EXECUTOR
+void	executor(t_data *data);
 
 // ------------------------------------------------------------------- BUILTINS
 void	get_env(t_list *env);

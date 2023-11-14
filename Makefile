@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/13 14:39:19 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/14 08:33:00 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ VPATH = ./src/ \
 	./src/builtins \
 	./src/env \
 	./src/error \
+	./src/executor \
 	./src/expansion \
 	./src/here_doc \
 	./src/lexer \
@@ -36,6 +37,8 @@ BUILTINS = cd.c \
 	exit.c
 
 ERROR = error.c \
+
+EXECUTOR = executor.c \
 
 ENV = init_env.c \
 	create_var_content.c \
@@ -84,6 +87,7 @@ SRCS = minishell.c \
 	$(BUILTINS) \
 	$(ENV) \
 	$(ERROR) \
+	$(EXECUTOR) \
 	$(EXPANSION) \
 	$(HERE_DOC) \
 	$(LEXER) \

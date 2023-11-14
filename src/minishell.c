@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 16:52:03 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 08:56:58 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static void	init_data(t_data *data, char **env)
 	data->tree = NULL;
 	data->err = NULL;
 	data->e_code = 0;
+	data->n_ps = 0;
+	data->pid = NULL;
 }
 
 static void	process_input(t_data *data)
@@ -35,7 +37,10 @@ static void	process_input(t_data *data)
 		}
 	}
 	if (!data->err)
+	{
 		data->tree = build_syntax_tree(data->tokens, 0);
+		print_syntax_tree(data->tree);
+	}
 	if (data->tree)
 		expansion(data->tree, data->env, data->e_code);
 	here_doc(data->tree, data);

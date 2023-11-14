@@ -6,13 +6,12 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/10 07:27:29 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 08:42:49 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
-#include "lexer.h"
 /*
 	SYNTAX TREE
 	The tree is composed by t_node items. Each t_node can be either of type

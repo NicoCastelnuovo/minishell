@@ -1,17 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.h                                         :+:      :+:    :+:   */
+/*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 14:08:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/01 12:30:43 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/11/14 08:31:08 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/11/14 08:56:08 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTOR_H
-# define EXECUTOR_H
+#include "minishell.h"
 
+void	executor(t_data *data)
+{
+	t_node	*node;
+	t_pipe	*pipe;
+	t_cmd	*cmd;
 
-#endif
+	node = data->tree;
+	while (node->type == IS_PIPE)
+	{
+		pipe = (t_pipe *)node->content;
+		cmd = (t_cmd *)pipe->left->content;
+		// need
+		node = pipe->right;
+	}
+	cmd = (t_cmd *)node->content;
+}
