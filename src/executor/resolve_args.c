@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 13:05:04 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/14 14:35:35 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 14:58:28 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static char	*get_abs_path(char *cmd_name, char **env)
 void	resolve_args(char **cmd_name, char **env)
 {
 	char	*abs_path;
-	char	**tmp;
+	char	*tmp;
 
 	abs_path = get_abs_path(*cmd_name, env);
 	if (abs_path)
