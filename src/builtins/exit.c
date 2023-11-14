@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:06:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 16:40:25 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 11:34:33 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	exit_custom(t_data *data)
 	{
 		if (ft_strcmp(cmd->args[1], "0")) // need to check 0000000000000
 		{
-			error("exit", CE_NUMREQUIRED);
+			error("exit", 1);
 			free_data(data);
 			ft_lstclear(&data->env, del_var_content);
 			exit(255);
@@ -46,7 +46,7 @@ void	exit_custom(t_data *data)
 	if (cmd->args[2])
 	{
 		data->e_code = 1;
-		return (error("exit", CE_TOOMANYARGS));
+		return (error("exit", 1));
 	}
 	else
 	{

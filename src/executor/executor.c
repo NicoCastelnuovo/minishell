@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 08:31:08 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/14 11:33:10 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:20:07 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,18 @@ static int	fork_ps(t_data *data, t_cmd *cmd, int *prev_pipe, int i)
 	if (data->pid[i] == 0)
 	{
 		if (i == 0)
-			first_child(cmd, env, fd_pipe);
+			first_child(cmd, env, fd_pipe, NULL);
 		else if (i == data->n_ps - 1)
-			last_child(cmd, env, fd_pipe);
+			last_child(cmd, env, fd_pipe, prev_pipe);
 		else
-			mid_child(cmd, env, fd_pipe);
+			mid_child(cmd, env, fd_pipe, prev_pipe);
 	}
 	else
 	{
-		// close(fd_pipe[1]);
-		// close(*prev_pipe);
-		// *prev_pipe = fd_pipe[0];
-		// close here ???
+		close(fd_pipe[1]);
+		close(*prev_pipe);
+		*prev_pipe = fd_pipe[0];
+		// close fd_pipe ???
 	}
 	return (0);
 }
@@ -92,6 +92,7 @@ int	executor(t_data *data)
 	cmd = (t_cmd *)node->content;
 	if (fork_ps(data, cmd, &prev_pipe, i))
 		return (1);
+	close(prev_pipe);
 	parent(data);
 	return (0);
 }

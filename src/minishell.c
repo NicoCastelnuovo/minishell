@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/14 11:15:50 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:18:37 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static void	process_input(t_data *data)
 	}
 	if (data->tree)
 		expansion(data->tree, data->env, data->e_code);
-	print_env(data->env);
 	here_doc(data->tree, data);
 	executor(data);
 	exit(0);
