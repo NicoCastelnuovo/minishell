@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_dlst_clear.c                                   :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/12 09:47:06 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/08 13:17:55 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/11/11 12:13:04 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/11/11 12:55:39 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env_dlst_clear(t_env **env)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	t_var	*next;
+	int	i;
 
-	next = NULL;
-	if (!*env)
-		return ;
-	while ((*env)->head)
-	{
-		next = (*env)->head->next;
-		env_dlst_delnode((*env)->head, env);
-		(*env)->head = next;
-	}
-	free(*env);
+	i = 0;
+	while (s1[i] && s2[i] && (s1[i] == s2[i]))
+		i++;
+	if (s1[i] < s2[i])
+		return (-1);
+	else if (s1[i] > s2[i])
+		return (1);
+	return (0);
 }

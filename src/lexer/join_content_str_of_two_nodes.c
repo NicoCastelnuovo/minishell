@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join_content_str_of_two_nodes.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 12:40:11 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/29 16:27:06 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/11/13 09:35:11 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,24 +6,74 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:20:48 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/08 12:05:40 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 11:04:45 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static char	*get_wd(void)
+{
+	char	*buff;
+	size_t	size;
+
+	buff = NULL;
+	size = 1;
+	buff = ft_calloc(size + 1, sizeof(char)); // protect --- create err function!
+	buff = getcwd(buff, size);
+	while (!buff)
+	{
+		free(buff);
+		size += 1;
+		buff = ft_calloc(size + 1, sizeof(char)); // protect --- create err function
+		buff = getcwd(buff, size);
+	}
+	return (buff);
+}
+
+static void	update_existing_var(char *name, char *new_value, t_list **env)
+{
+	t_list	*head;
+	t_var	*var;
+
+	head = (*env);
+	while (head)
+	{
+		var = (t_var *)head->content;
+		if (ft_strcmp(name, var->name) == 0)
+		{
+			var->value = new_value;
+			var->value_len = ft_strlen(new_value);
+			return ;
+		}
+		head = head->next;
+	}
+}
+
 /*
 	cd changes the current working directory of the current shell env. Only a
 	relative or an absolute path are accepted.
 */
-// int	cd(char *path, char **env)
-// {
-// 	// char	*old_dir;
-// 	// char	*new_dir;
+void	cd(t_data *data)
+{
+	char	*destination;
+	char	*curr_pwd;
+	char	*new_abs_path;
 
-// 	if (chdir(path) == -1)
-// 		return (ENOENT);
-// 	// new_dir = ft_strdup(get_wd());
-// 	// update_env_var("PWD=", new_dir, env);
-// 	return (0);
-// }
+	curr_pwd = get_wd(); // alocated
+	destination = ((t_cmd *)data->tree->content)->args[1];
+	if (!destination)
+		destination = get_env_custom("HOME", data->env);
+	if (chdir(destination) == -1)
+	{
+		data->e_code = errno; // print error and return ??????
+		free(curr_pwd);
+		// return ????????
+	}
+	else
+	{
+		update_existing_var("OLDPWD", curr_pwd, &data->env);
+		new_abs_path = get_wd(); // protect
+		update_existing_var("PWD", new_abs_path, &data->env);
+	}
+}

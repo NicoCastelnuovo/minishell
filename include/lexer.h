@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/10 15:24:41 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 08:28:35 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define SPECIAL_CHAR_NUM 10
 
-typedef enum s_tkn_type
+typedef enum e_tkn_type
 {
 	TKN_WORD = 1,
 	TKN_S_QUOTED_STR = 2,

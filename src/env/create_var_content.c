@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_dlst_new.c                                     :+:      :+:    :+:   */
+/*   create_var_content.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/10 18:34:43 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/27 15:09:24 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/11/13 10:15:40 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/11/13 15:01:40 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 /*
 	Given c as a divider, returns the length of the substring which is on the
-	left of it including the divider. Example. Hello=world!!!, if the divider
-	is =, it returns 6.
+	left. Example. Hello=world!!!, if the divider is =, it returns 5.
 */
-static int	get_substr_len(char *s, char c)
+int	get_substr_len(char *s, char c)
 {
 	int	i;
 
@@ -28,16 +27,34 @@ static int	get_substr_len(char *s, char c)
 			return (i);
 		i++;
 	}
-	return (i);
+	return (i); // changed
 }
 
-/*
-	Returns a new t_var struct, which is the potential content for a new node.
-	The = sign is omitted and not stored.
-	Example. NEW_VAR=hello
-		name -> NEW_VAR | value -> hello
-*/
-t_var	*env_dlst_new(char *env_var)
+static char	*get_env_var_value(char *env_var, t_var *var)
+{
+	char	*var_value;
+	int		shlvl;
+
+	var_value = ft_substr(env_var, ft_strlen(var->name) + 1, ft_strlen(env_var) - ft_strlen(var->name));
+	if (ft_strcmp(var->name, "SHLVL") == 0)
+	{
+		shlvl = ft_atoi(var_value) + 1;
+		free(var_value);
+		var_value = ft_itoa(shlvl);
+		var->to_export = 1;
+	}
+	else if (ft_strcmp(var->name, "_") == 0) // change
+	{
+		free(var_value);
+		var_value = ft_strdup("");
+		var->to_export = 0;
+	}
+	else
+		var->to_export = 1;
+	return (var_value);
+}
+
+t_var	*create_var_content(char *env_var)
 {
 	t_var	*var;
 
@@ -51,15 +68,15 @@ t_var	*env_dlst_new(char *env_var)
 	ft_strlcpy(var->name, env_var, var->name_len + 1);
 	if (ft_strchr(env_var, '='))
 	{
-		var->value = ft_substr(env_var, var->name_len + 1, ft_strlen(env_var) - var->name_len);
-		var->value_len = ft_strlen(var->value);
+		var->value = get_env_var_value(env_var, var);
+		var->value_len = -1;
+		if (var->value)
+			var->value_len = ft_strlen(var->value);
 	}
 	else
 	{
 		var->value = NULL;
 		var->value_len = -1;
 	}
-	var->next = NULL;
-	var->prev = NULL;
 	return (var);
 }

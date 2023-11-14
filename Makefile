@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/10 15:01:48 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/13 14:39:19 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@
 VPATH = ./src/ \
 	./src/builtins \
 	./src/env \
+	./src/error \
 	./src/expansion \
 	./src/here_doc \
 	./src/lexer \
@@ -27,18 +28,18 @@ VPATH = ./src/ \
 	./test
 
 BUILTINS = cd.c \
+	get_env.c \
 	echo.c \
 	export.c \
 	pwd.c \
 	unset.c \
 	exit.c
 
-ENV = env.c \
-	env_dlst_append.c \
-	env_dlst_clear.c \
-	env_dlst_delnode.c \
-	env_dlst_new.c \
-	env_dlst_update.c \
+ERROR = error.c \
+
+ENV = init_env.c \
+	create_var_content.c \
+	del_var_content.c \
 	get_env_custom.c
 
 EXPANSION = build_str.c \
@@ -58,7 +59,9 @@ PRINT_UTILS = print_syntax_tree.c \
 
 SIGNALS = sig_handler.c
 
-UTILS = free_data.c
+UTILS = free_data.c \
+	ft_strcmp.c \
+	is_valid_for_history.c
 
 LEXER = lexer.c \
 	tokenize_input.c \
@@ -80,6 +83,7 @@ LEXER = lexer.c \
 SRCS = minishell.c \
 	$(BUILTINS) \
 	$(ENV) \
+	$(ERROR) \
 	$(EXPANSION) \
 	$(HERE_DOC) \
 	$(LEXER) \

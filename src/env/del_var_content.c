@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env_custom.c                                   :+:      :+:    :+:   */
+/*   del_var_content.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 16:53:39 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 10:26:09 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/11/13 11:30:03 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/11/13 11:30:09 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_env_custom(char *name, t_list *env)
+void	del_var_content(void *content)
 {
 	t_var	*var;
 
-	if (env)
+	var = (t_var *)content;
+	if (var)
 	{
-		while (env)
+		if (var->name)
 		{
-			var = (t_var *)env->content;
-			if (ft_strcmp(var->name, name) == 0)
-				return (var->value);
-			env = env->next;
+			free(var->name);
+			var->name = NULL;
 		}
+		if (var->value)
+		{
+			free(var->value);
+			var->value = NULL;
+		}
+		var->name_len = -1;
+		var->value_len = -1;
+		var->to_export = -1;
+		free(var);
+		var = NULL;
 	}
-	return (NULL);
 }

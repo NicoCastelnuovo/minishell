@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/10 10:30:59 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:50:37 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 # include <readline/history.h>
 # include "stdbool.h"
 # include <signal.h>
-# include <termcap.h>
+# include <termcap.h> // ???
+# include <termios.h>
 # include <fcntl.h>
 
 # include "libft.h"
@@ -31,7 +32,7 @@
 
 typedef struct s_data
 {
-	t_env	*env;
+	t_list	*env;
 	char	*input;
 	t_list	*tokens;
 	t_node	*tree;
@@ -39,24 +40,47 @@ typedef struct s_data
 	int		e_code;
 }	t_data;
 
+/*
+	Custom error values are in the range between 106 (max errno value) and
+	126 (min reserved exit code), excluded.
+*/
+enum e_custom_errors
+{
+	CE_INVARG = 107,
+	CE_TOOMANYARGS = 108,
+	CE_NUMREQUIRED = 109,
+	CE_CMDNOTFOUND = 127
+};
 
 // -------------------------------------------------------------------- SIGNALS
 void	init_sig_handling(void);
 
 // ------------------------------------------------------------------ EXPANSION
-void	expansion(t_node *tree, t_env *env, int e_code);
+void	expansion(t_node *tree, t_list *env, int e_code);
 char	*build_str(char *old_str, t_list *var_lst);
-char	*expand(char *s, t_env *env, int e_code);
+char	*expand(char *s, t_list *env, int e_code);
 void	del_to_expand(void *content);
 void	print_expansion(t_list *var_lst);
 
-// ------------------------------------------------------------------- BUILTINS
-void	here_doc(t_node *tree);
+// ------------------------------------------------------------------- HERE_DOC
+void	here_doc(t_node *tree, t_data *data);
 
 // ------------------------------------------------------------------- BUILTINS
+void	get_env(t_list *env);
+void	cd(t_data *data);
+void	pwd(void);
 void	exit_custom(t_data *data);
+void	unset(t_data *data);
+void	get_exported(t_list *env);
+void	export(t_data *data);
+void	echo(t_data *data);
 
 // ---------------------------------------------------------------------- UTILS
+void	error(char *msg, int n);
+int		ft_strcmp(const char *s1, const char *s2);
 void	free_data(t_data *data);
+int		get_substr_len(char *s, char c);
+int		is_valid_for_history(t_data *data);
+int		is_empty_input(char *s);
 
 #endif

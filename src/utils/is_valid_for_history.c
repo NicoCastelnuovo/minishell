@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_dlst_append.c                                  :+:      :+:    :+:   */
+/*   is_valid_for_history.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/11 18:33:39 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/27 08:40:30 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/11/13 14:38:18 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/11/13 14:45:02 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env_dlst_append(t_env **env, t_var *new)
+int	is_empty_input(char *s)
 {
-	if (!(*env)->head)
-	{
-		(*env)->head = new;
-		(*env)->tail = new;
-		(*env)->size += 1;
-		return ;
-	}
-	(*env)->tail->next = new;
-	new->prev = (*env)->tail;
-	(*env)->tail = new;
-	(*env)->size += 1;
+	size_t	i;
+
+	i = 0;
+	while (s[i] == ' ') // check also s[i] == '\n' || s[i] == '\t' ???
+		i++;
+	if (ft_strlen(s) == i)
+		return (1);
+	return (0);
+}
+
+int	is_valid_for_history(t_data *data)
+{
+	// check empty string ?
+	// check ctrl-C ???
+	// other ???
+	return (1);
 }
