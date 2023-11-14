@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:15:40 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 15:01:40 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 11:16:23 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*get_env_var_value(char *env_var, t_var *var)
 		var_value = ft_itoa(shlvl);
 		var->to_export = 1;
 	}
-	else if (ft_strcmp(var->name, "_") == 0) // change
+	else if (ft_strcmp(var->name, "_") == 0) // change ????
 	{
 		free(var_value);
 		var_value = ft_strdup("");

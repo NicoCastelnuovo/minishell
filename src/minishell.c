@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/14 08:56:58 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 11:15:50 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,10 @@ static void	process_input(t_data *data)
 	}
 	if (data->tree)
 		expansion(data->tree, data->env, data->e_code);
+	print_env(data->env);
 	here_doc(data->tree, data);
-	// if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "cd") == 0)
-	// 	cd(data);
-	// if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "pwd") == 0)
-	// 	pwd();
-	// if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "env") == 0)
-	// 	get_env(data->env);
-	// if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "export") == 0)
-	// 	export(data);
-	// if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "unset") == 0)
-	// 	unset(data);
-	// if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "exit") == 0)
-	// 	exit_custom(data);
-	// if (ft_strcmp(((t_cmd *)data->tree->content)->args[0], "echo") == 0)
-	// 	echo(data);
-	// execute
+	executor(data);
+	exit(0);
 }
 
 static void	shell_loop(t_data *data)
@@ -81,7 +69,7 @@ static void	shell_loop(t_data *data)
 		// if (is_valid_for_history(data))
 		// 	add_history(data->input); // not always to do
 		free_data(data);
-		ft_printf("\033[0;35m=========================================================================\033[0m\n");
+		// ft_printf("\033[0;35m=========================================================================\033[0m\n");
 	}
 }
 

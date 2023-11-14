@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/14 08:33:00 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/14 11:29:26 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ VPATH = ./src/ \
 	./test
 
 BUILTINS = cd.c \
-	get_env.c \
+	print_env.c \
 	echo.c \
 	export.c \
 	pwd.c \
@@ -39,11 +39,15 @@ BUILTINS = cd.c \
 ERROR = error.c \
 
 EXECUTOR = executor.c \
+	parent.c \
+	children.c \
 
 ENV = init_env.c \
+	get_exported_var_n.c \
 	create_var_content.c \
 	del_var_content.c \
-	get_env_custom.c
+	get_env_custom.c \
+	convert_to_dptr.c
 
 EXPANSION = build_str.c \
 	expansion.c

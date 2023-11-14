@@ -1,37 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   children.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/13 09:44:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/14 09:41:09 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/11/14 09:49:46 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/11/14 11:33:25 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*custom_strerror(int n)
+void	first_child(t_cmd *cmd, char **env, int *fd_pipe)
 {
-	if (n == CE_INVARG)
-		return ("invalid arguments");
-	if (n == CE_CMDNOTFOUND)
-		return ("command not found");
-	return ("unknow error");
+	exit(1);
 }
 
-void	error(char *what_failed, int n)
+void	mid_child(t_cmd *cmd, char **env, int *fd_pipe)
 {
-	char	*err_msg;
-
-	err_msg = NULL;
-	if (n < 107)
-		err_msg = strerror(n);
-	else
-		err_msg = custom_strerror(n);
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(what_failed, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putendl_fd(err_msg, 2);
+	exit(1);
 }
+
+void	last_child(t_cmd *cmd, char **env, int *fd_pipe)
+{
+
+	exit(1);
+}
+
+
+	// pipe_fd[0]
+	// pipe_fd[1]
+	// prev_pipe
+
+	// close(fd_pipe[0]);
+	// dup2(*prev_pipe, STDIN_FILENO);
+
+	// close(*prev_pipe);
+
+	// dup2(fd_pipe[1], STDOUT_FILENO);
+	// close(fd_pipe[1]);
+
+	// child() // (t_cmd *cmd, char **env, int i)

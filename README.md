@@ -8,7 +8,6 @@ Implementation of Bash and some of its functionalities using C as programming la
 1) < > << >> explicit redirections wins over pipe
 2) and between multiple, the last one wins
 
-
 char *s1 = "Fuck " [******] 0x123 --> 0x145
 char *s2 = "You"   [****]	0x124
 char *tmp = s1; 0x123
@@ -20,13 +19,13 @@ free(tmp);
 
 # NICO
 8) Error handling
+6) export: need to merge arguments abd sort
+
+7) cd: maybe add c dwithout arguments which goes to home
 1) Adjust add_history() -> no empty line, no after ctrl-C
 5) Signals
-7) cd: maybe add c dwithout arguments which goes to home
-
 2) echo
 3) exit (see eval sheet)
-6) export: need to merge arguments abd sort
 
 # FARSHAD
 4) Executor:

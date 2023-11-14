@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/14 08:51:25 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 11:32:26 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ typedef struct s_data
 enum e_custom_errors
 {
 	CE_INVARG = 107,
-	CE_TOOMANYARGS = 108,
-	CE_NUMREQUIRED = 109,
 	CE_CMDNOTFOUND = 127
 };
 
@@ -67,10 +65,14 @@ void	print_expansion(t_list *var_lst);
 void	here_doc(t_node *tree, t_data *data);
 
 // ------------------------------------------------------------------- EXECUTOR
-void	executor(t_data *data);
+int		executor(t_data *data);
+int		parent(t_data *data);
+void	first_child(t_cmd *cmd, char **env, int *fd_pipe);
+void	mid_child(t_cmd *cmd, char **env, int *fd_pipe);
+void	last_child(t_cmd *cmd, char **env, int *fd_pipe);
 
 // ------------------------------------------------------------------- BUILTINS
-void	get_env(t_list *env);
+void	print_env(t_list *env);
 void	cd(t_data *data);
 void	pwd(void);
 void	exit_custom(t_data *data);
