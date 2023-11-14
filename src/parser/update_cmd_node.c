@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:53:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/10 09:45:02 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 16:28:38 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ static t_redir_type	get_redir_type(t_tkn_type curr_tkn_type)
 		return (REDIR_OUT);
 	if (curr_tkn_type == TKN_REDIR_APPEND)
 		return (REDIR_APPEND);
-	return (REDIR_HERE_DOC);
+	if (curr_tkn_type == TKN_HERE_DOC)
+		return (REDIR_HERE_DOC);
+	return (-1);
 }
 
 /*
@@ -44,11 +46,9 @@ static void	update_cmd_redir(t_list *curr_tkn, t_cmd *cmd)
 		new_content->file_name = NULL;
 		new_node = ft_lstnew(new_content); // protect
 		ft_lstadd_back(&cmd->redir, new_node);
-		ft_printf("REDIRECTION && ");
 	}
 	else // file name
 	{
-		ft_printf("FILE NAME\n");
 		last = ft_lstlast(cmd->redir);
 		((t_redir_data *)last->content)->file_name = ft_strdup(tkn_content->str);
 	}

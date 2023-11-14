@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/14 09:00:22 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 16:28:47 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ typedef enum e_redir_type
 {
 	REDIR_IN = '<',		// <
 	REDIR_OUT = '>',	// >
-	REDIR_HERE_DOC,		// <<
-	REDIR_APPEND		// >>
+	REDIR_HERE_DOC = 8,		// <<
+	REDIR_APPEND = 7		// >>
 }	t_redir_type;
 
 typedef struct s_redir_data

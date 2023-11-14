@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 09:44:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/14 09:41:09 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 16:56:06 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	error(char *what_failed, int n)
 
 	err_msg = NULL;
 	if (n < 107)
+	{
+		ft_printf("????\n");
 		err_msg = strerror(n);
+	}
 	else
 		err_msg = custom_strerror(n);
 	ft_putstr_fd("minishell: ", 2);

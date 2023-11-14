@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/14 14:55:08 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 17:07:37 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ void	here_doc(t_node *tree, t_data *data);
 // ------------------------------------------------------------------- EXECUTOR
 int		executor(t_data *data);
 int		parent(t_data *data);
-void	first_child(t_cmd *cmd, char **env, int *fd_pipe, int *prev_pipe);
+void	first_child(t_cmd *cmd, char **env, int *fd_pipe);
 void	mid_child(t_cmd *cmd, char **env, int *fd_pipe, int *prev_pipe);
 void	last_child(t_cmd *cmd, char **env, int *fd_pipe, int *prev_pipe);
 void	resolve_args(char **cmd_name, char **env);
-void	resolve_redir(t_cmd *cmd);
+int		resolve_redir(t_cmd *cmd);
 
 // ------------------------------------------------------------------- BUILTINS
 void	print_env(t_list *env);

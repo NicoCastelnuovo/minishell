@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/14 14:42:16 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 17:16:14 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ static void	shell_loop(t_data *data)
 		data->input = readline("minishell $ ");
 		if (!data->input)
 		{
-			struct termios t;
-			tcgetattr(STDIN_FILENO, &t);
-			t.c_lflag &= ~ICANON;  // Turn off canonical mode (line-buffered input)
-			t.c_cc[VMIN] = 0;      // Set VMIN to 0 for non-blocking read
-			tcsetattr(STDIN_FILENO, TCSANOW, &t);
-			ft_putendl_fd("FUCK YOU MINISHELL!", 1);
+			// struct termios t;
+			// tcgetattr(STDIN_FILENO, &t);
+			// t.c_lflag &= ~ICANON;  // Turn off canonical mode (line-buffered input)
+			// t.c_cc[VMIN] = 0;      // Set VMIN to 0 for non-blocking read
+			// tcsetattr(STDIN_FILENO, TCSANOW, &t);
+			// ft_putendl_fd("FUCK YOU MINISHELL!", 1);
 			exit(1);
 		}
 		if (data->input && !is_empty_input(data->input)) //  && !is_empty_input(data->input)

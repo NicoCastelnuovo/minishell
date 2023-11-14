@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 08:31:08 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/14 14:42:18 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 17:16:20 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	fork_ps(t_data *data, t_cmd *cmd, int *prev_pipe, int i)
 	if (data->pid[i] == 0)
 	{
 		if (i == 0)
-			first_child(cmd, env, fd_pipe, NULL);
+			first_child(cmd, env, fd_pipe);
 		else if (i == data->n_ps - 1)
 			last_child(cmd, env, fd_pipe, prev_pipe);
 		else
