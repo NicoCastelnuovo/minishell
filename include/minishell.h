@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/14 13:09:27 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 14:35:28 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		parent(t_data *data);
 void	first_child(t_cmd *cmd, char **env, int *fd_pipe, int *prev_pipe);
 void	mid_child(t_cmd *cmd, char **env, int *fd_pipe, int *prev_pipe);
 void	last_child(t_cmd *cmd, char **env, int *fd_pipe, int *prev_pipe);
-int		resolve_args(char **args, char **env);
+void	resolve_args(char **cmd_name, char **env);
 
 // ------------------------------------------------------------------- BUILTINS
 void	print_env(t_list *env);

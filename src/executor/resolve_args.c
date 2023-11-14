@@ -6,13 +6,13 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 13:05:04 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/14 13:42:06 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/14 14:35:35 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	bin_exists(char *cmd_name, char	*path)
+static char	*bin_exist_and_can_execute(char *cmd_name, char	*path)
 {
 	char	*abs_path;
 	char	*tmp;
@@ -21,11 +21,10 @@ static int	bin_exists(char *cmd_name, char	*path)
 	tmp = abs_path;
 	abs_path = ft_strjoin(abs_path, cmd_name);
 	free(tmp);
-	if (access())
-	{
-
-	}
-	return (0);
+	if (access(abs_path, F_OK | X_OK) == 0)
+		return (abs_path);
+	free(abs_path);
+	return (NULL);
 }
 
 static char	*get_path_var(char **env)
@@ -41,8 +40,6 @@ static char	*get_path_var(char **env)
 	}
 }
 
-//PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Users/ncasteln/goinfre/.brew/bin:/Users/ncasteln/.brew/bin:/Users/ncasteln/Projects/minishell
-
 static char	*get_abs_path(char *cmd_name, char **env)
 {
 	char	**path_var;
@@ -53,27 +50,24 @@ static char	*get_abs_path(char *cmd_name, char **env)
 	i = 0;
 	while (path_var[i])
 	{
-		if (bin_exists(cmd_name, path_var[i]))
-		{
-			// return it
-		}
+		abs_path = bin_exist_and_can_execute(cmd_name, path_var[i]);
+		if (abs_path)
+			return (abs_path);
 		i++;
 	}
-
-	exit(1);
-
-	// if (cmd_name[0] == '.')
-
+	return (NULL);
 }
 
-int	resolve_args(char **args, char **env)
+void	resolve_args(char **cmd_name, char **env)
 {
-	char	cmd_name;
+	char	*abs_path;
+	char	**tmp;
 
-	cmd_name = get_abs_path(args[0], env);
-
-	// search in case of /bin/ls OR ls OR ./ls
-	execve(NULL, NULL, env);
-	error(args[0], CE_CMDNOTFOUND);
-	exit(127);
+	abs_path = get_abs_path(*cmd_name, env);
+	if (abs_path)
+	{
+		tmp = *cmd_name;
+		*cmd_name = abs_path;
+		free(tmp);
+	}
 }
