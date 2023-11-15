@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:49:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 15:50:26 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 15:58:06 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	redirect_to_pipes(int *fd_pipe, int *prev_pipe)
 		err = dup2(*prev_pipe, STDIN_FILENO);
 		close(*prev_pipe);
 	}
-	if (err)
+	if (err == 1)
 		return (error("dup2", NULL, errno), 1);
 	return (0);
 }
@@ -59,24 +59,24 @@ static int	redirect_to_explicit(t_node *node, char **env)
 	if (cmd->redir)
 	{
 		if (resolve_redir(cmd) == -1)
+		{
 			return (1);
+		}
 		else
 		{
 			if (cmd->fd_in != -2)
 			{
 				err = dup2(cmd->fd_in, STDIN_FILENO);
 				close(cmd->fd_in);
-				// maybe is double close
 			}
 			if (cmd->fd_out != -2)
 			{
 				err = dup2(cmd->fd_out, STDOUT_FILENO);
 				close(cmd->fd_out);
-				// maybe is double close
 			}
 		}
 	}
-	if (err)
+	if (err == -1)
 		return (error("dup2", NULL, errno), 1);
 	return (0);
 }
