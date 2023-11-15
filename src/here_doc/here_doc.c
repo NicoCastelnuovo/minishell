@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:19:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/14 16:22:00 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 15:45:22 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,8 @@ static void	write_into_tmp_file(int fd_tmp, char *eof, t_data *data)
 	while (1)
 	{
 		line = readline("> "); // protect
-		if (!line)
+		if (!line || ft_strncmp(line, eof, ft_strlen(eof)) == 0)
 			break ;
-		if (ft_strncmp(line, eof, ft_strlen(eof)) == 0)
-		{
-			// chceck if need to insert a newline
-			break ;
-		}
 		else
 		{
 			if (data)

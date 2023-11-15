@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/14 16:28:47 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 15:14:55 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	free_pipe_node(t_node *node_p);
 void	free_dptr(char **p);
 
 // -------------------------------------------------------------------- PARSING
-char	*parse(t_list *tkn);
+int		check_for_syntax_err(t_list *tkn);
 int		is_redir(t_tkn_type tkn_type);
 
 // ----------------------------------------------------------- UPDATE CMD TABLE

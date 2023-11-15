@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:43:44 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 11:19:34 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 15:15:09 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,11 @@ void	free_data(t_data *data)
 	if (data->tokens)
 	{
 		ft_lstclear(&data->tokens, del_tokens);
-		// free(data->tokens);
-		// data->tokens = NULL;
+		data->tokens = NULL;
 	}
 	if (data->tree)
 	{
 		free_tree(data->tree);
 		data->tree = NULL;
 	}
-	if (data->err)
-	{
-		free(data->err);
-		data->err = NULL;
-	}
-	// don't reset e_code !!!!
 }

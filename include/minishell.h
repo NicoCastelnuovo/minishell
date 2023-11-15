@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/15 14:16:16 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 15:35:32 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef struct s_data
 	char	*input;
 	t_list	*tokens;
 	t_node	*tree;
-	char	*err;
 	int		e_code;
 	int		n_ps;
 	int		*pid;
@@ -50,11 +49,13 @@ enum e_custom_errors
 	CE_INVARG = 107,
 	CE_INVALIDIDENTIFIER = 108,
 	CE_TOOMANYARGS = 109,
+	CE_SYNTAX = 110,
 	CE_CMDNOTFOUND = 127
 };
 
 // -------------------------------------------------------------------- SIGNALS
 void	init_sig_handling(void);
+void	setup_child_signals(void);
 
 // ------------------------------------------------------------------ EXPANSION
 void	expansion(t_node *tree, t_list *env, int e_code);
@@ -70,7 +71,7 @@ void	here_doc(t_node *tree, t_data *data);
 int		executor(t_data *data);
 int		parent(t_data *data);
 void	child(t_node *node, char **env, int *fd_pipe, int *prev_pipe);
-void	resolve_args(char **cmd_name, char **env);
+int		resolve_args(char **cmd_name, char **env);
 int		resolve_redir(t_cmd *cmd);
 int		is_builtin(t_cmd *cmd);
 int		run_builtin(t_data *data);
@@ -87,6 +88,7 @@ void	echo(t_data *data);
 
 // ---------------------------------------------------------------------- UTILS
 void	error(char *s1, char *s2, int err_id);
+void	syntax_error(char *tkn);
 int		ft_strcmp(const char *s1, const char *s2);
 void	free_data(t_data *data);
 int		get_substr_len(char *s, char c);

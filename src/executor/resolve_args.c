@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 13:05:04 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 12:31:25 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:54:35 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static char	*get_abs_path(char *cmd_name, char **env)
 	if (!path_var)
 		return (NULL);
 	paths = ft_split(path_var, ':');
+	if (!paths)
+		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
@@ -63,16 +65,16 @@ static char	*get_abs_path(char *cmd_name, char **env)
 	return (NULL);
 }
 
-void	resolve_args(char **cmd_name, char **env)
+int	resolve_args(char **cmd_name, char **env)
 {
 	char	*abs_path;
 	char	*tmp;
 
 	abs_path = get_abs_path(*cmd_name, env);
-	if (abs_path)
-	{
-		tmp = *cmd_name;
-		*cmd_name = abs_path;
-		free(tmp);
-	}
+	if (!abs_path)
+		return (1);
+	tmp = *cmd_name;
+	*cmd_name = abs_path;
+	free(tmp);
+	return (0);
 }

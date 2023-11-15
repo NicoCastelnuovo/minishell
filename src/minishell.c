@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 14:12:33 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 15:39:11 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,30 +18,9 @@ static void	init_data(t_data *data, char **env)
 	data->input = NULL;
 	data->tokens = NULL;
 	data->tree = NULL;
-	data->err = NULL;
 	data->e_code = 0;
 	data->n_ps = 0;
 	data->pid = NULL;
-}
-
-static void	process_input(t_data *data)
-{
-	lexer(data->input, &data->tokens);
-	if (data->tokens) // can be false ?
-	{
-		data->err = parse(data->tokens);
-		if (data->err)
-		{
-			data->e_code = 258;
-			ft_printf("\033[91mminishell: syntax error near unexpected token `%s'\033[0m\n", data->err);
-		}
-	}
-	if (!data->err)
-		data->tree = build_syntax_tree(data->tokens, 0);
-	if (data->tree)
-		expansion(data->tree, data->env, data->e_code);
-	here_doc(data->tree, data);
-	executor(data);
 }
 
 static void	shell_loop(t_data *data)
@@ -50,13 +29,26 @@ static void	shell_loop(t_data *data)
 	{
 		data->input = readline("minishell $ ");
 		if (!data->input)
-			exit(1);
+			exit_custom(data);
 		if (data->input && !is_empty_input(data->input)) //  && !is_empty_input(data->input)
-			process_input(data);
+		{
+			lexer(data->input, &data->tokens);
+			if (data->tokens) // can be false ?
+				data->e_code = check_for_syntax_err(data->tokens);
+			if (!data->e_code)
+			{
+				data->tree = build_syntax_tree(data->tokens, 0);
+				if (data->tree) //if (!data->e_code)
+					expansion(data->tree, data->env, data->e_code);
+				//if (!data->e_code)
+				here_doc(data->tree, data);
+				//if (!data->e_code)
+				executor(data);
+			}
+		}
 		// if (is_valid_for_history(data))
 		// 	add_history(data->input); // not always to do
 		free_data(data);
-		// ft_printf("\033[0;35m=========================================================================\033[0m\n");
 	}
 }
 
@@ -69,7 +61,5 @@ int	main(int argc, char **argv, char **env) // env[0] = NULL
 	init_data(&data, env);
 	init_sig_handling();
 	shell_loop(&data);
-	// if (data.env)
-	// 	ft_lstclear(&data.env, del_var_content);
 	return (0);
 }

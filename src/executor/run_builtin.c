@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:18:14 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 14:16:42 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 15:00:25 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ int	run_builtin(t_data *data)
 		return (pwd());
 	else if (ft_strcmp(cmd->args[0], "unset") == 0)
 		return (unset(data));
+	data->e_code = 0;
 	return (0); // set return values
 }

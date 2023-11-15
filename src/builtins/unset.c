@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:37:54 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 14:12:23 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:59:21 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	unset(t_data *data)
 	i = 1;
 	while (cmd->args[i])
 	{
-		if (!ft_strchr(cmd->args[i], '='))
+		if (ft_strchr(cmd->args[i], '='))
 		{
 			error("unset", cmd->args[i], 1);
 			data->e_code = 1;

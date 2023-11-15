@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/15 13:19:42 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/15 15:01:55 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ EXPANSION = build_str.c \
 
 HERE_DOC = here_doc.c \
 
-PARSER = parser.c \
+PARSER = check_for_syntax_err.c \
 	build_syntax_tree.c \
 	update_cmd_node.c \
 	free_syntax_tree.c

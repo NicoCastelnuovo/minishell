@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   check_for_syntax_err.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:06:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/14 08:52:49 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 15:27:05 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,7 @@ int	is_redir(t_tkn_type tkn_type)
 	if (tkn_type == TKN_REDIR_APPEND ||
 		tkn_type == TKN_HERE_DOC ||
 		tkn_type == TKN_REDIR_IN ||
-		tkn_type == TKN_REDIR_OUT) // ||
-		// tkn_type == REDIR_APPEND ||
-		// tkn_type == REDIR_HERE_DOC ||
-		// tkn_type == REDIR_IN ||
-		// tkn_type == REDIR_OUT)
+		tkn_type == TKN_REDIR_OUT)
 		return (tkn_type);
 	return (0);
 }
@@ -46,7 +42,7 @@ static int	is_pipe_syntax_err(t_tkn_data *next_tkn)
 	return (0);
 }
 
-char	*parse(t_list *tkn)
+int	check_for_syntax_err(t_list *tkn)
 {
 	t_tkn_data	*curr_tkn;
 	t_tkn_data	*next_tkn;
@@ -57,24 +53,24 @@ char	*parse(t_list *tkn)
 		next_tkn = NULL;
 		curr_tkn = tkn->content;
 		if (curr_tkn->quote_status == OPEN_QUOTE)
-			return (ft_strdup("quotes"));
+			return (syntax_error("quotes"), 258);
 		if (tkn->next) // check current-next
 		{
 			next_tkn = tkn->next->content;
 			if (is_redir(curr_tkn->type) && is_redir_syntax_err(next_tkn))
-				return (ft_strdup(next_tkn->str));
+				return (syntax_error(next_tkn->str), 258);
 			if (curr_tkn->type == TKN_PIPE && is_pipe_syntax_err(next_tkn))
-				return (ft_strdup(next_tkn->str));
+				return (syntax_error(next_tkn->str), 258);
 		}
 		else // check current with end-line
 		{
 			// CHECH FOR OPEN QUOTES!!!
 			if (is_redir(curr_tkn->type))
-				return (ft_strdup("newLine"));
+				return (syntax_error("newline"), 258);
 			if (curr_tkn->type == TKN_PIPE)
-				return (ft_strdup(curr_tkn->str));
+				return (syntax_error(curr_tkn->str), 258);
 		}
 		tkn = tkn->next;
 	}
-	return (NULL);
+	return (0);
 }
