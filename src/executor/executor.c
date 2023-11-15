@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 08:31:08 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/14 17:16:20 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 09:44:44 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,6 @@ int	executor(t_data *data)
 		return (1);
 	close(prev_pipe);
 	parent(data);
+	exit(0);
 	return (0);
 }

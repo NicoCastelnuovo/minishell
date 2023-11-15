@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/14 15:03:39 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 09:37:17 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ static t_node	*init_cmd_node(int n)
 	cmd->block = NULL;
 	cmd->args = NULL;
 	cmd->redir = NULL;
-	cmd->fd_in = -1;
-	cmd->fd_out = -1;
+	cmd->fd_in = -2;
+	cmd->fd_out = -2;
 	return (node_c);
 }
 
