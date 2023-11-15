@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:35:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 16:04:03 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 16:06:51 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ void	init_sig_handling(void)
 	sigaction(SIGQUIT, &sa_ignore, NULL);
 }
 
-void	setup_child_signals(void)
-{
-	struct sigaction sa_default;
+// void	setup_child_signals(void)
+// {
+// 	struct sigaction sa_default;
 
-	sa_default.sa_handler = SIG_DFL;
-	sa_default.sa_flags = 0;
-	sigemptyset(&sa_default.sa_mask);
+// 	sa_default.sa_handler = SIG_DFL;
+// 	sa_default.sa_flags = 0;
+// 	sigemptyset(&sa_default.sa_mask);
 
-	sigaction(SIGINT, &sa_default, NULL);
-	sigaction(SIGQUIT, &sa_default, NULL);
-}
+// 	sigaction(SIGINT, &sa_default, NULL);
+// 	sigaction(SIGQUIT, &sa_default, NULL);
+// }
