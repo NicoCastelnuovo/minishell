@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:37:54 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 14:21:14 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:12:23 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	unset_single_var(char *name, t_list **env)
 	environment. If the argument is a variable which doesn't exist, nothing
 	happens.
 */
-void	unset(t_data *data)
+int	unset(t_data *data)
 {
 	t_cmd	*cmd;
 	int		i;
@@ -59,10 +59,12 @@ void	unset(t_data *data)
 	{
 		if (!ft_strchr(cmd->args[i], '='))
 		{
-			// error invalid identifier
-			return ;
+			error("unset", cmd->args[i], 1);
+			data->e_code = 1;
+			return (1);
 		}
 		unset_single_var(cmd->args[i], &data->env);
 		i++;
 	}
+	return (0);
 }

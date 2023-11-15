@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/14 14:55:02 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/15 13:19:42 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ EXECUTOR = executor.c \
 	children.c \
 	resolve_args.c \
 	resolve_redir.c \
+	run_builtin.c \
 
 ENV = init_env.c \
 	get_exported_var_n.c \

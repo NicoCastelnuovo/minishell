@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:52:18 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 10:41:29 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:16:18 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 	pwd command returns the current working path. The function getcwd()
 	allocates memory that should be freed.
 */
-void	pwd(void)
+int	pwd(void)
 {
 	char	*buff;
 	size_t	size;
@@ -32,6 +32,9 @@ void	pwd(void)
 		buff = ft_calloc(size + 1, sizeof(char)); // protect --- create err function
 		buff = getcwd(buff, size);
 	}
-	ft_putstr_fd(buff, 1);
+	if (!buff)
+		return (1);
+	ft_putendl_fd(buff, 1);
 	free (buff);
+	return (0);
 }

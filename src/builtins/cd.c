@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:20:48 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 11:04:45 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:16:44 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,23 @@ static void	update_existing_var(char *name, char *new_value, t_list **env)
 	cd changes the current working directory of the current shell env. Only a
 	relative or an absolute path are accepted.
 */
-void	cd(t_data *data)
+int	cd(t_data *data)
 {
 	char	*destination;
 	char	*curr_pwd;
 	char	*new_abs_path;
 
-	curr_pwd = get_wd(); // alocated
+	curr_pwd = get_wd();
+	if (!curr_pwd)
+		return (1);
 	destination = ((t_cmd *)data->tree->content)->args[1];
 	if (!destination)
 		destination = get_env_custom("HOME", data->env);
 	if (chdir(destination) == -1)
 	{
-		data->e_code = errno; // print error and return ??????
 		free(curr_pwd);
-		// return ????????
+		data->e_code = 1; // print error and return ??????
+		return (error("cd", NULL, errno), 1);
 	}
 	else
 	{
@@ -76,4 +78,5 @@ void	cd(t_data *data)
 		new_abs_path = get_wd(); // protect
 		update_existing_var("PWD", new_abs_path, &data->env);
 	}
+	return (0);
 }

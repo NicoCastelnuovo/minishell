@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:43:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 11:04:24 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:25:23 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	open_with_right_mode(char *file_name, int last_fd, int flags, int mod
 		close(last_fd);
 	fd = open(file_name, flags, mode);
 	if (fd == -1)
-		return (error(file_name, errno), -1);
+		return (error(file_name, NULL, errno), -1);
 	return (fd);
 }
 
@@ -53,6 +53,12 @@ static int	is_valid_fd(t_cmd *cmd, t_redir_data *redir, int last_fd)
 	return (fd);
 }
 
+/*
+	resolve_redir returns (0) in case of open() error and (1) in case of
+	success. The function has to stop as soon as an error occurs. The
+	last redirection in the list, are the one which are performed, and
+	are stored into cmd->fd_in and cmd->fd_out.
+*/
 int	resolve_redir(t_cmd *cmd)
 {
 	t_list			*head;
@@ -60,8 +66,6 @@ int	resolve_redir(t_cmd *cmd)
 	int				last_fd;
 
 	last_fd = -2;
-	if (!cmd->redir)
-		return (0);
 	head = cmd->redir;
 	while (head)
 	{
@@ -71,7 +75,5 @@ int	resolve_redir(t_cmd *cmd)
 			return (-1);
 		head = head->next;
 	}
-	ft_printf("FD IN -> [%d]\n", cmd->fd_in);
-	ft_printf("FD OUT -> [%d]\n", cmd->fd_out);
 	return (0);
 }

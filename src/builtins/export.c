@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 14:22:05 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:04:10 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void	export(t_data *data)
 	cmd = (t_cmd *)data->tree->content;
 	if (!cmd->args[1])
 		get_exported(data->env);
-	// need to check quotes and merge arguments first !!!!!!
 	else
 	{
 		i = 1;

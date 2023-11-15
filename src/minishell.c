@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 09:27:35 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:12:33 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,7 @@ static void	shell_loop(t_data *data)
 	{
 		data->input = readline("minishell $ ");
 		if (!data->input)
-		{
-			// struct termios t;
-			// tcgetattr(STDIN_FILENO, &t);
-			// t.c_lflag &= ~ICANON;  // Turn off canonical mode (line-buffered input)
-			// t.c_cc[VMIN] = 0;      // Set VMIN to 0 for non-blocking read
-			// tcsetattr(STDIN_FILENO, TCSANOW, &t);
-			// ft_putendl_fd("FUCK YOU MINISHELL!", 1);
 			exit(1);
-		}
 		if (data->input && !is_empty_input(data->input)) //  && !is_empty_input(data->input)
 			process_input(data);
 		// if (is_valid_for_history(data))
@@ -73,7 +65,7 @@ int	main(int argc, char **argv, char **env) // env[0] = NULL
 	t_data	data;
 
 	if (argc > 1 || argv[1])
-		return (error("argc/argv", CE_INVARG), CE_INVARG);
+		return (error("argc/argv", NULL, CE_INVARG), CE_INVARG);
 	init_data(&data, env);
 	init_sig_handling();
 	shell_loop(&data);

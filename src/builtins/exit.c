@@ -6,17 +6,23 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:06:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/14 11:34:33 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:24:12 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exit_custom(t_data *data)
+int	exit_custom(t_data *data)
 {
 	t_cmd	*cmd;
 	int		last_e_code;
 
+	cmd = NULL;
+	if (cmd->args[2])
+	{
+		data->e_code = 1;
+		return (error("exit", NULL, CE_TOOMANYARGS), 1);
+	}
 	if (!data->tree) // come from signal
 	{
 		ft_putstr_fd("exit", 1);
@@ -37,16 +43,11 @@ void	exit_custom(t_data *data)
 	{
 		if (ft_strcmp(cmd->args[1], "0")) // need to check 0000000000000
 		{
-			error("exit", 1);
+			error("exit", NULL, 1); // change err identifier
 			free_data(data);
 			ft_lstclear(&data->env, del_var_content);
 			exit(255);
 		}
-	}
-	if (cmd->args[2])
-	{
-		data->e_code = 1;
-		return (error("exit", 1));
 	}
 	else
 	{
@@ -54,4 +55,5 @@ void	exit_custom(t_data *data)
 		ft_lstclear(&data->env, del_var_content);
 		exit(ft_atoi(cmd->args[1]) % 256);
 	}
+	return (0);
 }

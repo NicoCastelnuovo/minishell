@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/14 17:07:37 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:16:16 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef struct s_data
 enum e_custom_errors
 {
 	CE_INVARG = 107,
+	CE_INVALIDIDENTIFIER = 108,
+	CE_TOOMANYARGS = 109,
 	CE_CMDNOTFOUND = 127
 };
 
@@ -67,24 +69,24 @@ void	here_doc(t_node *tree, t_data *data);
 // ------------------------------------------------------------------- EXECUTOR
 int		executor(t_data *data);
 int		parent(t_data *data);
-void	first_child(t_cmd *cmd, char **env, int *fd_pipe);
-void	mid_child(t_cmd *cmd, char **env, int *fd_pipe, int *prev_pipe);
-void	last_child(t_cmd *cmd, char **env, int *fd_pipe, int *prev_pipe);
+void	child(t_node *node, char **env, int *fd_pipe, int *prev_pipe);
 void	resolve_args(char **cmd_name, char **env);
 int		resolve_redir(t_cmd *cmd);
+int		is_builtin(t_cmd *cmd);
+int		run_builtin(t_data *data);
 
 // ------------------------------------------------------------------- BUILTINS
 void	print_env(t_list *env);
-void	cd(t_data *data);
-void	pwd(void);
-void	exit_custom(t_data *data);
-void	unset(t_data *data);
+int		cd(t_data *data);
+int		pwd(void);
+int		exit_custom(t_data *data);
+int		unset(t_data *data);
 void	get_exported(t_list *env);
 void	export(t_data *data);
 void	echo(t_data *data);
 
 // ---------------------------------------------------------------------- UTILS
-void	error(char *msg, int n);
+void	error(char *s1, char *s2, int err_id);
 int		ft_strcmp(const char *s1, const char *s2);
 void	free_data(t_data *data);
 int		get_substr_len(char *s, char c);
