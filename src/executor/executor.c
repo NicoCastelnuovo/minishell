@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 08:31:08 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 12:36:11 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 14:43:29 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static int	fork_ps(t_data *data, t_node *node, int *prev_pipe, int i, char **env
 		close(fd_pipe[1]);
 		close(*prev_pipe);
 		*prev_pipe = fd_pipe[0];
+		fprintf(stderr, "Changed prev pipe to [%d]\n", *prev_pipe);
 		// close fd_pipe ??? check
 	}
 	return (0);

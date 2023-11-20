@@ -16,25 +16,11 @@ s1 = ft_strjoin(s1, s2);
 free(tmp);
 
 # WHAT TO DO
+1) Export merge arguments
+2) Signals
+3) add_history()
+5) general refactor
+6) test 🤬
+7) syntax error format?
 
-# NICO
-8) Error handling
-6) export: need to merge arguments abd sort
-
-7) cd: maybe add c dwithout arguments which goes to home
-1) Adjust add_history() -> no empty line, no after ctrl-C
-5) Signals
-2) echo
-3) exit (see eval sheet)
-
-# FARSHAD
-4) Executor:
-	- exit code
-	- abs/rel path
-	- Try with ../../../../../../../../../../ and ../../
-	- understand hoe behaves ./custom_program
-	- check for case sensitive
-	- check for dquotes/squotes
-	- unset $PATH and test
-	- set $PATH with something else: /minishell/custom_path_1:/minishell/custom_path_2
-	- check for permissions when creating files
+4) executor leaks & refactor

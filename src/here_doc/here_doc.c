@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:19:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 14:01:02 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 14:04:17 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,10 @@ static int	perform_here_doc(t_redir_data *redir_content, t_data *data)
 	while (fd_tmp == -1)
 	{
 		if (n == INT_MAX)
-			return (error("here_doc", NULL, CE_HERE_DOC), -1);
+			return (error("here_doc", "INT_MAX", CE_HERE_DOC), -1);
 		tmp_name = get_tmp_name(n);
 		if (!tmp_name)
-			return (error("here_doc", NULL, CE_HERE_DOC), -1);
+			return (error("here_doc", tmp_name, CE_HERE_DOC), -1);
 		fd_tmp = open(tmp_name, O_CREAT | O_EXCL | O_WRONLY, 0600);
 		if (fd_tmp == -1)
 		{
