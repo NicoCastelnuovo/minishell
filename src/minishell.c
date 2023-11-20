@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 16:19:13 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 09:28:30 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,16 @@ static void	shell_loop(t_data *data)
 		data->input = readline("minishell $ ");
 		if (!data->input)
 			exit_custom(data);
-		if (data->input && !is_empty_input(data->input)) //  && !is_empty_input(data->input)
+		if (data->input && !is_empty_input(data->input))
 		{
 			lexer(data->input, &data->tokens);
-			if (data->tokens) // can be false ?
-				data->e_code = check_for_syntax_err(data->tokens);
-			if (!data->e_code)
-			{
-				data->tree = build_syntax_tree(data->tokens, 0);
-				if (data->tree) //if (!data->e_code)
-					expansion(data->tree, data->env, data->e_code);
-				//if (!data->e_code)
-				here_doc(data->tree, data);
-				//if (!data->e_code)
-				executor(data);
-			}
+			parser(data);
+			if (data->tree) //if (!data->e_code)
+				expansion(data->tree, data->env, data->e_code);
+			//if (!data->e_code)
+			here_doc(data->tree, data);
+			//if (!data->e_code)
+			executor(data);
 		}
 		// if (is_valid_for_history(data))
 		// 	add_history(data->input); // not always to do

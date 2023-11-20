@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/15 15:35:32 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 08:59:21 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,12 @@ enum e_custom_errors
 	CE_CMDNOTFOUND = 127
 };
 
+// --------------------------------------------------------------------- PARSER
+void	parser(t_data *data);
+
 // -------------------------------------------------------------------- SIGNALS
 void	init_sig_handling(void);
-void	setup_child_signals(void);
+// void	setup_child_signals(void);
 
 // ------------------------------------------------------------------ EXPANSION
 void	expansion(t_node *tree, t_list *env, int e_code);

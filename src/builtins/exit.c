@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:06:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 15:17:50 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 09:28:22 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,13 @@ int	exit_custom(t_data *data)
 {
 	t_cmd	*cmd;
 	int		last_e_code;
+	int		n;
 
-	cmd = NULL;
-	if (cmd->args[2])
+	cmd = (t_cmd *)data->tree->content;
+	n = 0;
+	while (cmd->args[n])
+		n++;
+	if (n > 1)
 	{
 		data->e_code = 1;
 		return (error("exit", NULL, CE_TOOMANYARGS), 1);
@@ -30,7 +34,6 @@ int	exit_custom(t_data *data)
 		ft_lstclear(&data->env, del_var_content);
 		exit(data->e_code);
 	}
-	cmd = (t_cmd *)data->tree->content;
 	ft_putendl_fd("exit", 1);
 	if (!cmd->args[1])
 	{

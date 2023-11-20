@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 09:37:17 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 09:32:27 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,39 +101,45 @@ static t_node	*init_cmd_node(int n)
 	return (node_c);
 }
 
+static void	free_cmd_and_pipe_node(t_node *node_c, t_node *node_p)
+{
+	free_cmd_node(node_c);
+	free_pipe_node(node_p);
+}
+
 /*
 	@param n - just a number to identify which node of the tree it is
 	and visualize it when printed.
 */
 t_node	*build_syntax_tree(t_list *tokens, int n)
 {
-	t_node		*node_c;
-	t_node		*node_p;
+	t_node	*node_c;
+	t_node	*node_p;
 
 	node_c = init_cmd_node(n);
 	if (!node_c)
 		return (NULL);
 	tokens = copy_tokens_block(tokens, node_c);
 	node_p = NULL;
-	if (ft_strncmp(((t_tkn_data *)tokens->content)->str, "|", 1) == 0)
+	if (ft_strcmp(((t_tkn_data *)tokens->content)->str, "|") == 0)
 	{
-		tokens = tokens->next; // this line skips the pipe, which is not stored
+		tokens = tokens->next;
 		node_p = init_pipe_node(n);
 		if (!node_p)
-		{
-			free_cmd_node(node_c);
-			free_pipe_node(node_p);
-			return (NULL);
-		}
+			return (free_cmd_and_pipe_node(node_c, node_p), NULL);
 		((t_pipe *)node_p->content)->left = node_c;
 		((t_pipe *)node_p->content)->right = build_syntax_tree(tokens, n + 2);
 		if (!((t_pipe *)node_p->content)->right)
-		{
-			free_cmd_node(node_c);
-			free_pipe_node(node_p);
-			return (NULL);
-		}
+			return (free_cmd_and_pipe_node(node_c, node_p), NULL);
 		return (node_p);
 	}
 	return (node_c);
+}
+
+void	parser(t_data *data)
+{
+	if (data->tokens) // can be false ?
+		data->e_code = check_for_syntax_err(data->tokens);
+	if (!data->e_code)
+		data->tree = build_syntax_tree(data->tokens, 0);
 }

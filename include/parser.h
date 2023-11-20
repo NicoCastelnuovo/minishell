@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 15:14:55 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 09:06:06 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,19 @@ typedef struct s_pipe
 typedef struct s_cmd
 {
 	t_list		*block;
-	char		**args;			// top cat -e ls      ftsplit("ls -la Makefile", ' ');
-	t_list		*redir;			// in1(<) - out4(>) - temp1(<<) - temp2(<<) - temp3(<<) - (null or "")(>)
-	int			fd_in;			// still necessary ???
+	char		**args;
+	t_list		*redir;
+	int			fd_in;
 	int			fd_out;
-	int			err_code;
+	int			err_code;	// ??????????
 }	t_cmd;
 
 typedef enum e_redir_type
 {
-	REDIR_IN = '<',		// <
-	REDIR_OUT = '>',	// >
-	REDIR_HERE_DOC = 8,		// <<
-	REDIR_APPEND = 7		// >>
+	REDIR_IN = '<',
+	REDIR_OUT = '>',
+	REDIR_HERE_DOC = 8,
+	REDIR_APPEND = 7
 }	t_redir_type;
 
 typedef struct s_redir_data
@@ -78,7 +78,7 @@ void	free_cmd_node(t_node *node_c);
 void	free_pipe_node(t_node *node_p);
 void	free_dptr(char **p);
 
-// -------------------------------------------------------------------- PARSING
+// -------------------------------------------------------------- SYNTAX ERRORS
 int		check_for_syntax_err(t_list *tkn);
 int		is_redir(t_tkn_type tkn_type);
 
