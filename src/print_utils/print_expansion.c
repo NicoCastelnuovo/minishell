@@ -6,15 +6,12 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 08:14:18 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/09 08:15:12 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 10:37:34 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-
-*/
 void	print_expansion(t_list *var_lst)
 {
 	t_var	*var;

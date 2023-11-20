@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:19:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 15:45:22 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 14:01:02 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,28 @@ static char	*get_tmp_name(int n)
 	return(tmp_name);
 }
 
-static void	write_into_tmp_file(int fd_tmp, char *eof, t_data *data)
+/*
+	@param data: data is passed only in case the expansion has to be performed.
+	Otherwise NULL is passed, and expansion is skipped.
+*/
+static int	write_into_tmp_file(int fd_tmp, char *eof, t_data *data)
 {
 	char	*line;
 
 	line = NULL;
 	while (1)
 	{
-		line = readline("> "); // protect
-		if (!line || ft_strncmp(line, eof, ft_strlen(eof)) == 0)
+		line = readline("> ");
+		if (!line || ft_strcmp(line, eof) == 0)
 			break ;
 		else
 		{
-			if (data)
+			if (data && ft_strchr(line, '$'))
+			{
 				line = expand(line, data->env, data->e_code);
+				if (!line)
+					return (error("here_doc", "expand", CE_HERE_DOC), 1);
+			}
 			ft_putendl_fd(line, fd_tmp);
 			if (line)
 				free(line);
@@ -44,91 +52,98 @@ static void	write_into_tmp_file(int fd_tmp, char *eof, t_data *data)
 	}
 	if (line)
 		free(line);
+	return (0);
 }
 
-static char	*trim_quotes(char *old_str)
+/*
+	There are two kinds of interactive input. If the eof is surrounded by
+	any kind of wuotes, the expansion is not performed.
+*/
+static char	*get_interactive_input(int fd_tmp, char **eof, t_data *data)
 {
-	char	*new;
-	int		old_len;
-	int		i;
-	int		j;
+	char	*tmp;
 
-	old_len = ft_strlen(old_str);
-	new = ft_calloc(ft_strlen(old_str) - 1, sizeof(char)); //protect
-	i = 0;
-	j = 0;
-	while (old_str[i])
+	tmp = NULL;
+	if (*eof[0] == '\'' || *eof[0] == '\"')
 	{
-		if (i == 0 || i == old_len - 1)
-			i++;
-		else
-		{
-			new[j] = old_str[i];
-			i++;
-			j++;
-		}
-	}
-	return (new);
-}
-
-static int	get_interactive_input(t_redir_data *redir_content, int n, t_data *data)
-{
-	char	*line;
-	char	*eof;
-	int		fd_tmp;
-	char	*tmp_name;
-
-	tmp_name = get_tmp_name(n);
-	fd_tmp = open(tmp_name, O_CREAT | O_EXCL | O_WRONLY, S_IRUSR);  //ONLY THIS SESSION
-	if (fd_tmp == -1)
-	{
-		if (errno == EEXIST)
-			return (free(tmp_name), 1); // 1 means need a new name // -1 means real error
-		return (-1);
-	}
-	line = NULL;
-	eof = redir_content->file_name;
-	if (eof[0] == '\'' || eof[0] == '\"')
-	{
-		eof = trim_quotes(redir_content->file_name);
-		write_into_tmp_file(fd_tmp, eof, NULL);
+		tmp = *eof;
+		*eof = ft_strtrim(*eof, "'\"");
+		free(tmp);
+		if (!*eof)
+			return (1);
+		if (write_into_tmp_file(fd_tmp, *eof, NULL))
+			return (1);
 	}
 	else
-		write_into_tmp_file(fd_tmp, eof, data);
+	{
+		if (write_into_tmp_file(fd_tmp, *eof, data)) // no quotes
+			return (1);
+	}
+	return (0);
+}
+
+static int	perform_here_doc(t_redir_data *redir_content, t_data *data)
+{
+	int		fd_tmp;
+	char	*tmp_name;
+	char	*eof;
+	int		n;
+
+	n = 0;
+	fd_tmp = -1;
+	tmp_name = NULL;
+	while (fd_tmp == -1)
+	{
+		if (n == INT_MAX)
+			return (error("here_doc", NULL, CE_HERE_DOC), -1);
+		tmp_name = get_tmp_name(n);
+		if (!tmp_name)
+			return (error("here_doc", NULL, CE_HERE_DOC), -1);
+		fd_tmp = open(tmp_name, O_CREAT | O_EXCL | O_WRONLY, 0600);
+		if (fd_tmp == -1)
+		{
+			if (tmp_name)
+				free(tmp_name);
+			if (errno == EEXIST)
+				n++;
+			else
+				return (error("here_doc", "open", errno), -1);
+		}
+	}
+	eof = ft_strdup(redir_content->file_name);
 	free(redir_content->file_name);
-	redir_content->file_name = ft_strdup(tmp_name);
-	free(tmp_name);
+	redir_content->file_name = tmp_name;
+	if (get_interactive_input(fd_tmp, &eof, data))
+	{
+		free(eof);
+		close(fd_tmp);
+		return (1);
+	}
+	free(eof);
 	close(fd_tmp);
 	return (0);
 }
 
-static void	check_here_doc(t_list *redir, t_data *data)
+static int	check_here_doc(t_list *redir, t_data *data)
 {
 	t_redir_data	*redir_content;
-	int				err_check;
-	int				n; // n to append
 
-	n = 0;
+	if (!redir)
+		return (0);
 	while (redir)
 	{
 		redir_content = redir->content;
 		if (redir_content->type == REDIR_HERE_DOC)
 		{
-			err_check = 1; // 1 == needs a name
-			while (err_check != 0)
+			if (perform_here_doc(redir_content, data))
 			{
-				err_check = get_interactive_input(redir_content, n, data);
-				if (err_check == -1)
-				{
-					// real error
-					// need to clean up
-					return ;
-				}
-				n++;
+				data->e_code = 1;
+				return (1);
 			}
 		}
 		redir = redir->next;
 	}
+	return (0);
 }
 
 void	here_doc(t_node *tree, t_data *data)
@@ -136,16 +151,16 @@ void	here_doc(t_node *tree, t_data *data)
 	t_pipe	*pipe;
 	t_cmd	*cmd;
 
-	// add available history ????
+	if (data->e_code)
+		return ;
 	while (tree->type == IS_PIPE)
 	{
 		pipe = tree->content;
 		cmd = (t_cmd *)pipe->left->content;
-		if (cmd->redir)
-			check_here_doc(cmd->redir, data);
+		if (check_here_doc(cmd->redir, data))
+			return ;
 		tree = pipe->right;
 	}
 	cmd = (t_cmd *)tree->content;
-	if (cmd->redir)
-		check_here_doc(cmd->redir, data);
+	check_here_doc(cmd->redir, data);
 }

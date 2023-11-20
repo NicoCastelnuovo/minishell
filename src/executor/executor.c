@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 08:31:08 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 09:01:04 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 12:36:11 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,15 @@ static int	fork_ps(t_data *data, t_node *node, int *prev_pipe, int i, char **env
 static int	get_n_cmds(t_node *node)
 {
 	t_pipe	*pipe;
-	t_cmd	*cmd;
 	int		n;
 
 	n = 0;
 	while (node->type == IS_PIPE)
 	{
 		pipe = (t_pipe *)node->content;
-		cmd = (t_cmd *)pipe->left->content;
 		n++;
 		node = pipe->right;
 	}
-	cmd = (t_cmd *)node->content;
 	n++;
 	return (n);
 }
@@ -72,6 +69,8 @@ int	executor(t_data *data)
 	int		prev_pipe;
 	char	**env;
 
+	if (data->e_code)
+		return (1);
 	prev_pipe = dup(0);
 	env = convert_to_dptr(data->env);
 	data->n_ps = get_n_cmds(data->tree);

@@ -6,25 +6,11 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 09:32:27 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 09:54:30 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static t_tkn_data	*cpy_tkn_content(t_tkn_data *content)
-{
-	t_tkn_data	*cpy;
-
-	cpy = ft_calloc(1, sizeof(t_tkn_data)); // prtct
-	cpy->list_size = content->list_size;
-	cpy->quote = content->quote;
-	cpy->quote_status = content->quote_status;
-	cpy->str = ft_strdup(content->str);
-	cpy->type = content->type;
-	cpy->white_space = content->white_space;
-	return (cpy);
-}
 
 /*
 	The tokens are divided into blocks.	Block means a set of tokens seaprated
@@ -32,26 +18,13 @@ static t_tkn_data	*cpy_tkn_content(t_tkn_data *content)
 */
 static t_list	*copy_tokens_block(t_list *curr_tkn, t_node *node_c)
 {
-	t_tkn_data	*tkn_content;
-	t_tkn_data	*tkn_content_cpy;
-	t_list		*tkn_node_cpy;
 	t_list		*prev_tkn;
 
-	tkn_node_cpy = NULL;
-	tkn_content_cpy = NULL;
 	prev_tkn = NULL;
 	while (curr_tkn)
 	{
-		// !!!!  After distributing in each filed the tokens, block could be deleted....
-				tkn_content = (t_tkn_data *)curr_tkn->content;
-				if (((t_tkn_data *)curr_tkn->content)->type == TKN_PIPE)
-					return (curr_tkn);
-				tkn_content_cpy = cpy_tkn_content(tkn_content); // protect
-				tkn_node_cpy = ft_lstnew(tkn_content_cpy); // protect
-				if (!tkn_node_cpy)
-					return (NULL);
-				ft_lstadd_back(&((t_cmd *)node_c->content)->block, tkn_node_cpy);
-		// !!!!  After distributing in each filed the tokens, block could be deleted....
+		if (((t_tkn_data *)curr_tkn->content)->type == TKN_PIPE)
+			return (curr_tkn);
 		update_cmd_node(curr_tkn, prev_tkn, node_c);
 		prev_tkn = curr_tkn;
 		if (curr_tkn->next)
@@ -93,7 +66,6 @@ static t_node	*init_cmd_node(int n)
 	if (!node_c->content)
 		return (free(node_c), NULL);
 	cmd = (t_cmd *)node_c->content;
-	cmd->block = NULL;
 	cmd->args = NULL;
 	cmd->redir = NULL;
 	cmd->fd_in = -2;
@@ -136,10 +108,20 @@ t_node	*build_syntax_tree(t_list *tokens, int n)
 	return (node_c);
 }
 
+/*
+	Given the token list, the parser check first for syntax errors. In case of
+	syntax error data->e_code is set to 258. The syntax tree is built only if
+	there no syntax error.
+*/
 void	parser(t_data *data)
 {
 	if (data->tokens) // can be false ?
 		data->e_code = check_for_syntax_err(data->tokens);
 	if (!data->e_code)
 		data->tree = build_syntax_tree(data->tokens, 0);
+	if (!data->tree)
+	{
+		error(NULL, NULL, CE_SYNTAX_TREE);
+		data->e_code = 1;
+	}
 }

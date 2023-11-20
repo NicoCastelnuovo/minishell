@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 09:06:06 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 10:36:13 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,10 @@ typedef struct s_pipe
 */
 typedef struct s_cmd
 {
-	t_list		*block;
 	char		**args;
 	t_list		*redir;
 	int			fd_in;
 	int			fd_out;
-	int			err_code;	// ??????????
 }	t_cmd;
 
 typedef enum e_redir_type

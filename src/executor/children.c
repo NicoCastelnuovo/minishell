@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:49:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 15:58:06 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 13:57:52 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,14 @@ void	child(t_node *node, char **env, int *fd_pipe, int *prev_pipe)
 
 	redirect_in_out(node, env, fd_pipe, prev_pipe);
 	cmd = (t_cmd *)node->content;
-	resolve_args(&cmd->args[0], env);
+	if (cmd->args)
+	{
+		resolve_args(&cmd->args[0], env);
+		execve(cmd->args[0], cmd->args, env);
+		error(cmd->args[0], NULL, CE_CMDNOTFOUND);
+		exit(127);
+	}
 	// ---- form here
 	// ---- unlink() / close()
-	execve(cmd->args[0], cmd->args, env);
-	error(cmd->args[0], NULL, CE_CMDNOTFOUND);
-	exit(127);
+	exit (0);
 }

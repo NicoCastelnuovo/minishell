@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/20 08:59:21 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 12:11:13 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <termcap.h> // ???
 # include <termios.h>
 # include <fcntl.h>
+# include <sys/wait.h>
+# include <limits.h>
 
 # include "libft.h"
 # include "ft_printf.h"
@@ -50,6 +52,10 @@ enum e_custom_errors
 	CE_INVALIDIDENTIFIER = 108,
 	CE_TOOMANYARGS = 109,
 	CE_SYNTAX = 110,
+	CE_SYNTAX_TREE = 111,
+	CE_EXPANSION = 112,
+	CE_HERE_DOC = 113,
+	CE_OVERFLOW = 114,
 	CE_CMDNOTFOUND = 127
 };
 
@@ -61,11 +67,14 @@ void	init_sig_handling(void);
 // void	setup_child_signals(void);
 
 // ------------------------------------------------------------------ EXPANSION
-void	expansion(t_node *tree, t_list *env, int e_code);
-char	*build_str(char *old_str, t_list *var_lst);
+void	expansion(t_data *data);
+int		check_expansion(t_cmd *cmd, t_list *env, int e_code);
 char	*expand(char *s, t_list *env, int e_code);
+char	*build_str(char *old_str, t_list *var_lst);
 void	del_to_expand(void *content);
 void	print_expansion(t_list *var_lst);
+int		get_n_dollars(char *s);
+int		get_var_name_len(char *s);
 
 // ------------------------------------------------------------------- HERE_DOC
 void	here_doc(t_node *tree, t_data *data);

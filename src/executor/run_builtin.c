@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:18:14 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 09:01:12 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 12:01:48 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	is_builtin(t_cmd *cmd)
 {
+	if (!cmd->args)
+		return (0);
 	if (ft_strcmp(cmd->args[0], "cd") == 0)
 		return (1);
 	if (ft_strcmp(cmd->args[0], "echo") == 0)

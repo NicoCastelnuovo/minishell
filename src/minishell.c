@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 09:28:30 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 14:00:59 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,14 @@ static void	shell_loop(t_data *data)
 		{
 			lexer(data->input, &data->tokens);
 			parser(data);
-			if (data->tree) //if (!data->e_code)
-				expansion(data->tree, data->env, data->e_code);
-			//if (!data->e_code)
+			expansion(data);
 			here_doc(data->tree, data);
-			//if (!data->e_code)
 			executor(data);
 		}
 		// if (is_valid_for_history(data))
 		// 	add_history(data->input); // not always to do
 		free_data(data);
+		exit(1);
 	}
 }
 

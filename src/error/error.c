@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 09:44:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 15:27:02 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 12:13:48 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ static char	*custom_strerror(int n)
 		return ("command not found");
 	if (n == CE_INVALIDIDENTIFIER)
 		return ("not a valid identifier");
+	if (n == CE_SYNTAX_TREE)
+		return ("fail building syntax tree");
+	if (n == CE_HERE_DOC)
+		return ("fail performing here_doc");
 	return ("unknow error");
 }
 
@@ -46,8 +50,11 @@ void	error(char *s1, char *s2, int err_id)
 		err_msg = custom_strerror(err_id);
 	ft_putstr_fd("\e[1;31m* \e[0m", 2); // make different error for syntax !!
 	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(s1, 2);
-	ft_putstr_fd(": ", 2);
+	if (s1)
+	{
+		ft_putstr_fd(s1, 2);
+		ft_putstr_fd(": ", 2);
+	}
 	if (s2)
 	{
 		ft_putstr_fd(s2, 2);

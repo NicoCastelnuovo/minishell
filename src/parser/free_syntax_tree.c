@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 10:28:35 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 10:47:27 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 09:43:55 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ void	free_cmd_node(t_node *node_c)
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *)node_c->content;
-	if (cmd->block)	// remove fi removed
-		ft_lstclear(&cmd->block, del_tokens);
 	if (cmd->args)
 		free_dptr(cmd->args);
 	if (cmd->redir)

@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/15 15:57:51 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/20 10:42:13 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,9 @@ ENV = init_env.c \
 	convert_to_dptr.c
 
 EXPANSION = build_str.c \
-	expansion.c
+	expansion.c \
+	check_expansion.c \
+	expansion_utils.c
 
 HERE_DOC = here_doc.c \
 
