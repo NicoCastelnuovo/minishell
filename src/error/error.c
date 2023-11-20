@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 09:44:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 14:13:32 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 17:08:23 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static char	*custom_strerror(int n)
 		return ("fail building syntax tree");
 	if (n == CE_HERE_DOC)
 		return ("fail performing here_doc");
+	if (n == CE_NUM_REQUIRED)
+		return ("numeric argument required");
 	return ("unknow error");
 }
 

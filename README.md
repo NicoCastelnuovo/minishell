@@ -18,6 +18,7 @@ free(tmp);
 # WHAT TO DO
 1) Export merge arguments
 2) Signals
+	• give input and ctrl+c causes segfault
 3) add_history()
 5) general refactor
 6) test 🤬

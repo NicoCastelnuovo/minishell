@@ -6,57 +6,58 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:06:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 09:28:22 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 17:14:44 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	bye(t_data *data, int last_e_code)
+{
+	free_data(data);
+	ft_lstclear(&data->env, del_var_content);
+	exit(last_e_code);
+}
+
+static int	is_valid_number(char *s)
+{
+	int		n;
+	size_t	i;
+
+	n = ft_atoi(s);
+	i = 0;
+	if (!n)
+	{
+		while (s[i] == '0')
+			i++;
+		if (i != ft_strlen(s))
+			return (0);
+	}
+	return (1);
+}
+
 int	exit_custom(t_data *data)
 {
 	t_cmd	*cmd;
-	int		last_e_code;
 	int		n;
 
-	cmd = (t_cmd *)data->tree->content;
 	n = 0;
+	cmd = (t_cmd *)data->tree->content;
 	while (cmd->args[n])
 		n++;
-	if (n > 1)
+	if (n == 1)
+		bye(data, data->e_code);
+	else if (n == 2)
 	{
-		data->e_code = 1;
-		return (error("exit", NULL, CE_TOOMANYARGS), 1);
-	}
-	if (!data->tree) // come from signal
-	{
-		ft_putstr_fd("exit", 1);
-		free_data(data);
-		ft_lstclear(&data->env, del_var_content);
-		exit(data->e_code);
-	}
-	ft_putendl_fd("exit", 1);
-	if (!cmd->args[1])
-	{
-		last_e_code = data->e_code;
-		free_data(data);
-		ft_lstclear(&data->env, del_var_content);
-		exit(last_e_code);
-	}
-	if (ft_atoi(cmd->args[1]) == 0) // if result of atoi is 0 but the arg is not zero
-	{
-		if (ft_strcmp(cmd->args[1], "0")) // need to check 0000000000000
+		if (is_valid_number(cmd->args[1]))
+			bye(data, ft_atoi(cmd->args[1]) % 256);
+		else
 		{
-			error("exit", NULL, 1); // change err identifier
-			free_data(data);
-			ft_lstclear(&data->env, del_var_content);
-			exit(255);
+			error("exit", cmd->args[1], CE_NUM_REQUIRED);
+			bye(data, 255);
 		}
 	}
-	else
-	{
-		free_data(data);
-		ft_lstclear(&data->env, del_var_content);
-		exit(ft_atoi(cmd->args[1]) % 256);
-	}
-	return (0);
+	else // n > 2
+		data->e_code = 1;
+	return (error("exit", NULL, CE_TOOMANYARGS), 1);
 }

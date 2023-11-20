@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 10:36:57 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 11:23:55 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:57:27 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	redir_expansion(t_cmd *cmd, t_list *env, int e_code)
 	t_list			*redir;
 	t_redir_data	*redir_content;
 
-	redir = cmd->redir;
+	redir = (t_list *)cmd->redir;
 	redir_content = NULL;
 	while (redir)
 	{

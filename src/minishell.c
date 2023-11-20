@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 14:37:49 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 17:14:48 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static void	shell_loop(t_data *data)
 	while (1)
 	{
 		data->input = readline("minishell $ ");
-		if (!data->input)
-			exit_custom(data);
+		// if (!data->input)
+		// 	exit_custom(data);
 		if (data->input && !is_empty_input(data->input))
 		{
 			lexer(data->input, &data->tokens);
@@ -37,10 +37,10 @@ static void	shell_loop(t_data *data)
 			expansion(data);
 			here_doc(data->tree, data);
 			executor(data);
+			if (is_valid_for_history(data))
+				add_history(data->input);
+			free_data(data);
 		}
-		// if (is_valid_for_history(data))
-		// 	add_history(data->input); // not always to do
-		free_data(data);
 	}
 }
 

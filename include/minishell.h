@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/20 12:11:13 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 17:08:03 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,18 @@
 # include "env.h"
 # include "parser.h"
 
+/*
+	@param n_ps: number of the process that has to be forked from parent ps
+*/
 typedef struct s_data
 {
 	t_list	*env;
 	char	*input;
 	t_list	*tokens;
 	t_node	*tree;
-	int		e_code;
 	int		n_ps;
 	int		*pid;
+	int		e_code;
 }	t_data;
 
 /*
@@ -56,6 +59,7 @@ enum e_custom_errors
 	CE_EXPANSION = 112,
 	CE_HERE_DOC = 113,
 	CE_OVERFLOW = 114,
+	CE_NUM_REQUIRED = 115,
 	CE_CMDNOTFOUND = 127
 };
 

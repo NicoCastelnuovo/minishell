@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:38:18 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/13 14:45:02 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:49:35 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int	is_empty_input(char *s)
 
 int	is_valid_for_history(t_data *data)
 {
-	// check empty string ?
-	// check ctrl-C ???
-	// other ???
+	if (ft_strlen(data->input) == 0)
+		return (0);
 	return (1);
 }

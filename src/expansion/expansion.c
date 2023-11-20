@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 11:23:39 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:05:49 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,23 +108,25 @@ char	*expand(char *old_str, t_list *env, int e_code)
 
 void	expansion(t_data *data)
 {
+	t_node	*node;
 	t_pipe	*pipe;
 	t_cmd	*cmd;
 
-	if (!data->tree) // && if (!data->e_code) ???
+	if (!data->tree)
 		return ;
-	while (data->tree->type == IS_PIPE)
+	node = data->tree;
+	while (node->type == IS_PIPE)
 	{
-		pipe = (t_pipe *)data->tree->content;
+		pipe = (t_pipe *)node->content;
 		cmd = (t_cmd *)pipe->left->content;
 		if (check_expansion(cmd, data->env, data->e_code))
 		{
 			data->e_code = 1;
 			return ;
 		}
-		data->tree = pipe->right;
+		node = pipe->right;
 	}
-	cmd = (t_cmd *)data->tree->content;
+	cmd = (t_cmd *)node->content;
 	if (check_expansion(cmd, data->env, data->e_code))
 	{
 		data->e_code = 1;

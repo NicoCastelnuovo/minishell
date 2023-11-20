@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 09:54:30 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:12:01 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,15 @@ t_node	*build_syntax_tree(t_list *tokens, int n)
 */
 void	parser(t_data *data)
 {
-	if (data->tokens) // can be false ?
-		data->e_code = check_for_syntax_err(data->tokens);
-	if (!data->e_code)
-		data->tree = build_syntax_tree(data->tokens, 0);
+	if (!data->tokens)
+		return ;
+	if (check_for_syntax_err(data->tokens))
+	{
+		data->e_code = 258;
+		return ;
+	}
+	// if (!data->e_code)
+	data->tree = build_syntax_tree(data->tokens, 0);
 	if (!data->tree)
 	{
 		error(NULL, NULL, CE_SYNTAX_TREE);

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:19:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 14:04:17 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:40:22 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	write_into_tmp_file(int fd_tmp, char *eof, t_data *data)
 	There are two kinds of interactive input. If the eof is surrounded by
 	any kind of wuotes, the expansion is not performed.
 */
-static char	*get_interactive_input(int fd_tmp, char **eof, t_data *data)
+static int	get_interactive_input(int fd_tmp, char **eof, t_data *data)
 {
 	char	*tmp;
 
@@ -151,7 +151,7 @@ void	here_doc(t_node *tree, t_data *data)
 	t_pipe	*pipe;
 	t_cmd	*cmd;
 
-	if (data->e_code)
+	if (data->e_code || !data->tree)
 		return ;
 	while (tree->type == IS_PIPE)
 	{
