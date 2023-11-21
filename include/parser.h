@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 14:19:30 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 07:08:18 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	update_cmd_node(t_list *curr_tkn, t_list *prev_tkn, t_node *node);
 // ---------------------------------------------------------------- PRINT UTILS
 void	print_syntax_tree(t_node *root);
 void	print_redir_list(t_list *redir);
-void	print_args(char **args);
+void	print_cmd_args(char **args);
 void	print_tree_construction(char *prev_tkn, char *curr_tkn, char *next);
 
 #endif

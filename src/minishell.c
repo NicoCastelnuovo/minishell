@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 06:53:33 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 07:04:11 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,8 @@ static void	shell_loop(t_data *data)
 			parser(data);
 			expansion(data);
 			here_doc(data->tree, data);
+			print_syntax_tree(data->tree);
 			executor(data);
-
-			/*
-				fix run_builtin which sets data->e_code everytime a
-				builtin is run
-			*/
-
 			if (is_valid_for_history(data))
 				add_history(data->input);
 			free_data(data);

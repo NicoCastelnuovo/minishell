@@ -25,3 +25,4 @@ free(tmp);
 5) general refactor
 6) test 🤬
 7) syntax error format?
+8) echo -> not right print

@@ -6,13 +6,13 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 08:30:02 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 14:50:52 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 07:08:24 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_args(char **args)
+void	print_cmd_args(char **args)
 {
 	int	i;
 
