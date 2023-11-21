@@ -6,25 +6,25 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 08:31:08 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 09:13:36 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 12:41:23 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	fork_last(t_data *data, t_node *node, int *prev_pipe, int i, char **env)
+static int	fork_last(t_data *data, t_node *node, int *prev_pipe, int i)
 {
 	data->pid[i] = fork();
 	if (data->pid[i] == -1)
 		return (error("fork", NULL, errno), 1);
 	if (data->pid[i] == 0)
-		child(node, env, NULL, prev_pipe);
+		child(data, node, NULL, prev_pipe);
 	else
 		close(*prev_pipe);
 	return (0);
 }
 
-static int	fork_ps(t_data *data, t_node *node, int *prev_pipe, int i, char **env)
+static int	fork_ps(t_data *data, t_node *node, int *prev_pipe, int i)
 {
 	int		fd_pipe[2];
 
@@ -34,7 +34,7 @@ static int	fork_ps(t_data *data, t_node *node, int *prev_pipe, int i, char **env
 	if (data->pid[i] == -1)
 		return (error("fork", NULL, errno), 1);
 	if (data->pid[i] == 0)
-		child(node, env, fd_pipe, prev_pipe);
+		child(data, node, fd_pipe, prev_pipe);
 	else
 	{
 		close(fd_pipe[1]);
@@ -61,7 +61,11 @@ static int	get_n_cmds(t_node *node)
 	return (n);
 }
 
-static int	fork_children(t_data *data, char **env, int *prev_pipe)
+/*
+	@param i: the index of the forked process, useful to store in order the
+	process id in the main/parent process, to wait for them.
+*/
+static int	fork_children(t_data *data, int *prev_pipe)
 {
 	t_node	*node;
 	t_pipe	*pipe;
@@ -72,12 +76,12 @@ static int	fork_children(t_data *data, char **env, int *prev_pipe)
 	while (node->type == IS_PIPE)
 	{
 		pipe = (t_pipe *)node->content;
-		if (fork_ps(data, pipe->left, prev_pipe, i, env))
+		if (fork_ps(data, pipe->left, prev_pipe, i))
 			return (1);
 		node = pipe->right;
 		i++;
 	}
-	if (fork_last(data, node, prev_pipe, i, env))
+	if (fork_last(data, node, prev_pipe, i))
 		return (1);
 	return (0);
 }
@@ -85,7 +89,6 @@ static int	fork_children(t_data *data, char **env, int *prev_pipe)
 int	executor(t_data *data)
 {
 	int		prev_pipe;
-	char	**env;
 
 	if (!data->tree)
 		return (1);
@@ -95,7 +98,6 @@ int	executor(t_data *data)
 		data->e_code = 1;
 		return (error("executor", NULL, errno), 1);
 	}
-	env = convert_to_dptr(data->env);
 	data->n_ps = get_n_cmds(data->tree);
 	data->pid = ft_calloc(data->n_ps, sizeof(int));
 	if (!data->pid)
@@ -104,13 +106,12 @@ int	executor(t_data *data)
 		return (1);
 	}
 	if (data->tree->type == IS_CMD && is_builtin(data->tree->content))
-		return (run_builtin(data));
-	if (fork_children(data, env, &prev_pipe))
+		return (run_builtin_same_ps(data));
+	if (fork_children(data, &prev_pipe))
 	{
 		data->e_code = 1;
 		return (1);
 	}
-	free_dptr(env);
 	parent(data);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:43:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 09:14:41 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 10:33:16 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	open_with_right_mode(char *file_name, int last_fd, int flags, int mod
 	return (fd);
 }
 
-static int	is_valid_fd(t_cmd *cmd, t_redir_data *redir, int last_fd)
+static int	is_valid_fd(t_cmd *cmd, t_redir_data *redir)
 {
 	int	fd;
 	int	flags;
@@ -70,7 +70,7 @@ int	resolve_redir(t_cmd *cmd)
 	while (head)
 	{
 		content = (t_redir_data *)head->content;
-		last_fd = is_valid_fd(cmd, content, last_fd);
+		last_fd = is_valid_fd(cmd, content);
 		if (last_fd == -1)
 			return (-1);
 		head = head->next;

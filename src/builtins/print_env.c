@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 15:16:10 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 09:55:16 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 10:28:26 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	print_env(t_list *env)
 		{
 			if (var->name && var->value)
 			{
-				// ft_putstr_fd(var->name, 1);
-				// ft_putchar_fd('=', 1);
-				// ft_putendl_fd(var->value, 1);
+				ft_putstr_fd(var->name, 1);
+				ft_putchar_fd('=', 1);
+				ft_putendl_fd(var->value, 1);
 			}
 		}
 		env = env->next;

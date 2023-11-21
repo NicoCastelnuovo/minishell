@@ -28,6 +28,10 @@ free(tmp);
 <!-- 8) echo -> not right print -->
 9) check open files
 10) modify trim funciton in here_doc
+11) Run builtins inside the pipes
 
 # RANDOM QUESTIONS
 1) /bin/echo should run builtin or program ?
+
+# CORRECTION FROM TESTS
+1) echo

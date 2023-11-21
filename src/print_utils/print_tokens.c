@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 12:13:28 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 09:56:44 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 10:29:26 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void print_tokens(t_list *tokens)
 	while (temp)
 	{
 		tkn_data = (t_tkn_data *)temp->content;
-		// ft_printf("%s • ", tkn_data->str);
+		ft_printf("%s • ", tkn_data->str);
 		temp = temp->next;
 	}
-	// ft_printf("\n");
+	ft_printf("\n");
 }

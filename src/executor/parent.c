@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:49:16 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 09:21:47 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 10:32:03 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static void	unlink_here_doc(t_node *tree)
 	t_node			*node;
 	t_pipe			*pipe;
 	t_cmd			*cmd;
-	t_redir_data	*redir_content;
 
 	node = tree;
 	while (node->type == IS_PIPE)

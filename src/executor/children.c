@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:49:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 09:14:16 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 12:59:35 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	redirect_to_pipes(int *fd_pipe, int *prev_pipe)
 	return (0);
 }
 
-static int	redirect_to_explicit(t_node *node, char **env)
+int	redirect_to_explicit(t_node *node)
 {
 	t_cmd	*cmd;
 	int		err;
@@ -58,10 +58,8 @@ static int	redirect_to_explicit(t_node *node, char **env)
 	err = 0;
 	if (cmd->redir)
 	{
-		if (resolve_redir(cmd) == -1)
-		{
+		if (resolve_redir(cmd) == -1) // error
 			return (1);
-		}
 		else
 		{
 			if (cmd->fd_in != -2)
@@ -81,31 +79,51 @@ static int	redirect_to_explicit(t_node *node, char **env)
 	return (0);
 }
 
-static int	redirect_in_out(t_node *node, char **env, int *fd_pipe, int *prev_pipe)
+/*
+	In order:
+		• char **env is prepared to be sent to execve()
+		• stdin and stdout are redirected to pipe ends
+		• stdin and stdout are redirected to redir (< << >> >)
+		• if builtin, it's run separately with proper functions
+		• if normal cmd, execve() is called
+*/
+void	child(t_data *data, t_node *node, int *fd_pipe, int *prev_pipe)
 {
+	char	**env;
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *)node->content;
+
+	env = convert_to_dptr(data->env);
+	if (!env)
+	{
+		error("convert env to dptr", NULL, errno);
+		exit(1);
+	}
+
+	// redirect to pipes && explicit
 	if (redirect_to_pipes(fd_pipe, prev_pipe))
 		free_child_and_exit(node, env);
-	if (redirect_to_explicit(node, env))
+
+
+	// arrives here only if not a builtin
+	if (redirect_to_explicit(node))
 		free_child_and_exit(node, env);
-}
 
-void	child(t_node *node, char **env, int *fd_pipe, int *prev_pipe)
-{
-	t_cmd	*cmd;
 
-	redirect_in_out(node, env, fd_pipe, prev_pipe);
-	cmd = (t_cmd *)node->content;
+	// if its builtin special thing
+	if (is_builtin(cmd))
+		exit(call_builtin_function(cmd, data));
+
+
+	// if normal cmd
 	if (cmd->args)
 	{
 		resolve_args(&cmd->args[0], env);
-		execve(cmd->args[0], cmd->args, env);
-		error(cmd->args[0], NULL, CE_CMDNOTFOUND);
-		exit(127);
+		if (execve(cmd->args[0], cmd->args, env))
+		{
+			error(cmd->args[0], NULL, CE_CMDNOTFOUND);
+			exit(CE_CMDNOTFOUND);
+		}
 	}
-	// ---- form here
-	// ---- unlink() / close()
-	exit (0);
 }

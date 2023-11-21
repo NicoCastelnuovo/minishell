@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:18:14 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 07:04:12 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 13:01:04 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ int	is_builtin(t_cmd *cmd)
 	return (0);
 }
 
-int	run_builtin(t_data *data)
+/*
+	This function is called for the builtins which are part of a pipeline. They
+	have a different function which call the custom functions. Pipes and
+	redir are performed before (child() function).
+*/
+int	call_builtin_function(t_cmd *cmd, t_data *data)
 {
-	t_cmd	*cmd;
-
-	cmd = (t_cmd *)data->tree->content;
 	if (ft_strcmp(cmd->args[0], "cd") == 0)
 		data->e_code = cd(data);
 	else if (ft_strcmp(cmd->args[0], "echo") == 0)
@@ -52,5 +54,61 @@ int	run_builtin(t_data *data)
 		data->e_code = pwd();
 	else if (ft_strcmp(cmd->args[0], "unset") == 0)
 		data->e_code = unset(data);
+	return (data->e_code);
+}
+
+/*
+	This function is called for the builtins which are NOT part of a pipeline.
+	They are not part of a pipeline because of some particular features
+	(basic example cd). Since there could be a possible redirection, the
+	default stdin and stdout need to be dup() to be restored.
+*/
+int	run_builtin_same_ps(t_data *data)
+{
+	t_cmd	*cmd;
+	int		def_stdin;
+	int		def_stdout;
+
+	def_stdin = dup(0);
+	if (def_stdin == -1)
+	{
+		data->e_code = 1;
+		error("builtin", NULL, errno);
+		return (1);
+	}
+	def_stdout = dup(1);
+	if (def_stdout == -1)
+	{
+		data->e_code = 1;
+		error("builtin", NULL, errno);
+		return (1);
+	}
+
+
+	if (redirect_to_explicit(data->tree))
+	{
+		// error place
+	}
+
+	cmd = (t_cmd *)data->tree->content;
+	data->e_code = call_builtin_function(cmd, data);
+
+
+
+	// reset stdin and out
+	if (dup2(def_stdin, STDIN_FILENO) == -1)
+	{
+		data->e_code = 1;
+		error("builtin", NULL, errno);
+		return (1);
+	}
+	if (dup2(def_stdout, STDOUT_FILENO) == -1)
+	{
+		data->e_code = 1;
+		error("builtin", NULL, errno);
+		return (1);
+	}
+	// automatic close ???
+
 	return (data->e_code);
 }

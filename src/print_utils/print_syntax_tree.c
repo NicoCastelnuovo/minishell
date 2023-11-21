@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 08:30:02 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 09:56:39 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 10:29:20 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ void	print_cmd_args(char **args)
 
 	if (!args)
 	{
-		// ft_printf("No arguments\n");
+		ft_printf("No arguments\n");
 		return ;
 	}
 	i = 0;
-	// ft_printf("{");
+	ft_printf("{");
 	while (args[i])
 	{
-		// ft_printf(" %s ", args[i]);
+		ft_printf(" %s ", args[i]);
 		i++;
 	}
-	// ft_printf("}\n");
+	ft_printf("}\n");
 }
 
 void	print_redir_list(t_list *redir)
@@ -38,7 +38,7 @@ void	print_redir_list(t_list *redir)
 
 	if (!redir)
 	{
-		// ft_printf("	No redirections!\n");
+		ft_printf("	No redirections!\n");
 		return ;
 	}
 	while (redir)
@@ -46,7 +46,7 @@ void	print_redir_list(t_list *redir)
 		content = (t_redir_data *)redir->content;
 		if (content)
 		{
-			// ft_printf("	File name: [ %s ]", content->file_name);
+			ft_printf("	File name: [ %s ]", content->file_name);
 			if (content->type == REDIR_IN)
 				type = "<";
 			else if (content->type == REDIR_OUT)
@@ -55,7 +55,7 @@ void	print_redir_list(t_list *redir)
 				type = ">>";
 			else if (content->type == REDIR_HERE_DOC)
 				type = "<<";
-			// ft_printf("	type [ %s ]\n", type);
+			ft_printf("	type [ %s ]\n", type);
 		}
 		redir = redir->next;
 	}
@@ -63,29 +63,29 @@ void	print_redir_list(t_list *redir)
 
 static void	print_cmd_node(t_cmd *cmd, int n)
 {
-	// ft_printf("CMD	[%d]\n", n);
-	// ft_printf("args	");
+	ft_printf("CMD	[%d]\n", n);
+	ft_printf("args	");
 	print_cmd_args(cmd->args);
-	// ft_printf("redir");
+	ft_printf("redir");
 	print_redir_list(cmd->redir);
-	// ft_printf("- - - - - - - - - - - - - - - - - - - - - - - -\n");
+	ft_printf("- - - - - - - - - - - - - - - - - - - - - - - -\n");
 }
 
 void	print_syntax_tree(t_node *tree)
 {
 	t_pipe	*pipe;
 
-	// ft_printf("\n____SYNTAX TREE____");
+	ft_printf("\n____SYNTAX TREE____");
 	if (!tree)
 		return ;
 	if (tree->type == IS_CMD)
 	{
-		// ft_printf("___First node is CMD___\n\n");
+		ft_printf("___First node is CMD___\n\n");
 		print_cmd_node(tree->content, tree->n);
-		// ft_printf("\n");
+		ft_printf("\n");
 		return ;
 	}
-	// ft_printf("___First node is PIPE___\n\n");
+	ft_printf("___First node is PIPE___\n\n");
 	while (tree->type == IS_PIPE)
 	{
 		pipe = (t_pipe *)tree->content;
@@ -93,5 +93,5 @@ void	print_syntax_tree(t_node *tree)
 		tree = pipe->right;
 	}
 	print_cmd_node(pipe->right->content, pipe->right->n);
-	// ft_printf("\n");
+	ft_printf("\n");
 }
