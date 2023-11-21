@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 16:05:49 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 16:44:01 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*expand(char *old_str, t_list *env, int e_code)
 	t_list	*to_expand;
 	char	*new_str;
 
-	n = get_n_dollars(old_str);
+	n = get_n_dollars(old_str); // $"Hello world USER $USER"
 	to_expand = get_var_names(old_str, n);
 	if (!to_expand)
 		return (NULL);

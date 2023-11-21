@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/21 12:57:33 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 16:53:32 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,6 @@ void	free_data(t_data *data);
 int		get_substr_len(char *s, char c);
 int		is_valid_for_history(t_data *data);
 int		is_empty_input(char *s);
-char	*trim_one_quote(char *s);
+char	*trim_outmost_quotes(char *s);
 
 #endif

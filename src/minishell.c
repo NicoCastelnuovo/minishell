@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 12:16:59 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 16:43:59 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	shell_loop(t_data *data)
 {
 	while (1)
 	{
-		if (isatty(fileno(stdin))) // --------- remove !!!
+		if (isatty(fileno(stdin))) // --------- remove
 			data->input = readline(data->prompt);
 		if (!data->input)
 			break ;
@@ -38,6 +38,7 @@ static void	shell_loop(t_data *data)
 			parser(data);
 			expansion(data);
 			here_doc(data->tree, data);
+			print_syntax_tree(data->tree);
 			executor(data);
 			if (is_valid_for_history(data))
 				add_history(data->input);

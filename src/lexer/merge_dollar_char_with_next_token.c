@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:52:43 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/09 13:41:36 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 14:57:02 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	is_needed_to_merge(char first_char)
 	is_alpha = ft_isalpha(first_char);
 	is_digit = ft_isdigit(first_char);
 	is_under_score = first_char == '_'; // norminette ??????
-	if (!(is_alpha || is_digit || is_under_score || first_char == '?')) // added || first_char == '?'
+	if (!(is_alpha || is_digit || is_under_score || first_char == '?' || first_char == '\"' || first_char == '\'' )) // added || first_char == '?'
 		return (false);
 	else
 		return (true);

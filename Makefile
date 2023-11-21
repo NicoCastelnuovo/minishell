@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/21 09:08:31 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/21 15:56:41 by ncasteln         ###   #################################.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,7 @@ SIGNALS = sig_handler.c
 UTILS = free_data.c \
 	ft_strcmp.c \
 	is_valid_for_history.c \
-	trim_one_quote.c
+	trim_outmost_quotes.c
 
 LEXER = lexer.c \
 	tokenize_input.c \
@@ -103,7 +103,6 @@ SRCS = minishell.c \
 	$(HERE_DOC) \
 	$(LEXER) \
 	$(PARSER) \
-	$(SYNTAX_TREE) \
 	$(PRINT_UTILS) \
 	$(SIGNALS) \
 	$(UTILS)
@@ -122,10 +121,8 @@ COLOR_GREEN = \033[0;32m
 COLOR_YELLOW = \033[0;33m
 COLOR_END = \033[0m
 
-all: $(NAME)
-
 $(NAME): $(OBJS) $(MYLIB) Makefile
-	@$(CC) $(OBJS) -L$(MYLIB_PATH) -lmylib -lreadline -ltermcap -o $(NAME)
+	@$(CC) $(OBJS) -L$(MYLIB_PATH) -lreadline -lmylib -ltermcap -o $(NAME)
 	@echo "$(COLOR_GREEN)minishell is created.$(COLOR_END)"
 
 $(OBJS_PATH)/%.o: %.c
@@ -148,4 +145,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+test:
+	@cd tests && bash tester.sh a
+
+.PHONY: all clean fclean re test

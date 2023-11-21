@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:23:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 13:01:03 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 16:56:59 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,15 @@ static int	echo_args(t_cmd *cmd, t_list *tkn, int i)
 	tmp = NULL;
 	while (cmd->args[i])
 	{
-		if (cmd->args[i][0] == TKN_D_QUOTE || cmd->args[i][0] == TKN_S_QUOTE)
-		{
-			tmp = trim_one_quote(cmd->args[i]);
-			if (!tmp)
-				return (error("echo", NULL, errno), 1);
-			ft_putstr_fd(tmp, 1);
-			free(tmp);
-		}
-		else
+		// if (cmd->args[i][0] == TKN_D_QUOTE || cmd->args[i][0] == TKN_S_QUOTE)
+		// {
+		// 	tmp = trim_one_quote(cmd->args[i]);
+		// 	if (!tmp)
+		// 		return (error("echo", NULL, errno), 1);
+		// 	ft_putstr_fd(tmp, 1);
+		// 	free(tmp);
+		// }
+		// else
 			ft_putstr_fd(cmd->args[i], 1);
 		if (needs_whitespace(tkn, i))
 			ft_putchar_fd(' ', 1);
@@ -72,7 +72,6 @@ static int	echo_args(t_cmd *cmd, t_list *tkn, int i)
 int	echo(t_data *data)
 {
 	t_cmd	*cmd;
-
 
 	cmd = (t_cmd *)data->tree->content;
 	if (cmd->args[1] && ft_strcmp("-n", cmd->args[1]) == 0)

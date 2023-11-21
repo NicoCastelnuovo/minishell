@@ -35,3 +35,9 @@ free(tmp);
 
 # CORRECTION FROM TESTS
 1) echo
+2) expansion or echo?
+	• echo $"HOME"$USER ---> HOMEncasteln
+	• echo $"HOM"E$USER ---> HOMEncasteln
+	• echo $"HOME" --------> HOME
+	• echo $"42$" ---------> 42$
+	• >$"USER" ------------> create USER file (minishell creates $ file)

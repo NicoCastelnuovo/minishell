@@ -1,7 +1,0 @@
-{
-	"files.associations": {
-		"readline.h": "c",
-		"__functional_base": "c",
-		"_errno_t.h": "c"
-	}
-}
