@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 15:16:10 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 14:15:45 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 07:00:02 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 	Outputs the environment variables which are at least an empty string. The
 	uninitalized env var are not output like in the standar env builtin.
 */
-void	print_env(t_list *env)
+int	print_env(t_list *env)
 {
 	t_var	*var;
 
@@ -32,7 +32,7 @@ void	print_env(t_list *env)
 				ft_putendl_fd(var->value, 1);
 			}
 		}
-
 		env = env->next;
 	}
+	return (0);
 }

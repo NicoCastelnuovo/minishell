@@ -20,8 +20,8 @@ free(tmp);
 2) Signals
 	• give input and ctrl+c causes segfault
 3) add_history()
+4) executor leaks & refactor
+	• unlink() here docs
 5) general refactor
 6) test 🤬
 7) syntax error format?
-
-4) executor leaks & refactor

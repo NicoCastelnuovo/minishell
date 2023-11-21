@@ -6,13 +6,13 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:06:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 17:14:44 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 06:59:41 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	bye(t_data *data, int last_e_code)
+static void	bye_bye(t_data *data, int last_e_code)
 {
 	free_data(data);
 	ft_lstclear(&data->env, del_var_content);
@@ -46,15 +46,15 @@ int	exit_custom(t_data *data)
 	while (cmd->args[n])
 		n++;
 	if (n == 1)
-		bye(data, data->e_code);
+		bye_bye(data, data->e_code);
 	else if (n == 2)
 	{
 		if (is_valid_number(cmd->args[1]))
-			bye(data, ft_atoi(cmd->args[1]) % 256);
+			bye_bye(data, ft_atoi(cmd->args[1]) % 256);
 		else
 		{
 			error("exit", cmd->args[1], CE_NUM_REQUIRED);
-			bye(data, 255);
+			bye_bye(data, 255);
 		}
 	}
 	else // n > 2

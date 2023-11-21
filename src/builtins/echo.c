@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:23:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 16:04:08 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 06:58:51 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	followed by a new line. As the subject states, it has to be implemented
 	with the optional -n argument.
 */
-void	echo(t_data *data)
+int	echo(t_data *data)
 {
 	t_cmd	*cmd;
 	int		i;
@@ -32,7 +32,7 @@ void	echo(t_data *data)
 			ft_putstr_fd(cmd->args[i], 1);
 			i++;
 		}
-		return ;
+		return (0);
 	}
 	while (cmd->args[i])
 	{
@@ -40,4 +40,5 @@ void	echo(t_data *data)
 		i++;
 	}
 	ft_putchar_fd('\n', 1);
+	return (0);
 }

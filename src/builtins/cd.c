@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:20:48 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 14:16:44 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 06:57:42 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,17 @@ static char	*get_wd(void)
 
 	buff = NULL;
 	size = 1;
-	buff = ft_calloc(size + 1, sizeof(char)); // protect --- create err function!
+	buff = ft_calloc(size + 1, sizeof(char));
+	if (!buff)
+		return (NULL);
 	buff = getcwd(buff, size);
 	while (!buff)
 	{
 		free(buff);
 		size += 1;
-		buff = ft_calloc(size + 1, sizeof(char)); // protect --- create err function
+		buff = ft_calloc(size + 1, sizeof(char));
+		if (!buff)
+			return (NULL);
 		buff = getcwd(buff, size);
 	}
 	return (buff);
@@ -62,20 +66,21 @@ int	cd(t_data *data)
 
 	curr_pwd = get_wd();
 	if (!curr_pwd)
-		return (1);
+		return (error("cd", NULL, errno), 1);
 	destination = ((t_cmd *)data->tree->content)->args[1];
 	if (!destination)
 		destination = get_env_custom("HOME", data->env);
 	if (chdir(destination) == -1)
 	{
 		free(curr_pwd);
-		data->e_code = 1; // print error and return ??????
 		return (error("cd", NULL, errno), 1);
 	}
 	else
 	{
 		update_existing_var("OLDPWD", curr_pwd, &data->env);
-		new_abs_path = get_wd(); // protect
+		new_abs_path = get_wd();
+		if (!new_abs_path)
+			return (error("cd", NULL, errno), 1);
 		update_existing_var("PWD", new_abs_path, &data->env);
 	}
 	return (0);
