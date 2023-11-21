@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:18:14 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 13:01:04 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 13:07:57 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,46 +69,24 @@ int	run_builtin_same_ps(t_data *data)
 	int		def_stdin;
 	int		def_stdout;
 
-	def_stdin = dup(0);
-	if (def_stdin == -1)
+	def_stdin = dup(STDIN_FILENO);
+	def_stdout = dup(STDOUT_FILENO);
+	if (def_stdin == -1 || def_stdout == -1)
 	{
 		data->e_code = 1;
-		error("builtin", NULL, errno);
-		return (1);
+		return (error("builtin", NULL, errno), 1);
 	}
-	def_stdout = dup(1);
-	if (def_stdout == -1)
-	{
-		data->e_code = 1;
-		error("builtin", NULL, errno);
-		return (1);
-	}
-
-
 	if (redirect_to_explicit(data->tree))
 	{
-		// error place
+		data->e_code = 1;
+		return (data->e_code);
 	}
-
 	cmd = (t_cmd *)data->tree->content;
 	data->e_code = call_builtin_function(cmd, data);
-
-
-
-	// reset stdin and out
-	if (dup2(def_stdin, STDIN_FILENO) == -1)
+	if (dup2(def_stdin, STDIN_FILENO) == -1 || dup2(def_stdout, STDOUT_FILENO) == -1)
 	{
 		data->e_code = 1;
-		error("builtin", NULL, errno);
-		return (1);
+		return (error("builtin", NULL, errno), 1);
 	}
-	if (dup2(def_stdout, STDOUT_FILENO) == -1)
-	{
-		data->e_code = 1;
-		error("builtin", NULL, errno);
-		return (1);
-	}
-	// automatic close ???
-
 	return (data->e_code);
 }
