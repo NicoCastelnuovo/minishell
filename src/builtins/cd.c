@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:20:48 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 06:57:42 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 09:54:39 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	cd(t_data *data)
 	if (chdir(destination) == -1)
 	{
 		free(curr_pwd);
-		return (error("cd", NULL, errno), 1);
+		return (error("cd", destination, errno), 1);
 	}
 	else
 	{

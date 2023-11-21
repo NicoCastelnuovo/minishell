@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 09:44:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 17:08:23 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 09:55:43 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,39 +28,45 @@ static char	*custom_strerror(int n)
 		return ("fail performing here_doc");
 	if (n == CE_NUM_REQUIRED)
 		return ("numeric argument required");
+	if (n == CE_SYNTAX_ERROR)
+		return ("syntax error near unexpected token");
 	return ("unknow error");
 }
 
-void	syntax_error(char *tkn)
+static void	basic_err_format(char *s)
 {
-	ft_putstr_fd("\e[1;31m* \e[0m", 2); // make different error for syntax !!
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd("syntax error near unexpected token ", 2);
-	ft_putchar_fd('`', 2);
-	ft_putstr_fd(tkn, 2);
-	ft_putendl_fd("'", 2);
+	// ft_putstr_fd(s, 2);
+	// ft_putstr_fd(": ", 2);
+}
+
+static void	syntax_err_format(char *s, char *err_message)
+{
+	// ft_putstr_fd(err_message, 2);
+	// ft_putchar_fd('`', 2);
+	// ft_putstr_fd(s, 2);
+	// ft_putendl_fd("'", 2);
+	return ;
 }
 
 void	error(char *s1, char *s2, int err_id)
 {
-	char	*err_msg;
+	char	*err_message;
 
-	err_msg = NULL;
+	err_message = NULL;
 	if (err_id < 107)
-		err_msg = strerror(err_id);
+		err_message = strerror(err_id);
 	else
-		err_msg = custom_strerror(err_id);
-	ft_putstr_fd("\e[1;31m* \e[0m", 2); // make different error for syntax !!
-	ft_putstr_fd("minishell: ", 2);
+		err_message = custom_strerror(err_id);
+	// ft_putstr_fd("\e[1;31m* \e[0m", 2);
+	// ft_putstr_fd("minishell: ", 2);
 	if (s1)
 	{
-		ft_putstr_fd(s1, 2);
-		ft_putstr_fd(": ", 2);
+		if (err_id == CE_SYNTAX_ERROR)
+			return (syntax_err_format(s1, err_message));
+		else
+			basic_err_format(s1);
 	}
 	if (s2)
-	{
-		ft_putstr_fd(s2, 2);
-		ft_putstr_fd(": ", 2);
-	}
-	ft_putendl_fd(err_msg, 2);
+		basic_err_format(s2);
+	// ft_putendl_fd(err_message, 2);
 }

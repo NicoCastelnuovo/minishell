@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/21 07:02:31 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/11/21 09:08:31 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,8 @@ HERE_DOC = here_doc.c \
 PARSER = check_for_syntax_err.c \
 	build_syntax_tree.c \
 	update_cmd_node.c \
-	free_syntax_tree.c
+	free_syntax_tree.c \
+	parser.c
 
 PRINT_UTILS = print_syntax_tree.c \
 	print_tokens.c \
@@ -73,7 +74,8 @@ SIGNALS = sig_handler.c
 
 UTILS = free_data.c \
 	ft_strcmp.c \
-	is_valid_for_history.c
+	is_valid_for_history.c \
+	trim_one_quote.c
 
 LEXER = lexer.c \
 	tokenize_input.c \

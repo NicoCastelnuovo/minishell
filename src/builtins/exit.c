@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:06:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 06:59:41 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 09:43:48 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	bye_bye(t_data *data, int last_e_code)
 	free_data(data);
 	ft_lstclear(&data->env, del_var_content);
 	exit(last_e_code);
+	// print exit in the right way !
 }
 
 static int	is_valid_number(char *s)

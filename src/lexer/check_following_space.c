@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 10:34:06 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/03 09:57:06 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 07:37:21 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ void	assign_following_space_status(t_list *tkns_head)
 		cur_node = cur_node->next;
 	}
 	cur_tkn_data = (t_tkn_data *)(cur_node->content);
-	if (!(cur_node->next) && cur_tkn_data->white_space == UNKNOWN_WHITE_SPACE)
+	if (!(cur_node->next) && cur_tkn_data->white_space == INIT_WHITE_SPACE)
 		cur_tkn_data->white_space = NOT_FOLLOWED_BY_WHITE_SPACE;
 }

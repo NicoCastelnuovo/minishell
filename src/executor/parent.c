@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:49:16 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 16:18:38 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 09:21:47 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,42 @@ static int	wait_children(pid_t *ps_id, int n_cmd)
 	return (exit_code);
 }
 
+static void	iter_redirections(t_list *redir)
+{
+	t_list			*head;
+	t_redir_data	*content;
+
+	head = redir;
+	while (head)
+	{
+		content = (t_redir_data *)head->content;
+		if (content->type == REDIR_HERE_DOC)
+			unlink(content->file_name);
+		head = head->next;
+	}
+}
+
+static void	unlink_here_doc(t_node *tree)
+{
+	t_node			*node;
+	t_pipe			*pipe;
+	t_cmd			*cmd;
+	t_redir_data	*redir_content;
+
+	node = tree;
+	while (node->type == IS_PIPE)
+	{
+		pipe = (t_pipe *)node->content;
+		cmd = (t_cmd *)pipe->left->content;
+		iter_redirections(cmd->redir);
+		node = pipe->right;
+	}
+	cmd = (t_cmd *)node->content;
+}
+
 int	parent(t_data *data)
 {
 	data->e_code = wait_children(data->pid, data->n_ps);
-	// can return 1 OR -1 ?????
+	unlink_here_doc(data->tree);
 	return (0);
 }

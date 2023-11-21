@@ -19,10 +19,15 @@ free(tmp);
 1) Export merge arguments
 2) Signals
 	• give input and ctrl+c causes segfault
-3) add_history()
-4) executor leaks & refactor
-	• unlink() here docs
+<!-- 3) add_history() -->
+<!-- 4) executor leaks & refactor
+	• unlink() here docs -->
 5) general refactor
 6) test 🤬
-7) syntax error format?
-8) echo -> not right print
+<!-- 7) syntax error format? -->
+<!-- 8) echo -> not right print -->
+9) check open files
+10) modify trim funciton in here_doc
+
+# RANDOM QUESTIONS
+1) /bin/echo should run builtin or program ?

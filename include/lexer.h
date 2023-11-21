@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/14 08:30:50 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 07:33:20 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef enum s_quote_status
 
 typedef enum s_white_space
 {
-	UNKNOWN_WHITE_SPACE = -1,
+	INIT_WHITE_SPACE = -1,
 	NOT_FOLLOWED_BY_WHITE_SPACE = 0,
 	FOLLOWED_BY_WHITE_SPACE = 1,
 }	t_white_space;

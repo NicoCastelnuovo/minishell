@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 16:12:01 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 09:08:35 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,27 +106,4 @@ t_node	*build_syntax_tree(t_list *tokens, int n)
 		return (node_p);
 	}
 	return (node_c);
-}
-
-/*
-	Given the token list, the parser check first for syntax errors. In case of
-	syntax error data->e_code is set to 258. The syntax tree is built only if
-	there no syntax error.
-*/
-void	parser(t_data *data)
-{
-	if (!data->tokens)
-		return ;
-	if (check_for_syntax_err(data->tokens))
-	{
-		data->e_code = 258;
-		return ;
-	}
-	// if (!data->e_code)
-	data->tree = build_syntax_tree(data->tokens, 0);
-	if (!data->tree)
-	{
-		error(NULL, NULL, CE_SYNTAX_TREE);
-		data->e_code = 1;
-	}
 }

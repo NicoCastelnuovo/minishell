@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 07:01:10 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 09:55:10 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,17 @@ int	get_exported(t_list *env)
 		{
 			if (var->name) // change to if (is_exported)
 			{
-				ft_putstr_fd("declare -x ", 1);
-				ft_putstr_fd(var->name, 1);
+				// ft_putstr_fd("declare -x ", 1);
+				// ft_putstr_fd(var->name, 1);
 			}
 			if (var->value)
 			{
-				ft_putchar_fd('=', 1);
-				ft_putchar_fd('"', 1);
-				ft_putstr_fd(var->value, 1);
-				ft_putchar_fd('"', 1);
+				// ft_putchar_fd('=', 1);
+				// ft_putchar_fd('"', 1);
+				// ft_putstr_fd(var->value, 1);
+				// ft_putchar_fd('"', 1);
 			}
-			ft_putchar_fd('\n', 1);
+			// ft_putchar_fd('\n', 1);
 		}
 		env = env->next;
 	}

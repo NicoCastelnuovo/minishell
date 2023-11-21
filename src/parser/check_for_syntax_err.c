@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:06:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 16:09:02 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/21 09:03:45 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,21 @@ int	check_for_syntax_err(t_list *tkn)
 	{
 		curr_tkn = tkn->content;
 		if (curr_tkn->quote_status == OPEN_QUOTE)
-			return (syntax_error("quotes"), 1);
+			return (error("quotes", NULL, CE_SYNTAX_ERROR), 1);
 		if (tkn->next) // check current-next
 		{
 			next_tkn = tkn->next->content;
 			if (is_redir(curr_tkn->type) && is_redir_syntax_err(next_tkn))
-				return (syntax_error(next_tkn->str), 1);
+				return (error(next_tkn->str, NULL, CE_SYNTAX_ERROR), 1);
 			if (curr_tkn->type == TKN_PIPE && is_pipe_syntax_err(next_tkn))
-				return (syntax_error(next_tkn->str), 1);
+				return (error(next_tkn->str, NULL, CE_SYNTAX_ERROR), 1);
 		}
 		else
 		{
 			if (is_redir(curr_tkn->type))
-				return (syntax_error("newline"), 1);
+				return (error("newline", NULL, CE_SYNTAX_ERROR), 1);
 			if (curr_tkn->type == TKN_PIPE)
-				return (syntax_error(curr_tkn->str), 1);
+				return (error(curr_tkn->str, NULL, CE_SYNTAX_ERROR), 1);
 		}
 		tkn = tkn->next;
 	}

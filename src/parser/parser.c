@@ -1,38 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_env.c                                        :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/11 15:16:10 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 09:55:16 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/11/21 09:04:07 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/11/21 09:08:41 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-	Outputs the environment variables which are at least an empty string. The
-	uninitalized env var are not output like in the standar env builtin.
+	Given the token list, the parser check first for syntax errors. In case of
+	syntax error data->e_code is set to 258. The syntax tree is built only if
+	there no syntax error.
 */
-int	print_env(t_list *env)
+void	parser(t_data *data)
 {
-	t_var	*var;
-
-	while (env)
+	if (!data->tokens)
+		return ;
+	if (check_for_syntax_err(data->tokens))
 	{
-		var = (t_var *)env->content;
-		if (var)
-		{
-			if (var->name && var->value)
-			{
-				// ft_putstr_fd(var->name, 1);
-				// ft_putchar_fd('=', 1);
-				// ft_putendl_fd(var->value, 1);
-			}
-		}
-		env = env->next;
+		data->e_code = 2;
+		return ;
 	}
-	return (0);
+	data->tree = build_syntax_tree(data->tokens, 0);
+	if (!data->tree)
+	{
+		error(NULL, NULL, CE_SYNTAX_TREE);
+		data->e_code = 1;
+	}
 }
