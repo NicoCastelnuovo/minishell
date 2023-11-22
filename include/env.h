@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 10:51:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/14 11:14:31 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/22 07:02:44 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,6 @@ typedef struct	s_var
 	int		value_len;
 	int		to_export;
 }				t_var;
-
-typedef struct	s_env
-{
-	struct s_var	*head; // remove
-	struct s_var	*tail;
-	int				size;
-}				t_env;
 
 // ------------------------------------------------------------------------ ENV
 t_list	*init_env(char **env);

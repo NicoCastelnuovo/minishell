@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/21 16:53:32 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/22 07:34:17 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,12 @@ int		run_builtin_same_ps(t_data *data);
 
 // ------------------------------------------------------------------- BUILTINS
 int		print_env(t_list *env);
-int		cd(t_data *data);
+int		cd(t_cmd *cmd, t_data *data);
 int		pwd(void);
-int		exit_custom(t_data *data);
-int		unset(t_data *data);
-int		get_exported(t_list *env);
-int		export(t_data *data);
+int		exit_custom(t_cmd *cmd, t_data *data);
+int		unset(t_cmd *cmd, t_data *data);
+int		print_exported(t_list *env);
+int		export(t_cmd *cmd, t_data *data);
 int		echo(t_data *data);
 
 // ---------------------------------------------------------------------- UTILS

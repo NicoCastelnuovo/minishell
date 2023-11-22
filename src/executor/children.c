@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:49:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 13:06:02 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/22 07:24:35 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,9 @@ void	child(t_data *data, t_node *node, int *fd_pipe, int *prev_pipe)
 
 	// if its builtin special thing
 	if (is_builtin(cmd))
+	{
 		exit(call_builtin_function(cmd, data));
+	}
 
 
 	// if normal cmd

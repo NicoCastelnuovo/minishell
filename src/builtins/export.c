@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 10:28:20 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/22 07:27:56 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 	As env builtin does, it prints out the env variables, but in ASCII
 	order, including the variables which are not initialized.
 */
-int	get_exported(t_list *env)
+int	print_exported(t_list *env)
 {
 	t_var	*var;
 
@@ -104,24 +104,24 @@ static void	check_export(char *arg, t_list **env)
 	}
 }
 
-int	export(t_data *data)
+static int	is_valid_argument(void)
 {
-	t_cmd	*cmd;
+
+}
+
+int	export(t_cmd *cmd, t_data *data)
+{
 	int		i;
 
-	cmd = (t_cmd *)data->tree->content;
 	if (!cmd->args[1])
-		get_exported(data->env);
+		print_exported(data->env);
 	else
 	{
 		i = 1;
 		while (cmd->args[i])
 		{
-			if (cmd->args[i][0] == '=')
-			{
-				// error invalid identifier
-				return (1);
-			}
+			// if (is_valid_argument(cmd->args[i]))
+			// 	return (1);
 			check_export(cmd->args[i], &data->env); // needs expansion!
 			i++;
 		}

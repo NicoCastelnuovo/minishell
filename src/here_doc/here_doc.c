@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:19:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 10:28:58 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/22 07:03:52 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	get_interactive_input(int fd_tmp, char **eof, t_data *data)
 	if (*eof[0] == '\'' || *eof[0] == '\"')
 	{
 		tmp = *eof;
-		*eof = ft_strtrim(*eof, "'\"");
+		*eof = trim_outmost_quotes(*eof);
 		free(tmp);
 		if (!*eof)
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:37:54 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 09:47:58 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/22 07:34:07 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,10 @@ static void	unset_single_var(char *name, t_list **env)
 	environment. If the argument is a variable which doesn't exist, nothing
 	happens.
 */
-int	unset(t_data *data)
+int	unset(t_cmd *cmd, t_data *data)
 {
-	t_cmd	*cmd;
 	int		i;
 
-	cmd = (t_cmd *)data->tree->content;
 	i = 1;
 	while (cmd->args[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:06:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 09:43:48 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/22 07:31:00 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,11 @@ static int	is_valid_number(char *s)
 	return (1);
 }
 
-int	exit_custom(t_data *data)
+int	exit_custom(t_cmd *cmd, t_data *data)
 {
-	t_cmd	*cmd;
 	int		n;
 
 	n = 0;
-	cmd = (t_cmd *)data->tree->content;
 	while (cmd->args[n])
 		n++;
 	if (n == 1)

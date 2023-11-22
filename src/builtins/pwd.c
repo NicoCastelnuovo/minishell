@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 10:52:18 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 12:26:02 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/22 07:32:22 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,17 @@ int	pwd(void)
 
 	buff = NULL;
 	size = 1;
-	buff = ft_calloc(size + 1, sizeof(char)); // protect --- create err function!
+	buff = ft_calloc(size + 1, sizeof(char));
+	if (!buff)
+		return (error("pwd", NULL, errno), 1);
 	buff = getcwd(buff, size);
 	while (!buff)
 	{
 		free(buff);
 		size += 1;
-		buff = ft_calloc(size + 1, sizeof(char)); // protect --- create err function
+		buff = ft_calloc(size + 1, sizeof(char));
+		if (!buff)
+			return (error("pwd", NULL, errno), 1);
 		buff = getcwd(buff, size);
 	}
 	if (!buff)
