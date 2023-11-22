@@ -55,7 +55,8 @@ ENV = init_env.c \
 EXPANSION = build_str.c \
 	expansion.c \
 	check_expansion.c \
-	expansion_utils.c
+	expansion_utils.c \
+	quote_removal.c
 
 HERE_DOC = here_doc.c \
 
@@ -120,6 +121,8 @@ INCLUDE = -I./include -I./mylib/libft -I./mylib/ft_printf -I./mylib/get_next_lin
 COLOR_GREEN = \033[0;32m
 COLOR_YELLOW = \033[0;33m
 COLOR_END = \033[0m
+
+all: $(NAME)
 
 $(NAME): $(OBJS) $(MYLIB) Makefile
 	@$(CC) $(OBJS) -L$(MYLIB_PATH) -lreadline -lmylib -ltermcap -o $(NAME)

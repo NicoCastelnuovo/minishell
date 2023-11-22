@@ -21,7 +21,12 @@ free(tmp);
 	• give input and ctrl+c causes segfault
 9) check open files
 12) test 🤬
+13) valid identifier for export and unset
 
+# RANDOM QUESTIONS
+1) Syntax err = 258 or 2 ?
 
 # PROBLEMS
 1) expansion of $"String $USER hello"
+2) export $HOME=USER
+3) fucking quote removal ex. "ls"
