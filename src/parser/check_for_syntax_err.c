@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:06:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 09:03:45 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/22 08:00:28 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	is_redir_syntax_err(t_tkn_data *next_tkn)
 		return (1);
 	if (next_tkn->type == TKN_NEW_LINE ||
 		next_tkn->type == TKN_TAB_CHAR ||
-		next_tkn->type == TKN_PIPE) // note sure about this
+		next_tkn->type == TKN_PIPE)
 		return (1);
 	return (0);
 }
@@ -42,33 +42,37 @@ static int	is_pipe_syntax_err(t_tkn_data *next_tkn)
 	return (0);
 }
 
+static int	check_curr_next_tkn(t_tkn_data *curr_tkn, t_tkn_data *next_tkn)
+{
+	if (is_redir(curr_tkn->type) && is_redir_syntax_err(next_tkn))
+		return (error(next_tkn->str, NULL, CE_SYNTAX_ERROR), 1);
+	if (curr_tkn->type == TKN_PIPE && is_pipe_syntax_err(next_tkn))
+		return (error(next_tkn->str, NULL, CE_SYNTAX_ERROR), 1);
+	return (0);
+}
+
 int	check_for_syntax_err(t_list *tkn)
 {
 	t_tkn_data	*curr_tkn;
-	t_tkn_data	*next_tkn;
+	int			i;
 
+	i = 0;
 	curr_tkn = NULL;
-	next_tkn = NULL;
 	while (tkn)
 	{
 		curr_tkn = tkn->content;
+		if (curr_tkn->type == TKN_PIPE && i == 0)
+			return (error(curr_tkn->str, NULL, CE_SYNTAX_ERROR), 1);
 		if (curr_tkn->quote_status == OPEN_QUOTE)
 			return (error("quotes", NULL, CE_SYNTAX_ERROR), 1);
-		if (tkn->next) // check current-next
+		if (tkn->next && check_curr_next_tkn(curr_tkn, tkn->next->content)) // check current-next
+			return (1);
+		else // end
 		{
-			next_tkn = tkn->next->content;
-			if (is_redir(curr_tkn->type) && is_redir_syntax_err(next_tkn))
-				return (error(next_tkn->str, NULL, CE_SYNTAX_ERROR), 1);
-			if (curr_tkn->type == TKN_PIPE && is_pipe_syntax_err(next_tkn))
-				return (error(next_tkn->str, NULL, CE_SYNTAX_ERROR), 1);
-		}
-		else
-		{
-			if (is_redir(curr_tkn->type))
+			if (is_redir(curr_tkn->type) || curr_tkn->type == TKN_PIPE)
 				return (error("newline", NULL, CE_SYNTAX_ERROR), 1);
-			if (curr_tkn->type == TKN_PIPE)
-				return (error(curr_tkn->str, NULL, CE_SYNTAX_ERROR), 1);
 		}
+		i++;
 		tkn = tkn->next;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/22 07:34:20 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/22 07:41:05 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	shell_loop(t_data *data)
 			parser(data);
 			expansion(data);
 			here_doc(data->tree, data);
-			print_syntax_tree(data->tree);
+			// print_syntax_tree(data->tree);
 			executor(data);
 			if (is_valid_for_history(data))
 				add_history(data->input);
