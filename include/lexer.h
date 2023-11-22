@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:44:50 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/21 07:33:20 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/22 10:36:34 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef enum e_tkn_type
 	TKN_ESCAPE_CHAR = '\\',
 	TKN_PIPE = '|',
 	TKN_DOLLAR_CHAR = '$',
-	TKN_FILE_NAME,
+	// TKN_FILE_NAME,
 }	t_tkn_type;
 
 typedef enum s_quote
@@ -94,6 +94,7 @@ void	del_tokens(void *content);
 void	assign_following_space_status(t_list *tkns_head);
 char	*join_two_strs(char **cur_str, char *next_str);
 void	remove_next_node(t_list *cur_node);
+void	merge_strings(t_list *tkn);
 void	print_tokens(t_list *tokens);
 
 #endif

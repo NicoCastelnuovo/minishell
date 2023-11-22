@@ -94,6 +94,7 @@ LEXER = lexer.c \
 	check_following_space.c \
 	join_content_str_of_two_nodes.c \
 	remove_a_token_node.c \
+	merge_strings.c
 
 SRCS = minishell.c \
 	$(BUILTINS) \

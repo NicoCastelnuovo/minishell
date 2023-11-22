@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:52:43 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/21 14:57:02 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/22 10:44:53 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	merge_dollar_char_with_next_token(t_list *tkns_head)
 			}
 			// if (!is_needed_to_merge(*(next_tkn_data->str)))
 			// 	return ;
-			cur_tkn_data->str = join_two_strs(&(cur_tkn_data->str),
-					next_tkn_data->str);
+			cur_tkn_data->str = join_two_strs(&(cur_tkn_data->str), next_tkn_data->str);
+			// protect return
 			remove_next_node(cur_node);
 			cur_tkn_data->type = TKN_ENV_VAR;
 			cur_tkn_data->str_len = ft_strlen(cur_tkn_data->str);

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/22 08:35:25 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/22 12:11:31 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	del_to_expand(void *content);
 void	print_expansion(t_list *var_lst);
 int		get_n_dollars(char *s);
 int		get_var_name_len(char *s);
-int		quote_removal(t_data *data);
+void	quote_removal(t_data *data);
 
 // ------------------------------------------------------------------- HERE_DOC
 void	here_doc(t_node *tree, t_data *data);
@@ -113,6 +113,6 @@ void	free_data(t_data *data);
 int		get_substr_len(char *s, char c);
 int		is_valid_for_history(t_data *data);
 int		is_empty_input(char *s);
-char	*trim_outmost_quotes(char *s);
+char	*trim_outmost_quotes(char *s); // to change
 
 #endif

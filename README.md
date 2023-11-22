@@ -27,6 +27,8 @@ free(tmp);
 1) Syntax err = 258 or 2 ?
 
 # PROBLEMS
+4) --- !!! What happened to '>outfile' !!! ---
 1) expansion of $"String $USER hello"
 2) export $HOME=USER
 3) fucking quote removal ex. "ls"
+5) quotes syntax error has to be anticipated ????
