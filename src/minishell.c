@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/22 12:12:34 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/23 09:52:23 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,8 @@ static void	shell_loop(t_data *data)
 		{
 			lexer(data->input, &data->tokens);
 			parser(data);
-			ft_printf("\033[0;35mBEFORE EXP and QUOTE REMOVAL\033[0;37m\n");
-			print_syntax_tree(data->tree);
 			expansion(data);
-			ft_printf("\033[0;35mAFTER EXP and QUOTE REMOVAL\033[0;37m\n");
 			quote_removal(data);
-			print_syntax_tree(data->tree);
 			// check here_doc after it
 			// here_doc(data->tree, data);
 			// executor(data);
