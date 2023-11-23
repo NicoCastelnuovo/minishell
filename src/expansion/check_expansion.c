@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 10:36:57 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/23 11:35:01 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/23 11:40:46 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,6 @@ static int	args_expansion(t_cmd *cmd, t_list *env, int e_code)
 		{
 			if (ft_strchr(cmd->args[i], '$'))
 			{
-				if (cmd->args[i][0] == '$') // $$$$"" && $"" && $''
-				{
-
-				}
 				if (cmd->args[i][0] != TKN_S_QUOTE)
 				{
 					cmd->args[i] = expand(cmd->args[i], env, e_code);
