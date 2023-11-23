@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/23 09:50:48 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/23 11:29:54 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,3 +133,8 @@ void	expansion(t_data *data)
 		return ;
 	}
 }
+
+/*
+	Think about expansion not for just a variable but also for phrases
+	and long strings
+*/
