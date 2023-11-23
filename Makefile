@@ -56,7 +56,9 @@ EXPANSION = build_str.c \
 	expansion.c \
 	check_expansion.c \
 	expansion_utils.c \
-	quote_removal.c
+	quote_removal.c \
+	get_total_new_len.c \
+	get_expanded_str.c
 
 HERE_DOC = here_doc.c \
 
