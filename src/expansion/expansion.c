@@ -6,27 +6,39 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/24 13:15:24 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/24 14:52:46 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+	The expansion do the following operations:
+		• Removes the first $ from piece of strings like $"$USER" or $'$USER'
+		• Expand first the exit code from $?
+		• Expand the environment variables
+		• Onlyafter expansion, certain quotes are removed
+*/
 char	*expand(char *original_str, t_data *data)
 {
-	char	*no_dollar;
+	char	*dollar_removed; // like $'' or $""
 	char	*e_code_expanded;
 	char	*var_expanded;
 
-	no_dollar = mid_step(original_str);
-	e_code_expanded = expand_e_code(no_dollar, data->e_code);
+	// handle the allocations
+	ft_printf("ORIGINAL [%s]\n", original_str);
+	dollar_removed = mid_step(original_str);
+	ft_printf("NO DOLLAR [%s]\n", dollar_removed);
+	e_code_expanded = expand_e_code(dollar_removed, data->e_code);
+	ft_printf("E_CODE [%s]\n", e_code_expanded);
 	if (!e_code_expanded)
 		return (NULL);
+	var_expanded = expand_variables(e_code_expanded, data->env);
+	ft_printf("LAST [%s]\n", var_expanded);
+	if (!var_expanded)
+		return (NULL);
 	exit(1);
-	// new_str = get_expanded_str(old_str, total_new_len, data);
-	// if (!new_str)
-	// 	return (NULL);
-	// return (var_expanded);
+	return (var_expanded);
 }
 
 static int	redir_expansion(t_cmd *cmd, t_data *data)

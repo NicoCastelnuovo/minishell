@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 11:47:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/24 12:42:35 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/24 14:17:30 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,16 @@ static char	*copy_with_e_code(char *s, int len, char *e_code_str)
 	new = ft_calloc(len + 1, sizeof(char)); // protect
 	while (s[i])
 	{
-		if (s[i] == '$')
+		if (s[i] == '$' && s[i + 1] == '?' && is_open != TKN_S_QUOTE)
 		{
-			if (s[i + 1] == '?' && is_open != TKN_S_QUOTE)
-			{
-				ft_memcpy(new + j, e_code_str, ft_strlen(e_code_str));
-				j += ft_strlen(e_code_str);
-				i++;
-			}
+			ft_memcpy(new + j, e_code_str, ft_strlen(e_code_str));
+			j += ft_strlen(e_code_str);
+			i++;
+		}
+		else if (s[i] == '$' && s[i + 1] == '?' && is_open == TKN_S_QUOTE)
+		{
+			new[j] = s[i];
+			j++;
 		}
 		else
 		{
@@ -57,13 +59,15 @@ static int	get_len_with_e_code_expanded(char *s, char *e_code_str)
 	len = 0;
 	while (s[i])
 	{
-		if (s[i] == '$')
+		if (s[i] == '$' && s[i + 1] == '?' && is_open != TKN_S_QUOTE)
 		{
-			if (s[i + 1] == '?' && is_open != TKN_S_QUOTE)
-			{
-				len += ft_strlen(e_code_str);// protect
-				i++;
-			}
+			len += ft_strlen(e_code_str);// protect
+			i++;
+		}
+		else if (s[i] == '$' && s[i + 1] == '?' && is_open == TKN_S_QUOTE)
+		{
+			len++;
+			i++;
 		}
 		else
 		{

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:19:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/22 12:12:27 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/24 13:43:47 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	write_into_tmp_file(int fd_tmp, char *eof, t_data *data)
 		{
 			if (data && ft_strchr(line, '$'))
 			{
-				line = expand(line, data->env, data->e_code);
+				line = expand(line, data);
 				if (!line)
 					return (error("here_doc", "expand", CE_HERE_DOC), 1);
 			}
