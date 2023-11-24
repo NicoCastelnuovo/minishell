@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 15:42:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/24 10:20:18 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/24 10:15:01 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,39 @@ static int	copy_env_var(char *new, char *old, int *j, int *i, t_list *env)
 	return (1);
 }
 
+static int	copy_expanded_values(char *new, char *old, t_data *data, int *i, int *j, char open_quote)
+{
+	if (*old == '$')
+	{
+		*new = *old;
+		(*j) += 1;
+	}
+	else if (*old == '?')
+	{
+		if (copy_exit_code(new, old, data->e_code, j) == -1) // protect
+			return (free(new), -1);
+		i++;
+	}
+	else
+	{
+		if (open_quote != TKN_S_QUOTE)
+		{
+			if (copy_env_var(new, old, j, i, data->env) == -1)
+				return (free(new), -1);
+		}
+	}
+	return (0);
+}
+
 char	*get_expanded_str(char *s, int len, t_data *data)
 {
 	char	*new;
 	char	open_quote;
-	int		is_open;
 	int		i;
 	int		j;
-	char	*tmp;
+	int		is_open = -1;
 
-	i = 0;
 	open_quote = -1;
-	is_open = 0;
 	new = ft_calloc(len + 1, sizeof(char)); // protect
 	if (!new)
 		return (NULL);
@@ -85,22 +106,26 @@ char	*get_expanded_str(char *s, int len, t_data *data)
 	j = 0;
 	while (s[i])
 	{
-		if (s[i] == '$' && open_quote != TKN_S_QUOTE && i != ft_strlen(s) -1) // check terminating part of the string
+		if (s[i] == '$' && open_quote != TKN_S_QUOTE)  // && i != ft_strlen(s) - 1
 		{
 			if (s[i + 1] != TKN_S_QUOTE || s[i + 1] !=  TKN_D_QUOTE)
 			{
+				// copy_expanded_values(new + j, s + i, data, &i, &j, open_quote); // chec return value
 				if (s[i + 1] == '$')
 					new[j++] = s[i];
 				else if (s[i + 1] == '?')
 				{
-					if (copy_exit_code(new + j, s, data->e_code, &j) == -1) // protect
+					if (copy_exit_code(new + j, s + i, data->e_code, &j) == -1) // protect
 						return (free(new), NULL);
 					i++;
 				}
 				else
 				{
-					if (copy_env_var(new + j, s + i, &j, &i, data->env) == -1)
-						return (free(new), NULL);
+					if (open_quote != TKN_S_QUOTE)
+					{
+						if (copy_env_var(new + j, s + i, &j, &i, data->env) == -1)
+							return (free(new), NULL);
+					}
 				}
 			}
 
@@ -114,14 +139,3 @@ char	*get_expanded_str(char *s, int len, t_data *data)
 	}
 	return (new);
 }
-
-
-
-				// tmp = GET_VAR_VAL(s + i, env); // protect
-				// i += GET_VAR_NAME_LEN(s + i);
-				// if (!tmp)
-				// 	return (free(new), NULL);
-				// ft_memcpy(new + j, tmp, ft_strlen(tmp));
-				// j += ft_strlen(tmp);
-				// if (tmp)
-				// 	free(tmp);

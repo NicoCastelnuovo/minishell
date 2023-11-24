@@ -54,11 +54,13 @@ ENV = init_env.c \
 
 EXPANSION = build_str.c \
 	expansion.c \
-	check_expansion.c \
 	expansion_utils.c \
 	quote_removal.c \
 	get_total_new_len.c \
-	get_expanded_str.c
+	get_expanded_str.c \
+	mid_step.c \
+	expand_variables.c \
+	expand_e_code.c
 
 HERE_DOC = here_doc.c \
 

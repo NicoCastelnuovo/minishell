@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:15:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/23 12:37:36 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/24 12:44:12 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,5 @@ void	lexer(char *input, t_list **tkns_head)
 	assign_following_space_status(*tkns_head);
 	delete_not_quoted_spaces(tkns_head);
 	merge_strings(*tkns_head);
+	print_tokens(*tkns_head);
 }

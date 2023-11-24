@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:36:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/23 17:31:43 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/24 11:19:17 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	change_open_quote_and_open(char curr_quote, int *is_open, char *open_quote,
 	// try to change no using is_open but jut open_quote
 	if (!(*is_open))
 	{
+		ft_printf("open [%c] quotes\n", curr_quote);
 		(*is_open) = 1;
 		(*open_quote) = curr_quote;
 	}
@@ -37,6 +38,7 @@ void	change_open_quote_and_open(char curr_quote, int *is_open, char *open_quote,
 	{
 		if ((*open_quote) == curr_quote)
 		{
+			ft_printf("close [%c] quotes\n", curr_quote);
 			(*is_open) = 0;
 			(*open_quote) = -1;
 		}
@@ -62,9 +64,9 @@ static int	add_var_value_len(char *s, t_list *env, int *len)
 	return (var_name_len);
 }
 
-static int	handle_dollar_exit_code(char *s, int i, int *len, int e_code)
+static int	handle_dollar_exit_code(char *next, int *len, int e_code, char open_quote)
 {
-	if (s[i + 1] == '?') //$?$?$?$? ---- how much ?
+	if (*next == '?' && open_quote != TKN_S_QUOTE) //$?$?$?$? ---- how much ?
 	{
 		(*len) += ft_strlen(ft_itoa(e_code)); // allocates and protect
 		return (1);
@@ -72,23 +74,28 @@ static int	handle_dollar_exit_code(char *s, int i, int *len, int e_code)
 	return (0);
 }
 
-static int	handle_dollar_sign_and_var(char *s, int i, int *len, t_list *env)
+static int	handle_dollar_sign_and_var(char *next, int *len, t_list *env, char open_quote)
 {
 	int	var_name_len;
 
 	var_name_len = 0;
-
-	if (s[i + 1] == '$') //$$$$$ just print it
+	if (*next == '$') //$$$$$ just print it
+	{
 		(*len)++;
+	}
 	else // $U
 	{
-		var_name_len = add_var_value_len(s + i, env, len); // protect ?
-		return (var_name_len);
+		if (open_quote != TKN_S_QUOTE)
+		{
+			var_name_len = add_var_value_len(next, env, len); // protect ?
+			ft_printf("VARNAME =[%d]\n", var_name_len);
+			return (var_name_len);
+		}
 	}
 	return (0);
 }
 
-int	get_total_new_len(char *s, t_list *env, int e_code)
+int	get_total_new_len(char *s, t_data *data)
 {
 	int		i;
 	int		len;
@@ -103,18 +110,29 @@ int	get_total_new_len(char *s, t_list *env, int e_code)
 	{
 		if (s[i] == '$') // check terminating part of the string
 		{
-			if (s[i + 1] != TKN_S_QUOTE && s[i + 1] != TKN_S_QUOTE)
+			ft_printf("Curr is dollar [%c]\n", s[i]);
+			if (s[i + 1] != TKN_S_QUOTE && s[i + 1] != TKN_D_QUOTE) // else, just remove it // can be extracted
 			{
-				i += handle_dollar_sign_and_var(s, i, &len, env);
-				i += handle_dollar_exit_code(s, i, &len, e_code);
+				ft_printf("	Next is not quote [%c]\n", s[i + 1]);
+				i += handle_dollar_sign_and_var(s + i + 1, &len, data->env, open_quote);
+				i += handle_dollar_exit_code(s + i + 1, &len, data->e_code, open_quote);
 			}
+			else
+				ft_printf("	Next is quote, just skip current $ [%c]\n", s[i + i]);
 		}
 		else
 		{
+			ft_printf("Curr is NOT dollar\n");
 			if (s[i] == TKN_S_QUOTE || s[i] == TKN_D_QUOTE)
+			{
+				ft_printf("	Curr is quote [%c]\n", s[i]);
 				change_open_quote_and_open(s[i], &is_open, &open_quote, &len);
+			}
 			else
+			{
+				ft_printf("	Curr is not quote [%c]\n", s[i]);
 				len++;
+			}
 		}
 		i++;
 	}

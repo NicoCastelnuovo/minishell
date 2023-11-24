@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/22 07:27:56 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/24 09:09:29 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ static void	check_export(char *arg, t_list **env)
 
 static int	is_valid_argument(void)
 {
-
+	// populate
 }
 
 int	export(t_cmd *cmd, t_data *data)

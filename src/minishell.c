@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/23 14:27:17 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/24 10:57:49 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,20 @@ static void	shell_loop(t_data *data)
 		{
 			lexer(data->input, &data->tokens);
 			parser(data);
+
+			//****************************************************************
 			ft_printf("\033[0;35mBEFORE EXP and QUOTE REMOVAL\033[0;37m\n");
 			print_syntax_tree(data->tree);
-			expansion(data);
-			// ft_printf("\033[0;35mAFTER EXP\033[0;37m\n"); // hello'"$no expand"'
-			// print_syntax_tree(data->tree);
-			// quote_removal(data);
+			//****************************************************************
+
+			expansion(data); // check ---> hello$?$ has a problem
+
+			//****************************************************************
+			ft_printf("\033[0;35mAFTER EXP\033[0;37m\n"); // hello'"$no expand"'
+			print_syntax_tree(data->tree);
+			//****************************************************************
+
+			// quote_removal(data); // need to return the values
 			// ft_printf("\033[0;35mAFTER EXP and QUOTE REMOVAL\033[0;37m\n");
 			// print_syntax_tree(data->tree);
 			// check here_doc after it
@@ -48,8 +56,8 @@ static void	shell_loop(t_data *data)
 			// executor(data);
 			// if (is_valid_for_history(data))
 			// 	add_history(data->input);
-			free_data(data);
 			exit(1);
+			free_data(data);
 		}
 	}
 }

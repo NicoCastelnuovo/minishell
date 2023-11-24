@@ -6,27 +6,23 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/24 12:44:07 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/24 10:11:05 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*expand(char *original_str, t_data *data)
+char	*expand(char *old_str, t_data *data)
 {
-	char	*no_dollar;
-	char	*e_code_expanded;
-	char	*var_expanded;
+	int		total_new_len;
+	char	*new_str;
 
-	no_dollar = mid_step(original_str);
-	e_code_expanded = expand_e_code(no_dollar, data->e_code);
-	if (!e_code_expanded)
+	total_new_len = get_total_new_len(old_str, data);
+	ft_printf("TOTAL = [%d]\n", total_new_len);
+	new_str = get_expanded_str(old_str, total_new_len, data);
+	if (!new_str)
 		return (NULL);
-	exit(1);
-	// new_str = get_expanded_str(old_str, total_new_len, data);
-	// if (!new_str)
-	// 	return (NULL);
-	// return (var_expanded);
+	return (new_str);
 }
 
 static int	redir_expansion(t_cmd *cmd, t_data *data)
@@ -123,17 +119,3 @@ void	expansion(t_data *data)
 		return ;
 	}
 }
-
-/*	to check
-	hello$USER (13)
-	hello'$USER' (12)
-	hello"$USER" (15)
-	hello"'$USER'" (17)
-	hello'"$USER"' (14)
-	hello$"'$USER'" (17)
-	hello$'"$USER"' (14)
-	hello$NOTHINGworld (10)
-	hello$$$$$ (10)
-	hello$?$?$?$?$? (10) if ecode == 0
-	hello$?$USER$$$ (17) if ecode == 0
-*/
