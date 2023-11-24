@@ -52,15 +52,11 @@ ENV = init_env.c \
 	get_env_custom.c \
 	convert_to_dptr.c
 
-EXPANSION = build_str.c \
-	expansion.c \
+EXPANSION = expansion.c \
 	expansion_utils.c \
+	build_str.c \
 	quote_removal.c \
-	get_total_new_len.c \
-	get_expanded_str.c \
 	mid_step.c \
-	expand_variables.c \
-	expand_e_code.c
 
 HERE_DOC = here_doc.c \
 

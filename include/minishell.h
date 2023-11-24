@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/24 14:07:16 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/24 15:33:37 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,29 +73,16 @@ void	init_sig_handling(void);
 
 // ------------------------------------------------------------------ EXPANSION
 void	expansion(t_data *data);
-int		check_expansion(t_cmd *cmd, t_data *data);
-
-// old
+int		get_n_dollars(char *s);
+int		get_var_name_len(char *s);
 char	*expand(char *s, t_data *data);
+char	*mid_step(char *old_str);
 char	*build_str(char *old_str, t_list *var_lst);
 void	del_to_expand(void *content);
 void	print_expansion(t_list *var_lst);
-int		get_n_dollars(char *s);
-int		get_var_name_len(char *s);
-
-// new
 void	quote_removal(t_data *data);
-// int		get_total_new_len(char *old_str, t_data *data);
-// void	change_open_quote_and_open(char curr_quote, int *is_open, char *open_quote, int *len);
-// char	*get_first_var_name(char *s);
-// char	*get_expanded_str(char *s, int len, t_data *data);
-
-// newnew
-char	*mid_step(char *old_str);
 int		remove_dollar_followed_by_quotes(char *old);
 void	change_is_open_quote(char curr_quote, char *is_open, int *len);
-char	*expand_e_code(char *old, int e_code);
-char	*expand_variables(char *old, t_list *env);
 
 // ------------------------------------------------------------------- HERE_DOC
 void	here_doc(t_node *tree, t_data *data);

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/24 10:57:49 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/24 15:33:24 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	shell_loop(t_data *data)
 			print_syntax_tree(data->tree);
 			//****************************************************************
 
-			// quote_removal(data); // need to return the values
+			quote_removal(data); // need to return the values
 			// ft_printf("\033[0;35mAFTER EXP and QUOTE REMOVAL\033[0;37m\n");
 			// print_syntax_tree(data->tree);
 			// check here_doc after it
