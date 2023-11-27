@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/24 15:33:37 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/27 10:39:58 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,19 +73,23 @@ void	init_sig_handling(void);
 
 // ------------------------------------------------------------------ EXPANSION
 void	expansion(t_data *data);
+char	*expand(char *old_str, t_data *data);
 int		get_n_dollars(char *s);
 int		get_var_name_len(char *s);
 char	*expand(char *s, t_data *data);
-char	*mid_step(char *old_str);
+char	*remove_translation_operator(char *old_str);
 char	*build_str(char *old_str, t_list *var_lst);
 void	del_to_expand(void *content);
 void	print_expansion(t_list *var_lst);
+
+// -------------------------------------------------------------- QUOTE REMOVAL
 void	quote_removal(t_data *data);
-int		remove_dollar_followed_by_quotes(char *old);
-void	change_is_open_quote(char curr_quote, char *is_open, int *len);
+char	*remove_quote_pairs(char *s);
+void	change_is_open_quote(char curr_quote, char *is_open);
 
 // ------------------------------------------------------------------- HERE_DOC
 void	here_doc(t_node *tree, t_data *data);
+int		perform_here_doc(t_redir_data *redir_content, t_data *data);
 
 // ------------------------------------------------------------------- EXECUTOR
 int		executor(t_data *data);

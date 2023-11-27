@@ -1,29 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansion.c                                        :+:      :+:    :+:   */
+/*   check_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/24 10:11:05 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/27 10:35:15 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*expand(char *old_str, t_data *data)
-{
-	int		total_new_len;
-	char	*new_str;
-
-	total_new_len = get_total_new_len(old_str, data);
-	ft_printf("TOTAL = [%d]\n", total_new_len);
-	new_str = get_expanded_str(old_str, total_new_len, data);
-	if (!new_str)
-		return (NULL);
-	return (new_str);
-}
 
 static int	redir_expansion(t_cmd *cmd, t_data *data)
 {
@@ -37,7 +24,7 @@ static int	redir_expansion(t_cmd *cmd, t_data *data)
 	while (redir)
 	{
 		redir_content = (t_redir_data *)redir->content;
-		if (redir && redir_content->type != REDIR_HERE_DOC) // make it later because of expansion inside
+		if (redir && redir_content->type != REDIR_HERE_DOC) // still needed ???
 		{
 			if (ft_strchr(redir_content->file_name, '$'))
 			{
@@ -58,10 +45,10 @@ static int	args_expansion(t_cmd *cmd, t_data *data)
 	int		i;
 	char	*tmp;
 
+	tmp = NULL;
 	i = 0;
 	if (cmd->args)
 	{
-
 		while (cmd->args[i])
 		{
 			if (ft_strchr(cmd->args[i], '$'))
@@ -78,12 +65,7 @@ static int	args_expansion(t_cmd *cmd, t_data *data)
 	return (0);
 }
 
-/*
-	Iterate through the args and redirections od t_cmd structure, checking
-	if there issomething to expand. In case of here_doc, the variable is not
-	expanded!
-*/
-int	check_expansion(t_cmd *cmd, t_data *data)
+static int	check_expansion(t_cmd *cmd, t_data *data)
 {
 	if (args_expansion(cmd, data))
 		return (1);
@@ -92,6 +74,17 @@ int	check_expansion(t_cmd *cmd, t_data *data)
 	return (0);
 }
 
+/*
+	The expander perform the following operations:
+		• Expands only args and redir which are not HERE_DOC
+		• Removes the $ from the string, like $"..." or $'...'
+		• Iterate through the string and counts ALL remaining $
+		• Iterate another time and switches the open/close single/double quotes
+			so that the expansion is performed or not
+		• If the most external quotes are not single, the expansion is done
+		• After the expansion, the quote_removal() function is called to
+			remove the remaining unuseful quotes
+*/
 void	expansion(t_data *data)
 {
 	t_node	*node;

@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mid_step.c                                         :+:      :+:    :+:   */
+/*   translation_op.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 11:08:27 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/24 15:13:48 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/27 09:52:21 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	change_is_open_quote(char curr_quote, char *is_open, int *len)
+/*
+	The function is a state changer for the quotes, so that is possible to
+	understand where the expansion has to be performed.
+*/
+void	change_is_open_quote(char curr_quote, char *is_open)
 {
 	if (*is_open == -1)	// quotes are closed
-	{
 		(*is_open) = curr_quote;
-	}
 	else // quote are open
 	{
 		if ((*is_open) == curr_quote)
 			(*is_open) = -1;
 	}
-	if (len)
-		(*len)++;
 }
 
 static char	*mid_copy(char *old, int len)
@@ -44,7 +44,7 @@ static char	*mid_copy(char *old, int len)
 		if (old[i] == '$' && is_open == -1 && (old[i + 1] == TKN_S_QUOTE || old[i + 1] == TKN_D_QUOTE))
 				i++;
 		if (old[i] == TKN_S_QUOTE || old[i] == TKN_D_QUOTE)
-			change_is_open_quote(old[i], &is_open, NULL);
+			change_is_open_quote(old[i], &is_open);
 		mid_str[j] = old[i];
 		j++;
 		i++;
@@ -52,7 +52,7 @@ static char	*mid_copy(char *old, int len)
 	return (mid_str);
 }
 
-int	remove_dollar_followed_by_quotes(char *old)
+static int	get_len_without_translation_operator(char *old)
 {
 	int		len;
 	int		i;
@@ -74,7 +74,7 @@ int	remove_dollar_followed_by_quotes(char *old)
 			}
 		}
 		if (old[i] == TKN_S_QUOTE || old[i] == TKN_D_QUOTE)
-			change_is_open_quote(old[i], &is_open, NULL);
+			change_is_open_quote(old[i], &is_open);
 		len++;
 		i++;
 	}
@@ -82,15 +82,16 @@ int	remove_dollar_followed_by_quotes(char *old)
 }
 
 /*
-	In this mid_step of expansion, all the unuseful $ sign are removed, such as
-	$"" and $'' to make the next steps of expansion easier to handle.
+	$"..." and $'...' are called translation operators. In this mid step of
+	expansion, all translation operators $ are removed to make the next steps
+	of expansion easier to handle. The quotes are removed in the steps later.
 */
-char *mid_step(char *old_str)
+char *remove_translation_operator(char *old_str)
 {
 	int		len;
 	char	*mid_str;
 
-	len = remove_dollar_followed_by_quotes(old_str);
+	len = get_len_without_translation_operator(old_str);
 	mid_str = mid_copy(old_str, len);
 	return (mid_str);
 }

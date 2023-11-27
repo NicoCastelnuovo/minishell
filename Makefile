@@ -52,13 +52,16 @@ ENV = init_env.c \
 	get_env_custom.c \
 	convert_to_dptr.c
 
-EXPANSION = expansion.c \
+EXPANSION = check_expansion.c \
+	expansion.c \
 	expansion_utils.c \
 	build_str.c \
+	check_quote_removal.c \
 	quote_removal.c \
-	mid_step.c \
+	translation_op.c
 
 HERE_DOC = here_doc.c \
+	get_interactive_input.c
 
 PARSER = check_for_syntax_err.c \
 	build_syntax_tree.c \
