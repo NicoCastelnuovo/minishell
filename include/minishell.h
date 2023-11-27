@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/27 10:39:58 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/27 11:44:04 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,11 @@ int		print_env(t_list *env);
 int		cd(t_cmd *cmd, t_data *data);
 int		pwd(void);
 int		exit_custom(t_cmd *cmd, t_data *data);
-int		unset(t_cmd *cmd, t_data *data);
 int		print_exported(t_list *env);
-int		export(t_cmd *cmd, t_data *data);
 int		echo(t_data *data);
+int		export(t_cmd *cmd, t_data *data);
+int		unset(t_cmd *cmd, t_data *data);
+int		is_invalid_identifier(char *builtin, char *arg);
 
 // ---------------------------------------------------------------------- UTILS
 void	error(char *s1, char *s2, int err_id);
@@ -119,6 +120,5 @@ void	free_data(t_data *data);
 int		get_substr_len(char *s, char c);
 int		is_valid_for_history(t_data *data);
 int		is_empty_input(char *s);
-char	*trim_outmost_quotes(char *s); // to change
 
 #endif

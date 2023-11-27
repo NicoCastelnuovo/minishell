@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:15:40 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/14 11:16:23 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/27 11:50:52 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ static char	*get_env_var_value(char *env_var, t_var *var)
 		free(var_value);
 		var_value = ft_strdup("");
 		var->to_export = 0;
+	}
+	else if (ft_strcmp(var->name, "OLDPWD") == 0) // change ????
+	{
+		free(var_value);
+		var_value = NULL;
+		var->to_export = 1;
 	}
 	else
 		var->to_export = 1;

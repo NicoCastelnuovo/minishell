@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:37:54 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/22 07:34:07 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/27 11:46:42 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,13 @@ int	unset(t_cmd *cmd, t_data *data)
 {
 	int		i;
 
+	if (!cmd->args[1])
+		return (0);
 	i = 1;
 	while (cmd->args[i])
 	{
-		if (ft_strchr(cmd->args[i], '='))
-		{
-			error("unset", cmd->args[i], 1);
-			data->e_code = 1;
+		if (is_invalid_identifier(cmd->args[0], cmd->args[i]))
 			return (1);
-		}
 		unset_single_var(cmd->args[i], &data->env);
 		i++;
 	}

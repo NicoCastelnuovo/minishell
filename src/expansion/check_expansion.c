@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/27 10:35:15 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/27 11:57:02 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	expansion(t_data *data)
 	t_pipe	*pipe;
 	t_cmd	*cmd;
 
-	if (!data->tree || data->e_code)
+	if (!data->tree)
 		return ;
 	node = data->tree;
 	while (node->type == IS_PIPE)

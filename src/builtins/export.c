@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/24 09:09:29 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/27 11:44:21 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,18 @@ static void	check_export(char *arg, t_list **env)
 	}
 }
 
-static int	is_valid_argument(void)
+int	is_invalid_identifier(char *builtin, char *arg)
 {
-	// populate
+	int		i;
+
+	i = 0;
+	if (arg[0] == '=' || ft_isdigit(arg[0]))
+		return (error(builtin, arg, CE_INVALIDIDENTIFIER), 1);
+	while (ft_isalnum(arg[i]) || arg[i] == '_')
+		i++;
+	if (arg[i] != '=')
+		return (error(builtin, arg, CE_INVALIDIDENTIFIER), 1);
+	return (0);
 }
 
 int	export(t_cmd *cmd, t_data *data)
@@ -120,8 +129,8 @@ int	export(t_cmd *cmd, t_data *data)
 		i = 1;
 		while (cmd->args[i])
 		{
-			// if (is_valid_argument(cmd->args[i]))
-			// 	return (1);
+			if (is_invalid_identifier(cmd->args[0], cmd->args[i]))
+				return (1);
 			check_export(cmd->args[i], &data->env); // needs expansion!
 			i++;
 		}

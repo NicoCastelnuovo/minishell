@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.c                                           :+:      :+:    :+:   */
+/*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 09:38:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/27 09:48:46 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/27 11:56:40 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static t_list	*get_var_names(char *s, int n)
 			var->name = ft_substr(s, 0, var->name_len);
 		if (!var->name)
 			return (ft_lstclear(&var_to_expand, del_to_expand), NULL);
+		ft_printf("--- VAR NAME = [%s]\n", var->name);
 		var->value = NULL;
 		var->value_len = -1;
 		new_node = ft_lstnew(var); // protect

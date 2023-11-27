@@ -79,7 +79,7 @@ SIGNALS = sig_handler.c
 UTILS = free_data.c \
 	ft_strcmp.c \
 	is_valid_for_history.c \
-	trim_outmost_quotes.c
+	error.c
 
 LEXER = lexer.c \
 	tokenize_input.c \
@@ -102,7 +102,6 @@ LEXER = lexer.c \
 SRCS = minishell.c \
 	$(BUILTINS) \
 	$(ENV) \
-	$(ERROR) \
 	$(EXECUTOR) \
 	$(EXPANSION) \
 	$(HERE_DOC) \

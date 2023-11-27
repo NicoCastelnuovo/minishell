@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/27 10:52:41 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/27 11:56:41 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static void	shell_loop(t_data *data)
 			print_syntax_tree(data->tree);
 			//****************************************************************
 			expansion(data);
-			// check ---> hello$?$ has a problem
 			//****************************************************************
 			ft_printf("\033[0;35mAFTER EXP\033[0;37m\n"); // hello'"$no expand"'
 			print_syntax_tree(data->tree);
