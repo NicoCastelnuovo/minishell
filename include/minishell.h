@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/27 11:44:04 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/30 12:04:37 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ enum e_custom_errors
 	CE_HERE_DOC = 113,
 	CE_OVERFLOW = 114,
 	CE_NUM_REQUIRED = 115,
+	CE_INITENV = 116,
 	CE_CMDNOTFOUND = 127
 };
 
@@ -105,11 +106,13 @@ int		run_builtin_same_ps(t_data *data);
 // ------------------------------------------------------------------- BUILTINS
 int		print_env(t_list *env);
 int		cd(t_cmd *cmd, t_data *data);
+char	*get_wd(void);
 int		pwd(void);
 int		exit_custom(t_cmd *cmd, t_data *data);
 int		print_exported(t_list *env);
 int		echo(t_data *data);
 int		export(t_cmd *cmd, t_data *data);
+t_list	*sort_env(t_list *old);
 int		unset(t_cmd *cmd, t_data *data);
 int		is_invalid_identifier(char *builtin, char *arg);
 

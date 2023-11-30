@@ -21,20 +21,22 @@ free(tmp);
 2) echo $99Nico: original is 9Nico, our is empty, because it searches for a var called 99Nico
 	but with export and unset, starting with a number is not a valid identifier
 3) Not sure about env->to_export variable, which told if the variable has to be exported
+4) set $_ not export, modify when a cmd executes, need to do ?
 
 # NICO
 <!-- 1) Leaks - expander and quote removal -->
 2) env
-	- export -> multiple args, <!-- invalid identifier -->
+	<!-- - export -> multiple args, invalid identifier -->
 	<!-- - unset -> invalid identifier -->
 	- what if env -i
-	- set $_ variable and understand what it does
-	- initialize OLDPWD but set to NULL
-3) Why hello$?$? executed for two times is first -> hello00 and then hello$?$?
+	<!-- - initialize OLDPWD but set to NULL -->
 
 # FARSHAD
 1) Signals
 2) Use tests
-3) Check if every file is closed
+3) Check if every file is closed -> update:
+	- file are always closed when one or more child is forked,
+		but it's not closed when a builtin is executed (because it doesn't go in child function)
+	- here_doc in case of single command is not closed
 4) export -> print in alphabetical order
 5) echo (now minishell uses the /bin/echo)

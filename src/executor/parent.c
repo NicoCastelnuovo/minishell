@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:49:16 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 10:32:03 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/30 12:54:32 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ static void	iter_redirections(t_list *redir)
 
 static void	unlink_here_doc(t_node *tree)
 {
-	t_node			*node;
-	t_pipe			*pipe;
-	t_cmd			*cmd;
+	t_node	*node;
+	t_pipe	*pipe;
+	t_cmd	*cmd;
 
 	node = tree;
 	while (node->type == IS_PIPE)
@@ -72,6 +72,7 @@ static void	unlink_here_doc(t_node *tree)
 		node = pipe->right;
 	}
 	cmd = (t_cmd *)node->content;
+	iter_redirections(cmd->redir); // ADDED
 }
 
 int	parent(t_data *data)

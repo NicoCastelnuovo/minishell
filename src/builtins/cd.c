@@ -6,13 +6,13 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:20:48 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/22 07:30:18 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/30 11:33:35 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_wd(void)
+char	*get_wd(void)
 {
 	char	*buff;
 	size_t	size;

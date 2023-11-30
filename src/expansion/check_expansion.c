@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/27 11:57:02 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/30 14:35:56 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	redir_expansion(t_cmd *cmd, t_data *data)
 	while (redir)
 	{
 		redir_content = (t_redir_data *)redir->content;
-		if (redir && redir_content->type != REDIR_HERE_DOC) // still needed ???
+		if (redir && redir_content->type != REDIR_HERE_DOC)
 		{
 			if (ft_strchr(redir_content->file_name, '$'))
 			{
@@ -75,7 +75,7 @@ static int	check_expansion(t_cmd *cmd, t_data *data)
 }
 
 /*
-	The expander perform the following operations:
+	The expander perform the following operations (IF a syntax tree is built):
 		• Expands only args and redir which are not HERE_DOC
 		• Removes the $ from the string, like $"..." or $'...'
 		• Iterate through the string and counts ALL remaining $

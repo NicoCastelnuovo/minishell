@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:15:40 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/27 11:50:52 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/30 11:37:15 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,25 @@ static char	*get_env_var_value(char *env_var, t_var *var)
 	char	*var_value;
 	int		shlvl;
 
+	// modify this horrible thing
 	var_value = ft_substr(env_var, ft_strlen(var->name) + 1, ft_strlen(env_var) - ft_strlen(var->name));
 	if (ft_strcmp(var->name, "SHLVL") == 0)
 	{
 		shlvl = ft_atoi(var_value) + 1;
 		free(var_value);
 		var_value = ft_itoa(shlvl);
-		var->to_export = 1;
+		if (!var_value)
+			return (NULL);
 	}
-	else if (ft_strcmp(var->name, "_") == 0) // change ????
-	{
-		free(var_value);
-		var_value = ft_strdup("");
+	return (var_value);
+}
+
+static void	set_export(t_var *var)
+{
+	if (ft_strcmp(var->name, "_") == 0)
 		var->to_export = 0;
-	}
-	else if (ft_strcmp(var->name, "OLDPWD") == 0) // change ????
-	{
-		free(var_value);
-		var_value = NULL;
-		var->to_export = 1;
-	}
 	else
 		var->to_export = 1;
-	return (var_value);
 }
 
 t_var	*create_var_content(char *env_var)
@@ -68,9 +64,9 @@ t_var	*create_var_content(char *env_var)
 	if (!var)
 		return (NULL);
 	var->name_len = get_substr_len(env_var, '=');
-	var->name = ft_calloc(var->name_len + 1, sizeof(char)); //protect
+	var->name = ft_calloc(var->name_len + 1, sizeof(char));
 	if (!var->name)
-		return (NULL);
+		return (NULL); // free() ???
 	ft_strlcpy(var->name, env_var, var->name_len + 1);
 	if (ft_strchr(env_var, '='))
 	{
@@ -78,11 +74,14 @@ t_var	*create_var_content(char *env_var)
 		var->value_len = -1;
 		if (var->value)
 			var->value_len = ft_strlen(var->value);
+		else
+			return (NULL);
 	}
 	else
 	{
 		var->value = NULL;
 		var->value_len = -1;
 	}
+	set_export(var);
 	return (var);
 }

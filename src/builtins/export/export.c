@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/27 11:44:21 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/30 12:27:30 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,26 @@
 int	print_exported(t_list *env)
 {
 	t_var	*var;
+	t_list	*sorted;
 
+	sorted = NULL;
+	if (env)
+	{
+		sorted = sort_env(env);
+		if (!sorted)
+			return (1);
+		else
+		{
+			// print sorted
+		}
+	}
+	// change printing
 	while (env)
 	{
 		var = (t_var *)env->content;
 		if (var->to_export)
 		{
-			if (var->name) // change to if (is_exported)
+			if (var->name) // change to if (is_exported) ??
 			{
 				ft_putstr_fd("declare -x ", 1);
 				ft_putstr_fd(var->name, 1);
@@ -106,7 +119,7 @@ static void	check_export(char *arg, t_list **env)
 
 int	is_invalid_identifier(char *builtin, char *arg)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	if (arg[0] == '=' || ft_isdigit(arg[0]))
@@ -120,7 +133,7 @@ int	is_invalid_identifier(char *builtin, char *arg)
 
 int	export(t_cmd *cmd, t_data *data)
 {
-	int		i;
+	int	i;
 
 	if (!cmd->args[1])
 		print_exported(data->env);
@@ -131,7 +144,7 @@ int	export(t_cmd *cmd, t_data *data)
 		{
 			if (is_invalid_identifier(cmd->args[0], cmd->args[i]))
 				return (1);
-			check_export(cmd->args[i], &data->env); // needs expansion!
+			check_export(cmd->args[i], &data->env);
 			i++;
 		}
 	}

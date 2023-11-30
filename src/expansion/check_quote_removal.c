@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 08:34:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/27 10:28:20 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/30 14:34:03 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,19 @@ static int	check_quote_removal(t_cmd *cmd, t_data *data)
 	return (0);
 }
 
+/*
+	If there is a syntax tree and not e_code quote_removal is performed.
+	About redirections: here_doc quotes are not removed, because they are
+	needed after to understand if expand the heredoc content or nor
+	(see get_interactive_input() function).
+*/
 void	quote_removal(t_data *data)
 {
 	t_node	*node;
 	t_cmd	*cmd;
 	t_pipe	*pipe;
 
-	if (!data->tree || data->e_code)
+	if (!data->tree || data->e_code) // || data->e_code ??? VERIFY !!!!!
 		return ;
 	node = data->tree;
 	while (node->type == IS_PIPE)

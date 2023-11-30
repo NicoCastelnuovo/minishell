@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:18:14 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/22 08:41:36 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/30 13:08:04 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	run_builtin_same_ps(t_data *data)
 	int		def_stdin;
 	int		def_stdout;
 
+	// some files are not closed ???????
 	def_stdin = dup(STDIN_FILENO);
 	def_stdout = dup(STDOUT_FILENO);
 	if (def_stdin == -1 || def_stdout == -1)

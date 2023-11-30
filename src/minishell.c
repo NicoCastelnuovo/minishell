@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/27 11:56:41 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:00:47 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 static void	init_data(t_data *data, char **env)
 {
-	data->env = init_env(env); // need to check in case of empty environment ???
+	data->env = init_env(env);
+	if (!data->env)
+	{
+		error("init_data", NULL, CE_INITENV);
+		exit(CE_INITENV);
+	}
 	data->input = NULL;
 	data->tokens = NULL;
 	data->tree = NULL;
@@ -26,6 +31,7 @@ static void	init_data(t_data *data, char **env)
 
 static void	shell_loop(t_data *data)
 {
+	// ft_printf("minishell pid = [%d]\n",getpid());
 	while (1)
 	{
 		data->input = readline(data->prompt);
@@ -36,16 +42,16 @@ static void	shell_loop(t_data *data)
 			lexer(data->input, &data->tokens);
 			parser(data);
 			//****************************************************************
-			ft_printf("\033[0;35mBEFORE EXP and QUOTE REMOVAL\033[0;37m\n");
-			print_syntax_tree(data->tree);
+			// ft_printf("\033[0;35mBEFORE\033[0;37m\n");
+			// print_syntax_tree(data->tree);
 			//****************************************************************
 			expansion(data);
-			//****************************************************************
-			ft_printf("\033[0;35mAFTER EXP\033[0;37m\n"); // hello'"$no expand"'
-			print_syntax_tree(data->tree);
-			//****************************************************************
 			quote_removal(data); // need to return the values
 			here_doc(data->tree, data);
+			//****************************************************************
+			// ft_printf("\033[0;35mAFTER\033[0;37m\n"); // hello'"$no expand"'
+			// print_syntax_tree(data->tree);
+			//****************************************************************
 			executor(data);
 			if (is_valid_for_history(data))
 				add_history(data->input);

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/22 07:18:58 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/30 14:42:53 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,21 @@ static void	free_cmd_and_pipe_node(t_node *node_c, t_node *node_p)
 }
 
 /*
-	@param n - just a number to identify which node of the tree it is
-	and visualize it when printed.
+	The function build the syntax tree recursively. The operations:
+		1)	Init a new cmd node.
+		2)	Copy the next tkn block (block means until the pipe sign)
+			populating the cmd table with arguments and redirections.
+		3)	After it, it checks if copy_tokens_block() function exited because
+			of a pipe or end of the line. If it was a pipe sign, a t_pipe node
+			is created. The cmd node created is assgined to pipe->left,
+			while the right one is assigned to the result of the function
+			which calls itself.
+		4)	The function always returns a pipe node, until it reaches the end
+			of the line; in that last case, a cmd node is returned.
+		5)	The last returned value is the first pipe node created, which
+			is the top of the tree.
+	@param n - is just a number to identify which node of the tree it is and
+	visualize it when printed.
 */
 t_node	*build_syntax_tree(t_list *tokens, int n)
 {

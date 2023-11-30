@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 08:31:08 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/22 07:23:49 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:01:33 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	fork_children(t_data *data, int *prev_pipe)
 
 int	executor(t_data *data)
 {
-	int		prev_pipe;
+	int	prev_pipe;
 
 	if (!data->tree)
 		return (1);

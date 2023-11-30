@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:06:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/22 08:20:32 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/30 14:33:14 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ int	check_for_syntax_err(t_list *tkn)
 	curr_tkn = NULL;
 	while (tkn)
 	{
-		curr_tkn = tkn->content;
+		curr_tkn = (t_tkn_data *)tkn->content;
 		if (curr_tkn->type == TKN_PIPE && i == 0)
 			return (error(curr_tkn->str, NULL, CE_SYNTAX_ERROR), 1);
 		if (curr_tkn->quote_status == OPEN_QUOTE)
 			return (error("quotes", NULL, CE_SYNTAX_ERROR), 1);
-		if (tkn->next)
+		if (tkn->next) // if (check_curr_next(curr_tkn, tkn->next->content)) nested
 		{
 			if (check_curr_next(curr_tkn, tkn->next->content))
 				return (1);

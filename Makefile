@@ -16,6 +16,7 @@
 
 VPATH = ./src/ \
 	./src/builtins \
+	./src/builtins/export \
 	./src/env \
 	./src/error \
 	./src/executor \
@@ -32,6 +33,7 @@ BUILTINS = cd.c \
 	print_env.c \
 	echo.c \
 	export.c \
+	sort_env.c \
 	pwd.c \
 	unset.c \
 	exit.c

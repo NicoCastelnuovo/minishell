@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 09:04:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/23 09:50:24 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/30 14:37:37 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
 	Given the token list, the parser check first for syntax errors. In case of
 	syntax error data->e_code is set to 2. The syntax tree is built only if
-	there no syntax error.
+	there is no syntax error.
 */
 void	parser(t_data *data)
 {
