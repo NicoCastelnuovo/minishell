@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 08:34:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/30 14:34:03 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:28:43 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,20 @@ static int	args_quote_removal(t_cmd *cmd, t_data *data)
 {
 	int		i;
 	char	*tmp;
+	char	*arg;
 
+	arg = NULL;
 	tmp = NULL;
 	i = 0;
 	if (cmd->args)
 	{
 		while (cmd->args[i])
 		{
-			if (ft_strchr(cmd->args[i], TKN_D_QUOTE) || ft_strchr(cmd->args[i], TKN_S_QUOTE))
+			arg = cmd->args[i];
+			if (ft_strchr(arg, TKN_D_QUOTE) || ft_strchr(arg, TKN_S_QUOTE))
 			{
 				tmp = cmd->args[i];
-				cmd->args[i] = remove_quote_pairs(cmd->args[i]); // check leaks and protect
+				cmd->args[i] = remove_quote_pairs(cmd->args[i]);
 				free(tmp);
 				if (cmd->args[i] == NULL)
 					return (error(cmd->args[i], NULL, CE_EXPANSION), 1);
@@ -40,24 +43,25 @@ static int	args_quote_removal(t_cmd *cmd, t_data *data)
 static int	redir_quote_removal(t_cmd *cmd, t_data *data)
 {
 	t_list			*redir;
-	t_redir_data	*redir_content;
+	t_redir_data	*redir_cont;
 	char			*tmp;
 
 	redir = (t_list *)cmd->redir;
-	redir_content = NULL;
+	redir_cont = NULL;
 	tmp = NULL;
 	while (redir)
 	{
-		redir_content = (t_redir_data *)redir->content;
-		if (redir_content->type != REDIR_HERE_DOC)
+		redir_cont = (t_redir_data *)redir->content;
+		tmp = redir_cont->file_name;
+		if (redir_cont->type != REDIR_HERE_DOC)
 		{
-			if (ft_strchr(redir_content->file_name, TKN_D_QUOTE) || ft_strchr(redir_content->file_name, TKN_S_QUOTE))
+			if (ft_strchr(tmp, TKN_D_QUOTE) || ft_strchr(tmp, TKN_S_QUOTE))
 			{
-				tmp = redir_content->file_name;
-				redir_content->file_name = expand(redir_content->file_name, data);
+				// tmp = redir_cont->file_name; // moved to line 55
+				redir_cont->file_name = expand(redir_cont->file_name, data);
+				if (!redir_cont->file_name)
+					return (error(tmp, NULL, CE_EXPANSION), free(tmp), 1);
 				free(tmp);
-				if (!redir_content->file_name)
-					return (error(redir_content->file_name, NULL, CE_EXPANSION), 1);
 			}
 		}
 		redir = redir->next;

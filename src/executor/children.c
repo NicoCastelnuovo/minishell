@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:49:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/30 13:04:38 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:15:40 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,18 +93,18 @@ void	child(t_data *data, t_node *node, int *fd_pipe, int *prev_pipe)
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *)node->content;
-
 	env = convert_to_dptr(data->env);
 	if (!env)
 	{
 		error("convert env to dptr", NULL, errno);
 		exit(1);
 	}
-
-	// redirect to pipes && explicit
-	if (redirect_to_pipes(fd_pipe, prev_pipe))
-		free_child_and_exit(node, env);
-
+	if (fd_pipe || prev_pipe) // means is only one child
+	{
+		// redirect to pipes
+		if (redirect_to_pipes(fd_pipe, prev_pipe))
+			free_child_and_exit(node, env);
+	}
 
 	// arrives here only if not a builtin
 	if (redirect_to_explicit(node))

@@ -37,6 +37,7 @@ free(tmp);
 3) Check if every file is closed -> update:
 	- file are always closed when one or more child is forked,
 		but it's not closed when a builtin is executed (because it doesn't go in child function)
-	- here_doc in case of single command is not closed
+	- here_doc in case of single command is not closed and sometimes executes (???)
+	- separate pipechain from single cmd execution
 4) export -> print in alphabetical order
 5) echo (now minishell uses the /bin/echo)
