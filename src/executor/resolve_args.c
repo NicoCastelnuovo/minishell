@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 13:05:04 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/01 10:32:05 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/01 12:29:43 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,19 @@ static char	*get_abs_path(char *cmd_name, char **env)
 	{
 		abs_path = bin_exist_and_can_execute(cmd_name, paths[i]);
 		if (abs_path)
-			return (abs_path);
+			return (free_dptr(paths), abs_path);
 		i++;
 	}
-	return (NULL);
+	return (free_dptr(paths), NULL);
 }
 
 /*
 	resolve_args take the args of the cmd node and build the absolute path
 	of the command. In case it doesn't find the absolute path, the original
-	path (no absolute) will be the one which will be passed inside execve().
+	cmd_name will be the one which will be passed inside execve(), else,
+	the original cmd_name is substituted with abs_path.
 */
-int	resolve_args(char **cmd_name, char **env)
+int	resolve_args(char **cmd_name, char **env) // return vaue not catched
 {
 	char	*abs_path;
 	char	*tmp;

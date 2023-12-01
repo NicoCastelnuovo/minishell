@@ -6,46 +6,19 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 10:06:56 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/01 11:56:21 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/01 12:33:22 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_child_and_exit(t_node *node, char **env)
+void	free_child_and_exit(t_data *data, char **env, int e_code)
 {
 	// close pipes !!!!!!!!????
-	free_cmd_node(node);
+	// free_cmd_node(node);
+	free_data(data);
 	free_dptr(env);
-	exit(1);
-}
-
-/*
-	@param exit(0) - this is the case in which there is no cmd->args (example
-	when typing line '<<EOF' without anything else).
-*/
-static void	child_single_cmd(t_data *data)
-{
-	char	**env;
-	t_cmd	*cmd;
-
-	cmd = (t_cmd *)data->tree->content;
-	env = convert_to_dptr(data->env);
-	if (!env)
-		exit(1);
-	if (redirect_to_explicit(data->tree))
-		free_child_and_exit(data->tree, env);
-	if (cmd->args)
-	{
-		resolve_args(&cmd->args[0], env);
-		if (execve(cmd->args[0], cmd->args, env))
-		{
-			error(cmd->args[0], NULL, CE_CMDNOTFOUND);
-			exit(CE_CMDNOTFOUND);
-		}
-	}
-	else
-		exit(0);
+	exit(e_code);
 }
 
 static int	fork_one_ps(t_data *data)

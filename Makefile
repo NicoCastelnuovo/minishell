@@ -44,8 +44,9 @@ EXECUTOR = executor.c \
 	execute_single_cmd.c \
 	execute_pipechain.c \
 	child_pipechain.c \
+	child_single_cmd.c \
 	resolve_args.c \
-	resolve_redir.c \
+	redirection.c \
 	run_builtin.c \
 	parent.c \
 

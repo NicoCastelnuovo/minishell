@@ -41,3 +41,7 @@ free(tmp);
 	- separate pipechain from single cmd execution
 4) export -> print in alphabetical order
 5) echo (now minishell uses the /bin/echo)
+
+# LEAKS/VALGRIND
+<!-- 1) NOT existing commands (not happens in pipechain) -->
+2) Valgrind errors in case of expansion AND/OR quote removal
