@@ -6,22 +6,11 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 10:39:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/30 15:00:37 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/01 09:40:24 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static char	*get_tmp_name(int n)
-{
-	char	*tmp_name; // remember to throw an error in case of >".tmp_" something
-	char	*digits;
-
-	digits = ft_itoa(n); // protect
-	tmp_name = ft_strjoin(".tmp_", digits); // protect
-	free(digits);
-	return(tmp_name);
-}
 
 /*
 	@param data: data is passed only in case the expansion has to be performed.
@@ -61,7 +50,7 @@ static int	write_into_tmp_file(int fd_tmp, char *eof, t_data *data)
 	has no quote, they are expanded. That because, in case of here-doc, the
 	quotes are removed only here.
 */
-static int	get_interactive_input(int fd_tmp, char **eof, t_data *data)
+int	get_interactive_input(int fd_tmp, char **eof, t_data *data)
 {
 	char	*tmp;
 
@@ -82,47 +71,5 @@ static int	get_interactive_input(int fd_tmp, char **eof, t_data *data)
 		if (write_into_tmp_file(fd_tmp, *eof, data)) // no quotes
 			return (1);
 	}
-	return (0);
-}
-
-int	perform_here_doc(t_redir_data *redir_content, t_data *data)
-{
-	int		fd_tmp;
-	char	*tmp_name;
-	char	*eof;
-	int		n;
-
-	n = 0;
-	fd_tmp = -1;
-	tmp_name = NULL;
-	while (fd_tmp == -1)
-	{
-		if (n == INT_MAX)
-			return (error("here_doc", "INT_MAX", CE_HERE_DOC), -1);
-		tmp_name = get_tmp_name(n);
-		if (!tmp_name)
-			return (error("here_doc", tmp_name, CE_HERE_DOC), -1);
-		fd_tmp = open(tmp_name, O_CREAT | O_EXCL | O_WRONLY, 0600);
-		if (fd_tmp == -1)
-		{
-			if (tmp_name)
-				free(tmp_name);
-			if (errno == EEXIST)
-				n++;
-			else
-				return (error("here_doc", "open", errno), -1);
-		}
-	}
-	eof = ft_strdup(redir_content->file_name);
-	free(redir_content->file_name);
-	redir_content->file_name = tmp_name;
-	if (get_interactive_input(fd_tmp, &eof, data))
-	{
-		free(eof);
-		close(fd_tmp);
-		return (1);
-	}
-	free(eof);
-	close(fd_tmp);
 	return (0);
 }

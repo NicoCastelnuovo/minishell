@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/30 12:04:37 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/01 09:40:28 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ void	change_is_open_quote(char curr_quote, char *is_open);
 
 // ------------------------------------------------------------------- HERE_DOC
 void	here_doc(t_node *tree, t_data *data);
-int		perform_here_doc(t_redir_data *redir_content, t_data *data);
+int		get_fd_tmp(t_redir_data *redir_cont);
+int		get_interactive_input(int fd_tmp, char **eof, t_data *data);
 
 // ------------------------------------------------------------------- EXECUTOR
 int		executor(t_data *data);

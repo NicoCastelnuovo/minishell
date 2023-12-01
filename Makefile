@@ -63,7 +63,8 @@ EXPANSION = check_expansion.c \
 	translation_op.c
 
 HERE_DOC = here_doc.c \
-	get_interactive_input.c
+	get_interactive_input.c \
+	tmp_file_creation.c
 
 PARSER = check_for_syntax_err.c \
 	build_syntax_tree.c \
