@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 09:39:13 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/01 09:41:39 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/01 09:46:23 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,13 @@ static char	*build_tmp_name(int n)
 	file with the same name of an already existing file. In that case,
 	get_fd_tmp() try to create a new file incrementing by 1 the value n, until
 	it finds a unique .tmp_n file name.
+	The while loop ends only in 3 conditions: a tmp file name is found, an
+	error from build_tmp_name() occured, or INT_MAX is reached.
 */
-int	get_fd_tmp(t_redir_data *redir_cont)
+int	get_fd_tmp(t_redir_data *redir_cont, int fd_tmp, int n)
 {
-	int		fd_tmp;
-	int		n;
 	char	*tmp_name;
 
-	n = 0;
-	fd_tmp = -1;
 	tmp_name = NULL;
 	while (fd_tmp == -1)
 	{

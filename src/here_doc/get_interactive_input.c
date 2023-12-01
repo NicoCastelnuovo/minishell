@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 10:39:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/01 09:40:24 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/01 09:45:36 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	get_interactive_input(int fd_tmp, char **eof, t_data *data)
 {
 	char	*tmp;
 
-	ft_printf("EOF = [%s]\n", *eof);
 	tmp = NULL;
 	if (ft_strchr(*eof, TKN_S_QUOTE) || ft_strchr(*eof, TKN_D_QUOTE))
 	{

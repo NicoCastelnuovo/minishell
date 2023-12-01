@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:19:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/01 09:40:52 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/01 09:46:54 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ static int	perform_here_doc(t_redir_data *redir_cont, t_data *data)
 	char	*tmp_name;
 	char	*eof;
 
+	fd_tmp = -1;
 	tmp_name = NULL;
 	eof = ft_strdup(redir_cont->file_name);
-	fd_tmp = get_fd_tmp(redir_cont);
+	fd_tmp = get_fd_tmp(redir_cont, fd_tmp, 0);
 	if (fd_tmp == -1)
 		return (1);
 	if (get_interactive_input(fd_tmp, &eof, data))
