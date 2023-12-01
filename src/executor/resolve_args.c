@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 13:05:04 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/15 14:54:35 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/01 10:32:05 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ static char	*get_abs_path(char *cmd_name, char **env)
 	return (NULL);
 }
 
+/*
+	resolve_args take the args of the cmd node and build the absolute path
+	of the command. In case it doesn't find the absolute path, the original
+	path (no absolute) will be the one which will be passed inside execve().
+*/
 int	resolve_args(char **cmd_name, char **env)
 {
 	char	*abs_path;

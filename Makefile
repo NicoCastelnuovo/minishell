@@ -41,11 +41,13 @@ BUILTINS = cd.c \
 ERROR = error.c \
 
 EXECUTOR = executor.c \
-	parent.c \
-	children.c \
+	execute_single_cmd.c \
+	execute_pipechain.c \
+	child_pipechain.c \
 	resolve_args.c \
 	resolve_redir.c \
 	run_builtin.c \
+	parent.c \
 
 ENV = init_env.c \
 	get_exported_var_n.c \
