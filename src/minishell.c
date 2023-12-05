@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 09:58:23 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/05 17:41:12 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@ static void	init_data(t_data *data, char **env)
 
 static void	shell_loop(t_data *data)
 {
-	// ft_printf("minishell pid = [%d]\n",getpid());
 	while (1)
 	{
 		data->input = readline(data->prompt);
 		if (!data->input)
-			break ;
-		if (data->input && !is_empty_input(data->input))
+			exit_custom(NULL, data);
+		if (ft_strlen(data->input) != 0)
 		{
 			lexer(data->input, &data->tokens);
 			parser(data);
@@ -47,14 +46,13 @@ static void	shell_loop(t_data *data)
 			//****************************************************************
 			expansion(data);
 			quote_removal(data);
-			here_doc(data->tree, data);
 			//****************************************************************
 			// ft_printf("\033[0;35mAFTER\033[0;37m\n"); // hello'"$no expand"'
 			// print_syntax_tree(data->tree);
 			//****************************************************************
+			here_doc(data->tree, data);
 			executor(data);
-			if (is_valid_for_history(data))
-				add_history(data->input);
+			add_history(data->input);
 			free_data(data);
 		}
 	}

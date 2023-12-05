@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 09:04:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/30 14:37:37 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/05 15:11:32 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	parser(t_data *data)
 		return ;
 	if (check_for_syntax_err(data->tokens))
 	{
-		data->e_code = 2;
+		data->e_code = 258;
 		return ;
 	}
 	data->tree = build_syntax_tree(data->tokens, 0);

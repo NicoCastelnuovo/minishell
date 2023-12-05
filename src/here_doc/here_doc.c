@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:19:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/01 12:26:58 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:39:20 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static int	perform_here_doc(t_redir_data *redir_cont, t_data *data)
 	{
 		free(eof);
 		close(fd_tmp);
+		unlink(redir_cont->file_name); // check
 		return (1);
 	}
 	free(eof);
@@ -60,7 +61,7 @@ void	here_doc(t_node *tree, t_data *data)
 	t_pipe	*pipe;
 	t_cmd	*cmd;
 
-	if (data->e_code || !data->tree)
+	if (!data->tree)
 		return ;
 	while (tree->type == IS_PIPE)
 	{

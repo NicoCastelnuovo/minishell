@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:15:53 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/30 13:10:18 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/05 14:46:06 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	lexer(char *input, t_list **tkns_head)
 {
+	if (is_empty_input(input))
+		return ;
 	tokenize_input(input, tkns_head);
 	assign_type_to_tkn(*tkns_head);
 	assign_quote_status_to_tkn(*tkns_head);

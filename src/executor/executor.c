@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 08:31:08 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 10:02:29 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:46:12 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static int	get_n_cmds(t_node *node)
 
 int	executor(t_data *data)
 {
-	data->n_ps = get_n_cmds(data->tree);
 	if (!data->tree) // right ??
 		return (1);
+	data->n_ps = get_n_cmds(data->tree);
 	if (data->tree->type == IS_CMD)
 	{
 		if (execute_single_cmd(data))

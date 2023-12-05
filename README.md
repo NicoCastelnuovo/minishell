@@ -15,22 +15,6 @@ char *tmp = s1; 0x123
 s1 = ft_strjoin(s1, s2);
 free(tmp);
 
-
-# RANDOM QUESTIONS
-1) Syntax err = 258 or 2 ?
-2) echo $99Nico: original is 9Nico, our is empty, because it searches for a var called 99Nico
-	but with export and unset, starting with a number is not a valid identifier
-3) Not sure about env->to_export variable, which told if the variable has to be exported
-4) set $_ not export, modify when a cmd executes, need to do ?
-
-# NICO
-<!-- 1) Leaks - expander and quote removal -->
-2) env
-	<!-- - export -> multiple args, invalid identifier -->
-	<!-- - unset -> invalid identifier -->
-	- what if env -i
-	<!-- - initialize OLDPWD but set to NULL -->
-
 # FARSHAD
 1) Signals
 2) Use tests
@@ -40,7 +24,12 @@ free(tmp);
 	- here_doc in case of single command is not closed and sometimes executes (???)
 	- separate pipechain from single cmd execution
 4) export -> print in alphabetical order
-<!-- 5) echo (now minishell uses the /bin/echo) -->
+5) Check what happend if type planty new lines with commands or not
+6) Which is status of synta error? 258 or 2?
+7) What if example the expander makes error in the middle
+8) export and unset invalid identifier done't work properly
+9) Not sure about env->to_export variable, which told if the variable has to be exported
+10) set $_ not export, modify when a cmd executes, need to do ?
 
 # LEAKS/VALGRIND
 <!-- 1) NOT existing commands (not happens in pipechain) -->

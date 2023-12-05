@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:53:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/22 07:21:16 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/05 15:11:14 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ static void	update_cmd_args(char *arg, t_cmd *cmd)
 	i = 0;
 	while (i < n_args)
 	{
-		new_args[i] = ft_strdup(cmd->args[i]);
+		new_args[i] = ft_strdup(cmd->args[i]); // protect
 		i++;
 	}
-	new_args[i] = ft_strdup(arg);
+	new_args[i] = ft_strdup(arg); // protect
 	new_args[i + 1] = NULL;
 	free_dptr(cmd->args);
 	cmd->args = new_args;

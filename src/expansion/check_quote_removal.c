@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 08:34:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/01 12:12:29 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:40:35 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	args_quote_removal(t_cmd *cmd)
 	return (0);
 }
 
-static int	redir_quote_removal(t_cmd *cmd, t_data *data)
+static int	redir_quote_removal(t_cmd *cmd)
 {
 	t_list			*redir;
 	t_redir_data	*redir_cont;
@@ -58,7 +58,7 @@ static int	redir_quote_removal(t_cmd *cmd, t_data *data)
 			if (ft_strchr(tmp, TKN_D_QUOTE) || ft_strchr(tmp, TKN_S_QUOTE))
 			{
 				// tmp = redir_cont->file_name; // moved to line 55
-				redir_cont->file_name = expand(redir_cont->file_name, data); // why i put the expand here ---- ????
+				redir_cont->file_name = remove_quote_pairs(redir_cont->file_name); // why i put the expand here ---- ????
 				if (!redir_cont->file_name)
 					return (error(tmp, NULL, CE_EXPANSION), free(tmp), 1);
 				free(tmp);
@@ -69,11 +69,11 @@ static int	redir_quote_removal(t_cmd *cmd, t_data *data)
 	return (0);
 }
 
-static int	check_quote_removal(t_cmd *cmd, t_data *data)
+static int	check_quote_removal(t_cmd *cmd)
 {
 	if (args_quote_removal(cmd))
 		return (1);
-	if (redir_quote_removal(cmd, data))
+	if (redir_quote_removal(cmd))
 		return (1);
 	return (0);
 }
@@ -90,14 +90,14 @@ void	quote_removal(t_data *data)
 	t_cmd	*cmd;
 	t_pipe	*pipe;
 
-	if (!data->tree || data->e_code) // || data->e_code ??? VERIFY !!!!!
+	if (!data->tree) // || data->e_code ??? VERIFY !!!!!
 		return ;
 	node = data->tree;
 	while (node->type == IS_PIPE)
 	{
 		pipe = (t_pipe *)node->content;
 		cmd = pipe->left->content;
-		if (check_quote_removal(cmd, data))
+		if (check_quote_removal(cmd))
 		{
 			data->e_code = 1;
 			return ;
@@ -105,6 +105,6 @@ void	quote_removal(t_data *data)
 		node = pipe->right;
 	}
 	cmd = node->content;
-	if (check_quote_removal(cmd, data))
+	if (check_quote_removal(cmd))
 		data->e_code = 1;
 }

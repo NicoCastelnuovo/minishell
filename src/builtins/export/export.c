@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/30 12:27:30 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/05 17:25:35 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ int	print_exported(t_list *env)
 	t_list	*sorted;
 
 	sorted = NULL;
-	if (env)
-	{
-		sorted = sort_env(env);
-		if (!sorted)
-			return (1);
-		else
-		{
-			// print sorted
-		}
-	}
+	// if (env)
+	// {
+	// 	sorted = sort_env(env);
+	// 	if (!sorted)
+	// 		return (1);
+	// 	else
+	// 	{
+	// 		// print sorted
+	// 	}
+	// }
 	// change printing
 	while (env)
 	{
@@ -128,6 +128,7 @@ int	is_invalid_identifier(char *builtin, char *arg)
 		i++;
 	if (arg[i] != '=')
 		return (error(builtin, arg, CE_INVALIDIDENTIFIER), 1);
+	// modify this function, example. ABC
 	return (0);
 }
 

@@ -84,7 +84,7 @@ SIGNALS = sig_handler.c
 
 UTILS = free_data.c \
 	ft_strcmp.c \
-	is_valid_for_history.c \
+	is_empty_input.c \
 	error.c
 
 LEXER = lexer.c \

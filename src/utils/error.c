@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 09:44:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 09:52:23 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/05 14:56:44 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	basic_err_format(char *s)
 static void	syntax_err_format(char *s, char *err_message)
 {
 	ft_putstr_fd(err_message, 2);
-	ft_putchar_fd('`', 2);
+	ft_putstr_fd(" `", 2);
 	ft_putstr_fd(s, 2);
 	ft_putendl_fd("'", 2);
 	return ;
