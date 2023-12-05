@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/12/01 09:46:38 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/01 12:33:03 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 
 # include "libft.h"
 # include "ft_printf.h"
+# include "get_next_line.h"
 # include "lexer.h"
 # include "env.h"
 # include "parser.h"
@@ -95,14 +96,23 @@ int		get_interactive_input(int fd_tmp, char **eof, t_data *data);
 
 // ------------------------------------------------------------------- EXECUTOR
 int		executor(t_data *data);
+int		execute_single_cmd(t_data *data);
+void	child_single_cmd(t_data *data);
+
+int		execute_pipechain(t_data *data);
+void	child_pipechain(t_data *data, t_node *node, int *fd_pipe, int *prev_pipe);
+
 int		parent(t_data *data);
-void	child(t_data *data, t_node *node, int *fd_pipe, int *prev_pipe);
+
 int		resolve_args(char **cmd_name, char **env);
-int		resolve_redir(t_cmd *cmd);
 int		redirect_to_explicit(t_node *node);
+int		redirect_to_pipes(int *fd_pipe, int *prev_pipe);
+
 int		is_builtin(t_cmd *cmd);
 int		call_builtin_function(t_cmd *cmd, t_data *data);
 int		run_builtin_same_ps(t_data *data);
+
+void	free_child_and_exit(t_data *data, char **env, int e_code);
 
 // ------------------------------------------------------------------- BUILTINS
 int		print_env(t_list *env);

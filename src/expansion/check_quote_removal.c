@@ -6,13 +6,13 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 08:34:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/30 15:28:43 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/01 12:12:29 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	args_quote_removal(t_cmd *cmd, t_data *data)
+static int	args_quote_removal(t_cmd *cmd)
 {
 	int		i;
 	char	*tmp;
@@ -58,7 +58,7 @@ static int	redir_quote_removal(t_cmd *cmd, t_data *data)
 			if (ft_strchr(tmp, TKN_D_QUOTE) || ft_strchr(tmp, TKN_S_QUOTE))
 			{
 				// tmp = redir_cont->file_name; // moved to line 55
-				redir_cont->file_name = expand(redir_cont->file_name, data);
+				redir_cont->file_name = expand(redir_cont->file_name, data); // why i put the expand here ---- ????
 				if (!redir_cont->file_name)
 					return (error(tmp, NULL, CE_EXPANSION), free(tmp), 1);
 				free(tmp);
@@ -71,7 +71,7 @@ static int	redir_quote_removal(t_cmd *cmd, t_data *data)
 
 static int	check_quote_removal(t_cmd *cmd, t_data *data)
 {
-	if (args_quote_removal(cmd, data))
+	if (args_quote_removal(cmd))
 		return (1);
 	if (redir_quote_removal(cmd, data))
 		return (1);

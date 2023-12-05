@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   resolve_redir.c                                    :+:      :+:    :+:   */
+/*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:43:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/30 13:04:16 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/01 12:07:04 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	is_valid_fd(t_cmd *cmd, t_redir_data *redir)
 	last redirection in the list, are the one which are performed, and
 	are stored into cmd->fd_in and cmd->fd_out.
 */
-int	resolve_redir(t_cmd *cmd)
+static int	resolve_redir(t_cmd *cmd)
 {
 	t_list			*head;
 	t_redir_data	*content;
@@ -75,5 +75,64 @@ int	resolve_redir(t_cmd *cmd)
 			return (-1);
 		head = head->next;
 	}
+	return (0);
+}
+
+int	redirect_to_explicit(t_node *node)
+{
+	t_cmd	*cmd;
+	int		err;
+
+	cmd = (t_cmd *)node->content;
+	err = 0;
+	if (cmd->redir)
+	{
+		if (resolve_redir(cmd) == -1) // error
+			return (1);
+		else
+		{
+			if (cmd->fd_in != -2)
+			{
+				err = dup2(cmd->fd_in, STDIN_FILENO);
+				close(cmd->fd_in);
+			}
+			if (cmd->fd_out != -2)
+			{
+				err = dup2(cmd->fd_out, STDOUT_FILENO);
+				close(cmd->fd_out);
+			}
+		}
+	}
+	if (err == -1)
+		return (error("dup2", NULL, errno), 1);
+	return (0);
+}
+
+/*
+	if (fd_pipe), means that is a first or a middle child. In case
+	fd_pipe == NULL, it means that is the last child.
+*/
+int	redirect_to_pipes(int *fd_pipe, int *prev_pipe)
+{
+	int	err;
+
+	err = 0;
+	if (fd_pipe)
+	{
+		// first
+		err = dup2(fd_pipe[1], STDOUT_FILENO);
+		close(fd_pipe[1]);
+		err = dup2(*prev_pipe, STDIN_FILENO); // prev pipe in first child is 0 so already STDIN_FILENO
+		close(fd_pipe[0]);
+		close(*prev_pipe);
+	}
+	else
+	{
+		// last
+		err = dup2(*prev_pipe, STDIN_FILENO);
+		close(*prev_pipe);
+	}
+	if (err == 1)
+		return (error("dup2", NULL, errno), 1);
 	return (0);
 }
