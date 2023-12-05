@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 09:33:52 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/05 09:58:23 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static void	shell_loop(t_data *data)
 				add_history(data->input);
 			free_data(data);
 		}
-		exit(0); // REMOVE
 	}
 }
 

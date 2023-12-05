@@ -40,7 +40,7 @@ free(tmp);
 	- here_doc in case of single command is not closed and sometimes executes (???)
 	- separate pipechain from single cmd execution
 4) export -> print in alphabetical order
-5) echo (now minishell uses the /bin/echo)
+<!-- 5) echo (now minishell uses the /bin/echo) -->
 
 # LEAKS/VALGRIND
 <!-- 1) NOT existing commands (not happens in pipechain) -->

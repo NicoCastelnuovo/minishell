@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:23:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/01 12:09:48 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/05 10:04:11 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,48 +37,29 @@ static int	needs_whitespace(t_list *tkn, int i)
 }
 
 /*
-	@param i: starting point from which print the argument. In case of option -n
-	the first argument to be printed ist the number 2.
-*/
-static int	echo_args(t_cmd *cmd, t_list *tkn, int i)
-{
-	char	*tmp;
-
-	tmp = NULL;
-	while (cmd->args[i])
-	{
-		// if (cmd->args[i][0] == TKN_D_QUOTE || cmd->args[i][0] == TKN_S_QUOTE)
-		// {
-		// 	tmp = trim_one_quote(cmd->args[i]);
-		// 	if (!tmp)
-		// 		return (error("echo", NULL, errno), 1);
-		// 	ft_putstr_fd(tmp, 1);
-		// 	free(tmp);
-		// }
-		// else
-			ft_putstr_fd(cmd->args[i], 1);
-		if (needs_whitespace(tkn, i))
-			ft_putchar_fd(' ', 1);
-		i++;
-	}
-	return (0);
-}
-
-/*
 	echo writes any oprand to stdout separated by a single blank char, and
 	followed by a new line. As the subject states, it has to be implemented
 	with the optional -n argument.
+	@param i: starting point from which print the argument. In case of option -n
+	the first argument to be printed is the number 2.
 */
 int	echo(t_data *data)
 {
 	t_cmd	*cmd;
-
-	// ECHO IS BROKEN
+	int		i;
 
 	cmd = (t_cmd *)data->tree->content;
+	i = 1;
 	if (cmd->args[1] && ft_strcmp("-n", cmd->args[1]) == 0)
-		return (echo_args(cmd, data->tokens, 2));
-	echo_args(cmd, data->tokens, 1);
-	ft_putchar_fd('\n', 1);
+		i = 2;
+	while (cmd->args[i])
+	{
+		ft_putstr_fd(cmd->args[i], 1);
+		if (needs_whitespace(data->tokens, i))
+			ft_putchar_fd(' ', 1);
+		i++;
+	}
+	if (cmd->args[1] && ft_strcmp("-n", cmd->args[1]) != 0)
+		ft_putchar_fd('\n', 1);
 	return (0);
 }

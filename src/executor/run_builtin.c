@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:18:14 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/01 11:26:36 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/05 09:58:55 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	is_builtin(t_cmd *cmd)
 		return (0);
 	if (ft_strcmp(cmd->args[0], "cd") == 0)
 		return (1);
-	// if (ft_strcmp(cmd->args[0], "echo") == 0)
-	// 	return (1);
+	if (ft_strcmp(cmd->args[0], "echo") == 0)
+		return (1);
 	if (ft_strcmp(cmd->args[0], "exit") == 0)
 		return (1);
 	if (ft_strcmp(cmd->args[0], "export") == 0)
@@ -42,8 +42,8 @@ int	call_builtin_function(t_cmd *cmd, t_data *data)
 {
 	if (ft_strcmp(cmd->args[0], "cd") == 0)
 		data->e_code = cd(cmd, data);
-	// else if (ft_strcmp(cmd->args[0], "echo") == 0)
-	// 	data->e_code = echo(data);
+	else if (ft_strcmp(cmd->args[0], "echo") == 0)
+		data->e_code = echo(data);
 	else if (ft_strcmp(cmd->args[0], "exit") == 0)
 		data->e_code = exit_custom(cmd, data);
 	else if (ft_strcmp(cmd->args[0], "export") == 0)
