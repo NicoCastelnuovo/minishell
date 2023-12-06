@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 10:08:00 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/01 11:55:43 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:06:31 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	execute_pipechain(t_data *data)
 		data->e_code = 1;
 		return (error("executor", NULL, errno), 1);
 	}
-	prev_pipe = dup(0);
+	prev_pipe = dup(STDIN_FILENO); // protect
 	if (prev_pipe == -1)
 	{
 		data->e_code = 1;

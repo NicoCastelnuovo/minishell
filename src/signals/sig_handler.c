@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:35:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 17:31:00 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/06 10:47:02 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ void	init_sig_handling(void)
 	// ctrl C
 	// sa_newline.sa_handler = &handle_sa_newline;
 	// sa_newline.sa_flags = 0;
-	// sa_newline.sa_mask = set;
+	// // sa_newline.sa_mask = set;
 	// sigaction(SIGINT, &sa_newline, NULL);
 
 	// ctrl <backsl> --- nothing
 	sa_ignore.sa_handler = SIG_IGN;
 	sa_ignore.sa_flags = 0;
-	sa_ignore.sa_mask = set;
+	// sa_ignore.sa_mask = set;
 	sigaction(SIGQUIT, &sa_ignore, NULL);
 }
 

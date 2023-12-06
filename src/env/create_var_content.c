@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:15:40 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/30 11:37:15 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/06 11:38:10 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,12 @@ static char	*get_env_var_value(char *env_var, t_var *var)
 		if (!var_value)
 			return (NULL);
 	}
+	if (ft_strcmp(var->name, "OLDPWD") == 0)
+	{
+		free(var_value);
+		var_value = NULL;
+	}
 	return (var_value);
-}
-
-static void	set_export(t_var *var)
-{
-	if (ft_strcmp(var->name, "_") == 0)
-		var->to_export = 0;
-	else
-		var->to_export = 1;
 }
 
 t_var	*create_var_content(char *env_var)
@@ -68,20 +65,9 @@ t_var	*create_var_content(char *env_var)
 	if (!var->name)
 		return (NULL); // free() ???
 	ft_strlcpy(var->name, env_var, var->name_len + 1);
-	if (ft_strchr(env_var, '='))
-	{
-		var->value = get_env_var_value(env_var, var);
-		var->value_len = -1;
-		if (var->value)
-			var->value_len = ft_strlen(var->value);
-		else
-			return (NULL);
-	}
-	else
-	{
-		var->value = NULL;
-		var->value_len = -1;
-	}
-	set_export(var);
+	var->value = get_env_var_value(env_var, var);
+	var->value_len = -1;
+	if (var->value)
+		var->value_len = ft_strlen(var->value);
 	return (var);
 }

@@ -24,13 +24,20 @@ free(tmp);
 	- here_doc in case of single command is not closed and sometimes executes (???)
 	- separate pipechain from single cmd execution
 4) export -> print in alphabetical order
-5) Check what happend if type planty new lines with commands or not
-6) Which is status of synta error? 258 or 2?
+6) Which is status of syntax error? 258 or 2?
 7) What if example the expander makes error in the middle
 8) export and unset invalid identifier done't work properly
-9) Not sure about env->to_export variable, which told if the variable has to be exported
-10) set $_ not export, modify when a cmd executes, need to do ?
+<!-- 9) Not sure about env->to_export variable, which told if the variable has to be exported -->
+<!-- 11) expot var+=something add omething to the existing variable or creates a new one -->
+12) echo -n -n -n -n -n
+	echo Hi | echo 99
+	exit ""
+	exit A 2 3 ---> not right error
 
 # LEAKS/VALGRIND
 <!-- 1) NOT existing commands (not happens in pipechain) -->
 2) Valgrind errors in case of expansion AND/OR quote removal
+
+# REALLY TO DO ??
+5) Check what happend if type planty new lines with commands or not
+10) set $_ not export, modify when a cmd executes, need to do ?

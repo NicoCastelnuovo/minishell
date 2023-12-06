@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:23:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 17:08:45 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:58:19 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,26 @@ static int	needs_whitespace(t_list *tkn, int i)
 	@param i: starting point from which print the argument. In case of option -n
 	the first argument to be printed is the number 2.
 */
-int	echo(t_data *data)
+int	echo(t_data *data, t_cmd *cmd)
 {
-	t_cmd	*cmd;
 	int		i;
+	int		new_line;
 
-	cmd = (t_cmd *)data->tree->content;
+	new_line = 1;
 	i = 1;
-	if (cmd->args[1] && ft_strcmp("-n", cmd->args[1]) == 0)
-		i = 2;
+	while (cmd->args[i] && ft_strcmp(cmd->args[i], "-n") == 0)
+	{
+		new_line = 0;
+		i++;
+	}
 	while (cmd->args[i])
 	{
 		ft_putstr_fd(cmd->args[i], 1);
-		if (needs_whitespace(data->tokens, i))
+		if (needs_whitespace(data->tokens, i) && cmd->args[i + 1])
 			ft_putchar_fd(' ', 1);
 		i++;
 	}
-	if (cmd->args[1] && ft_strcmp("-n", cmd->args[1]) != 0)
+	if (new_line)
 		ft_putchar_fd('\n', 1);
 	return (0);
 }

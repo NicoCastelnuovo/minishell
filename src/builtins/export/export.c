@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 17:25:35 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:01:29 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	print_exported(t_list *env)
 	while (env)
 	{
 		var = (t_var *)env->content;
-		if (var->to_export)
+		if (var)
 		{
 			if (var->name) // change to if (is_exported) ??
 			{
@@ -57,31 +57,70 @@ int	print_exported(t_list *env)
 	return (0);
 }
 
-static int	env_var_exist(char *name, t_list *env)
+/*
+	@param n: number of charachter to compare. It is needed to differentiate
+	between var+=value which append value to the var, and var=value, which
+	assigns it truncating the already existing content.
+*/
+static int	env_var_exist(char *tmp_var_name, t_list *env)
 {
 	t_var	*var;
+	int		n;
 
+	n = ft_strlen(tmp_var_name);
+	if (tmp_var_name[n - 1] == '+')
+		n -= 1;
 	while (env)
 	{
 		var = (t_var *)env->content;
-		if (ft_strcmp(var->name, name) == 0)
+		if (ft_strncmp(var->name, tmp_var_name, n) == 0)
 			return (1);
 		env = env->next;
 	}
 	return (0);
 }
 
+static void	append_to_existing_var(t_list *env, t_var *tmp_var)
+{
+	t_list	*head;
+	t_var	*var;
+
+	head = env;
+	while (head)
+	{
+		var = (t_var *)head->content;
+
+		head = head->next;
+	}
+}
+
+
 static void	update_var_content(char *name, char *new_value, t_list *env)
 {
 	t_var	*var;
+	int		n;
+	char	*tmp;
 
+	tmp = NULL;
+	n = ft_strlen(name);
+	if (name[n - 1] == '+')
+		n -= 1;
 	while (env)
 	{
 		var = (t_var *)env->content;
-		if (ft_strcmp(var->name, name) == 0)
+		if (ft_strncmp(var->name, name, n) == 0)
 		{
-			free(var->value);
-			var->value = ft_strdup(new_value);
+			if (name[n] == '+')
+			{
+				tmp = var->value;
+				var->value = ft_strjoin(var->value, new_value); // protect
+				free(tmp);
+			}
+			else
+			{
+				free(var->value);
+				var->value = ft_strdup(new_value);
+			}
 			return ;
 		}
 		env = env->next;
@@ -98,13 +137,14 @@ static void	check_export(char *arg, t_list **env)
 {
 	t_var	*tmp_var;
 	t_list	*new_node;
+	char	*tmp;
 
 	new_node = NULL;
 	tmp_var = NULL;
 	tmp_var = create_var_content(arg);
 	if (!env_var_exist(tmp_var->name, *env))
 	{
-		new_node = ft_lstnew(tmp_var);
+		new_node = ft_lstnew(tmp_var); // protect
 		ft_lstadd_back(env, new_node);
 	}
 	else
@@ -117,19 +157,29 @@ static void	check_export(char *arg, t_list **env)
 	}
 }
 
-int	is_invalid_identifier(char *builtin, char *arg)
+static int	is_valid_export_identifier(char *arg)
 {
 	int	i;
+	int	assigned;
 
-	i = 0;
 	if (arg[0] == '=' || ft_isdigit(arg[0]))
-		return (error(builtin, arg, CE_INVALIDIDENTIFIER), 1);
-	while (ft_isalnum(arg[i]) || arg[i] == '_')
+		return (error("export", arg, CE_INVALIDIDENTIFIER), 0);
+	assigned = 0;
+	i = 0;
+	while (arg[i])
+	{
+		if (!assigned)
+		{
+			if (arg[i] == '=')
+				assigned = 1;
+			else if (arg[i] == '+' && arg[i + 1] == '=')
+				return (1);
+			else if (!ft_isalnum(arg[i]) && arg[i] != '_')
+				return (error("export", arg, CE_INVALIDIDENTIFIER), 0);
+		}
 		i++;
-	if (arg[i] != '=')
-		return (error(builtin, arg, CE_INVALIDIDENTIFIER), 1);
-	// modify this function, example. ABC
-	return (0);
+	}
+	return (1);
 }
 
 int	export(t_cmd *cmd, t_data *data)
@@ -143,9 +193,8 @@ int	export(t_cmd *cmd, t_data *data)
 		i = 1;
 		while (cmd->args[i])
 		{
-			if (is_invalid_identifier(cmd->args[0], cmd->args[i]))
-				return (1);
-			check_export(cmd->args[i], &data->env);
+			if (is_valid_export_identifier(cmd->args[i]))
+				check_export(cmd->args[i], &data->env);
 			i++;
 		}
 	}

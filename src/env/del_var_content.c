@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 11:30:03 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/30 10:42:03 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/06 11:13:38 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	del_var_content(void *content)
 		}
 		var->name_len = -1;
 		var->value_len = -1;
-		var->to_export = -1;
 		free(var);
 		var = NULL;
 	}

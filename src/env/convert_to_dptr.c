@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:49:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/01 11:59:32 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/06 11:13:59 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	**convert_to_dptr(t_list *env)
 	while (env)
 	{
 		var = (t_var *)env->content;
-		if (var->to_export)
+		if (var->value) // changed from var->to_export
 		{
 			joined = prepare_var(var->name, var->value);
 			if (!joined)

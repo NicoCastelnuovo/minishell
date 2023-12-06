@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:20:48 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 17:08:09 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/06 11:23:24 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static void	update_existing_var(char *name, char *new_value, t_list **env)
 		var = (t_var *)head->content;
 		if (ft_strcmp(name, var->name) == 0)
 		{
-			ft_printf("Found OLDPWD!\n"); // OLDPWD is not updated
 			var->value = new_value;
 			var->value_len = ft_strlen(new_value);
 			return ;

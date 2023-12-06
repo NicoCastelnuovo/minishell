@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:18:14 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 17:25:50 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:37:37 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	call_builtin_function(t_cmd *cmd, t_data *data)
 	if (ft_strcmp(cmd->args[0], "cd") == 0)
 		data->e_code = cd(cmd, data);
 	else if (ft_strcmp(cmd->args[0], "echo") == 0)
-		data->e_code = echo(data);
+		data->e_code = echo(data, cmd);
 	else if (ft_strcmp(cmd->args[0], "exit") == 0)
 		data->e_code = exit_custom(cmd, data);
 	else if (ft_strcmp(cmd->args[0], "export") == 0)

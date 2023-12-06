@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/12/01 12:33:03 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:35:58 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int		parent(t_data *data);
 
 int		resolve_args(char **cmd_name, char **env);
 int		redirect_to_explicit(t_node *node);
-int		redirect_to_pipes(int *fd_pipe, int *prev_pipe);
+int		redirect_to_pipes(int *fd_pipe, int *prev_pipe, t_cmd *cmd);
 
 int		is_builtin(t_cmd *cmd);
 int		call_builtin_function(t_cmd *cmd, t_data *data);
@@ -121,11 +121,10 @@ char	*get_wd(void);
 int		pwd(void);
 int		exit_custom(t_cmd *cmd, t_data *data);
 int		print_exported(t_list *env);
-int		echo(t_data *data);
+int		echo(t_data *data, t_cmd *cmd);
 int		export(t_cmd *cmd, t_data *data);
 t_list	*sort_env(t_list *old);
 int		unset(t_cmd *cmd, t_data *data);
-int		is_invalid_identifier(char *builtin, char *arg);
 
 // ---------------------------------------------------------------------- UTILS
 void	error(char *s1, char *s2, int err_id);

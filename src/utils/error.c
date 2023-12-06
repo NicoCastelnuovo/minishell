@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 09:44:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 14:56:44 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:05:50 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,15 @@ static void	syntax_err_format(char *s, char *err_message)
 	return ;
 }
 
+static void	inv_identifier_format(char *s, char *err_message)
+{
+	ft_putstr_fd("`", 2);
+	ft_putstr_fd(s, 2);
+	ft_putstr_fd("': ", 2);
+	ft_putendl_fd(err_message, 2);
+	return ;
+}
+
 void	error(char *s1, char *s2, int err_id)
 {
 	char	*err_message;
@@ -67,6 +76,11 @@ void	error(char *s1, char *s2, int err_id)
 			basic_err_format(s1);
 	}
 	if (s2)
-		basic_err_format(s2);
+	{
+		if (err_id == CE_INVALIDIDENTIFIER)
+			return (inv_identifier_format(s2, err_message));
+		else
+			basic_err_format(s2);
+	}
 	ft_putendl_fd(err_message, 2);
 }

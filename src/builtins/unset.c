@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:37:54 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 17:26:06 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/06 12:02:48 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,34 @@ static void	unset_single_var(char *name, t_list **env)
 	}
 }
 
+static int	is_valid_unset_identifier(char *arg)
+{
+	int	i;
+	int	assigned;
+
+	assigned = 0;
+	i = 0;
+	// if (!ft_isalnum(arg[i]) && arg[i] != '_')
+	// 	return (error("unset", arg, CE_INVALIDIDENTIFIER), 0);
+	while (arg[i])
+	{
+		if (!assigned)
+		{
+			if (arg[i] == '=')
+				assigned = 1;
+			else if (!ft_isalnum(arg[i]) && arg[i] != '_')
+				return (error("unset", arg, CE_INVALIDIDENTIFIER), 0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 /*
 	The environment variable specified by <name> is unset for the current
 	environment. If the argument is a variable which doesn't exist, nothing
-	happens.
+	happens. If there are invalid identifiers, the function doesn't returns,
+	and the other arguments are processed.
 */
 int	unset(t_cmd *cmd, t_data *data)
 {
@@ -57,9 +81,8 @@ int	unset(t_cmd *cmd, t_data *data)
 	i = 1;
 	while (cmd->args[i])
 	{
-		if (is_invalid_identifier(cmd->args[0], cmd->args[i]))
-			return (1);
-		unset_single_var(cmd->args[i], &data->env);
+		if (is_valid_unset_identifier(cmd->args[i]))
+			unset_single_var(cmd->args[i], &data->env);
 		i++;
 	}
 	return (0);

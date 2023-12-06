@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:43:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/01 12:07:04 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:38:43 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,27 +112,62 @@ int	redirect_to_explicit(t_node *node)
 	if (fd_pipe), means that is a first or a middle child. In case
 	fd_pipe == NULL, it means that is the last child.
 */
-int	redirect_to_pipes(int *fd_pipe, int *prev_pipe)
+int	redirect_to_pipes(int *fd_pipe, int *prev_pipe, t_cmd *cmd)
 {
-	int	err;
+	int	fd_ret;
 
-	err = 0;
+	fd_ret = -1;
 	if (fd_pipe)
 	{
-		// first
-		err = dup2(fd_pipe[1], STDOUT_FILENO);
+		// first and mid
+		fd_ret = dup2(fd_pipe[1], STDOUT_FILENO);
+		// if (fd_ret != -1)
+		// 	cmd->fd_out = fd_ret;
 		close(fd_pipe[1]);
-		err = dup2(*prev_pipe, STDIN_FILENO); // prev pipe in first child is 0 so already STDIN_FILENO
+		fd_ret = dup2(*prev_pipe, STDIN_FILENO); // prev pipe in first child is 0 so already STDIN_FILENO
+		// if (fd_ret != -1)
+		// 	cmd->fd_in = fd_ret;
 		close(fd_pipe[0]);
 		close(*prev_pipe);
 	}
 	else
 	{
 		// last
-		err = dup2(*prev_pipe, STDIN_FILENO);
+		fd_ret = dup2(*prev_pipe, STDIN_FILENO); // protect ?
+		// if (fd_ret != -1)
+		// 	cmd->fd_in = fd_ret;
 		close(*prev_pipe);
 	}
-	if (err == 1)
+	if (fd_ret == -1)
 		return (error("dup2", NULL, errno), 1);
 	return (0);
 }
+
+
+// int	redirect_to_pipes(int *fd_pipe, int *prev_pipe, t_cmd *cmd)
+// {
+// 	int	err;
+
+// 	err = 0;
+// 	if (fd_pipe)
+// 	{
+// 		// first and mid
+// 		cmd->fd_in = fd_pipe[1];
+// 		cmd->fd_out = *prev_pipe;
+
+// 		err = dup2(cmd->fd_out, STDOUT_FILENO);
+// 		close(cmd->fd_out);
+// 		err = dup2(*prev_pipe, STDIN_FILENO); // prev pipe in first child is 0 so already STDIN_FILENO
+// 		close(cmd->fd_in);
+// 		close(*prev_pipe);
+// 	}
+// 	else
+// 	{
+// 		// last
+// 		err = dup2(*prev_pipe, STDIN_FILENO);
+// 		close(*prev_pipe);
+// 	}
+// 	// if (err == 1) // err -1 or 1
+// 	// 	return (error("dup2", NULL, errno), 1);
+// 	return (0);
+// }
