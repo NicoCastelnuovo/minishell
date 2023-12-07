@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:35:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/06 10:47:02 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:07:42 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@
 	@line	rl_on_new_line() - tell the program to move to a new line
 	@line	rl_redisplay() - update what is displayed, to reflect the buffer
 */
-static void	handle_sa_newline(int sig_n)
+/* static void	handle_sa_newline(int sig_n)
 {
+	(void)sig_n;
 	ft_putchar_fd('\n', 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-}
+} */
 
 void	init_sig_handling(void)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_pipechain.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:49:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 08:50:59 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:02:16 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

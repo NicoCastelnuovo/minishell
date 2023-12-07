@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:43:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/06 17:08:01 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:07:10 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int	redirect_to_pipes(int *fd_pipe, int *prev_pipe, t_cmd *cmd)
 {
 	int	fd_ret;
 
+	(void)cmd;
 	fd_ret = -1;
 	if (fd_pipe)
 	{

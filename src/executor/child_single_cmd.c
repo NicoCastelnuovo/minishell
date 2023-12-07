@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_single_cmd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 12:25:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/06 11:11:18 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:02:19 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

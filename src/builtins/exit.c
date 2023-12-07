@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:06:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 09:40:46 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:09:00 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,5 @@ int	exit_custom(t_cmd *cmd, t_data *data)
 				error("exit", cmd->args[1], CE_TOOMANYARGS);
 		}
 	}
+	return (1);
 }

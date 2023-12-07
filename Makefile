@@ -121,7 +121,7 @@ OBJS_PATH = ./objs
 OBJS = $(patsubst %.c, $(OBJS_PATH)/%.o, $(SRCS))
 
 CC = cc
-CFLAGS = -c -g -Wall -Wextra #-Werror
+CFLAGS = -c -g -Wall -Wextra -Werror
 NAME = minishell
 MYLIB_PATH = ./mylib
 MYLIB = $(MYLIB_PATH)/libmylib.a

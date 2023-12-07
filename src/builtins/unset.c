@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:37:54 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 10:17:01 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:06:43 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static int	unset_mid_last(t_list *head, t_list **env, char *name)
 {
 	t_list	*next_node;
 
+	(void)env;
 	next_node = NULL;
 	if (head->next)
 	{
