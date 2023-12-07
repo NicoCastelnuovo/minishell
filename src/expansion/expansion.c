@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 09:38:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 15:37:30 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:24:35 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	*expand(char *old_str, t_data *data)
 	mid_str = remove_translation_operator(old_str);
 	if (!mid_str)
 		return (NULL);
-	n = get_n_dollars(mid_str);
+	n = get_n_dollars(mid_str); // ????
 	to_expand = store_var_names(mid_str, n, -1);
 	get_var_values(to_expand, data->env, data->e_code);
 	new_str = build_str(mid_str, to_expand);

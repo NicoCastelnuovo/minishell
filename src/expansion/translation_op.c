@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 11:08:27 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 14:20:02 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 17:00:25 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*mid_copy(char *old, int len)
 	char	is_open;
 	char	*mid_str;
 
-	mid_str = ft_calloc(len, sizeof(char));
+	mid_str = ft_calloc(len + 1, sizeof(char));
 	if (!mid_str)
 		return (NULL);
 	mid_str[len] = '\0';
@@ -55,9 +55,9 @@ static char	*mid_copy(char *old, int len)
 	return (mid_str);
 }
 
-static int	get_len_without_translation_operator(char *old)
+static size_t	get_len_without_translation_operator(char *old)
 {
-	int		len;
+	size_t	len;
 	int		i;
 	char	is_open;
 
@@ -91,10 +91,16 @@ static int	get_len_without_translation_operator(char *old)
 */
 char	*remove_translation_operator(char *old_str)
 {
-	int		len;
+	size_t	new_len;
 	char	*mid_str;
 
-	len = get_len_without_translation_operator(old_str);
-	mid_str = mid_copy(old_str, len);
+	new_len = get_len_without_translation_operator(old_str);
+	ft_printf("old_str [%s]\n", old_str);
+	ft_printf("OLD LEN = [%d]\n", ft_strlen(old_str));
+	ft_printf("NEW LEN = [%d]\n", new_len);
+	if (ft_strlen(old_str) == new_len)
+		mid_str = ft_strdup(old_str);
+	else
+		mid_str = mid_copy(old_str, new_len);
 	return (mid_str);
 }

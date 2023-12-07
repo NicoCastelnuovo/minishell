@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 10:06:56 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 11:02:59 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:12:41 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_child_and_exit(t_data *data, char **env, int e_code)
 
 static int	fork_one_ps(t_data *data)
 {
-	data->pid = ft_calloc(1, sizeof(int));
+	data->pid = ft_calloc(1, sizeof(int)); // ??? leak
 	if (!data->pid)
 	{
 		data->e_code = 1;

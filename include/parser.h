@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 14:22:35 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:53:46 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	free_pipe_node(t_node *node_p);
 void	free_dptr(char **p);
 
 // -------------------------------------------------------------- SYNTAX ERRORS
-int		check_for_syntax_err(t_list *tkn);
+int		check_for_syntax_err(t_list *tkn, int i);
 int		is_redir(t_tkn_type tkn_type);
 
 // ----------------------------------------------------------- UPDATE CMD TABLE

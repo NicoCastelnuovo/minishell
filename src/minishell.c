@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 14:18:36 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 17:01:29 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,21 @@ static void	shell_loop(t_data *data)
 {
 	while (1)
 	{
-		data->input = readline(data->prompt);
+		// data->input = readline(data->prompt);
+		data->input = ft_strdup("echo $"); // -----> valgrind problems
 		if (!data->input)
-			break ; // ----> print exit !!!!
+			break ; // ----> print exit && check if call exit_custom()
 		if (ft_strlen(data->input) != 0)
 		{
 			lexer(data->input, &data->tokens);
 			parser(data);
-			//****************************************************************
-			// ft_printf("\033[0;35mBEFORE\033[0;37m\n");
-			// print_syntax_tree(data->tree);
-			//****************************************************************
 			expansion(data);
 			quote_removal(data);
-			//****************************************************************
-			// ft_printf("\033[0;35mAFTER\033[0;37m\n"); // hello'"$no expand"'
-			// print_syntax_tree(data->tree);
-			//****************************************************************
 			here_doc(data->tree, data);
 			executor(data);
-			add_history(data->input);
+			// add_history(data->input);
 			free_data(data);
+			exit_custom(NULL, data); // ---> remove!
 		}
 	}
 }
@@ -68,5 +62,6 @@ int	main(int argc, char **argv, char **env)
 	init_sig_handling();
 	shell_loop(&data);
 	free_data(&data);
+	ft_lstclear(&data.env, del_var_content);
 	return (0);
 }
