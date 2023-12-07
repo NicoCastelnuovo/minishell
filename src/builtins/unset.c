@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:37:54 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 10:17:01 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:31:01 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	unset_head(t_list *head, t_list **env, char *name)
 	return (0);
 }
 
-static int	unset_mid_last(t_list *head, t_list **env, char *name)
+static int	unset_mid_last(t_list *head, char *name)
 {
 	t_list	*next_node;
 
@@ -53,7 +53,7 @@ static void	unset_single_var(char *name, t_list **env)
 	{
 		if (unset_head(head, env, name))
 			break ;
-		if (unset_mid_last(head, env, name))
+		if (unset_mid_last(head, name))
 			break ;
 		head = head->next;
 	}

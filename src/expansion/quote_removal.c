@@ -6,11 +6,34 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 10:26:16 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 15:43:45 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:19:29 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// if (kind_of_quotes == -1)
+// 	kind_of_quotes = s[i];
+// else if (kind_of_quotes == s[i])
+// 	kind_of_quotes = -1;
+// else
+// {
+// 	new_str[j] = s[i];
+// 	j++;
+// }
+
+static void	handle_quotes_and_cpy(char *quotes, char *new_str, char c, int *j)
+{
+	if (*quotes == -1)
+		*quotes = c;
+	else if (*quotes == c)
+		*quotes = -1;
+	else
+	{
+		new_str[*j] = c;
+		(*j)++;
+	}
+}
 
 static char	*copy_without_quotes(char *s, int len)
 {
@@ -29,17 +52,7 @@ static char	*copy_without_quotes(char *s, int len)
 	while (s[i])
 	{
 		if (s[i] == TKN_S_QUOTE || s[i] == TKN_D_QUOTE)
-		{
-			if (kind_of_quotes == -1)
-				kind_of_quotes = s[i];
-			else if (kind_of_quotes == s[i])
-				kind_of_quotes = -1;
-			else
-			{
-				new_str[j] = s[i];
-				j++;
-			}
-		}
+			handle_quotes_and_cpy(&kind_of_quotes, new_str, s[i], &j);
 		else
 		{
 			new_str[j] = s[i];

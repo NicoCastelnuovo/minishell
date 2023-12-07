@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/30 14:42:53 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:43:07 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ static t_node	*init_pipe_node(int n)
 {
 	t_node	*node_p;
 
-	node_p = ft_calloc(1, sizeof(t_node)); // protect
+	node_p = ft_calloc(1, sizeof(t_node));
 	if (!node_p)
 		return (NULL);
 	node_p->type = IS_PIPE;
 	node_p->n = n + 1;
-	node_p->content = ft_calloc(1, sizeof(t_pipe)); // prtct
+	node_p->content = ft_calloc(1, sizeof(t_pipe));
 	if (!node_p->content)
 		return (free(node_p), NULL);
 	((t_pipe *)node_p->content)->left = NULL;
@@ -57,12 +57,12 @@ static t_node	*init_cmd_node(int n)
 	t_node	*node_c;
 	t_cmd	*cmd;
 
-	node_c = ft_calloc (1, sizeof(t_node)); // prtct
+	node_c = ft_calloc (1, sizeof(t_node));
 	if (!node_c)
 		return (NULL);
 	node_c->type = IS_CMD;
 	node_c->n = n;
-	node_c->content = ft_calloc(1, sizeof(t_cmd)); // prtct
+	node_c->content = ft_calloc(1, sizeof(t_cmd));
 	if (!node_c->content)
 		return (free(node_c), NULL);
 	cmd = (t_cmd *)node_c->content;

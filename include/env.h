@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 10:51:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/06 11:14:04 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:09:21 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct	s_var
 
 // ------------------------------------------------------------------------ ENV
 t_list	*init_env(char **env);
+t_list	*create_essential_env(void);
 t_var	*create_var_content(char *env_var);
 void	del_var_content(void *content);
 char	*get_env_custom(char *name, t_list *env);

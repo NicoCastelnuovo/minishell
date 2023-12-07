@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 11:08:27 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 15:22:55 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:20:02 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 */
 void	change_is_open_quote(char curr_quote, char *is_open)
 {
-	if (*is_open == -1)	// quotes are closed
+	if (*is_open == -1)
 		(*is_open) = curr_quote;
-	else // quote are open
+	else
 	{
 		if ((*is_open) == curr_quote)
 			(*is_open) = -1;
@@ -34,14 +34,17 @@ static char	*mid_copy(char *old, int len)
 	char	is_open;
 	char	*mid_str;
 
-	mid_str = ft_calloc(len, sizeof(char)); // protect
+	mid_str = ft_calloc(len, sizeof(char));
+	if (!mid_str)
+		return (NULL);
 	mid_str[len] = '\0';
 	is_open = -1;
 	i = 0;
 	j = 0;
 	while (old[i])
 	{
-		if (old[i] == '$' && is_open == -1 && (old[i + 1] == TKN_S_QUOTE || old[i + 1] == TKN_D_QUOTE))
+		if (old[i] == '$' && is_open == -1)
+			if (old[i + 1] == TKN_S_QUOTE || old[i + 1] == TKN_D_QUOTE)
 				i++;
 		if (old[i] == TKN_S_QUOTE || old[i] == TKN_D_QUOTE)
 			change_is_open_quote(old[i], &is_open);
@@ -63,7 +66,7 @@ static int	get_len_without_translation_operator(char *old)
 	i = 0;
 	while (old[i])
 	{
-		if (old[i] == '$' && is_open == -1) // case not to count
+		if (old[i] == '$' && is_open == -1)
 		{
 			if (old[i + 1] == TKN_S_QUOTE || old[i + 1] == TKN_D_QUOTE)
 				i++;
@@ -86,7 +89,7 @@ static int	get_len_without_translation_operator(char *old)
 	expansion, all translation operators $ are removed to make the next steps
 	of expansion easier to handle. The quotes are removed in the steps later.
 */
-char *remove_translation_operator(char *old_str)
+char	*remove_translation_operator(char *old_str)
 {
 	int		len;
 	char	*mid_str;

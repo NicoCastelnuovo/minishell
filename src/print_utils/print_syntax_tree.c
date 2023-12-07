@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 08:30:02 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/30 13:10:51 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:49:58 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,16 @@ void	print_redir_list(t_list *redir)
 	while (redir)
 	{
 		content = (t_redir_data *)redir->content;
-		if (content)
-		{
-			ft_printf("	File name: [ %s ]", content->file_name);
-			if (content->type == REDIR_IN)
-				type = "<";
-			else if (content->type == REDIR_OUT)
-				type = ">";
-			else if (content->type == REDIR_APPEND)
-				type = ">>";
-			else if (content->type == REDIR_HERE_DOC)
-				type = "<<";
-			ft_printf("	type [ %s ]\n", type);
-		}
+		ft_printf("	File name: [ %s ]", content->f_name);
+		if (content->type == REDIR_IN)
+			type = "<";
+		else if (content->type == REDIR_OUT)
+			type = ">";
+		else if (content->type == REDIR_APPEND)
+			type = ">>";
+		else if (content->type == REDIR_HERE_DOC)
+			type = "<<";
+		ft_printf("	type [ %s ]\n", type);
 		redir = redir->next;
 	}
 }

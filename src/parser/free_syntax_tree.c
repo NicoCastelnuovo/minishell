@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 10:28:35 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/20 09:43:55 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:24:29 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static void	del_redir(void *content)
 	redir = (t_redir_data *)content;
 	if (redir)
 	{
-		if (redir->file_name)
-			free(redir->file_name);
+		if (redir->f_name)
+			free(redir->f_name);
 		redir->type = -1;
 		free(redir);
 	}

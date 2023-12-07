@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 10:17:26 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:51:15 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,20 +80,17 @@ static int	env_var_exist(char *tmp_var_name, t_list *env)
 	return (0);
 }
 
-static void	append_to_existing_var(t_list *env, t_var *tmp_var)
+static int	append_to_existing_var(t_var *var, char *new_value)
 {
-	t_list	*head;
-	t_var	*var;
+	char	*tmp;
 
-	head = env;
-	while (head)
-	{
-		var = (t_var *)head->content;
-
-		head = head->next;
-	}
+	tmp = var->value;
+	var->value = ft_strjoin(var->value, new_value); // protect
+	if (!var->value)
+		return (1);
+	free(tmp);
+	return (0);
 }
-
 
 static int	update_var_content(char *name, char *new_value, t_list *env)
 {
@@ -112,11 +109,8 @@ static int	update_var_content(char *name, char *new_value, t_list *env)
 		{
 			if (name[n] == '+')
 			{
-				tmp = var->value;
-				var->value = ft_strjoin(var->value, new_value); // protect
-				if (!var->value)
+				if (append_to_existing_var(var, new_value))
 					return (1);
-				free(tmp);
 			}
 			else
 			{
@@ -143,14 +137,13 @@ static int	check_export(char *arg, t_list **env)
 {
 	t_var	*tmp_var;
 	t_list	*new_node;
-	char	*tmp;
 
 	new_node = NULL;
 	tmp_var = NULL;
 	tmp_var = create_var_content(arg);
 	if (!env_var_exist(tmp_var->name, *env))
 	{
-		new_node = ft_lstnew(tmp_var); // protect
+		new_node = ft_lstnew(tmp_var);
 		if (!new_node)
 			return (1);
 		ft_lstadd_back(env, new_node);

@@ -6,26 +6,26 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 09:38:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 15:28:36 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:37:30 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-	For each variable name in the list, get_env_custom() is applied, and the value is
-	duplicated into the node. If the variable doesn't exist, an empty string
-	is duplicated.
+	For each variable name in the list, get_env_custom() is applied, and the
+	value is duplicated into the node. If the variable doesn't exist, an empty
+	string is duplicated.
 */
-static void	get_var_values(t_list *var_to_expand, t_list *env, int e_code)
+static void	get_var_values(t_list *var_store, t_list *env, int e_code)
 {
 	char	*expanded;
 	t_var	*var;
 
 	expanded = NULL;
-	while (var_to_expand)
+	while (var_store)
 	{
-		var = (t_var *)var_to_expand->content;
+		var = (t_var *)var_store->content;
 		if (var->name_len == 0)
 			expanded = ft_strdup("$");
 		else if (var->name[0] == '?' && var->name_len == 1)
@@ -36,21 +36,48 @@ static void	get_var_values(t_list *var_to_expand, t_list *env, int e_code)
 			expanded = ft_strdup("");
 		var->value = expanded;
 		var->value_len = ft_strlen(var->value);
-		var_to_expand = var_to_expand->next;
+		var_store = var_store->next;
 	}
 }
 
-static t_list	*get_var_names(char *s, int n)
+static int	add_node_to_var_store(char *s, t_list **var_store)
 {
-	t_list	*var_to_expand;
-	t_list	*new_node;
 	t_var	*var;
-	int		i;
-	char	is_open = -1;
+	t_list	*new_node;
 
-	var_to_expand = NULL;
+	var = ft_calloc(1, sizeof(t_var));
+	if (!var)
+		return (1);
+	var->name_len = get_var_name_len(s);
+	if (var->name_len == 0)
+		var->name = ft_strdup("$");
+	else
+		var->name = ft_substr(s, 0, var->name_len);
+	if (!var->name)
+		return (del_var_content(var), 1);
+	var->value = NULL;
+	var->value_len = -1;
+	new_node = ft_lstnew(var);
+	if (!new_node)
+		return (del_var_content(var), 1);
+	ft_lstadd_back(var_store, new_node);
+	return (0);
+}
+
+/*
+	Creates var_store, a t_list of t_var *, which stores the name of the
+	variables that have to be expanded, in the order that they're found.
+	Example. "Hello $$USER $HOME world$" results in:
+		$ -> USER -> HOME -> $ -> (null)
+*/
+static t_list	*store_var_names(char *s, int n, char is_open)
+{
+	t_list	*var_store;
+	int		i;
+
+	var_store = NULL;
 	i = 0;
-	while (i < n) /// includes stuff not to expand
+	while (i < n)
 	{
 		while (*s != '$')
 		{
@@ -58,33 +85,17 @@ static t_list	*get_var_names(char *s, int n)
 				change_is_open_quote(*s, &is_open);
 			s++;
 		}
-		// here is $
-		// s = ft_strchr(s, '$');
 		s++;
 		if (is_open == TKN_S_QUOTE)
 		{
 			i++;
 			continue ;
 		}
-		var = ft_calloc(1, sizeof(t_var));
-		if (!var)
-			return (ft_lstclear(&var_to_expand, del_to_expand), NULL);
-		var->name_len = get_var_name_len(s);
-		if (var->name_len == 0)
-			var->name = ft_strdup("$");
-		else
-			var->name = ft_substr(s, 0, var->name_len);
-		if (!var->name)
-			return (ft_lstclear(&var_to_expand, del_to_expand), NULL);
-		var->value = NULL;
-		var->value_len = -1;
-		new_node = ft_lstnew(var); // protect
-		if (!new_node)
-			return (ft_lstclear(&var_to_expand, del_to_expand), NULL);
-		ft_lstadd_back(&var_to_expand, new_node);
+		if (add_node_to_var_store(s, &var_store))
+			return (ft_lstclear(&var_store, del_var_content), NULL);
 		i++;
 	}
-	return (var_to_expand);
+	return (var_store);
 }
 
 /*
@@ -104,10 +115,10 @@ char	*expand(char *old_str, t_data *data)
 	if (!mid_str)
 		return (NULL);
 	n = get_n_dollars(mid_str);
-	to_expand = get_var_names(mid_str, n);
+	to_expand = store_var_names(mid_str, n, -1);
 	get_var_values(to_expand, data->env, data->e_code);
 	new_str = build_str(mid_str, to_expand);
-	ft_lstclear(&to_expand, del_to_expand);
+	ft_lstclear(&to_expand, del_var_content);
 	free(mid_str);
 	return (new_str);
 }
