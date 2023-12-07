@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:15:40 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/06 11:38:10 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 10:17:29 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,13 @@ static char	*get_env_var_value(char *env_var, t_var *var)
 {
 	char	*var_value;
 	int		shlvl;
+	char	*start;
 
 	// modify this horrible thing
+	// format possible ---> USER=hello | USER= | USER | USER=ok=
+	start = ft_strchr(env_var, '=');
+	if (!start)
+		return (NULL);
 	var_value = ft_substr(env_var, ft_strlen(var->name) + 1, ft_strlen(env_var) - ft_strlen(var->name));
 	if (ft_strcmp(var->name, "SHLVL") == 0)
 	{
@@ -45,11 +50,11 @@ static char	*get_env_var_value(char *env_var, t_var *var)
 		if (!var_value)
 			return (NULL);
 	}
-	if (ft_strcmp(var->name, "OLDPWD") == 0)
-	{
-		free(var_value);
-		var_value = NULL;
-	}
+	// if (ft_strcmp(var->name, "OLDPWD") == 0) // NOT possible for init() and update()
+	// {
+	// 	free(var_value);
+	// 	var_value = NULL;
+	// }
 	return (var_value);
 }
 

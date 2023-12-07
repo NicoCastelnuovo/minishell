@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/12/06 16:35:58 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 09:07:27 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,12 @@
 # include <readline/history.h>
 # include "stdbool.h"
 # include <signal.h>
-# include <termcap.h> // ???
-# include <termios.h>
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <limits.h>
 
 # include "libft.h"
 # include "ft_printf.h"
-# include "get_next_line.h"
 # include "lexer.h"
 # include "env.h"
 # include "parser.h"
@@ -48,8 +45,8 @@ typedef struct s_data
 }	t_data;
 
 /*
-	Custom error values are in the range between 106 (max errno value) and
-	126 (min reserved exit code), excluded.
+	Custom error values are in the range between 107 (106 is the max errno
+	value) and 127.
 */
 enum e_custom_errors
 {
@@ -97,9 +94,9 @@ int		get_interactive_input(int fd_tmp, char **eof, t_data *data);
 // ------------------------------------------------------------------- EXECUTOR
 int		executor(t_data *data);
 int		execute_single_cmd(t_data *data);
-void	child_single_cmd(t_data *data);
-
 int		execute_pipechain(t_data *data);
+
+void	child_single_cmd(t_data *data);
 void	child_pipechain(t_data *data, t_node *node, int *fd_pipe, int *prev_pipe);
 
 int		parent(t_data *data);
@@ -131,7 +128,6 @@ void	error(char *s1, char *s2, int err_id);
 int		ft_strcmp(const char *s1, const char *s2);
 void	free_data(t_data *data);
 int		get_substr_len(char *s, char c);
-int		is_valid_for_history(t_data *data);
 int		is_empty_input(char *s);
 
 #endif

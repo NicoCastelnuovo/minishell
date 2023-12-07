@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:49:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/06 16:39:26 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 08:50:59 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@ void	child_pipechain(t_data *data, t_node *node, int *fd_pipe, int *prev_pipe)
 	env = convert_to_dptr(data->env);
 	if (!env)
 		exit(1);
-	if (redirect_to_pipes(fd_pipe, prev_pipe, cmd))
+	if (redirect_to_pipes(fd_pipe, prev_pipe, cmd)) // changed verify
 		free_child_and_exit(data, env, 1);
 	if (redirect_to_explicit(node))
 		free_child_and_exit(data, env, 1);
 	if (is_builtin(cmd))
 		exit(call_builtin_function(cmd, data));
+	// fprintf(stderr, "fdin [%d]", cmd->fd_in);
+	// fprintf(stderr, "fdout [%d]", cmd->fd_out);
 	if (cmd->args)
 	{
 		resolve_args(&cmd->args[0], env);

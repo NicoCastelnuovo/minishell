@@ -6,61 +6,72 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:37:54 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/06 12:02:48 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 10:17:01 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	unset_head(t_list *head, t_list **env, char *name)
+{
+	if (head == (*env))
+	{
+		if (ft_strcmp(((t_var *)head->content)->name, name) == 0)
+		{
+			ft_lstdelone(head, del_var_content);
+			(*env) = (*env)->next;
+			return (1);
+		}
+	}
+	return (0);
+}
+
+static int	unset_mid_last(t_list *head, t_list **env, char *name)
+{
+	t_list	*next_node;
+
+	next_node = NULL;
+	if (head->next)
+	{
+		next_node = (t_list *)head->next;
+		if (ft_strcmp(((t_var *)next_node->content)->name, name) == 0)
+		{
+			head->next = next_node->next;
+			ft_lstdelone(next_node, del_var_content);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 static void	unset_single_var(char *name, t_list **env)
 {
 	t_list	*head;
-	t_list	*next_node;
 
 	head = (*env);
 	while (head)
 	{
-		if (head == (*env))
-		{
-			if (ft_strcmp(((t_var *)head->content)->name, name) == 0)
-			{
-				ft_lstdelone(head, del_var_content);
-				(*env) = (*env)->next;
-				break ;
-			}
-		}
-		if (head->next)
-		{
-			next_node = (t_list *)head->next;
-			if (ft_strcmp(((t_var *)next_node->content)->name, name) == 0)
-			{
-				head->next = next_node->next;
-				ft_lstdelone(next_node, del_var_content);
-				break ;
-			}
-		}
+		if (unset_head(head, env, name))
+			break ;
+		if (unset_mid_last(head, env, name))
+			break ;
 		head = head->next;
 	}
 }
 
 static int	is_valid_unset_identifier(char *arg)
 {
-	int	i;
-	int	assigned;
+	int		i;
 
-	assigned = 0;
 	i = 0;
-	// if (!ft_isalnum(arg[i]) && arg[i] != '_')
-	// 	return (error("unset", arg, CE_INVALIDIDENTIFIER), 0);
+	if (ft_strchr(arg, '='))
+		return (error("unset", arg, CE_INVALIDIDENTIFIER), 0);
+	if (ft_isdigit(arg[0]))
+		return (error("unset", arg, CE_INVALIDIDENTIFIER), 0);
 	while (arg[i])
 	{
-		if (!assigned)
-		{
-			if (arg[i] == '=')
-				assigned = 1;
-			else if (!ft_isalnum(arg[i]) && arg[i] != '_')
-				return (error("unset", arg, CE_INVALIDIDENTIFIER), 0);
-		}
+		if (!ft_isalnum(arg[i]) && arg[i] != '_')
+			return (error("unset", arg, CE_INVALIDIDENTIFIER), 0);
 		i++;
 	}
 	return (1);

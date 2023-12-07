@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 09:44:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/06 13:05:50 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 09:07:20 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ static void	inv_identifier_format(char *s, char *err_message)
 	return ;
 }
 
+/*
+	When an error occures, the function is called with 2 optional char *
+	arguments, which will compose the error message. When possible errno and
+	it's related error messages are used.
+*/
 void	error(char *s1, char *s2, int err_id)
 {
 	char	*err_message;

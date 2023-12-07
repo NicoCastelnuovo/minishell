@@ -29,10 +29,7 @@ free(tmp);
 8) export and unset invalid identifier done't work properly
 <!-- 9) Not sure about env->to_export variable, which told if the variable has to be exported -->
 <!-- 11) expot var+=something add omething to the existing variable or creates a new one -->
-12) echo -n -n -n -n -n
-	echo Hi | echo 99
-	exit ""
-	exit A 2 3 ---> not right error
+12)	export "" AND unset "" // export "" hello=1 '' world=2
 
 # LEAKS/VALGRIND
 <!-- 1) NOT existing commands (not happens in pipechain) -->

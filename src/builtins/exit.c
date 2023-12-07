@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:06:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/06 15:43:24 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 09:40:46 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,15 @@ static void	bye_bye(t_data *data, int last_e_code)
 	exit(last_e_code);
 }
 
-static int	is_valid_number(char *s)
+static int	is_valid_number(char *s, t_list *tkns)
 {
-	int		n;
-	size_t	i;
+	int			n;
+	size_t		i;
+	t_tkn_data	*tkn_cont;
 
+	tkn_cont = (t_tkn_data *)tkns->next->content;
+	if (tkn_cont->str[0] == '\'' || tkn_cont->str[0] == '\"')
+		return (0);
 	n = ft_atoi(s);
 	i = 0;
 	if (!n)
@@ -48,7 +52,7 @@ int	exit_custom(t_cmd *cmd, t_data *data)
 		bye_bye(data, data->e_code);
 	else
 	{
-		if (!is_valid_number(cmd->args[1]))
+		if (!is_valid_number(cmd->args[1], data->tokens))
 		{
 			error("exit", cmd->args[1], CE_NUM_REQUIRED);
 			bye_bye(data, 255);

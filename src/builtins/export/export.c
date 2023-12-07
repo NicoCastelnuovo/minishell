@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/06 13:01:29 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 10:17:26 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static void	append_to_existing_var(t_list *env, t_var *tmp_var)
 }
 
 
-static void	update_var_content(char *name, char *new_value, t_list *env)
+static int	update_var_content(char *name, char *new_value, t_list *env)
 {
 	t_var	*var;
 	int		n;
@@ -114,26 +114,32 @@ static void	update_var_content(char *name, char *new_value, t_list *env)
 			{
 				tmp = var->value;
 				var->value = ft_strjoin(var->value, new_value); // protect
+				if (!var->value)
+					return (1);
 				free(tmp);
 			}
 			else
 			{
 				free(var->value);
 				var->value = ft_strdup(new_value);
+				if (!var->value)
+					return (1);
 			}
-			return ;
 		}
 		env = env->next;
 	}
+	return (0);
 }
 
 /*
 	Exports the specified variable to the subshells and child processes.
-	• IF the var doesn't exist yet, a new one is created and appended
+	• IF the var doesn't exist yet, a new one is created and added to the env
 	• IF the var exist, if arg is initialized (at least = sign at the end),
-		the variable need to be updated.
+		the variable need to be replaced. If at the left ofthe equal sign there
+		is a + , than the old value is not replaces, but the new one is
+		appended.
 */
-static void	check_export(char *arg, t_list **env)
+static int	check_export(char *arg, t_list **env)
 {
 	t_var	*tmp_var;
 	t_list	*new_node;
@@ -145,16 +151,20 @@ static void	check_export(char *arg, t_list **env)
 	if (!env_var_exist(tmp_var->name, *env))
 	{
 		new_node = ft_lstnew(tmp_var); // protect
+		if (!new_node)
+			return (1);
 		ft_lstadd_back(env, new_node);
 	}
 	else
 	{
 		if (tmp_var->value)
 		{
-			update_var_content(tmp_var->name, tmp_var->value, *env);
+			if (update_var_content(tmp_var->name, tmp_var->value, *env))
+				return (1);
 			del_var_content(tmp_var);
 		}
 	}
+	return (0);
 }
 
 static int	is_valid_export_identifier(char *arg)
@@ -194,7 +204,10 @@ int	export(t_cmd *cmd, t_data *data)
 		while (cmd->args[i])
 		{
 			if (is_valid_export_identifier(cmd->args[i]))
-				check_export(cmd->args[i], &data->env);
+			{
+				if (check_export(cmd->args[i], &data->env))
+					return (1);
+			}
 			i++;
 		}
 	}

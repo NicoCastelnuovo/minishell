@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:43:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/06 16:38:43 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:08:01 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int	redirect_to_pipes(int *fd_pipe, int *prev_pipe, t_cmd *cmd)
 		// 	cmd->fd_in = fd_ret;
 		close(*prev_pipe);
 	}
-	if (fd_ret == -1)
+	if (fd_ret == -1) // error was here probably !
 		return (error("dup2", NULL, errno), 1);
 	return (0);
 }

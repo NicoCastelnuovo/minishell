@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:20:48 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/06 11:23:24 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 10:32:47 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,40 @@ char	*get_wd(void)
 	return (buff);
 }
 
-static void	update_existing_var(char *name, char *new_value, t_list **env)
+static int	create_new_var(char *name, char *new_value, t_list **env)
+{
+	char	*env_var;
+	char	*tmp;
+	t_var	*new_var;
+	t_list	*new_node;
+
+	new_var = NULL;
+	tmp = NULL;
+	env_var = ft_strjoin(name, "=");
+	if (!env_var)
+		return (1);
+	tmp = env_var;
+	env_var = ft_strjoin(env_var, new_value);
+	if (!env_var)
+		return (1);
+	free(tmp);
+	new_var = create_var_content(env_var);
+	free(env_var);
+	if (!new_var)
+		return (1);
+	new_node = ft_lstnew(new_var);
+	if (!new_node)
+		return (del_var_content(new_var), 1);
+	ft_lstadd_back(env, new_node);
+	return (0);
+}
+
+/*
+	Update the existing variables OLDPWD and PWD. If They are not found in the
+	list, then they are created. To test it, unset OLDPWD and PWD, and than
+	run the builtin 'cd'.
+*/
+static int	update_var_or_create(char *name, char *new_value, t_list **env)
 {
 	t_list	*head;
 	t_var	*var;
@@ -48,10 +81,13 @@ static void	update_existing_var(char *name, char *new_value, t_list **env)
 		{
 			var->value = new_value;
 			var->value_len = ft_strlen(new_value);
-			return ;
+			return (0);
 		}
 		head = head->next;
 	}
+	if (create_new_var(name, new_value, env))
+		return (1);
+	return (0);
 }
 
 /*
@@ -77,11 +113,11 @@ int	cd(t_cmd *cmd, t_data *data)
 	}
 	else
 	{
-		update_existing_var("OLDPWD", curr_pwd, &data->env);
+		update_var_or_create("OLDPWD", curr_pwd, &data->env); // protect
 		new_abs_path = get_wd();
 		if (!new_abs_path)
 			return (error("cd", NULL, errno), 1);
-		update_existing_var("PWD", new_abs_path, &data->env);
+		update_var_or_create("PWD", new_abs_path, &data->env); // protect
 	}
 	return (0);
 }
