@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:37:54 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 11:16:39 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:22:38 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static int	unset_mid_last(t_list *head, char *name)
 {
 	t_list	*next_node;
 
-	(void)env;
 	next_node = NULL;
 	if (head->next)
 	{
