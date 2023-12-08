@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:49:16 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 14:23:13 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/08 13:42:55 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	wait_children(pid_t *ps_id, int n_cmd, int *wstatus)
 	i = 0;
 	while (i < n_cmd)
 	{
-		w_pid = waitpid(ps_id[i], wstatus, 0);
+		w_pid = waitpid(ps_id[i], wstatus, 0); // catch error in case of ps_id[i] = -1
 		// if (w_pid == -1)
 		// 	return (error("waitpid", NULL, errno), 1);
 		if (w_pid == ps_id[i])
@@ -71,7 +71,7 @@ static void	unlink_here_doc(t_node *tree)
 		node = pipe->right;
 	}
 	cmd = (t_cmd *)node->content;
-	iter_redirections(cmd->redir); // ADDED
+	iter_redirections(cmd->redir);
 }
 
 int	parent(t_data *data)

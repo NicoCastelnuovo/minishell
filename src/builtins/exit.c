@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:06:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 11:11:29 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:22:30 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	exit_custom(t_cmd *cmd, t_data *data)
 	int		n;
 
 	n = 0;
-	if (!cmd) // ------ remove ?
+	if (!cmd) // ------ remove ? Added to test leaks
 		bye_bye(data, data->e_code);
 	ft_putendl_fd("exit", 1);
 	while (cmd->args[n])

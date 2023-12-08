@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 08:34:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 14:26:11 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:23:20 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static int	redir_quote_removal(t_cmd *cmd)
 		{
 			if (ft_strchr(tmp, TKN_D_QUOTE) || ft_strchr(tmp, TKN_S_QUOTE))
 			{
-				// tmp = redir_cont->f_name; // moved to line 55
 				redir_cont->f_name = remove_quote_pairs(redir_cont->f_name);
 				if (!redir_cont->f_name)
 					return (error(tmp, NULL, CE_EXP), free(tmp), 1);

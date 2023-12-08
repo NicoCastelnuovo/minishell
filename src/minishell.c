@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 11:11:30 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/08 13:14:04 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,21 @@ static void	shell_loop(t_data *data)
 {
 	while (1)
 	{
-		// data->input = readline(data->prompt);
-		data->input = ft_strdup("echo $$$$USER$$$$$$$$"); // -----> valgrind problems
+		data->input = readline(data->prompt);
+		// data->input = ft_strdup("<<EOF cat -e | >out"); // -----> valgrind problems
 		if (!data->input)
 			break ; // ----> print exit && check if call exit_custom()
 		if (ft_strlen(data->input) != 0)
 		{
 			lexer(data->input, &data->tokens);
-			print_tokens(data->tokens);
 			parser(data);
-			print_syntax_tree(data->tree);
 			expansion(data);
 			quote_removal(data);
 			here_doc(data->tree, data);
 			executor(data);
-			// add_history(data->input);
+			add_history(data->input);
 			free_data(data);
-			exit_custom(NULL, data); // ---> remove!
+			// exit_custom(NULL, data); // ---> remove!
 		}
 	}
 }

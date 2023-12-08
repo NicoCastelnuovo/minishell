@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 11:51:15 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:22:40 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int	append_to_existing_var(t_var *var, char *new_value)
 	char	*tmp;
 
 	tmp = var->value;
-	var->value = ft_strjoin(var->value, new_value); // protect
+	var->value = ft_strjoin(var->value, new_value);
 	if (!var->value)
 		return (1);
 	free(tmp);

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 13:05:04 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/01 12:29:43 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/08 13:42:53 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,13 @@ static char	*get_abs_path(char *cmd_name, char **env)
 	cmd_name will be the one which will be passed inside execve(), else,
 	the original cmd_name is substituted with abs_path.
 */
-int	resolve_args(char **cmd_name, char **env) // return vaue not catched
+int	resolve_args(char **cmd_name, char **env)
 {
 	char	*abs_path;
 	char	*tmp;
 
+	// check if already an abs path (/something)
+	// -1 is error ???
 	abs_path = get_abs_path(*cmd_name, env);
 	if (!abs_path)
 		return (1);

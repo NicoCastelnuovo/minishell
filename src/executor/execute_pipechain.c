@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 10:08:00 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/06 16:06:31 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/08 13:24:06 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static int	fork_first_and_mid_ps(t_data *data, t_node *node, int *prev_pipe, int
 		close(fd_pipe[1]);
 		close(*prev_pipe);
 		*prev_pipe = fd_pipe[0];
-		// close fd_pipe ??? check
 	}
 	return (0);
 }

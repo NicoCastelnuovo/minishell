@@ -6,26 +6,15 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 10:06:56 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 16:12:41 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/08 13:09:40 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_child_and_exit(t_data *data, char **env, int e_code)
-{
-	// close pipes !!!!!!!!????
-	// free_cmd_node(node);
-	if (data)
-		free_data(data);
-	if (env)
-		free_dptr(env);
-	exit(e_code);
-}
-
 static int	fork_one_ps(t_data *data)
 {
-	data->pid = ft_calloc(1, sizeof(int)); // ??? leak
+	data->pid = ft_calloc(1, sizeof(int));
 	if (!data->pid)
 	{
 		data->e_code = 1;
@@ -45,7 +34,7 @@ static int	fork_one_ps(t_data *data)
 	would be "cd" command, which would change the directory inside the child ps
 	and not in the parent.
 */
-int	execute_single_cmd(t_data *data) // void or int ?
+int	execute_single_cmd(t_data *data)
 {
 	if (is_builtin(data->tree->content))
 		return (run_builtin_same_ps(data));

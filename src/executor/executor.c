@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 08:31:08 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/06 15:45:41 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/08 13:48:19 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,19 @@ static int	get_n_cmds(t_node *node)
 
 int	executor(t_data *data)
 {
-	if (!data->tree) // right ??
+	if (!data->tree)
 		return (1);
 	data->n_ps = get_n_cmds(data->tree);
 	if (data->tree->type == IS_CMD)
 	{
-		if (execute_single_cmd(data))
+		if (execute_single_cmd(data)) // parent has to wait
 			return (1);
 	}
 	else
 	{
-		if (execute_pipechain(data)) // waht happend if a child in the middle fails?
+		if (execute_pipechain(data)) // parent has to wait
 			return (1);
 	}
-	parent(data);
+	parent(data); // return value ???
 	return (0);
 }
