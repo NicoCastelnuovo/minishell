@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:35:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 14:07:42 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:12:51 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 	@line	rl_on_new_line() - tell the program to move to a new line
 	@line	rl_redisplay() - update what is displayed, to reflect the buffer
 */
-/* static void	handle_sa_newline(int sig_n)
+static void	handle_sa_newline(int sig_n)
 {
 	(void)sig_n;
 	ft_putchar_fd('\n', 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-} */
+}
 
 void	init_sig_handling(void)
 {
@@ -40,10 +40,10 @@ void	init_sig_handling(void)
 	sigaddset(&set, SIGQUIT);	// <backsl>
 
 	// ctrl C
-	// sa_newline.sa_handler = &handle_sa_newline;
-	// sa_newline.sa_flags = 0;
-	// // sa_newline.sa_mask = set;
-	// sigaction(SIGINT, &sa_newline, NULL);
+	sa_newline.sa_handler = &handle_sa_newline;
+	sa_newline.sa_flags = 0;
+	sa_newline.sa_mask = set;
+	sigaction(SIGINT, &sa_newline, NULL);
 
 	// ctrl <backsl> --- nothing
 	sa_ignore.sa_handler = SIG_IGN;

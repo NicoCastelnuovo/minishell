@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 16:02:44 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:31:45 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,41 +17,7 @@
 	order, including the variables which are not initialized.
 */
 
-/* t_list	*copy(t_list *env)
-{
-	t_list	**head;
-	t_list	*new;
-	t_var	*var;
-
-	head = NULL;
-	while (env)
-	{
-		var = ft_calloc(1, sizeof(t_var));
-		new = ft_lstnew(var);
-		ft_lstadd_back(head, new);
-		var->name = ft_strdup(((t_var *)(env->content))->name);
-		var->name_len = ((t_var *)(env->content))->name_len;
-		var->value = ft_strdup(((t_var *)(env->content))->value);
-		var->value_len = ((t_var *)(env->content))->value_len;
-		env = env->next;
-	}
-	
-}
-
-void	print_env_copy(t_list *env_copy)
-{
-	while (env_copy)
-	{
-		printf("name = %s\n", ((t_var *)(env_copy->content))->name);
-		printf("name_len = %s\n", ((t_var *)(env_copy->content))->name_len);
-		printf("value = %s\n", ((t_var *)(env_copy->content))->value);
-		printf("value_len = %s\n", ((t_var *)(env_copy->content))->value_len);
-		env_copy = env_copy->next;
-	}
-	
-} */
-
-void	print_dptr_contetnt(char **dptr)
+/* void	print_dptr_contetnt(char **dptr)
 {
 	int	i;
 
@@ -72,48 +38,6 @@ void	print_all_env(t_list *env)
 		env = env->next;
 	}
 	
-}
-
-
-
-/* char	**env_convert_to_double_pointer(t_list *env)
-{
-	char	**env_dptr;
-	int		i;
-	char	*name_value;
-	char	*temp;
-	
-	i = 0;
-	env_dptr = ft_calloc(ft_lstsize(env) + 1, sizeof(char *));
-	while (env)
-	{
-		name_value = ft_strjoin(((t_var *)(env->content))->name, "=");
-		temp = name_value;
-		name_value = ft_strjoin(name_value, "\"");
-		free(temp);
-		temp = name_value;
-		if (((t_var *)(env->content))->value)
-			name_value = ft_strjoin(name_value, ((t_var *)(env->content))->value);
-		else
-		{
-			name_value = ft_strjoin(name_value, "\"");
-			env_dptr[i] = name_value;
-			free(temp);
-			env = env->next;
-			i++;
-			continue ;
-		}
-		free(temp);
-		temp = name_value;
-		name_value = ft_strjoin(name_value, "\"");
-		free(temp);
-		env_dptr[i] = name_value;
-		ft_printf("🤬\n");
-		env = env->next;
-		i++;
-	}
-	
-	return (env_dptr);
 } */
 
 char	**env_convert_to_double_pointer(t_list *env)
@@ -172,50 +96,36 @@ char	**sort_export(t_list *env)
 	return (env_dptr);
 }
 
-/* char	*add_double_quotes(char *sorted_env)
-{
-	char	*quoted_name_value;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	quoted_name_value = ft_calloc(ft_strlen(sorted_env) + 3, sizeof(char));
-	while (*sorted_env)
-	{
-		if (sorted_env[i] == '=')
-		{
-			quoted_name_value[i] = '"';
-			quoted_name_value[i + 1] = sorted_env[j];
-			
-		}
-		quoted_name_value[i] = sorted_env[j];
-		sorted_env++;
-		i++;
-		j++;
-	}
-	
-} */
-
 int	print_exported(t_list *env)
 {
-	// t_var	*var;
 	char	**sorted_env;
-	// char	*quoted_name_value;
-	int		i;
+	char	**temp;
+	bool	is_equal;
 
-	i = 0;
+	is_equal = false;
 	sorted_env = sort_export(env);
-	while (*sorted_env)
+	temp = sorted_env;
+	while (*temp)
 	{
-		while (**sorted_env)
+		while (**temp)
 		{
-			printf("%c", (**sorted_env));
-			(*sorted_env)++;
+			ft_putchar_fd(**temp, 1);
+			if (**temp == '=')
+			{
+				ft_putchar_fd('"', 1);
+				is_equal = true;
+			}
+			(*temp)++;
 		}
-		sorted_env++;
-		printf("\n");
+		if (is_equal)
+		{
+			ft_putchar_fd('"', 1);
+			is_equal = false;
+		}
+		temp++;
+		ft_putchar_fd('\n', 1);
 	}
+	free(sorted_env);
 	return (0);
 }
 
