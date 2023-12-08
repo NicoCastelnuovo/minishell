@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 10:39:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/01 11:50:03 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:39:57 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	get_interactive_input(int fd_tmp, char **eof, t_data *data)
 	}
 	else
 	{
-		if (write_into_tmp_file(fd_tmp, *eof, data)) // no quotes
+		if (write_into_tmp_file(fd_tmp, *eof, data))
 			return (1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 08:34:59 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 16:40:35 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:26:11 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	args_quote_removal(t_cmd *cmd)
 				cmd->args[i] = remove_quote_pairs(cmd->args[i]);
 				free(tmp);
 				if (cmd->args[i] == NULL)
-					return (error(cmd->args[i], NULL, CE_EXPANSION), 1);
+					return (error(cmd->args[i], NULL, CE_EXP), 1);
 			}
 			i++;
 		}
@@ -52,15 +52,15 @@ static int	redir_quote_removal(t_cmd *cmd)
 	while (redir)
 	{
 		redir_cont = (t_redir_data *)redir->content;
-		tmp = redir_cont->file_name;
+		tmp = redir_cont->f_name;
 		if (redir_cont->type != REDIR_HERE_DOC)
 		{
 			if (ft_strchr(tmp, TKN_D_QUOTE) || ft_strchr(tmp, TKN_S_QUOTE))
 			{
-				// tmp = redir_cont->file_name; // moved to line 55
-				redir_cont->file_name = remove_quote_pairs(redir_cont->file_name); // why i put the expand here ---- ????
-				if (!redir_cont->file_name)
-					return (error(tmp, NULL, CE_EXPANSION), free(tmp), 1);
+				// tmp = redir_cont->f_name; // moved to line 55
+				redir_cont->f_name = remove_quote_pairs(redir_cont->f_name);
+				if (!redir_cont->f_name)
+					return (error(tmp, NULL, CE_EXP), free(tmp), 1);
 				free(tmp);
 			}
 		}
@@ -90,7 +90,7 @@ void	quote_removal(t_data *data)
 	t_cmd	*cmd;
 	t_pipe	*pipe;
 
-	if (!data->tree) // || data->e_code ??? VERIFY !!!!!
+	if (!data->tree)
 		return ;
 	node = data->tree;
 	while (node->type == IS_PIPE)

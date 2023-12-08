@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:49:16 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 10:02:26 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:23:13 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	iter_redirections(t_list *redir)
 	{
 		content = (t_redir_data *)head->content;
 		if (content->type == REDIR_HERE_DOC)
-			unlink(content->file_name);
+			unlink(content->f_name);
 		head = head->next;
 	}
 }

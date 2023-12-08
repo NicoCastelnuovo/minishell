@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:49:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/27 09:48:24 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:30:41 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	get_varname_len(t_list *var_to_expand)
 	{
 		var = (t_var *)var_to_expand->content;
 		if (var->name_len > 0)
-			len += var->name_len + 1; // because of $ not counted in
+			len += var->name_len + 1;
 		var_to_expand = var_to_expand->next;
 	}
 	return (len);
@@ -76,9 +76,8 @@ static char	*create_new_str(t_list *var_to_expand, int total_len, char *old_str)
 		}
 		else
 		{
-			new_str[i] = *old_str;
+			new_str[i++] = *old_str;
 			old_str++;
-			i++;
 		}
 	}
 	return (new_str);

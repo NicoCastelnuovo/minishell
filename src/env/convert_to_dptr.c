@@ -6,11 +6,30 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:49:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 14:02:11 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:18:03 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+	Counts the number of variables whose value is not NULL.
+*/
+int	get_exported_var_n(t_list *env)
+{
+	t_var	*var;
+	int		n;
+
+	n = 0;
+	while (env)
+	{
+		var = (t_var *)env->content;
+		if (var->value)
+			n++;
+		env = env->next;
+	}
+	return (n);
+}
 
 static char	*prepare_var(char *name, char *value)
 {
@@ -40,7 +59,7 @@ char	**convert_to_dptr(t_list *env)
 	char	*joined;
 
 	n = get_exported_var_n(env);
-	new_env = ft_calloc(n + 1, sizeof(char *)); // protect
+	new_env = ft_calloc(n + 1, sizeof(char *));
 	if (!new_env)
 		return (error("convert env to dptr", NULL, errno), NULL);
 	new_env[n] = NULL;
@@ -48,13 +67,12 @@ char	**convert_to_dptr(t_list *env)
 	while (env)
 	{
 		var = (t_var *)env->content;
-		if (var->value) // changed from var->to_export
+		if (var->value)
 		{
 			joined = prepare_var(var->name, var->value);
 			if (!joined)
-				return (NULL); // free
+				return (free_dptr(new_env), NULL);
 			new_env[i++] = joined;
-			// i++;
 		}
 		env = env->next;
 	}

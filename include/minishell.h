@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/12/07 09:07:27 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:26:04 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ enum e_custom_errors
 	CE_TOOMANYARGS = 109,
 	CE_SYNTAX_ERROR = 110,
 	CE_SYNTAX_TREE = 111,
-	CE_EXPANSION = 112,
+	CE_EXP = 112,
 	CE_HERE_DOC = 113,
 	CE_OVERFLOW = 114,
 	CE_NUM_REQUIRED = 115,
@@ -78,7 +78,6 @@ int		get_var_name_len(char *s);
 char	*expand(char *s, t_data *data);
 char	*remove_translation_operator(char *old_str);
 char	*build_str(char *old_str, t_list *var_lst);
-void	del_to_expand(void *content);
 void	print_expansion(t_list *var_lst);
 
 // -------------------------------------------------------------- QUOTE REMOVAL
@@ -124,6 +123,7 @@ t_list	*sort_env(t_list *old);
 int		unset(t_cmd *cmd, t_data *data);
 
 // ---------------------------------------------------------------------- UTILS
+char	*get_wd(void);
 void	error(char *s1, char *s2, int err_id);
 int		ft_strcmp(const char *s1, const char *s2);
 void	free_data(t_data *data);

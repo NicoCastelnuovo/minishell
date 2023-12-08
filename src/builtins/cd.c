@@ -6,34 +6,11 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:20:48 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 10:32:47 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 13:48:17 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*get_wd(void)
-{
-	char	*buff;
-	size_t	size;
-
-	buff = NULL;
-	size = 1;
-	buff = ft_calloc(size + 1, sizeof(char));
-	if (!buff)
-		return (NULL);
-	buff = getcwd(buff, size);
-	while (!buff)
-	{
-		free(buff);
-		size += 1;
-		buff = ft_calloc(size + 1, sizeof(char));
-		if (!buff)
-			return (NULL);
-		buff = getcwd(buff, size);
-	}
-	return (buff);
-}
 
 static int	create_new_var(char *name, char *new_value, t_list **env)
 {
@@ -90,6 +67,21 @@ static int	update_var_or_create(char *name, char *new_value, t_list **env)
 	return (0);
 }
 
+static int	update_pwd_oldpwd(char *curr_pwd, t_list **env)
+{
+	char	*new_abs_path;
+
+	new_abs_path = NULL;
+	if (update_var_or_create("OLDPWD", curr_pwd, env))
+		return (1);
+	new_abs_path = get_wd();
+	if (!new_abs_path)
+		return (1);
+	if (update_var_or_create("PWD", new_abs_path, env))
+		return (1);
+	return (0);
+}
+
 /*
 	cd changes the current working directory of the current shell env. Only a
 	relative or an absolute path are accepted.
@@ -98,7 +90,6 @@ int	cd(t_cmd *cmd, t_data *data)
 {
 	char	*destination;
 	char	*curr_pwd;
-	char	*new_abs_path;
 
 	curr_pwd = get_wd();
 	if (!curr_pwd)
@@ -113,11 +104,8 @@ int	cd(t_cmd *cmd, t_data *data)
 	}
 	else
 	{
-		update_var_or_create("OLDPWD", curr_pwd, &data->env); // protect
-		new_abs_path = get_wd();
-		if (!new_abs_path)
+		if (update_pwd_oldpwd(curr_pwd, &data->env))
 			return (error("cd", NULL, errno), 1);
-		update_var_or_create("PWD", new_abs_path, &data->env); // protect
 	}
 	return (0);
 }

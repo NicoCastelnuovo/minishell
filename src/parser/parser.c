@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 09:04:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 15:11:32 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:46:37 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	parser(t_data *data)
 {
 	if (!data->tokens)
 		return ;
-	if (check_for_syntax_err(data->tokens))
+	if (check_for_syntax_err(data->tokens, 0))
 	{
 		data->e_code = 258;
 		return ;

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/11/21 09:04:55 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:53:46 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef enum e_redir_type
 
 typedef struct s_redir_data
 {
-	char			*file_name;
+	char			*f_name;
 	t_redir_type	type;
 }	t_redir_data;
 
@@ -77,7 +77,7 @@ void	free_pipe_node(t_node *node_p);
 void	free_dptr(char **p);
 
 // -------------------------------------------------------------- SYNTAX ERRORS
-int		check_for_syntax_err(t_list *tkn);
+int		check_for_syntax_err(t_list *tkn, int i);
 int		is_redir(t_tkn_type tkn_type);
 
 // ----------------------------------------------------------- UPDATE CMD TABLE

@@ -6,22 +6,22 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:43:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 14:07:10 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:18:44 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	open_with_right_mode(char *file_name, int last_fd, int flags, int mode)
+static int	open_with_right_mode(char *f_name, int last_fd, int flags, int mode)
 {
 	int fd;
 
 	fd = -2;
 	if (last_fd >= 0)
 		close(last_fd);
-	fd = open(file_name, flags, mode);
+	fd = open(f_name, flags, mode);
 	if (fd == -1)
-		return (error(file_name, NULL, errno), -1);
+		return (error(f_name, NULL, errno), -1);
 	return (fd);
 }
 
@@ -35,19 +35,19 @@ static int	is_valid_fd(t_cmd *cmd, t_redir_data *redir)
 	if (redir->type == REDIR_IN || redir->type == REDIR_HERE_DOC)
 	{
 		flags = O_RDONLY;
-		cmd->fd_in = open_with_right_mode(redir->file_name, cmd->fd_in, flags, 0);
+		cmd->fd_in = open_with_right_mode(redir->f_name, cmd->fd_in, flags, 0);
 		return (cmd->fd_in); // 0 mode is ignored
 	}
 	else if (redir->type == REDIR_OUT)
 	{
 		flags = O_WRONLY | O_CREAT | O_TRUNC;
-		cmd->fd_out = open_with_right_mode(redir->file_name, cmd->fd_out, flags, 0644);
+		cmd->fd_out = open_with_right_mode(redir->f_name, cmd->fd_out, flags, 0644);
 		return (cmd->fd_out);
 	}
 	else if (redir->type == REDIR_APPEND)
 	{
 		flags = O_WRONLY | O_CREAT | O_APPEND;
-		cmd->fd_out = open_with_right_mode(redir->file_name, cmd->fd_out, flags, 0644);
+		cmd->fd_out = open_with_right_mode(redir->f_name, cmd->fd_out, flags, 0644);
 		return (cmd->fd_out);
 	}
 	return (fd);

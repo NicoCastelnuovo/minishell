@@ -51,11 +51,11 @@ EXECUTOR = executor.c \
 	parent.c \
 
 ENV = init_env.c \
-	get_exported_var_n.c \
 	create_var_content.c \
 	del_var_content.c \
 	get_env_custom.c \
-	convert_to_dptr.c
+	convert_to_dptr.c \
+	create_essential_env.c
 
 EXPANSION = check_expansion.c \
 	expansion.c \
@@ -85,7 +85,8 @@ SIGNALS = sig_handler.c
 UTILS = free_data.c \
 	ft_strcmp.c \
 	is_empty_input.c \
-	error.c
+	error.c \
+	get_wd.c
 
 LEXER = lexer.c \
 	tokenize_input.c \

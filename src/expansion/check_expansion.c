@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:18:55 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/06 11:40:16 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:59:20 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ static int	redir_expansion(t_cmd *cmd, t_data *data)
 		redir_content = (t_redir_data *)redir->content;
 		if (redir && redir_content->type != REDIR_HERE_DOC)
 		{
-			if (ft_strchr(redir_content->file_name, '$'))
+			if (ft_strchr(redir_content->f_name, '$'))
 			{
-				tmp = redir_content->file_name;
-				redir_content->file_name = expand(redir_content->file_name, data);
+				tmp = redir_content->f_name;
+				redir_content->f_name = expand(redir_content->f_name, data);
 				free(tmp);
-				if (!redir_content->file_name)
-					return (error(redir_content->file_name, NULL, CE_EXPANSION), 1);
+				if (!redir_content->f_name)
+					return (error(redir_content->f_name, NULL, CE_EXP), 1);
 			}
 		}
 		redir = redir->next;
@@ -57,7 +57,7 @@ static int	args_expansion(t_cmd *cmd, t_data *data)
 				cmd->args[i] = expand(cmd->args[i], data);
 				free(tmp);
 				if (cmd->args[i] == NULL)
-					return (error(cmd->args[i], NULL, CE_EXPANSION), 1);
+					return (error(cmd->args[i], NULL, CE_EXP), 1);
 			}
 			i++;
 		}

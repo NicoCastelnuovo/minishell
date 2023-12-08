@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 09:39:13 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 16:28:16 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:42:08 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	get_fd_tmp(t_redir_data *redir_cont, int fd_tmp, int n)
 				return (error("here_doc", "open", errno), -1);
 		}
 	}
-	free(redir_cont->file_name);
-	redir_cont->file_name = tmp_name;
+	free(redir_cont->f_name);
+	redir_cont->f_name = tmp_name;
 	return (fd_tmp);
 }

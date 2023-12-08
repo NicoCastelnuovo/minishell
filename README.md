@@ -17,7 +17,6 @@ free(tmp);
 
 # FARSHAD
 1) Signals
-2) Use tests
 3) Check if every file is closed -> update:
 	- file are always closed when one or more child is forked,
 		but it's not closed when a builtin is executed (because it doesn't go in child function)
@@ -26,10 +25,10 @@ free(tmp);
 4) export -> print in alphabetical order
 6) Which is status of syntax error? 258 or 2?
 7) What if example the expander makes error in the middle
-8) export and unset invalid identifier done't work properly
+<!-- 8) export and unset invalid identifier done't work properly -->
 <!-- 9) Not sure about env->to_export variable, which told if the variable has to be exported -->
 <!-- 11) expot var+=something add omething to the existing variable or creates a new one -->
-12)	export "" AND unset "" // export "" hello=1 '' world=2
+<!-- 12)	export "" AND unset "" // export "" hello=1 '' world=2 -->
 
 # LEAKS/VALGRIND
 <!-- 1) NOT existing commands (not happens in pipechain) -->

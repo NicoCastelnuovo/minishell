@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:53:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/05 15:11:14 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:50:12 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ static void	update_cmd_redir(t_list *curr_tkn, t_cmd *cmd)
 	{
 		new_content = ft_calloc(1, sizeof(t_redir_data)); // protect
 		new_content->type = get_redir_type(tkn_content->type);
-		new_content->file_name = NULL;
+		new_content->f_name= NULL;
 		new_node = ft_lstnew(new_content); // protect
 		ft_lstadd_back(&cmd->redir, new_node);
 	}
 	else // file name
 	{
 		last = ft_lstlast(cmd->redir);
-		((t_redir_data *)last->content)->file_name = ft_strdup(tkn_content->str);
+		((t_redir_data *)last->content)->f_name= ft_strdup(tkn_content->str);
 	}
 }
 

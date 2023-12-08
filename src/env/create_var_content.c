@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:15:40 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 10:17:29 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:02:18 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,37 +27,32 @@ int	get_substr_len(char *s, char c)
 			return (i);
 		i++;
 	}
-	return (i); // changed
+	return (i);
 }
 
 static char	*get_env_var_value(char *env_var, t_var *var)
 {
 	char	*var_value;
-	int		shlvl;
-	char	*start;
+	char	*is_assigned;
+	int		start;
+	int		len;
 
-	// modify this horrible thing
-	// format possible ---> USER=hello | USER= | USER | USER=ok=
-	start = ft_strchr(env_var, '=');
-	if (!start)
+	is_assigned = ft_strchr(env_var, '=');
+	if (!is_assigned)
 		return (NULL);
-	var_value = ft_substr(env_var, ft_strlen(var->name) + 1, ft_strlen(env_var) - ft_strlen(var->name));
-	if (ft_strcmp(var->name, "SHLVL") == 0)
-	{
-		shlvl = ft_atoi(var_value) + 1;
-		free(var_value);
-		var_value = ft_itoa(shlvl);
-		if (!var_value)
-			return (NULL);
-	}
-	// if (ft_strcmp(var->name, "OLDPWD") == 0) // NOT possible for init() and update()
-	// {
-	// 	free(var_value);
-	// 	var_value = NULL;
-	// }
+	start = ft_strlen(var->name) + 1;
+	len = ft_strlen(env_var) - ft_strlen(var->name);
+	var_value = ft_substr(env_var, start, len);
 	return (var_value);
 }
 
+/*
+	This is a generic function which create a t_var * containing name and
+	value of a variable, accepting a string in the following formats:
+		• USER
+		• USER=
+		• USER=new-user-name
+*/
 t_var	*create_var_content(char *env_var)
 {
 	t_var	*var;
@@ -68,7 +63,7 @@ t_var	*create_var_content(char *env_var)
 	var->name_len = get_substr_len(env_var, '=');
 	var->name = ft_calloc(var->name_len + 1, sizeof(char));
 	if (!var->name)
-		return (NULL); // free() ???
+		return (del_var_content(var), NULL);
 	ft_strlcpy(var->name, env_var, var->name_len + 1);
 	var->value = get_env_var_value(env_var, var);
 	var->value_len = -1;
