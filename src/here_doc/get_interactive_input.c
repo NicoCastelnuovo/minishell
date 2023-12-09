@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_interactive_input.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 10:39:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 11:25:07 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 15:59:44 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	get_interactive_input(int fd_tmp, char **eof, t_data *data)
 {
 	char	*tmp;
 
+	
 	tmp = NULL;
 	if (ft_strchr(*eof, TKN_S_QUOTE) || ft_strchr(*eof, TKN_D_QUOTE))
 	{

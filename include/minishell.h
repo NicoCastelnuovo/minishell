@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/12/09 10:38:07 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 17:36:00 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <sys/wait.h>
 # include <sys/stat.h>	// used for dirctory checking
 # include <limits.h>
+#include <termios.h>
+#include <sys/ioctl.h>
 
 # include "libft.h"
 # include "ft_printf.h"
@@ -132,5 +134,7 @@ void	free_data(t_data *data);
 int		get_substr_len(char *s, char c);
 int		is_empty_input(char *s);
 void	del_redir_content(void *content);
+
+extern int	g_sig_num;
 
 #endif

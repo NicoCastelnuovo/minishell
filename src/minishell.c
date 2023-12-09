@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/09 12:45:36 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/09 18:04:11 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,18 @@ static void	shell_loop(t_data *data)
 {
 	while (1)
 	{
-		// data->input = readline(data->prompt);
-		data->input = ft_strdup("$USER$HOME$$$$$?$?$?$$$$"); // -----> valgrind problems
+		init_sig_handling();
+		data->input = readline(data->prompt); // -----> valgrind problems
 		if (!data->input)
 			break ; // ----> print exit && check if call exit_custom()
 		if (ft_strlen(data->input) != 0)
 		{
+			if (g_sig_num != 0)
+			{
+				data->e_code = g_sig_num;
+				// printf("data->e_code = %d\n", data->e_code);
+				g_sig_num = 0;
+			}
 			lexer(data->input, &data->tokens);
 			parser(data);
 			print_syntax_tree(data->tree);
@@ -47,6 +53,7 @@ static void	shell_loop(t_data *data)
 			here_doc(data->tree, data);
 			executor(data);
 			add_history(data->input);
+			// printf("g_sig_num = %d\n", g_sig_num);
 			free_data(data);
 			// exit_custom(NULL, data); // ---> remove!
 		}
@@ -60,7 +67,6 @@ int	main(int argc, char **argv, char **env)
 	if (argc > 1 || argv[1])
 		return (error("argc/argv", NULL, CE_INVARG), CE_INVARG);
 	init_data(&data, env);
-	init_sig_handling();
 	shell_loop(&data);
 	free_data(&data);
 	ft_lstclear(&data.env, del_var_content);

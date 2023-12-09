@@ -6,11 +6,13 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:35:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 11:12:51 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/09 17:44:04 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_sig_num = 0;
 
 /*
 	SIGINT prints a new line.
@@ -20,11 +22,22 @@
 static void	handle_sa_newline(int sig_n)
 {
 	(void)sig_n;
+	g_sig_num = 1;
 	ft_putchar_fd('\n', 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+	// printf("HANDLED\n");
 }
+
+/* void	configs()
+{
+	struct termios	config;
+
+	tcgetattr(0, &config);
+	config.c_cflag &= ~ECHOCTL;
+	tcsetattr(0, 0, &config);
+} */
 
 void	init_sig_handling(void)
 {
@@ -32,9 +45,9 @@ void	init_sig_handling(void)
 	struct sigaction	sa_ignore;
 	sigset_t			set;
 
+	// configs();
 	ft_bzero(&sa_newline, sizeof(sa_newline));
 	ft_bzero(&sa_ignore, sizeof(sa_ignore));
-
 	sigemptyset(&set);
 	sigaddset(&set, SIGINT);	// C
 	sigaddset(&set, SIGQUIT);	// <backsl>
