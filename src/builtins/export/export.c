@@ -6,11 +6,25 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 11:17:59 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/09 09:46:06 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_double_pointer(char **double_pointer)
+{
+	char	**temp;
+
+	temp = double_pointer;
+	while (*temp)
+	{
+		free(*temp);
+		temp++;
+	}
+	free(double_pointer);
+	
+}
 
 /*
 	As env builtin does, it prints out the env variables, but in ASCII
@@ -96,7 +110,7 @@ char	**sort_export(t_list *env)
 	return (env_dptr);
 }
 
-int	print_exported(t_list *env)
+/* int	print_exported(t_list *env)
 {
 	char	**sorted_env;
 	char	**temp;
@@ -104,6 +118,7 @@ int	print_exported(t_list *env)
 
 	is_equal = false;
 	sorted_env = sort_export(env);
+	
 	temp = sorted_env;
 	while (*temp)
 	{
@@ -125,7 +140,46 @@ int	print_exported(t_list *env)
 		temp++;
 		ft_putchar_fd('\n', 1);
 	}
-	free(sorted_env);
+	free_double_pointer(sorted_env);
+	// printf("[[[[[[[0]]]]]] = %s\n", sorted_env[0]);
+	return (0);
+} */
+
+int	print_exported(t_list *env)
+{
+	char	**sorted_env;
+	char	**temp;
+	bool	is_equal;
+	int		i;
+	int		j;
+
+	is_equal = false;
+	sorted_env = sort_export(env);
+	i = 0;
+	temp = sorted_env;
+	while (temp[i])
+	{
+		j = 0;
+		while (temp[i][j])
+		{
+			ft_putchar_fd(temp[i][j], 1);
+			if (temp[i][j] == '=')
+			{
+				ft_putchar_fd('"', 1);
+				is_equal = true;
+			}
+			j++;
+		}
+		if (is_equal)
+		{
+			ft_putchar_fd('"', 1);
+			is_equal = false;
+		}
+		i++;
+		ft_putchar_fd('\n', 1);
+	}
+	free_double_pointer(sorted_env);
+	// printf("[[[[[[[0]]]]]] = %s\n", sorted_env[0]);
 	return (0);
 }
 
@@ -169,9 +223,9 @@ static int	update_var_content(char *name, char *new_value, t_list *env)
 {
 	t_var	*var;
 	int		n;
-	char	*tmp;
+	// char	*tmp;
 
-	tmp = NULL;
+	// tmp = NULL;
 	n = ft_strlen(name);
 	if (name[n - 1] == '+')
 		n -= 1;
@@ -211,7 +265,6 @@ static int	check_export(char *arg, t_list **env)
 	t_var	*tmp_var;
 	t_list	*new_node;
 
-	(void)tmp;
 	new_node = NULL;
 	tmp_var = NULL;
 	tmp_var = create_var_content(arg);

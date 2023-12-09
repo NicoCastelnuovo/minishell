@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 11:16:31 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/09 11:01:24 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	shell_loop(t_data *data)
 	while (1)
 	{
 		// data->input = readline(data->prompt);
-		data->input = ft_strdup("echo $$$$USER$$$$$$$$"); // -----> valgrind problems
+		data->input = ft_strdup("$USER$HOME$$$$$?$?$?$$$$"); // -----> valgrind problems
 		if (!data->input)
 			break ; // ----> print exit && check if call exit_custom()
 		if (ft_strlen(data->input) != 0)

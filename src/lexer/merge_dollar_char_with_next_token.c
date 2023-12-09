@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   merge_dollar_char_with_next_token.c                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:52:43 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/24 12:45:04 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 11:07:31 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool	is_needed_to_merge(char first_char)
 
 	is_alpha = ft_isalpha(first_char);
 	is_digit = ft_isdigit(first_char);
-	is_under_score = first_char == '_'; // norminette ??????
+	is_under_score = first_char == '_';
 	if (!(is_alpha || is_digit || is_under_score || first_char == '$' || first_char == '?' || first_char == '\"' || first_char == '\'' )) // added || first_char == '?'
 		return (false);
 	else
@@ -53,6 +53,7 @@ void	merge_dollar_char_with_next_token(t_list *tkns_head)
 			cur_tkn_data->type = TKN_ENV_VAR;
 			cur_tkn_data->str_len = ft_strlen(cur_tkn_data->str);
 			((t_tkn_data *)(tkns_head->content))->list_size--;
+			continue; // added to merge odd number of $ signs
 		}
 		cur_node = cur_node->next;
 	}
