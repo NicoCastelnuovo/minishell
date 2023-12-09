@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:18:14 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 13:00:17 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 09:24:16 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,6 @@ int	run_builtin_same_ps(t_data *data)
 	// some files are not closed ???????
 	def_stdin = dup(STDIN_FILENO); // protect
 	def_stdout = dup(STDOUT_FILENO); // protect
-	ft_printf("(1)\n");
-	ft_printf("stdin[%d]\n", def_stdin);
-	ft_printf("stdout[%d]\n", def_stdout);
 	if (def_stdin == -1 || def_stdout == -1)
 	{
 		data->e_code = 1;
@@ -85,9 +82,6 @@ int	run_builtin_same_ps(t_data *data)
 		data->e_code = 1;
 		return (data->e_code);
 	}
-	ft_printf("(1.5)\n");
-	ft_printf("stdin[%d]\n", def_stdin);
-	ft_printf("stdout[%d]\n", def_stdout);
 	cmd = (t_cmd *)data->tree->content;
 	data->e_code = call_builtin_function(cmd, data);
 	if (dup2(def_stdin, STDIN_FILENO) == -1 || dup2(def_stdout, STDOUT_FILENO) == -1)
@@ -95,8 +89,5 @@ int	run_builtin_same_ps(t_data *data)
 		data->e_code = 1;
 		return (error("builtin", NULL, errno), 1);
 	}
-	ft_printf("(2)\n");
-	ft_printf("stdin[%d]\n", def_stdin);
-	ft_printf("stdout[%d]\n", def_stdout);
 	return (data->e_code);
 }

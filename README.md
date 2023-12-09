@@ -36,3 +36,15 @@ free(tmp);
 9) What happens if something in the middle fails (like the expansion)? e_code cannot be set because it's smoething different
 
 10) executor -> resolve_args need to returns -1 for err
+
+## CHECK
+1) /bin/echo 1 >/dev/null | /usr/bin/grep 1
+2) "."
+3) .ls different err msg ; /bin/cats
+4) ""
+
+## TESTS TO DO
+1) scmds after correcting point 3 and 4
+2) variables
+3) correction
+4) go_wild

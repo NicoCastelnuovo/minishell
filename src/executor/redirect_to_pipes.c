@@ -6,34 +6,32 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 12:44:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 13:27:46 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 08:21:17 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-	if (fd_pipe), means that is a first or a middle child. In case
-	fd_pipe == NULL, it means that is the last child.
+	if (pipe), means that is a first or a middle child. In case pipe == NULL,
+	means that is the last child of a pipechain.
 */
-int	redirect_to_pipes(int *fd_pipe, int *prev_pipe)
+int	redirect_to_pipes(int *pipe, int *prev_pipe)
 {
 	int	fd_ret;
 
 	fd_ret = -1;
-	if (fd_pipe)
+	if (pipe)
 	{
-		// first and mid
-		fd_ret = dup2(fd_pipe[1], STDOUT_FILENO);
-		close(fd_pipe[1]);
+		fd_ret = dup2(pipe[1], STDOUT_FILENO);
+		close(pipe[1]);
 		fd_ret = dup2(*prev_pipe, STDIN_FILENO);
-		close(fd_pipe[0]);
+		close(pipe[0]);
 		close(*prev_pipe);
 	}
 	else
 	{
-		// last
-		fd_ret = dup2(*prev_pipe, STDIN_FILENO); // maybe take outside
+		fd_ret = dup2(*prev_pipe, STDIN_FILENO);
 		close(*prev_pipe);
 	}
 	if (fd_ret == -1)

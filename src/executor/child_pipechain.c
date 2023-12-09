@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:49:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 13:42:46 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 10:58:12 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,28 @@
 		• if builtin, it's run separately with proper functions (no execve());
 		• if normal cmd, execve() is called
 */
-void	child_pipechain(t_data *data, t_node *node, int *fd_pipe, int *prev_pipe)
+void	child_pipechain(t_data *data, t_node *node, int *pipe, int *prev_pipe)
 {
 	char	**env;
 	t_cmd	*cmd;
+	int		ret_value;
 
+	ret_value = 0;
 	cmd = (t_cmd *)node->content;
 	env = convert_to_dptr(data->env);
 	if (!env)
 		free_child_and_exit(data, env, 1); // chaged from exit(1);
-	if (redirect_to_pipes(fd_pipe, prev_pipe))
+	if (redirect_to_pipes(pipe, prev_pipe))
 		free_child_and_exit(data, env, 1);
 	if (redirect_to_explicit(node))
 		free_child_and_exit(data, env, 1);
 	if (is_builtin(cmd))
 		exit(call_builtin_function(cmd, data));
-	// fprintf(stderr, "fdin [%d]", cmd->fd_in);
-	// fprintf(stderr, "fdout [%d]", cmd->fd_out);
 	if (cmd->args)
 	{
-		resolve_args(&cmd->args[0], env); // return value
+		ret_value = resolve_args(&cmd->args[0], env);
+		if (ret_value == 126 || ret_value == 127 || ret_value == -1)
+			free_child_and_exit(data, env, ret_value);
 		if (execve(cmd->args[0], cmd->args, env))
 		{
 			error(cmd->args[0], NULL, CE_CMDNOTFOUND);

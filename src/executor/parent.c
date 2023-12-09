@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:49:16 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 13:42:55 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 08:51:13 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,22 @@ static int	check_wstatus(int *wstatus)
 
 static int	wait_children(pid_t *ps_id, int n_cmd, int *wstatus)
 {
-	int		exit_code;
+	int		last_e_code;
 	pid_t	w_pid;
 	int		i;
 
-	exit_code = 0;
+	last_e_code = 0;
 	i = 0;
 	while (i < n_cmd)
 	{
-		w_pid = waitpid(ps_id[i], wstatus, 0); // catch error in case of ps_id[i] = -1
+		w_pid = waitpid(ps_id[i], wstatus, 0);
 		// if (w_pid == -1)
 		// 	return (error("waitpid", NULL, errno), 1);
 		if (w_pid == ps_id[i])
-			exit_code = check_wstatus(wstatus);
+			last_e_code = check_wstatus(wstatus);
 		i++;
 	}
-	return (exit_code);
+	return (last_e_code);
 }
 
 static void	iter_redirections(t_list *redir)
@@ -78,6 +78,7 @@ int	parent(t_data *data)
 {
 	int	wstatus;
 
+	wstatus = 0;
 	if (data->pid)
 		data->e_code = wait_children(data->pid, data->n_ps, &wstatus);
 	unlink_here_doc(data->tree);

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 12:25:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 13:20:16 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 10:59:05 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	free_child_and_exit(t_data *data, char **env, int e_code)
 {
-	// close pipes in case of pipechain !!!!!!!!????
 	if (data)
 		free_data(data);
 	if (env)
@@ -32,7 +31,9 @@ void	child_single_cmd(t_data *data)
 {
 	char	**env;
 	t_cmd	*cmd;
+	int		ret_value;
 
+	ret_value = 0;
 	env = convert_to_dptr(data->env);
 	if (!env)
 		free_child_and_exit(data, env, 1);
@@ -41,8 +42,9 @@ void	child_single_cmd(t_data *data)
 	cmd = (t_cmd *)data->tree->content;
 	if (cmd->args)
 	{
-		if (resolve_args(&cmd->args[0], env) == -1)
-			free_child_and_exit(data, env, 1);
+		ret_value = resolve_args(&cmd->args[0], env);
+		if (ret_value == 126 || ret_value == 127 || ret_value == -1)
+			free_child_and_exit(data, env, ret_value);
 		if (execve(cmd->args[0], cmd->args, env))
 		{
 			error(cmd->args[0], NULL, CE_CMDNOTFOUND);
