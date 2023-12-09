@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 10:08:00 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/06 16:06:31 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 08:04:50 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	it doesn't need them, since it has to read from the prev_pipe, and write
 	to the STDOUT.
 */
-static int	fork_last_ps(t_data *data, t_node *node, int *prev_pipe, int i)
+static int	fork_last(t_data *data, t_node *node, int *prev_pipe, int i)
 {
 	data->pid[i] = fork();
 	if (data->pid[i] == -1)
@@ -29,7 +29,7 @@ static int	fork_last_ps(t_data *data, t_node *node, int *prev_pipe, int i)
 	return (0);
 }
 
-static int	fork_first_and_mid_ps(t_data *data, t_node *node, int *prev_pipe, int i)
+static int	fork_first_mid(t_data *data, t_node *node, int *prev_pipe, int i)
 {
 	int	fd_pipe[2];
 
@@ -45,7 +45,6 @@ static int	fork_first_and_mid_ps(t_data *data, t_node *node, int *prev_pipe, int
 		close(fd_pipe[1]);
 		close(*prev_pipe);
 		*prev_pipe = fd_pipe[0];
-		// close fd_pipe ??? check
 	}
 	return (0);
 }
@@ -67,12 +66,12 @@ static int	fork_children(t_data *data, int *prev_pipe)
 	while (node->type == IS_PIPE)
 	{
 		pipe = (t_pipe *)node->content;
-		if (fork_first_and_mid_ps(data, pipe->left, prev_pipe, i))
+		if (fork_first_mid(data, pipe->left, prev_pipe, i))
 			return (1);
 		node = pipe->right;
 		i++;
 	}
-	if (fork_last_ps(data, node, prev_pipe, i))
+	if (fork_last(data, node, prev_pipe, i))
 		return (1);
 	return (0);
 }
@@ -87,7 +86,7 @@ int	execute_pipechain(t_data *data)
 		data->e_code = 1;
 		return (error("executor", NULL, errno), 1);
 	}
-	prev_pipe = dup(STDIN_FILENO); // protect
+	prev_pipe = dup(STDIN_FILENO);
 	if (prev_pipe == -1)
 	{
 		data->e_code = 1;

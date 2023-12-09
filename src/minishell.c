@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/09 11:01:24 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/09 12:45:36 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,15 @@ static void	shell_loop(t_data *data)
 		if (ft_strlen(data->input) != 0)
 		{
 			lexer(data->input, &data->tokens);
-			print_tokens(data->tokens);
 			parser(data);
 			print_syntax_tree(data->tree);
 			expansion(data);
 			quote_removal(data);
 			here_doc(data->tree, data);
 			executor(data);
-			// add_history(data->input);
+			add_history(data->input);
 			free_data(data);
-			exit_custom(NULL, data); // ---> remove!
+			// exit_custom(NULL, data); // ---> remove!
 		}
 	}
 }

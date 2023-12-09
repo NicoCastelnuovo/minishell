@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:19:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 14:23:52 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:25:22 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	perform_here_doc(t_redir_data *redir_cont, t_data *data)
 	{
 		free(eof);
 		close(fd_tmp);
-		unlink(redir_cont->f_name); // check
+		unlink(redir_cont->f_name);
 		return (1);
 	}
 	free(eof);

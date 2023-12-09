@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/09 09:46:06 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/09 12:43:25 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ static int	append_to_existing_var(t_var *var, char *new_value)
 	char	*tmp;
 
 	tmp = var->value;
-	var->value = ft_strjoin(var->value, new_value); // protect
+	var->value = ft_strjoin(var->value, new_value);
 	if (!var->value)
 		return (1);
 	free(tmp);

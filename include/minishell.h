@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/12/07 14:26:04 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 10:38:07 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <sys/stat.h>	// used for dirctory checking
 # include <limits.h>
 
 # include "libft.h"
@@ -60,6 +61,7 @@ enum e_custom_errors
 	CE_OVERFLOW = 114,
 	CE_NUM_REQUIRED = 115,
 	CE_INITENV = 116,
+	CE_ISADIRECTORY = 126,
 	CE_CMDNOTFOUND = 127
 };
 
@@ -96,13 +98,13 @@ int		execute_single_cmd(t_data *data);
 int		execute_pipechain(t_data *data);
 
 void	child_single_cmd(t_data *data);
-void	child_pipechain(t_data *data, t_node *node, int *fd_pipe, int *prev_pipe);
+void	child_pipechain(t_data *data, t_node *node, int *pipe, int *prev_pipe);
 
 int		parent(t_data *data);
 
 int		resolve_args(char **cmd_name, char **env);
 int		redirect_to_explicit(t_node *node);
-int		redirect_to_pipes(int *fd_pipe, int *prev_pipe, t_cmd *cmd);
+int		redirect_to_pipes(int *pipe, int *prev_pipe);
 
 int		is_builtin(t_cmd *cmd);
 int		call_builtin_function(t_cmd *cmd, t_data *data);
@@ -129,5 +131,6 @@ int		ft_strcmp(const char *s1, const char *s2);
 void	free_data(t_data *data);
 int		get_substr_len(char *s, char c);
 int		is_empty_input(char *s);
+void	del_redir_content(void *content);
 
 #endif

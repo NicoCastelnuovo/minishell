@@ -46,7 +46,8 @@ EXECUTOR = executor.c \
 	child_pipechain.c \
 	child_single_cmd.c \
 	resolve_args.c \
-	redirection.c \
+	redirect_to_pipes.c \
+	redirect_to_explicit.c \
 	run_builtin.c \
 	parent.c \
 
@@ -72,6 +73,8 @@ HERE_DOC = here_doc.c \
 PARSER = check_for_syntax_err.c \
 	build_syntax_tree.c \
 	update_cmd_node.c \
+	update_cmd_args.c \
+	update_cmd_redir.c \
 	free_syntax_tree.c \
 	parser.c
 

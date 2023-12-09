@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 15:53:46 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 07:53:09 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ typedef struct s_cmd
 {
 	char		**args;
 	t_list		*redir;
-	int			fd_in;
-	int			fd_out;
 }	t_cmd;
 
 typedef enum e_redir_type
@@ -81,7 +79,9 @@ int		check_for_syntax_err(t_list *tkn, int i);
 int		is_redir(t_tkn_type tkn_type);
 
 // ----------------------------------------------------------- UPDATE CMD TABLE
-void	update_cmd_node(t_list *curr_tkn, t_list *prev_tkn, t_node *node);
+int		update_cmd_node(t_list *curr_tkn, t_list *prev_tkn, t_node *node);
+int		update_cmd_redir(t_list *curr_tkn, t_cmd *cmd);
+int		update_cmd_args(char *arg, t_cmd *cmd);
 
 // ---------------------------------------------------------------- PRINT UTILS
 void	print_syntax_tree(t_node *root);

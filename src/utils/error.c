@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 09:44:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 09:07:20 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 10:38:25 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static char	*custom_strerror(int n)
 		return ("invalid arguments");
 	if (n == CE_TOOMANYARGS)
 		return ("too many arguments");
+	if (n == CE_ISADIRECTORY)
+		return ("is a directory");
 	if (n == CE_CMDNOTFOUND)
 		return ("command not found");
 	if (n == CE_INVALIDIDENTIFIER)

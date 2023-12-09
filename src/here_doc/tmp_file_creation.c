@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 09:39:13 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 15:42:08 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:28:21 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*build_tmp_name(int n)
 {
-	char	*tmp_name; // remember to throw an error in case of >".tmp_" something
+	char	*tmp_name;
 	char	*digits;
 
 	digits = ft_itoa(n);

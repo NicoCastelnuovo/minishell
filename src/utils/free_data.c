@@ -6,23 +6,11 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:43:44 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 16:51:57 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 09:27:48 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	free_pid(int *pid, int n_ps)
-{
-	int	i;
-
-	i = 0;
-	while (i < n_ps)
-	{
-		free(pid + i);
-		i++;
-	}
-}
 
 /*
 	t_data is freed entirely except for the environment, which should survive
@@ -33,7 +21,10 @@ void	free_data(t_data *data)
 	if (!data)
 		return ;
 	if (data->pid)
-		free_pid(data->pid, data->n_ps);
+	{
+		free(data->pid);
+		data->pid = NULL;
+	}
 	if (data->input)
 	{
 		free(data->input);

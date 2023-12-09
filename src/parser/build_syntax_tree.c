@@ -6,17 +6,19 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 15:43:07 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 07:53:51 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-	The tokens are divided into blocks.	Block means a set of tokens seaprated
-	by the pipes, like the folowing: [ BLOCK_1 ] | [ BLOCK_2 ] | [ BLOCK_3 ]
+	Iterates the token t_list and updates the cmd table. When a pipe or the end
+	of the line is found, it returns it. Block is something between the start
+	of the line and a pipe, between 2 pipe, or between a pipe and end of line.
+	Example. [block1] | [block2] | [block3]
 */
-static t_list	*copy_tokens_block(t_list *curr_tkn, t_node *node_c)
+static t_list	*parse_tkn_block(t_list *curr_tkn, t_node *node_c)
 {
 	t_list		*prev_tkn;
 
@@ -25,7 +27,8 @@ static t_list	*copy_tokens_block(t_list *curr_tkn, t_node *node_c)
 	{
 		if (((t_tkn_data *)curr_tkn->content)->type == TKN_PIPE)
 			return (curr_tkn);
-		update_cmd_node(curr_tkn, prev_tkn, node_c);
+		if (update_cmd_node(curr_tkn, prev_tkn, node_c))
+			return (NULL);
 		prev_tkn = curr_tkn;
 		if (curr_tkn->next)
 			curr_tkn = curr_tkn->next;
@@ -68,8 +71,8 @@ static t_node	*init_cmd_node(int n)
 	cmd = (t_cmd *)node_c->content;
 	cmd->args = NULL;
 	cmd->redir = NULL;
-	cmd->fd_in = -2;
-	cmd->fd_out = -2;
+	// cmd->fd_in = -2;
+	// cmd->fd_out = -2;
 	return (node_c);
 }
 
@@ -84,7 +87,7 @@ static void	free_cmd_and_pipe_node(t_node *node_c, t_node *node_p)
 		1)	Init a new cmd node.
 		2)	Copy the next tkn block (block means until the pipe sign)
 			populating the cmd table with arguments and redirections.
-		3)	After it, it checks if copy_tokens_block() function exited because
+		3)	After it, it checks if parse_tkn_block() function exited because
 			of a pipe or end of the line. If it was a pipe sign, a t_pipe node
 			is created. The cmd node created is assgined to pipe->left,
 			while the right one is assigned to the result of the function
@@ -96,7 +99,7 @@ static void	free_cmd_and_pipe_node(t_node *node_c, t_node *node_p)
 	@param n - is just a number to identify which node of the tree it is and
 	visualize it when printed.
 */
-t_node	*build_syntax_tree(t_list *tokens, int n)
+t_node	*build_syntax_tree(t_list *tkn, int n)
 {
 	t_node	*node_c;
 	t_node	*node_p;
@@ -104,16 +107,18 @@ t_node	*build_syntax_tree(t_list *tokens, int n)
 	node_c = init_cmd_node(n);
 	if (!node_c)
 		return (NULL);
-	tokens = copy_tokens_block(tokens, node_c);
+	tkn = parse_tkn_block(tkn, node_c);
+	if (!tkn)
+		return (NULL);
 	node_p = NULL;
-	if (ft_strcmp(((t_tkn_data *)tokens->content)->str, "|") == 0)
+	if (ft_strcmp(((t_tkn_data *)tkn->content)->str, "|") == 0)
 	{
-		tokens = tokens->next;
+		tkn = tkn->next;
 		node_p = init_pipe_node(n);
 		if (!node_p)
 			return (free_cmd_and_pipe_node(node_c, node_p), NULL);
 		((t_pipe *)node_p->content)->left = node_c;
-		((t_pipe *)node_p->content)->right = build_syntax_tree(tokens, n + 2);
+		((t_pipe *)node_p->content)->right = build_syntax_tree(tkn, n + 2);
 		if (!((t_pipe *)node_p->content)->right)
 			return (free_cmd_and_pipe_node(node_c, node_p), NULL);
 		return (node_p);

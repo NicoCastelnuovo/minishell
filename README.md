@@ -17,23 +17,34 @@ free(tmp);
 
 # FARSHAD
 1) Signals
-3) Check if every file is closed -> update:
+	- blank line
+	- write a line without pressing 'return' and ctrl-c
+	- single/multiple here_doc
+	- single cmd cat/top/sleep
+	- pipechain
+2) Check if every file is closed -> update:
 	- file are always closed when one or more child is forked,
 		but it's not closed when a builtin is executed (because it doesn't go in child function)
 	- here_doc in case of single command is not closed and sometimes executes (???)
 	- separate pipechain from single cmd execution
-4) export -> print in alphabetical order
-6) Which is status of syntax error? 258 or 2?
-7) What if example the expander makes error in the middle
-<!-- 8) export and unset invalid identifier done't work properly -->
-<!-- 9) Not sure about env->to_export variable, which told if the variable has to be exported -->
-<!-- 11) expot var+=something add omething to the existing variable or creates a new one -->
-<!-- 12)	export "" AND unset "" // export "" hello=1 '' world=2 -->
+3) export -> print in alphabetical order
+4) What if example the expander makes error in the middle
+5) Problem with odd number of $$$
+6) Valgrind errors in case of expansion AND/OR quote removal
+7) Check what happend if type planty new lines with commands or not
+8) set $_ not export, modify when a cmd executes, need to do ?
+9) What happens if something in the middle fails (like the expansion)? e_code cannot be set because it's smoething different
 
-# LEAKS/VALGRIND
-<!-- 1) NOT existing commands (not happens in pipechain) -->
-2) Valgrind errors in case of expansion AND/OR quote removal
+10) executor -> resolve_args need to returns -1 for err
 
-# REALLY TO DO ??
-5) Check what happend if type planty new lines with commands or not
-10) set $_ not export, modify when a cmd executes, need to do ?
+## CHECK
+1) /bin/echo 1 >/dev/null | /usr/bin/grep 1
+2) "."
+3) .ls different err msg ; /bin/cats
+4) ""
+
+## TESTS TO DO
+1) scmds after correcting point 3 and 4
+2) variables
+3) correction
+4) go_wild
