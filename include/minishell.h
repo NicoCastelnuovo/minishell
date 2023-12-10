@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/12/09 10:38:07 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 17:51:55 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,5 +132,7 @@ void	free_data(t_data *data);
 int		get_substr_len(char *s, char c);
 int		is_empty_input(char *s);
 void	del_redir_content(void *content);
+
+extern int	g_ctrl_c_pressed;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:49:20 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 16:30:41 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 17:54:56 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	get_varvalue_len(t_list *var_to_expand)
 	while (var_to_expand)
 	{
 		var = (t_var *)var_to_expand->content;
-		if (var->value_len > 0)
+		if (var->value_len > 0 && ft_strcmp(var->name, "$"))
 			len += var->value_len;
 		var_to_expand = var_to_expand->next;
 	}
@@ -46,8 +46,8 @@ static int	get_varvalue_len(t_list *var_to_expand)
 
 static int	get_total_len(t_list *var_to_expand, char *old_str)
 {
-	int		tot_varname_len;
-	int		tot_varvalue_len;
+	int	tot_varname_len;
+	int	tot_varvalue_len;
 
 	tot_varname_len = get_varname_len(var_to_expand);
 	tot_varvalue_len = get_varvalue_len(var_to_expand);

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 10:08:00 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/09 08:04:50 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 17:49:04 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ static int	fork_last(t_data *data, t_node *node, int *prev_pipe, int i)
 	if (data->pid[i] == -1)
 		return (error("fork", NULL, errno), 1);
 	if (data->pid[i] == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
 		child_pipechain(data, node, NULL, prev_pipe);
+	}
 	else
 		close(*prev_pipe);
 	return (0);
@@ -39,7 +43,11 @@ static int	fork_first_mid(t_data *data, t_node *node, int *prev_pipe, int i)
 	if (data->pid[i] == -1)
 		return (error("fork", NULL, errno), 1);
 	if (data->pid[i] == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
 		child_pipechain(data, node, fd_pipe, prev_pipe);
+	}
 	else
 	{
 		close(fd_pipe[1]);

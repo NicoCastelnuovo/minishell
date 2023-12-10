@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 10:06:56 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/09 09:24:06 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 17:48:18 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ static int	fork_one_ps(t_data *data)
 	if (data->pid[0] == -1)
 		return (error("fork", NULL, errno), 1);
 	if (data->pid[0] == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
 		child_single_cmd(data);
+	}
 	return (0);
 }
 

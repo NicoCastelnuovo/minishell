@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/09 12:38:54 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 18:00:30 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,20 @@ static void	shell_loop(t_data *data)
 {
 	while (1)
 	{
+		init_sig_handling();
 		data->input = readline(data->prompt);
-		// data->input = ft_strdup("<<EOF cat -e | >out"); // -----> valgrind problems
+		// data->input = ft_strdup("pwd");
 		if (!data->input)
 			break ; // ----> print exit && check if call exit_custom()
 		if (ft_strlen(data->input) != 0)
 		{
+			if (g_ctrl_c_pressed)
+			{
+				data->e_code = 1;
+				g_ctrl_c_pressed = 0;
+			}
 			lexer(data->input, &data->tokens);
 			parser(data);
-			print_syntax_tree(data->tree);
 			expansion(data);
 			quote_removal(data);
 			here_doc(data->tree, data);
@@ -60,9 +65,9 @@ int	main(int argc, char **argv, char **env)
 	if (argc > 1 || argv[1])
 		return (error("argc/argv", NULL, CE_INVARG), CE_INVARG);
 	init_data(&data, env);
-	init_sig_handling();
 	shell_loop(&data);
 	free_data(&data);
 	ft_lstclear(&data.env, del_var_content);
+	// rl cler history
 	return (0);
 }

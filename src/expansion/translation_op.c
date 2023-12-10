@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 11:08:27 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/09 12:36:40 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 17:53:39 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	change_is_open_quote(char curr_quote, char *is_open)
 	}
 }
 
-static char	*mid_copy(char *old, int len)
+static char	*copy_without_translation_operator(char *old, int len)
 {
 	int		i;
 	int		j;
@@ -66,9 +66,9 @@ static size_t	get_len_without_translation_operator(char *old)
 	i = 0;
 	while (old[i])
 	{
-		if (old[i] == '$' && is_open == -1)
+		if (old[i] == '$' && (old[i + 1] == TKN_S_QUOTE || old[i + 1] == TKN_D_QUOTE))
 		{
-			if (old[i + 1] == TKN_S_QUOTE || old[i + 1] == TKN_D_QUOTE)
+			if (is_open == -1)
 				i++;
 			else
 			{
@@ -94,13 +94,11 @@ char	*remove_translation_operator(char *old_str)
 	size_t	new_len;
 	char	*mid_str;
 
+	mid_str = NULL;
 	new_len = get_len_without_translation_operator(old_str);
-	ft_printf("old_str [%s]\n", old_str);
-	ft_printf("OLD LEN = [%d]\n", ft_strlen(old_str));
-	ft_printf("NEW LEN = [%d]\n", new_len);
 	if (ft_strlen(old_str) == new_len)
 		mid_str = ft_strdup(old_str);
 	else
-		mid_str = mid_copy(old_str, new_len);
+		mid_str = copy_without_translation_operator(old_str, new_len);
 	return (mid_str);
 }
