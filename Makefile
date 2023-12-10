@@ -67,6 +67,7 @@ EXPANSION = check_expansion.c \
 	translation_op.c
 
 HERE_DOC = here_doc.c \
+	eofs.c \
 	get_interactive_input.c \
 	tmp_file_creation.c
 

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/12/10 11:34:47 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/10 16:15:59 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/wait.h>
 # include <sys/stat.h>	// used for dirctory checking
 # include <limits.h>
+# include <termios.h>
 
 # include "libft.h"
 # include "ft_printf.h"
@@ -70,7 +71,7 @@ void	parser(t_data *data);
 
 // -------------------------------------------------------------------- SIGNALS
 void	init_sig_handling(void);
-// void	setup_child_signals(void);
+void	change_sig_handling(void); // change ??
 
 // ------------------------------------------------------------------ EXPANSION
 void	expansion(t_data *data);
@@ -89,6 +90,8 @@ void	change_is_open_quote(char curr_quote, char *is_open);
 
 // ------------------------------------------------------------------- HERE_DOC
 void	here_doc(t_node *tree, t_data *data);
+char	**collect_eofs(t_node *tree, t_data *data);
+int		get_tmp_name(t_redir_data *redir_cont, int fd_tmp, int n);
 int		get_fd_tmp(t_redir_data *redir_cont, int fd_tmp, int n);
 int		get_interactive_input(int fd_tmp, char **eof, t_data *data);
 

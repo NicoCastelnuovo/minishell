@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:35:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/09 18:05:34 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/10 15:50:12 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,22 @@ int	g_ctrl_c_pressed = 0;
 	@line	rl_on_new_line() - tell the program to move to a new line
 	@line	rl_redisplay() - update what is displayed, to reflect the buffer
 */
-static void	handle_sa_newline(int sig_n)
+static void	handle_ctrl_c_before_rl(int sig_n)
 {
 	(void) sig_n;
-	g_ctrl_c_pressed = 1;
-	ft_putchar_fd('\n', 1);
+	ft_putendl_fd("", STDOUT_FILENO);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+	g_ctrl_c_pressed = 1;
+}
+
+void	handle_ctrl_c_after_rl(int sig_n)
+{
+	(void) sig_n;
+	ft_putendl_fd("", STDOUT_FILENO);
+	rl_on_new_line();
+	g_ctrl_c_pressed = 1;
 }
 
 void	init_sig_handling(void)
@@ -43,7 +51,7 @@ void	init_sig_handling(void)
 	sigaddset(&set, SIGQUIT);	// <backsl>
 
 	// ctrl C
-	sa_newline.sa_handler = &handle_sa_newline;
+	sa_newline.sa_handler = &handle_ctrl_c_before_rl;
 	sa_newline.sa_flags = 0;
 	sa_newline.sa_mask = set;
 	sigaction(SIGINT, &sa_newline, NULL);
@@ -53,4 +61,27 @@ void	init_sig_handling(void)
 	sa_ignore.sa_flags = 0;
 	// sa_ignore.sa_mask = set;
 	sigaction(SIGQUIT, &sa_ignore, NULL);
+
+	struct termios config;
+
+	tcgetattr(0, &config);
+	config.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, 0, &config);
+}
+
+void	change_sig_handling(void)
+{
+	struct sigaction	sa_newline;
+	sigset_t			set;
+
+	ft_bzero(&sa_newline, sizeof(sa_newline));
+
+	sigemptyset(&set);
+	sigaddset(&set, SIGINT);	// C
+
+	// ctrl C
+	sa_newline.sa_handler = &handle_ctrl_c_after_rl;
+	sa_newline.sa_flags = 0;
+	sa_newline.sa_mask = set;
+	sigaction(SIGINT, &sa_newline, NULL);
 }

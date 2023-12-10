@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/10 12:31:05 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/10 16:30:15 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,19 @@ static void	init_data(t_data *data, char **env)
 	}
 	data->input = NULL;
 	data->tokens = NULL;
-	data->tree = NULL;
-	data->e_code = 0;
+	data->tree = NULL;	data->e_code = 0;
 	data->n_ps = 0;
 	data->pid = NULL;
 	data->prompt = "minishell $ ";
+}
+
+static void	is_ctrl_c_pressed(t_data *data)
+{
+	if (g_ctrl_c_pressed)
+	{
+		data->e_code = 1;
+		g_ctrl_c_pressed = 0;
+	}
 }
 
 static void	shell_loop(t_data *data)
@@ -35,16 +43,12 @@ static void	shell_loop(t_data *data)
 	{
 		init_sig_handling();
 		data->input = readline(data->prompt);
-		// data->input = ft_strdup("pwd");
+		change_sig_handling();
+		is_ctrl_c_pressed(data);
 		if (!data->input)
 			break ; // ----> print exit && check if call exit_custom()
 		if (ft_strlen(data->input) != 0)
 		{
-			if (g_ctrl_c_pressed)
-			{
-				data->e_code = 1;
-				g_ctrl_c_pressed = 0;
-			}
 			lexer(data->input, &data->tokens);
 			parser(data);
 			expansion(data);
@@ -66,8 +70,8 @@ int	main(int argc, char **argv, char **env)
 		return (error("argc/argv", NULL, CE_INVARG), CE_INVARG);
 	init_data(&data, env);
 	shell_loop(&data);
-	// free_data(&data);
-	// ft_lstclear(&data.env, del_var_content);
-	// rl cler history
+	free_data(&data);
+	ft_lstclear(&data.env, del_var_content);
+	rl_clear_history(); // check if it's correct and put also in: here_doc maybe, exits, children etc
 	return (0);
 }
