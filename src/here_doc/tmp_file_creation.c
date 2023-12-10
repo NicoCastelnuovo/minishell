@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 09:39:13 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 11:28:21 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/10 12:00:28 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,17 @@ static char	*build_tmp_name(int n)
 {
 	char	*tmp_name;
 	char	*digits;
+	char	*tmp;
 
 	digits = ft_itoa(n);
 	if (!digits && n != 0)
 		return (NULL);
 	tmp_name = ft_strjoin(".tmp_", digits);
+	if (!tmp_name)
+		return (free(digits), NULL);
+	tmp = tmp_name;
+	tmp_name = ft_strjoin("/tmp/", tmp_name);
+	free(tmp);
 	free(digits);
 	return(tmp_name);
 }
