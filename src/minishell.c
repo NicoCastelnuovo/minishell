@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/10 11:34:40 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/10 12:31:05 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ int	main(int argc, char **argv, char **env)
 		return (error("argc/argv", NULL, CE_INVARG), CE_INVARG);
 	init_data(&data, env);
 	shell_loop(&data);
-	free_data(&data);
-	ft_lstclear(&data.env, del_var_content);
+	// free_data(&data);
+	// ft_lstclear(&data.env, del_var_content);
 	// rl cler history
 	return (0);
 }

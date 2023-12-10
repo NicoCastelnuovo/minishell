@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:18:14 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/10 11:15:44 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/10 12:07:09 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	run_builtin_same_ps(t_data *data)
 		data->e_code = 1;
 		return (error("builtin", NULL, errno), 1);
 	}
-	if (redirect_to_explicit(data->tree, data)) // check
+	if (redirect_to_explicit(data->tree)) // check
 	{
 		data->e_code = 1;
 		return (data->e_code);
