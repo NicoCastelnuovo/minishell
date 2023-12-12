@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assign_quote_status_to_tokens.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:12:23 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/09 13:47:01 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/10 18:00:08 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	assign_quote_status_to_tkn(t_list *tkns_head)
 {
-	t_list		*current_node;
-	char		tkn_first_char;
-	t_quote		position;
-	t_tkn_data	*tkn_data;
+	t_list			*current_node;
+	char			tkn_first_char;
+	t_quote			position;
+	t_tkn_data		*tkn_data;
 	t_quote_open	*quote_open;
 
 	position = NOT_QUOTED;

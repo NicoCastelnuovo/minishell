@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:20:48 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/07 13:48:17 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 13:32:49 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	cd(t_cmd *cmd, t_data *data)
 	else
 	{
 		if (update_pwd_oldpwd(curr_pwd, &data->env))
-			return (error("cd", NULL, errno), 1);
+			return (free(curr_pwd), error("cd", NULL, errno), 1);
 	}
 	return (0);
 }

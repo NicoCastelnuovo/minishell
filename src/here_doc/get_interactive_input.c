@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 10:39:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/09 15:59:44 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:44:29 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@
 static int	write_into_tmp_file(int fd_tmp, char *eof, t_data *data)
 {
 	char	*line;
+	char	*prompt;
 
 	line = NULL;
+	prompt = NULL;
 	while (1)
 	{
-		line = readline("> ");
+		prompt = ft_strjoin(eof, " > "); // LEAKS
+		line = readline(prompt);
 		if (!line || ft_strcmp(line, eof) == 0)
 			break ;
 		else

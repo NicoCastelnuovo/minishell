@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:48:11 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/05/30 15:06:23 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/10 18:33:09 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ static void	*support_read(char **remainder)
 }
 
 static char	*check_end(char *buffer, int *num, int fd, char **remainder)
-{	
+{
 	int	i;
 
 	while (1)
-	{	
+	{
 		i = 0;
 		remainder[fd] = ft_my_strjoin(remainder[fd], buffer);
 		if (!(remainder[fd]))

@@ -6,14 +6,14 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 16:35:25 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/04/21 12:26:37 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/10 18:32:00 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 int	print_i(char format_specifier, int *i, va_list args)
-{	
+{
 	int					a;
 	int					count;
 	unsigned long int	b;

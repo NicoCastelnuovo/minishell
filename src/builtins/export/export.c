@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/09 12:43:25 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/10 18:47:28 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	free_double_pointer(char **double_pointer)
 		temp++;
 	}
 	free(double_pointer);
-	
 }
 
 /*
@@ -60,7 +59,7 @@ char	**env_convert_to_double_pointer(t_list *env)
 	int		i;
 	char	*name_value;
 	char	*temp;
-	
+
 	i = 0;
 	env_dptr = ft_calloc(ft_lstsize(env) + 1, sizeof(char *));
 	while (env)
@@ -69,7 +68,8 @@ char	**env_convert_to_double_pointer(t_list *env)
 		{
 			name_value = ft_strjoin(((t_var *)(env->content))->name, "=");
 			temp = name_value;
-			name_value = ft_strjoin(name_value, ((t_var *)(env->content))->value);
+			name_value = ft_strjoin(name_value,
+					((t_var *)(env->content))->value);
 			free(temp);
 		}
 		else
@@ -84,12 +84,11 @@ char	**env_convert_to_double_pointer(t_list *env)
 char	**sort_export(t_list *env)
 {
 	char	**env_dptr;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*temp;
 
 	i = 0;
-	// print_all_env(env);
 	env_dptr = env_convert_to_double_pointer(env);
 	while (env_dptr[i])
 	{
@@ -106,44 +105,8 @@ char	**sort_export(t_list *env)
 		}
 		i++;
 	}
-	// print_dptr_contetnt(env_dptr);
 	return (env_dptr);
 }
-
-/* int	print_exported(t_list *env)
-{
-	char	**sorted_env;
-	char	**temp;
-	bool	is_equal;
-
-	is_equal = false;
-	sorted_env = sort_export(env);
-	
-	temp = sorted_env;
-	while (*temp)
-	{
-		while (**temp)
-		{
-			ft_putchar_fd(**temp, 1);
-			if (**temp == '=')
-			{
-				ft_putchar_fd('"', 1);
-				is_equal = true;
-			}
-			(*temp)++;
-		}
-		if (is_equal)
-		{
-			ft_putchar_fd('"', 1);
-			is_equal = false;
-		}
-		temp++;
-		ft_putchar_fd('\n', 1);
-	}
-	free_double_pointer(sorted_env);
-	// printf("[[[[[[[0]]]]]] = %s\n", sorted_env[0]);
-	return (0);
-} */
 
 int	print_exported(t_list *env)
 {
@@ -179,7 +142,6 @@ int	print_exported(t_list *env)
 		ft_putchar_fd('\n', 1);
 	}
 	free_double_pointer(sorted_env);
-	// printf("[[[[[[[0]]]]]] = %s\n", sorted_env[0]);
 	return (0);
 }
 

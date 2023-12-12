@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/09 18:04:11 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:51:42 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,19 @@ static void	init_data(t_data *data, char **env)
 	}
 	data->input = NULL;
 	data->tokens = NULL;
-	data->tree = NULL;
-	data->e_code = 0;
+	data->tree = NULL;	data->e_code = 0;
 	data->n_ps = 0;
 	data->pid = NULL;
 	data->prompt = "minishell $ ";
+}
+
+static void	is_ctrl_c_pressed(t_data *data)
+{
+	if (g_ctrl_c_pressed)
+	{
+		data->e_code = 1;
+		g_ctrl_c_pressed = 0;
+	}
 }
 
 static void	shell_loop(t_data *data)
@@ -34,20 +42,15 @@ static void	shell_loop(t_data *data)
 	while (1)
 	{
 		init_sig_handling();
-		data->input = readline(data->prompt); // -----> valgrind problems
+		data->input = readline(data->prompt);
+		change_sig_handling();
+		is_ctrl_c_pressed(data);
 		if (!data->input)
 			break ; // ----> print exit && check if call exit_custom()
 		if (ft_strlen(data->input) != 0)
 		{
-			if (g_sig_num != 0)
-			{
-				data->e_code = g_sig_num;
-				// printf("data->e_code = %d\n", data->e_code);
-				g_sig_num = 0;
-			}
 			lexer(data->input, &data->tokens);
 			parser(data);
-			print_syntax_tree(data->tree);
 			expansion(data);
 			quote_removal(data);
 			here_doc(data->tree, data);
@@ -70,5 +73,6 @@ int	main(int argc, char **argv, char **env)
 	shell_loop(&data);
 	free_data(&data);
 	ft_lstclear(&data.env, del_var_content);
+	rl_clear_history(); // check if it's correct and put also in: here_doc maybe, exits, children etc
 	return (0);
 }

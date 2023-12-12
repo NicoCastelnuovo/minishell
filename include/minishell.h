@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/12/09 17:36:00 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:42:50 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@
 # include <sys/wait.h>
 # include <sys/stat.h>	// used for dirctory checking
 # include <limits.h>
-#include <termios.h>
-#include <sys/ioctl.h>
+# include <termios.h>
 
 # include "libft.h"
 # include "ft_printf.h"
@@ -72,7 +71,7 @@ void	parser(t_data *data);
 
 // -------------------------------------------------------------------- SIGNALS
 void	init_sig_handling(void);
-// void	setup_child_signals(void);
+void	change_sig_handling(void); // change ??
 
 // ------------------------------------------------------------------ EXPANSION
 void	expansion(t_data *data);
@@ -91,6 +90,8 @@ void	change_is_open_quote(char curr_quote, char *is_open);
 
 // ------------------------------------------------------------------- HERE_DOC
 void	here_doc(t_node *tree, t_data *data);
+char	**collect_eofs(t_node *tree, t_data *data);
+int		get_tmp_name(t_redir_data *redir_cont, int fd_tmp, int n);
 int		get_fd_tmp(t_redir_data *redir_cont, int fd_tmp, int n);
 int		get_interactive_input(int fd_tmp, char **eof, t_data *data);
 
@@ -135,6 +136,6 @@ int		get_substr_len(char *s, char c);
 int		is_empty_input(char *s);
 void	del_redir_content(void *content);
 
-extern int	g_sig_num;
+extern int	g_ctrl_c_pressed;
 
 #endif

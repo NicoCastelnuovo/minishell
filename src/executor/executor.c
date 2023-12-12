@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 08:31:08 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/09 18:03:19 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:40:59 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static int	get_n_cmds(t_node *node)
 
 int	executor(t_data *data)
 {
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	if (!data->tree)
+	signal(SIGINT, SIG_IGN);		// if removed exit_code of cat is not 130
+	// signal(SIGQUIT, SIG_IGN);	// still needed ????
+	if (!data->tree)				 // need to check  errors????
 		return (1);
 	data->n_ps = get_n_cmds(data->tree);
 	if (data->tree->type == IS_CMD)

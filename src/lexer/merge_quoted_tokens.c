@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   merge_quoted_tokens.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:03:49 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/11/03 09:57:55 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/10 18:12:46 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ void	merge(t_list *cur_node, t_list *cur_quoted_node, char tkn_type)
 
 bool	is_opening_quote(t_tkn_data *cur_tkn_data)
 {
-	if ((*(cur_tkn_data->str) == TKN_S_QUOTE || (cur_tkn_data->str)[0] == TKN_D_QUOTE)
+	if ((*(cur_tkn_data->str) == TKN_S_QUOTE
+			|| (cur_tkn_data->str)[0] == TKN_D_QUOTE)
 		&& cur_tkn_data->quote_status == OPEN_QUOTE)
 		return (true);
 	else

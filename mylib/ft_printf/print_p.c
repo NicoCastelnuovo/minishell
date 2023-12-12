@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:08:10 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/04/22 13:07:58 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/10 18:32:22 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	calc_required_memory(size_t a)
 }
 
 static char	*convert_address_to_string(size_t address)
-{	
+{
 	size_t				remainder;
 	char				*remainders;
 	int					i;
@@ -41,7 +41,7 @@ static char	*convert_address_to_string(size_t address)
 	i = 0;
 	remainder = address ;
 	while (address > 0)
-	{	
+	{
 		remainder = address % 16;
 		if (remainder > 9)
 			remainders[i] = (char)('a' - 10 + remainder);
@@ -82,7 +82,7 @@ static int	print_result(void *p)
 }
 
 int	print_p(int *i, va_list args)
-{	
+{
 	int		count;
 	void	*p;
 

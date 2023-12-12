@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 09:45:12 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/04/22 13:11:04 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/10 18:32:34 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	calc_required_memory(unsigned int a)
 }
 
 static char	*convert_hex_to_string(unsigned int a)
-{	
+{
 	unsigned int		remainder;
 	char				*remainders;
 	int					i;

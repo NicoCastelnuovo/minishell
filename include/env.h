@@ -6,14 +6,14 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 10:51:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 11:16:27 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/10 18:29:25 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_H
 # define ENV_H
 
-typedef struct	s_var
+typedef struct s_var
 {
 	char	*name;
 	int		name_len;
