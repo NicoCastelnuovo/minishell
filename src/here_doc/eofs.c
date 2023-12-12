@@ -6,13 +6,13 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 16:13:39 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 10:15:44 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 11:02:55 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int store_eofs_single_block(t_list *redir, t_data *data, char **eofs, int *i)
+static int	store_eofs_single_block(t_list *redir, char **eofs, int *i)
 {
 	t_list			*head;
 	t_redir_data	*redir_cont;
@@ -35,7 +35,7 @@ static int store_eofs_single_block(t_list *redir, t_data *data, char **eofs, int
 	return (0);
 }
 
-static char	**store_eofs(t_node *tree, t_data *data, int n)
+static char	**store_eofs(t_node *tree, int n)
 {
 	t_pipe	*pipe;
 	t_cmd	*cmd;
@@ -51,21 +51,21 @@ static char	**store_eofs(t_node *tree, t_data *data, int n)
 	{
 		pipe = tree->content;
 		cmd = (t_cmd *)pipe->left->content;
-		if (store_eofs_single_block(cmd->redir, data, eofs, &i))
+		if (store_eofs_single_block(cmd->redir, eofs, &i))
 			return (NULL);
 		tree = pipe->right;
 	}
 	cmd = (t_cmd *)tree->content;
-	if (store_eofs_single_block(cmd->redir, data, eofs, &i))
+	if (store_eofs_single_block(cmd->redir, eofs, &i))
 		return (NULL);
 	return (eofs);
 }
 
-static int	count_all_here_doc(t_list *redir, t_data *data)
+static int	count_all_here_doc(t_list *redir)
 {
 	t_redir_data	*redir_cont;
 	int				n;
-	(void)data;
+
 	n = 0;
 	if (!redir)
 		return (0);
@@ -79,7 +79,7 @@ static int	count_all_here_doc(t_list *redir, t_data *data)
 	return (n);
 }
 
-static int	get_n_eofs(t_node *tree, t_data *data)
+static int	get_n_eofs(t_node *tree)
 {
 	t_pipe	*pipe;
 	t_cmd	*cmd;
@@ -90,27 +90,24 @@ static int	get_n_eofs(t_node *tree, t_data *data)
 	{
 		pipe = tree->content;
 		cmd = (t_cmd *)pipe->left->content;
-		n += count_all_here_doc(cmd->redir, data);
+		n += count_all_here_doc(cmd->redir);
 		tree = pipe->right;
 	}
 	cmd = (t_cmd *)tree->content;
-	n += count_all_here_doc(cmd->redir, data);
+	n += count_all_here_doc(cmd->redir);
 	return (n);
 }
 
-char **collect_eofs(t_node *tree, t_data *data)
+char	**collect_eofs(t_node *tree, t_data *data)
 {
-	t_pipe	*pipe;
-	t_cmd	*cmd;
 	int		n;
 	char	**eofs;
-	(void)pipe;
-	(void)cmd;
+
 	n = 0;
-	n = get_n_eofs(tree, data);
+	n = get_n_eofs(tree);
 	if (n == 0)
 		return (NULL);
-	eofs = store_eofs(tree, data, n);
+	eofs = store_eofs(tree, n);
 	if (!eofs)
 		data->e_code = 1;
 	return (eofs);

@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/10/10 13:39:47 by fahmadia          #+#    #+#              #
-#    Updated: 2023/11/21 15:56:41 by ncasteln         ###   #################################.fr        #
+#    Created: 2023/12/12 14:25:53 by ncasteln          #+#    #+#              #
+#    Updated: 2023/12/12 14:59:29 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ VPATH = ./src/ \
 	./src/builtins \
 	./src/builtins/export \
 	./src/env \
-	./src/error \
 	./src/executor \
 	./src/expansion \
 	./src/here_doc \
@@ -26,8 +25,7 @@ VPATH = ./src/ \
 	./src/parser \
 	./src/print_utils \
 	./src/signals \
-	./src/utils \
-	./test
+	./src/utils
 
 BUILTINS = cd.c \
 	print_env.c \
@@ -38,14 +36,13 @@ BUILTINS = cd.c \
 	unset.c \
 	exit.c
 
-ERROR = error.c \
-
 EXECUTOR = executor.c \
 	execute_single_cmd.c \
 	execute_pipechain.c \
 	child_pipechain.c \
 	child_single_cmd.c \
-	resolve_args.c \
+	resolve_cmd_path.c \
+	cmd_path_utils.c \
 	redirect_to_pipes.c \
 	redirect_to_explicit.c \
 	run_builtin.c \
@@ -71,27 +68,6 @@ HERE_DOC = here_doc.c \
 	get_interactive_input.c \
 	tmp_file_creation.c
 
-PARSER = check_for_syntax_err.c \
-	build_syntax_tree.c \
-	update_cmd_node.c \
-	update_cmd_args.c \
-	update_cmd_redir.c \
-	free_syntax_tree.c \
-	parser.c
-
-PRINT_UTILS = print_syntax_tree.c \
-	print_tokens.c \
-	print_expansion.c \
-	print_tree_construction.c
-
-SIGNALS = sig_handler.c
-
-UTILS = free_data.c \
-	ft_strcmp.c \
-	is_empty_input.c \
-	error.c \
-	get_wd.c
-
 LEXER = lexer.c \
 	tokenize_input.c \
 	del_tokens.c \
@@ -110,6 +86,27 @@ LEXER = lexer.c \
 	remove_a_token_node.c \
 	merge_strings.c
 
+PARSER = check_for_syntax_err.c \
+	build_syntax_tree.c \
+	update_cmd_node.c \
+	update_cmd_args.c \
+	update_cmd_redir.c \
+	free_syntax_tree.c \
+	parser.c
+
+PRINT_UTILS = print_syntax_tree.c \
+	print_tokens.c \
+	print_expansion.c \
+	print_tree_construction.c
+
+SIGNALS = sig_handler.c
+
+UTILS = terminal_config.c \
+	free_data.c \
+	ft_strcmp.c \
+	error.c \
+	get_wd.c
+
 SRCS = minishell.c \
 	$(BUILTINS) \
 	$(ENV) \
@@ -126,7 +123,7 @@ OBJS_PATH = ./objs
 OBJS = $(patsubst %.c, $(OBJS_PATH)/%.o, $(SRCS))
 
 CC = cc
-CFLAGS = -c -g -Wall -Wextra -Werror
+CFLAGS = -c -g -Wall -Wextra #-Werror
 NAME = minishell
 MYLIB_PATH = ./mylib
 MYLIB = $(MYLIB_PATH)/libmylib.a
@@ -161,8 +158,5 @@ fclean: clean
 	@echo "$(COLOR_YELLOW)minishell object files and minishell executable file are deleted.$(COLOR_END)"
 
 re: fclean all
-
-test:
-	@cd tests && bash tester.sh a
 
 .PHONY: all clean fclean re test

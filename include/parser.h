@@ -6,12 +6,13 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:31:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/09 07:53:09 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 14:36:25 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
+
 /*
 	SYNTAX TREE
 	The tree is composed by t_node items. Each t_node can be either of type
@@ -31,7 +32,7 @@ typedef struct s_node
 }	t_node;
 
 /*
-	t_pipe is the content of t_node, when its type is IS_PIPE.
+	t_pipe is the content type of t_node, when its type is IS_PIPE.
 	It holds just two address to 2 different t_node.
 */
 typedef struct s_pipe
@@ -41,11 +42,9 @@ typedef struct s_pipe
 }	t_pipe;
 
 /*
-	t_cmd is the content of t_node in case its type is IS_CMD'
+	t_cmd is the content of t_node in case its type is IS_CMD.
 	It holds information about the tokens in a block delimited by start/end of
 	the input, and by pipes.
-	@param tkn_sublist - given an input of "ls -la | cat -eb >out1", the list is
-	divided into [ls -la | ][cat -eb >out1]
 */
 typedef struct s_cmd
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   merge_strings.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 10:35:23 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/10 18:27:17 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/12 14:20:17 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,6 @@ static int	is_word_or_string(t_tkn_type type)
 	return (0);
 }
 
-// 			cur_tkn_data->str = join_two_strs(&(cur_tkn_data->str),
-// 					next_tkn_data->str);
-// 			remove_next_node(cur_node);
-// 			cur_tkn_data->type = TKN_ENV_VAR;
-// 			cur_tkn_data->str_len = ft_strlen(cur_tkn_data->str);
-// 			((t_tkn_data *)(tkns_head->content))->list_size--;
-
 static void	do_the_merge(t_tkn_data *next_cont, t_tkn_data *curr_cont,
 	t_list *head, t_list *tkn)
 {
@@ -36,7 +29,7 @@ static void	do_the_merge(t_tkn_data *next_cont, t_tkn_data *curr_cont,
 	next_wp_status = next_cont->white_space;
 	curr_cont->str = join_two_strs(&(curr_cont->str), next_cont->str);
 	if (!curr_cont->str)
-		return ;//protect
+		return ;
 	remove_next_node(head);
 	curr_cont->type = TKN_WORD;
 	curr_cont->white_space = next_wp_status;

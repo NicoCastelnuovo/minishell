@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 12:01:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 12:17:39 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 10:51:23 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	update_cmd_args(char *arg, t_cmd *cmd)
 	n_args = count_n_args(cmd);
 	new_args = ft_calloc(n_args + 2, sizeof(char *));
 	if (!new_args)
-		return (1); // ----- check leaks free_dptr(cmd->args)
+		return (1);
 	i = 0;
 	while (i < n_args)
 	{

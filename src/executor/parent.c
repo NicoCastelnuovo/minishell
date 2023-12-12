@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:49:16 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 10:07:07 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:00:01 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,5 @@ int	parent(t_data *data)
 	if (data->pid)
 		data->e_code = wait_children(data->pid, data->n_ps, &wstatus);
 	unlink_here_doc(data->tree);
-	// init_sig_handling();
 	return (0);
 }

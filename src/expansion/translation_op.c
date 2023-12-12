@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 11:08:27 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/09 17:53:39 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 10:42:42 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ static char	*copy_without_translation_operator(char *old, int len)
 	while (old[i])
 	{
 		if (old[i] == '$' && is_open == -1)
-			if (old[i + 1] == TKN_S_QUOTE || old[i + 1] == TKN_D_QUOTE)
+			if (old[i + 1] == '\'' || old[i + 1] == '\"')
 				i++;
-		if (old[i] == TKN_S_QUOTE || old[i] == TKN_D_QUOTE)
+		if (old[i] == '\'' || old[i] == '\"')
 			change_is_open_quote(old[i], &is_open);
 		mid_str[j] = old[i];
 		j++;
@@ -66,7 +66,7 @@ static size_t	get_len_without_translation_operator(char *old)
 	i = 0;
 	while (old[i])
 	{
-		if (old[i] == '$' && (old[i + 1] == TKN_S_QUOTE || old[i + 1] == TKN_D_QUOTE))
+		if (old[i] == '$' && (old[i + 1] == '\'' || old[i + 1] == '\"'))
 		{
 			if (is_open == -1)
 				i++;
@@ -76,7 +76,7 @@ static size_t	get_len_without_translation_operator(char *old)
 				i++;
 			}
 		}
-		if (old[i] == TKN_S_QUOTE || old[i] == TKN_D_QUOTE)
+		if (old[i] == '\'' || old[i] == '\"')
 			change_is_open_quote(old[i], &is_open);
 		len++;
 		i++;

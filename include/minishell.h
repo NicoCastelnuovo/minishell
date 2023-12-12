@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/12/12 10:15:28 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 14:49:45 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ enum e_custom_errors
 void	parser(t_data *data);
 
 // -------------------------------------------------------------------- SIGNALS
-void	init_sig_handling(void);
-void	change_sig_handling(void); // change ??
+void	set_sig_action(int is_before_rl);
+void	switch_g_var(t_data *data);
 
 // ------------------------------------------------------------------ EXPANSION
 void	expansion(t_data *data);
@@ -92,20 +92,23 @@ void	change_is_open_quote(char curr_quote, char *is_open);
 void	here_doc(t_node *tree, t_data *data);
 char	**collect_eofs(t_node *tree, t_data *data);
 int		get_tmp_name(t_redir_data *redir_cont, int fd_tmp, int n);
-int		get_fd_tmp(t_redir_data *redir_cont, int fd_tmp, int n);
 int		get_interactive_input(int fd_tmp, char **eof, t_data *data);
 
 // ------------------------------------------------------------------- EXECUTOR
-int		executor(t_data *data);
+void	executor(t_data *data);
 int		execute_single_cmd(t_data *data);
 int		execute_pipechain(t_data *data);
 
 void	child_single_cmd(t_data *data);
 void	child_pipechain(t_data *data, t_node *node, int *pipe, int *prev_pipe);
-
 int		parent(t_data *data);
 
-int		resolve_args(char **cmd_name, char **env);
+int		resolve_cmd_path(char **cmd_name, char **env);
+char	*get_path_var(char **env);
+int		file_and_exec_ok(char *cmd_name, char **abs_path, char	*path);
+int		is_a_directory(char *cmd_name);
+int		contains_a_path(char *cmd_name);
+
 int		redirect_to_explicit(t_node *node);
 int		redirect_to_pipes(int *pipe, int *prev_pipe);
 
@@ -125,16 +128,15 @@ int		exit_custom(t_cmd *cmd, t_data *data);
 int		print_exported(t_list *env);
 int		echo(t_data *data, t_cmd *cmd);
 int		export(t_cmd *cmd, t_data *data);
-t_list	*sort_env(t_list *old);
 int		unset(t_cmd *cmd, t_data *data);
 
 // ---------------------------------------------------------------------- UTILS
+void	terminal_config(void);
 char	*get_wd(void);
 void	error(char *s1, char *s2, int err_id);
 int		ft_strcmp(const char *s1, const char *s2);
 void	free_data(t_data *data);
 int		get_substr_len(char *s, char c);
-int		is_empty_input(char *s);
 void	del_redir_content(void *content);
 
 extern int	g_ctrl_c_pressed;

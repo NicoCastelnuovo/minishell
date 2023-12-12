@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_single_cmd.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 10:06:56 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/10 17:40:24 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/12 13:32:45 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	fork_one_ps(t_data *data)
 	if (data->pid[0] == 0)
 	{
 		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_IGN);
+		signal(SIGQUIT, SIG_DFL);
 		child_single_cmd(data);
 	}
 	return (0);

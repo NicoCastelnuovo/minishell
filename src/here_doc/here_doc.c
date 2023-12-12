@@ -6,17 +6,17 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:19:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 10:15:10 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 14:46:58 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	perform_here_doc(t_redir_data *redir_cont, t_data *data, char *eof, int i)
+static int	perform_here_doc(t_redir_data *redir_cont, t_data *data, char *eof)
 {
 	int		fd_tmp;
-	(void)i;
-	fd_tmp = open(redir_cont->f_name, O_WRONLY); // check returns
+
+	fd_tmp = open(redir_cont->f_name, O_WRONLY);
 	if (fd_tmp == -1)
 		return (error("here_doc", NULL, errno), 1);
 	if (get_interactive_input(fd_tmp, &eof, data))
@@ -28,19 +28,18 @@ static int	perform_here_doc(t_redir_data *redir_cont, t_data *data, char *eof, i
 	return (0);
 }
 
-
-static int	check_redirections(t_list *redir, t_data *data, char **eofs, int *i)
+static int	check_redir(t_list *redir, t_data *data, char **eofs, int *i)
 {
-	t_redir_data	*redir_content;
+	t_redir_data	*redir_cont;
 
 	if (!redir)
 		return (0);
 	while (redir)
 	{
-		redir_content = redir->content;
-		if (redir_content->type == REDIR_HERE_DOC)
+		redir_cont = (t_redir_data *)redir->content;
+		if (redir_cont->type == REDIR_HERE_DOC)
 		{
-			if (perform_here_doc(redir_content, data, eofs[*i], *i))
+			if (perform_here_doc(redir_cont, data, eofs[*i]))
 			{
 				data->e_code = 1;
 				return (1);
@@ -56,20 +55,21 @@ static int	child_here_doc(t_node *tree, t_data *data, char **eofs)
 {
 	t_pipe	*pipe;
 	t_cmd	*cmd;
-	int		i = 0;
+	int		i;
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_IGN);
+	i = 0;
 	while (tree->type == IS_PIPE)
 	{
 		pipe = tree->content;
 		cmd = (t_cmd *)pipe->left->content;
-		if (check_redirections(cmd->redir, data, eofs, &i))
+		if (check_redir(cmd->redir, data, eofs, &i))
 			return (free_dptr(eofs), 1);
 		tree = pipe->right;
 	}
 	cmd = (t_cmd *)tree->content;
-	if (check_redirections(cmd->redir, data, eofs, &i))
+	if (check_redir(cmd->redir, data, eofs, &i))
 		return (free_dptr(eofs), 1);
 	return (free_dptr(eofs), 0);
 }
@@ -98,11 +98,8 @@ static int	resolve_here_doc(t_node *tree, t_data *data, char **eofs)
 
 void	here_doc(t_node *tree, t_data *data)
 {
-	t_pipe	*pipe;
-	t_cmd	*cmd;
 	char	**eofs;
-	(void)pipe;
-	(void)cmd;
+
 	if (!data->tree)
 		return ;
 	eofs = collect_eofs(tree, data);

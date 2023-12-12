@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 10:28:35 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 09:24:51 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 10:50:49 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,6 @@ void	free_cmd_node(t_node *node_c)
 		free_dptr(cmd->args);
 	if (cmd->redir)
 		ft_lstclear(&cmd->redir, del_redir_content);
-	// if (cmd->fd_in >= 0)
-	// {
-	// 	close(cmd->fd_in);
-	// 	cmd->fd_in = -2;
-	// }
-	// if (cmd->fd_out >= 0)
-	// {
-	// 	close(cmd->fd_out);
-	// 	cmd->fd_out = -2;
-	// }
 	free(cmd);
 	free(node_c);
 }

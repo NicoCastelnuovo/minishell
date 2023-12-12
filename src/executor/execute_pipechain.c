@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipechain.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 10:08:00 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/10 17:40:19 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/12 13:37:26 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	fork_last(t_data *data, t_node *node, int *prev_pipe, int i)
 	if (data->pid[i] == 0)
 	{
 		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_IGN);
+		signal(SIGQUIT, SIG_DFL);
 		child_pipechain(data, node, NULL, prev_pipe);
 	}
 	else
@@ -45,7 +45,7 @@ static int	fork_first_mid(t_data *data, t_node *node, int *prev_pipe, int i)
 	if (data->pid[i] == 0)
 	{
 		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_IGN);
+		signal(SIGQUIT, SIG_DFL);
 		child_pipechain(data, node, fd_pipe, prev_pipe);
 	}
 	else

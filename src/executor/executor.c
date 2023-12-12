@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 08:31:08 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/10 17:40:59 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/12 13:38:18 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,32 @@ static int	get_n_cmds(t_node *node)
 	return (n);
 }
 
-int	executor(t_data *data)
+/*
+	signal() ignores the init_sig_handling(), which sets the global to 1.
+	This is needed to catch the exit code of such programs like cat and sleep.
+*/
+void	executor(t_data *data)
 {
-	signal(SIGINT, SIG_IGN);		// if removed exit_code of cat is not 130
-	// signal(SIGQUIT, SIG_IGN);	// still needed ????
-	if (!data->tree)				 // need to check  errors????
-		return (1);
+	signal(SIGINT, SIG_IGN);
+	if (!data->tree)
+		return ;
 	data->n_ps = get_n_cmds(data->tree);
 	if (data->tree->type == IS_CMD)
 	{
 		if (execute_single_cmd(data))
-			return (parent(data));
+		{
+			parent(data);
+			return ;
+		}
 	}
 	else
 	{
 		if (execute_pipechain(data))
-			return (parent(data));
+		{
+			parent(data);
+			data->e_code = 1;
+			return ;
+		}
 	}
 	parent(data);
-	return (0);
 }

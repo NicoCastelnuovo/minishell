@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:06:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 10:15:37 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 12:36:51 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	bye_bye(t_data *data, int last_e_code)
 {
 	free_data(data);
 	ft_lstclear(&data->env, del_var_content);
-	// clear readline history
+	rl_clear_history();
 	exit(last_e_code);
 }
 
@@ -46,9 +46,6 @@ int	exit_custom(t_cmd *cmd, t_data *data)
 	int		n;
 
 	n = 0;
-	if (!cmd) // ------ remove ? Added to test leaks
-		bye_bye(data, data->e_code);
-	ft_putendl_fd("exit", 1);
 	while (cmd->args[n])
 		n++;
 	if (n == 1)

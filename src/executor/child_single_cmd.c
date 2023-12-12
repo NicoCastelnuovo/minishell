@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 12:25:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 10:15:41 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 14:46:22 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_child_and_exit(t_data *data, char **env, int e_code)
 	if (env)
 		free_dptr(env);
 	ft_lstclear(&data->env, del_var_content);
-	// rl clear history?
+	rl_clear_history();
 	exit(e_code);
 }
 
@@ -43,7 +43,7 @@ void	child_single_cmd(t_data *data)
 	cmd = (t_cmd *)data->tree->content;
 	if (cmd->args)
 	{
-		ret_value = resolve_args(&cmd->args[0], env);
+		ret_value = resolve_cmd_path(&cmd->args[0], env);
 		if (ret_value == 126 || ret_value == 127 || ret_value == -1)
 			free_child_and_exit(data, env, ret_value);
 		if (execve(cmd->args[0], cmd->args, env))

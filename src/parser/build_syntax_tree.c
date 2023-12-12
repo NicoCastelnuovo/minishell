@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:32:21 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/09 07:53:51 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 10:50:42 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ static t_node	*init_cmd_node(int n)
 	cmd = (t_cmd *)node_c->content;
 	cmd->args = NULL;
 	cmd->redir = NULL;
-	// cmd->fd_in = -2;
-	// cmd->fd_out = -2;
 	return (node_c);
 }
 

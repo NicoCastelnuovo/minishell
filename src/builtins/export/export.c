@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/10 18:47:28 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/12 14:38:43 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,34 +24,6 @@ void	free_double_pointer(char **double_pointer)
 	}
 	free(double_pointer);
 }
-
-/*
-	As env builtin does, it prints out the env variables, but in ASCII
-	order, including the variables which are not initialized.
-*/
-
-/* void	print_dptr_contetnt(char **dptr)
-{
-	int	i;
-
-	i = 0;
-	while (dptr[i])
-	{
-		printf("%s\n", dptr[i]);
-		i++;
-	}
-	
-}
-
-void	print_all_env(t_list *env)
-{
-	while (env)
-	{
-		printf("%s\n", ((t_var *)(env->content))->name);
-		env = env->next;
-	}
-	
-} */
 
 char	**env_convert_to_double_pointer(t_list *env)
 {
@@ -161,7 +133,7 @@ static int	env_var_exist(char *tmp_var_name, t_list *env)
 	while (env)
 	{
 		var = (t_var *)env->content;
-		if (ft_strncmp(var->name, tmp_var_name, n) == 0)
+		if (ft_strcmp(var->name, tmp_var_name) == 0)
 			return (1);
 		env = env->next;
 	}
@@ -185,9 +157,7 @@ static int	update_var_content(char *name, char *new_value, t_list *env)
 {
 	t_var	*var;
 	int		n;
-	// char	*tmp;
 
-	// tmp = NULL;
 	n = ft_strlen(name);
 	if (name[n - 1] == '+')
 		n -= 1;

@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_empty_input.c                                   :+:      :+:    :+:   */
+/*   terminal_config.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/13 14:38:18 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 11:36:38 by ncasteln         ###   ########.fr       */
+/*   Created: 2023/12/12 11:59:22 by ncasteln          #+#    #+#             */
+/*   Updated: 2023/12/12 12:26:39 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_empty_input(char *s) // check is still needed
+/*
+	Remove ^C when ctrl-c is pressed.
+*/
+void	terminal_config(void)
 {
-	size_t	i;
+	struct termios	config;
 
-	i = 0;
-	while (s[i] == ' ' || s[i] == '\n' || s[i] == '\t') // check this
-		i++;
-	if (ft_strlen(s) == i)
-		return (1);
-	return (0);
+	tcgetattr(0, &config);
+	config.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, 0, &config);
 }
