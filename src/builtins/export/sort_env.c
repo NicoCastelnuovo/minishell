@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 12:03:48 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 15:57:22 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:50:31 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,6 @@ char	**check_next_chars(char **sorted_env)
 			j++;
 		}
 		i++;
-	}
+	} // check if creash with unsetting all variables
 	return (sorted_env);
 }

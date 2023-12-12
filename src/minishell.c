@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 17:30:02 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 18:02:13 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,25 @@ static void	init_data(t_data *data, char **env)
 
 static void	shell_loop(t_data *data)
 {
+	int N = 0; // leaks
+
 	while (1)
 	{
 		set_sig_action(1);
-		data->input = ft_strdup("export a a");		// for leaks
+		if (!N)
+		{
+			data->input = ft_strdup("unset PWD HOSTNAME HOME TERM SHLVL PATH OLDPWD _");		// for leaks
+			N = 1;
+		}
+		else if (N)
+		{
+			// data->input = ft_strdup("env");		// for leaks
+		}
 		// data->input = readline(data->prompt);
 		set_sig_action(0);
 		switch_g_var(data);
 		if (!data->input)
-			exit_custom(NULL, data);		// for leaks
+			break ;		// for leaks
 		if (ft_strlen(data->input) != 0)
 		{
 			lexer(data->input, &data->tokens);

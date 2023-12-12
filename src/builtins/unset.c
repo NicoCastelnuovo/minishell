@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:37:54 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 11:22:38 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/12 18:02:16 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,19 @@
 
 static int	unset_head(t_list *head, t_list **env, char *name)
 {
+	t_var	*var;
+	t_list	*tmp;
+
+	var = NULL;
+	tmp	= NULL;
 	if (head == (*env))
 	{
-		if (ft_strcmp(((t_var *)head->content)->name, name) == 0)
+		var = (t_var *)head->content;
+		if (ft_strcmp(var->name, name) == 0)
 		{
+			tmp = (*env)->next;
 			ft_lstdelone(head, del_var_content);
-			(*env) = (*env)->next;
+			(*env) = tmp;
 			return (1);
 		}
 	}
