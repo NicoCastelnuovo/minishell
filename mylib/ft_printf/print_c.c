@@ -6,14 +6,14 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:00:55 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/04/21 09:37:24 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/10 18:31:49 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 int	print_c(int *i, va_list args)
-{	
+{
 	int	c;
 
 	c = va_arg(args, int);

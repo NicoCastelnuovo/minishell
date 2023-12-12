@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 12:03:48 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 11:22:50 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 12:43:28 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ t_list	*cpy_env(t_list *old)
 	return (new_list);
 }
 
-static void	sort(t_list **env)
+/* static void	sort(t_list **env)
 {
 	// need to sort based on ASCII value!
 	// idea: swap just the contents, not the node
-}
+} */
 
 t_list	*sort_env(t_list *old)
 {
@@ -77,7 +77,7 @@ t_list	*sort_env(t_list *old)
 	env_cpy = cpy_env(old);
 	if (!env_cpy)
 		return (NULL);
-	sort(&env_cpy);
+	// sort(&env_cpy);
 	print_env(env_cpy);
 	exit (0);
 	return (env_cpy);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   convert_to_dptr.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:49:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 12:41:34 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/09 12:43:53 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

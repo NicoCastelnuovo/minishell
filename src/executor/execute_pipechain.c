@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipechain.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 10:08:00 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/10 14:09:05 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:40:19 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

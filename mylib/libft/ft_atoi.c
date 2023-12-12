@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:30:08 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/04/14 11:33:36 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/10 18:33:46 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,4 @@ int	ft_atoi(const char *str)
 	if (sign == -1)
 		num *= -1;
 	return (num);
-}	
+}

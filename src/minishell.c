@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 10:12:05 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 10:15:30 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static void	shell_loop(t_data *data)
 			here_doc(data->tree, data);
 			executor(data);
 			add_history(data->input);
+			// printf("g_sig_num = %d\n", g_sig_num);
 			free_data(data);
 			// exit_custom(NULL, data); // ---> remove!
 		}

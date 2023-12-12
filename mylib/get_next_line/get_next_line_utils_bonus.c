@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 12:49:20 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/05/30 15:06:23 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/10 18:33:42 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	*ft_my_substr(char const *s, unsigned int start, size_t len)
 			p_substring[i] = (s + start)[i];
 			i++;
 		}
-	p_substring[i] = '\0';
+		p_substring[i] = '\0';
 	}
 	return (p_substring);
 }

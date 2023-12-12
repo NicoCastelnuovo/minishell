@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:19:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 10:07:36 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 10:15:10 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	perform_here_doc(t_redir_data *redir_cont, t_data *data, char *eof, int i)
 {
 	int		fd_tmp;
-
+	(void)i;
 	fd_tmp = open(redir_cont->f_name, O_WRONLY); // check returns
 	if (fd_tmp == -1)
 		return (error("here_doc", NULL, errno), 1);
@@ -101,7 +101,8 @@ void	here_doc(t_node *tree, t_data *data)
 	t_pipe	*pipe;
 	t_cmd	*cmd;
 	char	**eofs;
-
+	(void)pipe;
+	(void)cmd;
 	if (!data->tree)
 		return ;
 	eofs = collect_eofs(tree, data);

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 16:13:39 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 10:04:44 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 10:15:44 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	count_all_here_doc(t_list *redir, t_data *data)
 {
 	t_redir_data	*redir_cont;
 	int				n;
-
+	(void)data;
 	n = 0;
 	if (!redir)
 		return (0);
@@ -104,7 +104,8 @@ char **collect_eofs(t_node *tree, t_data *data)
 	t_cmd	*cmd;
 	int		n;
 	char	**eofs;
-
+	(void)pipe;
+	(void)cmd;
 	n = 0;
 	n = get_n_eofs(tree, data);
 	if (n == 0)

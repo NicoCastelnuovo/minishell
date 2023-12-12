@@ -3,57 +3,145 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 11:22:40 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/10 18:47:28 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	free_double_pointer(char **double_pointer)
+{
+	char	**temp;
+
+	temp = double_pointer;
+	while (*temp)
+	{
+		free(*temp);
+		temp++;
+	}
+	free(double_pointer);
+}
+
 /*
 	As env builtin does, it prints out the env variables, but in ASCII
 	order, including the variables which are not initialized.
 */
-int	print_exported(t_list *env)
-{
-	t_var	*var;
-	t_list	*sorted;
 
-	sorted = NULL;
-	// if (env)
-	// {
-	// 	sorted = sort_env(env);
-	// 	if (!sorted)
-	// 		return (1);
-	// 	else
-	// 	{
-	// 		// print sorted
-	// 	}
-	// }
-	// change printing
+/* void	print_dptr_contetnt(char **dptr)
+{
+	int	i;
+
+	i = 0;
+	while (dptr[i])
+	{
+		printf("%s\n", dptr[i]);
+		i++;
+	}
+	
+}
+
+void	print_all_env(t_list *env)
+{
 	while (env)
 	{
-		var = (t_var *)env->content;
-		if (var)
-		{
-			if (var->name) // change to if (is_exported) ??
-			{
-				ft_putstr_fd("declare -x ", 1);
-				ft_putstr_fd(var->name, 1);
-			}
-			if (var->value)
-			{
-				ft_putchar_fd('=', 1);
-				ft_putchar_fd('"', 1);
-				ft_putstr_fd(var->value, 1);
-				ft_putchar_fd('"', 1);
-			}
-			ft_putchar_fd('\n', 1);
-		}
+		printf("%s\n", ((t_var *)(env->content))->name);
 		env = env->next;
 	}
+	
+} */
+
+char	**env_convert_to_double_pointer(t_list *env)
+{
+	char	**env_dptr;
+	int		i;
+	char	*name_value;
+	char	*temp;
+
+	i = 0;
+	env_dptr = ft_calloc(ft_lstsize(env) + 1, sizeof(char *));
+	while (env)
+	{
+		if (((t_var *)(env->content))->value)
+		{
+			name_value = ft_strjoin(((t_var *)(env->content))->name, "=");
+			temp = name_value;
+			name_value = ft_strjoin(name_value,
+					((t_var *)(env->content))->value);
+			free(temp);
+		}
+		else
+			name_value = ft_strdup(((t_var *)(env->content))->name);
+		env_dptr[i] = name_value;
+		env = env->next;
+		i++;
+	}
+	return (env_dptr);
+}
+
+char	**sort_export(t_list *env)
+{
+	char	**env_dptr;
+	int		i;
+	int		j;
+	char	*temp;
+
+	i = 0;
+	env_dptr = env_convert_to_double_pointer(env);
+	while (env_dptr[i])
+	{
+		j = i + 1;
+		while (env_dptr[j])
+		{
+			if (env_dptr[i][0] > env_dptr[j][0])
+			{
+				temp = env_dptr[j];
+				env_dptr[j] = env_dptr[i];
+				env_dptr[i] = temp;
+			}
+			j++;
+		}
+		i++;
+	}
+	return (env_dptr);
+}
+
+int	print_exported(t_list *env)
+{
+	char	**sorted_env;
+	char	**temp;
+	bool	is_equal;
+	int		i;
+	int		j;
+
+	is_equal = false;
+	sorted_env = sort_export(env);
+	i = 0;
+	temp = sorted_env;
+	while (temp[i])
+	{
+		j = 0;
+		while (temp[i][j])
+		{
+			ft_putchar_fd(temp[i][j], 1);
+			if (temp[i][j] == '=')
+			{
+				ft_putchar_fd('"', 1);
+				is_equal = true;
+			}
+			j++;
+		}
+		if (is_equal)
+		{
+			ft_putchar_fd('"', 1);
+			is_equal = false;
+		}
+		i++;
+		ft_putchar_fd('\n', 1);
+	}
+	free_double_pointer(sorted_env);
 	return (0);
 }
 
@@ -80,6 +168,7 @@ static int	env_var_exist(char *tmp_var_name, t_list *env)
 	return (0);
 }
 
+
 static int	append_to_existing_var(t_var *var, char *new_value)
 {
 	char	*tmp;
@@ -96,9 +185,9 @@ static int	update_var_content(char *name, char *new_value, t_list *env)
 {
 	t_var	*var;
 	int		n;
-	char	*tmp;
+	// char	*tmp;
 
-	tmp = NULL;
+	// tmp = NULL;
 	n = ft_strlen(name);
 	if (name[n - 1] == '+')
 		n -= 1;
@@ -206,3 +295,15 @@ int	export(t_cmd *cmd, t_data *data)
 	}
 	return (0);
 }
+
+
+
+
+
+/*
+	take the first part of the string until = or the entire word
+	print "
+	print the right part of the first =
+	print "
+
+*/

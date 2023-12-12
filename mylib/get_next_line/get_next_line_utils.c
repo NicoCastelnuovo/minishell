@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 14:37:58 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/10/27 11:48:30 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/10 18:33:27 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*ft_my_strdup(const char *s1)
 			p_new_string[i] = s1[i];
 			i++;
 		}
-	p_new_string[i] = '\0';
+		p_new_string[i] = '\0';
 	}
 	return (p_new_string);
 }
@@ -117,7 +117,7 @@ char	*ft_my_substr(char const *s, unsigned int start, size_t len)
 			p_substring[i] = (s + start)[i];
 			i++;
 		}
-	p_substring[i] = '\0';
+		p_substring[i] = '\0';
 	}
 	return (p_substring);
 }

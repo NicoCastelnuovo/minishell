@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:35:30 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/10 15:50:12 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:45:02 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,24 @@ void	handle_ctrl_c_after_rl(int sig_n)
 	g_ctrl_c_pressed = 1;
 }
 
+/* void	configs()
+{
+	struct termios	config;
+
+	tcgetattr(0, &config);
+	config.c_cflag &= ~ECHOCTL;
+	tcsetattr(0, 0, &config);
+} */
+
 void	init_sig_handling(void)
 {
 	struct sigaction	sa_newline;
 	struct sigaction	sa_ignore;
 	sigset_t			set;
 
+	// configs();
 	ft_bzero(&sa_newline, sizeof(sa_newline));
 	ft_bzero(&sa_ignore, sizeof(sa_ignore));
-
 	sigemptyset(&set);
 	sigaddset(&set, SIGINT);	// C
 	sigaddset(&set, SIGQUIT);	// <backsl>

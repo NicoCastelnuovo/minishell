@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 11:52:30 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/04/14 11:37:27 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/10 18:34:03 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	{
 		if (src < dst)
 		{
-		p_dst[len - 1 - i] = p_src[len - 1 - i];
-		i++;
+			p_dst[len - 1 - i] = p_src[len - 1 - i];
+			i++;
 		}
 		else
 		{
