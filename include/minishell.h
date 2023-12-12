@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/12/12 15:14:20 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:17:47 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,10 +125,11 @@ int		cd(t_cmd *cmd, t_data *data);
 char	*get_wd(void);
 int		pwd(void);
 int		exit_custom(t_cmd *cmd, t_data *data);
-int		print_exported(t_list *env);
 int		echo(t_data *data, t_cmd *cmd);
-int		export(t_cmd *cmd, t_data *data);
 int		unset(t_cmd *cmd, t_data *data);
+int		export(t_cmd *cmd, t_data *data);
+int		print_exported(t_list *env);
+int		check_export(char *arg, t_list **env);
 char	**check_next_chars(char **sorted_env);
 char	**sort_export(t_list *env);
 void	print_each_line(int *i, bool *is_equal, char **sorted_env);

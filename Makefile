@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/12 14:25:53 by ncasteln          #+#    #+#              #
-#    Updated: 2023/12/12 14:59:29 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/12/12 15:19:15 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ BUILTINS = cd.c \
 	sort_env.c \
 	pwd.c \
 	unset.c \
-	exit.c
+	exit.c \
+	update_env.c
 
 EXECUTOR = executor.c \
 	execute_single_cmd.c \

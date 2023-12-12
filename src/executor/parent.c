@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:49:16 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 15:00:01 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 16:00:06 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static int	wait_children(pid_t *ps_id, int n_cmd, int *wstatus)
 	while (i < n_cmd)
 	{
 		w_pid = waitpid(ps_id[i], wstatus, 0);
-		// if (w_pid == -1)
-		// 	return (error("waitpid", NULL, errno), 1);
+		if (w_pid == -1)
+			return (error("waitpid", NULL, errno), 1);
 		if (w_pid == ps_id[i])
 			last_e_code = check_wstatus(wstatus);
 		i++;

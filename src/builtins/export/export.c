@@ -6,54 +6,11 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 15:12:09 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:49:35 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	free_double_pointer(char **double_pointer)
-// {
-// 	char	**temp;
-
-// 	temp = double_pointer;
-// 	while (*temp)
-// 	{
-// 		free(*temp);
-// 		temp++;
-// 	}
-// 	free(double_pointer);
-// }
-
-/*
-	As env builtin does, it prints out the env variables, but in ASCII
-	order, including the variables which are not initialized.
-*/
-
-/* void	print_dptr_contetnt(char **dptr)
-{
-	int	i;
-
-	i = 0;
-	while (dptr[i])
-	{
-		printf("%s\n", dptr[i]);
-		i++;
-	}
-
-}
-
-void	print_all_env(t_list *env)
-{
-	while (env)
-	{
-		printf("%s\n", ((t_var *)(env->content))->name);
-		env = env->next;
-	}
-
-} */
-
-
 
 int	print_exported(t_list *env)
 {
@@ -68,108 +25,6 @@ int	print_exported(t_list *env)
 	while (sorted_env[i])
 		print_each_line(&i, &is_equal, sorted_env);
 	free_dptr(sorted_env);
-	return (0);
-}
-
-/*
-	@param n: number of charachter to compare. It is needed to differentiate
-	between var+=value which append value to the var, and var=value, which
-	assigns it truncating the already existing content.
-*/
-static int	env_var_exist(char *tmp_var_name, t_list *env)
-{
-	t_var	*var;
-	int		n;
-
-	n = ft_strlen(tmp_var_name);
-	if (tmp_var_name[n - 1] == '+')
-		n -= 1;
-	while (env)
-	{
-		var = (t_var *)env->content;
-		if (ft_strcmp(var->name, tmp_var_name) == 0)
-			return (1);
-		env = env->next;
-	}
-	return (0);
-}
-
-
-static int	append_to_existing_var(t_var *var, char *new_value)
-{
-	char	*tmp;
-
-	tmp = var->value;
-	var->value = ft_strjoin(var->value, new_value);
-	if (!var->value)
-		return (1);
-	free(tmp);
-	return (0);
-}
-
-static int	update_var_content(char *name, char *new_value, t_list *env)
-{
-	t_var	*var;
-	int		n;
-
-	n = ft_strlen(name);
-	if (name[n - 1] == '+')
-		n -= 1;
-	while (env)
-	{
-		var = (t_var *)env->content;
-		if (ft_strncmp(var->name, name, n) == 0)
-		{
-			if (name[n] == '+')
-			{
-				if (append_to_existing_var(var, new_value))
-					return (1);
-			}
-			else
-			{
-				free(var->value);
-				var->value = ft_strdup(new_value);
-				if (!var->value)
-					return (1);
-			}
-		}
-		env = env->next;
-	}
-	return (0);
-}
-
-/*
-	Exports the specified variable to the subshells and child processes.
-	• IF the var doesn't exist yet, a new one is created and added to the env
-	• IF the var exist, if arg is initialized (at least = sign at the end),
-		the variable need to be replaced. If at the left ofthe equal sign there
-		is a + , than the old value is not replaces, but the new one is
-		appended.
-*/
-static int	check_export(char *arg, t_list **env)
-{
-	t_var	*tmp_var;
-	t_list	*new_node;
-
-	new_node = NULL;
-	tmp_var = NULL;
-	tmp_var = create_var_content(arg);
-	if (!env_var_exist(tmp_var->name, *env))
-	{
-		new_node = ft_lstnew(tmp_var);
-		if (!new_node)
-			return (1);
-		ft_lstadd_back(env, new_node);
-	}
-	else
-	{
-		if (tmp_var->value)
-		{
-			if (update_var_content(tmp_var->name, tmp_var->value, *env))
-				return (1);
-			del_var_content(tmp_var);
-		}
-	}
 	return (0);
 }
 
@@ -219,15 +74,3 @@ int	export(t_cmd *cmd, t_data *data)
 	}
 	return (0);
 }
-
-
-
-
-
-/*
-	take the first part of the string until = or the entire word
-	print "
-	print the right part of the first =
-	print "
-
-*/
