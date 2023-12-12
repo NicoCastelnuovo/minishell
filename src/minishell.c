@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 15:13:48 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:30:02 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,12 @@ static void	shell_loop(t_data *data)
 	while (1)
 	{
 		set_sig_action(1);
-		data->input = readline(data->prompt);
+		data->input = ft_strdup("export a a");		// for leaks
+		// data->input = readline(data->prompt);
 		set_sig_action(0);
 		switch_g_var(data);
 		if (!data->input)
-			break ;
+			exit_custom(NULL, data);		// for leaks
 		if (ft_strlen(data->input) != 0)
 		{
 			lexer(data->input, &data->tokens);
@@ -47,8 +48,9 @@ static void	shell_loop(t_data *data)
 			quote_removal(data);
 			here_doc(data->tree, data);
 			executor(data);
-			add_history(data->input);
+			// add_history(data->input);
 			free_data(data);
+			exit_custom(NULL, data);		// for leaks
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:17:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 15:56:57 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:34:36 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,8 @@ int	check_export(char *arg, t_list **env)
 	if (tmp_var->value)
 	{
 		if (update_var(tmp_var->name, tmp_var->value, *env, to_append))
-			return (1);
-		del_var_content(tmp_var);
+			return (del_var_content(tmp_var), 1);
 	}
+	del_var_content(tmp_var);
 	return (0);
 }

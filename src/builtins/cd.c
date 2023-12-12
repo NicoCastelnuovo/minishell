@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:20:48 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/09 13:32:49 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:26:50 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static int	update_var_or_create(char *name, char *new_value, t_list **env)
 		var = (t_var *)head->content;
 		if (ft_strcmp(name, var->name) == 0)
 		{
+			free(var->value);
 			var->value = new_value;
 			var->value_len = ft_strlen(new_value);
 			return (0);

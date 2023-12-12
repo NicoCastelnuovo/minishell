@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:06:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 12:36:51 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:19:55 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ int	exit_custom(t_cmd *cmd, t_data *data)
 	int		n;
 
 	n = 0;
+	if (!cmd)							// for leaks
+		bye_bye(data, data->e_code);	// for leaks
+	ft_putendl_fd("exit", 1);
 	while (cmd->args[n])
 		n++;
 	if (n == 1)
