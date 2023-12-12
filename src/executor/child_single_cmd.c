@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 12:25:07 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/10 11:37:49 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 08:25:26 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	free_child_and_exit(t_data *data, char **env, int e_code)
 	if (env)
 		free_dptr(env);
 	ft_lstclear(&data->env, del_var_content);
+	// rl clear history?
 	exit(e_code);
 }
 

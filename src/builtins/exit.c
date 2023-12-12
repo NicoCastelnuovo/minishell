@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:06:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/08 11:22:30 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 08:24:39 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	bye_bye(t_data *data, int last_e_code)
 {
 	free_data(data);
 	ft_lstclear(&data->env, del_var_content);
+	// clear readline history
 	exit(last_e_code);
 }
 
