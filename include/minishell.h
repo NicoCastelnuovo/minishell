@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/12/10 17:42:50 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:09:05 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,9 @@ int		echo(t_data *data, t_cmd *cmd);
 int		export(t_cmd *cmd, t_data *data);
 t_list	*sort_env(t_list *old);
 int		unset(t_cmd *cmd, t_data *data);
+char	**check_next_chars(char **sorted_env);
+char	**sort_export(t_list *env);
+void	print_each_line(int *i, bool *is_equal, char **sorted_env);
 
 // ---------------------------------------------------------------------- UTILS
 char	*get_wd(void);

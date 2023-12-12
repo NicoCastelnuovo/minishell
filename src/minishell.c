@@ -6,7 +6,7 @@
 /*   By: fahmadia <fahmadia@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/10 17:51:42 by fahmadia         ###   ########.fr       */
+/*   Updated: 2023/12/12 14:45:48 by fahmadia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ static void	shell_loop(t_data *data)
 	while (1)
 	{
 		init_sig_handling();
-		data->input = readline(data->prompt);
+		// data->input = readline(data->prompt);
+		data->input = strdup("export");
 		change_sig_handling();
 		is_ctrl_c_pressed(data);
 		if (!data->input)
@@ -55,10 +56,11 @@ static void	shell_loop(t_data *data)
 			quote_removal(data);
 			here_doc(data->tree, data);
 			executor(data);
-			add_history(data->input);
+			// add_history(data->input);
 			// printf("g_sig_num = %d\n", g_sig_num);
 			free_data(data);
-			// exit_custom(NULL, data); // ---> remove!
+			// rl_clear_history();
+			exit_custom(NULL, data); // ---> remove!
 		}
 	}
 }
