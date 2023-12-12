@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/12/12 14:49:45 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:14:20 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,9 @@ int		print_exported(t_list *env);
 int		echo(t_data *data, t_cmd *cmd);
 int		export(t_cmd *cmd, t_data *data);
 int		unset(t_cmd *cmd, t_data *data);
+char	**check_next_chars(char **sorted_env);
+char	**sort_export(t_list *env);
+void	print_each_line(int *i, bool *is_equal, char **sorted_env);
 
 // ---------------------------------------------------------------------- UTILS
 void	terminal_config(void);

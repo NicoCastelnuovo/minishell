@@ -6,114 +6,68 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:09:15 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 14:38:43 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:12:09 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_double_pointer(char **double_pointer)
-{
-	char	**temp;
+// void	free_double_pointer(char **double_pointer)
+// {
+// 	char	**temp;
 
-	temp = double_pointer;
-	while (*temp)
-	{
-		free(*temp);
-		temp++;
-	}
-	free(double_pointer);
-}
+// 	temp = double_pointer;
+// 	while (*temp)
+// 	{
+// 		free(*temp);
+// 		temp++;
+// 	}
+// 	free(double_pointer);
+// }
 
-char	**env_convert_to_double_pointer(t_list *env)
+/*
+	As env builtin does, it prints out the env variables, but in ASCII
+	order, including the variables which are not initialized.
+*/
+
+/* void	print_dptr_contetnt(char **dptr)
 {
-	char	**env_dptr;
-	int		i;
-	char	*name_value;
-	char	*temp;
+	int	i;
 
 	i = 0;
-	env_dptr = ft_calloc(ft_lstsize(env) + 1, sizeof(char *));
+	while (dptr[i])
+	{
+		printf("%s\n", dptr[i]);
+		i++;
+	}
+
+}
+
+void	print_all_env(t_list *env)
+{
 	while (env)
 	{
-		if (((t_var *)(env->content))->value)
-		{
-			name_value = ft_strjoin(((t_var *)(env->content))->name, "=");
-			temp = name_value;
-			name_value = ft_strjoin(name_value,
-					((t_var *)(env->content))->value);
-			free(temp);
-		}
-		else
-			name_value = ft_strdup(((t_var *)(env->content))->name);
-		env_dptr[i] = name_value;
+		printf("%s\n", ((t_var *)(env->content))->name);
 		env = env->next;
-		i++;
 	}
-	return (env_dptr);
-}
 
-char	**sort_export(t_list *env)
-{
-	char	**env_dptr;
-	int		i;
-	int		j;
-	char	*temp;
+} */
 
-	i = 0;
-	env_dptr = env_convert_to_double_pointer(env);
-	while (env_dptr[i])
-	{
-		j = i + 1;
-		while (env_dptr[j])
-		{
-			if (env_dptr[i][0] > env_dptr[j][0])
-			{
-				temp = env_dptr[j];
-				env_dptr[j] = env_dptr[i];
-				env_dptr[i] = temp;
-			}
-			j++;
-		}
-		i++;
-	}
-	return (env_dptr);
-}
+
 
 int	print_exported(t_list *env)
 {
 	char	**sorted_env;
-	char	**temp;
 	bool	is_equal;
 	int		i;
-	int		j;
 
 	is_equal = false;
 	sorted_env = sort_export(env);
+	sorted_env = check_next_chars(sorted_env);
 	i = 0;
-	temp = sorted_env;
-	while (temp[i])
-	{
-		j = 0;
-		while (temp[i][j])
-		{
-			ft_putchar_fd(temp[i][j], 1);
-			if (temp[i][j] == '=')
-			{
-				ft_putchar_fd('"', 1);
-				is_equal = true;
-			}
-			j++;
-		}
-		if (is_equal)
-		{
-			ft_putchar_fd('"', 1);
-			is_equal = false;
-		}
-		i++;
-		ft_putchar_fd('\n', 1);
-	}
-	free_double_pointer(sorted_env);
+	while (sorted_env[i])
+		print_each_line(&i, &is_equal, sorted_env);
+	free_dptr(sorted_env);
 	return (0);
 }
 
