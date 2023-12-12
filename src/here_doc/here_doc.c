@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:19:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 14:46:58 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 18:24:29 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ static int	resolve_here_doc(t_node *tree, t_data *data, char **eofs)
 	int		pid_hd;
 	int		wstatus;
 
+	wstatus = 0;
 	pid_hd = fork();
 	if (pid_hd == -1)
 		return (error("fork", NULL, errno), 1);
