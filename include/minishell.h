@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/12/10 16:15:59 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 10:01:58 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int		call_builtin_function(t_cmd *cmd, t_data *data);
 int		run_builtin_same_ps(t_data *data);
 
 void	free_child_and_exit(t_data *data, char **env, int e_code);
+void	unlink_here_doc(t_node *tree);
 
 // ------------------------------------------------------------------- BUILTINS
 int		print_env(t_list *env);

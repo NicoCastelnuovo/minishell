@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 08:29:07 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 10:12:05 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ int	main(int argc, char **argv, char **env)
 	shell_loop(&data);
 	free_data(&data);
 	ft_lstclear(&data.env, del_var_content);
-	rl_clear_history(); // check if it's correct and put also in: here_doc maybe, exits, children etc
+	rl_clear_history();
 	return (0);
 }

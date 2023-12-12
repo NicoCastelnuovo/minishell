@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 16:13:39 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/10 16:25:40 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 10:04:44 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,20 @@
 
 static int store_eofs_single_block(t_list *redir, t_data *data, char **eofs, int *i)
 {
-	t_list	*head;
-	t_redir_data	*redir_content;
+	t_list			*head;
+	t_redir_data	*redir_cont;
 
 	head = redir;
 	while (head)
 	{
-		redir_content = head->content;
-		if (redir_content->type == REDIR_HERE_DOC)
+		redir_cont = head->content;
+		if (redir_cont->type == REDIR_HERE_DOC)
 		{
-			eofs[*i] = ft_strdup(redir_content->f_name);
+			eofs[*i] = ft_strdup(redir_cont->f_name);
 			if (!eofs[*i])
-				return (error("eofs", NULL, errno), 1);
-			get_tmp_name(redir_content, -1, *i); // LEAKS???
+				return (free_dptr(eofs), error("eofs", NULL, errno), 1);
+			if (get_tmp_name(redir_cont, -1, *i) == -1)
+				return (free_dptr(eofs), 1);
 			(*i)++;
 		}
 		head = head->next;
@@ -62,7 +63,7 @@ static char	**store_eofs(t_node *tree, t_data *data, int n)
 
 static int	count_all_here_doc(t_list *redir, t_data *data)
 {
-	t_redir_data	*redir_content;
+	t_redir_data	*redir_cont;
 	int				n;
 
 	n = 0;
@@ -70,8 +71,8 @@ static int	count_all_here_doc(t_list *redir, t_data *data)
 		return (0);
 	while (redir)
 	{
-		redir_content = redir->content;
-		if (redir_content->type == REDIR_HERE_DOC)
+		redir_cont = redir->content;
+		if (redir_cont->type == REDIR_HERE_DOC)
 			n++;
 		redir = redir->next;
 	}

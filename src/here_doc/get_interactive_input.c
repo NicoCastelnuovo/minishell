@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 10:39:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/10 15:37:29 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 09:48:58 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,11 @@
 static int	write_into_tmp_file(int fd_tmp, char *eof, t_data *data)
 {
 	char	*line;
-	char	*prompt;
 
 	line = NULL;
-	prompt = NULL;
 	while (1)
 	{
-		prompt = ft_strjoin(eof, " > "); // LEAKS
-		line = readline(prompt);
+		line = readline("> ");
 		if (!line || ft_strcmp(line, eof) == 0)
 			break ;
 		else
@@ -44,7 +41,7 @@ static int	write_into_tmp_file(int fd_tmp, char *eof, t_data *data)
 	}
 	if (line)
 		free(line);
-	return (0);
+	return (rl_clear_history(), 0);
 }
 
 /*

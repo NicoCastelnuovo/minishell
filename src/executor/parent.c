@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:49:16 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/10 15:26:47 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 10:07:07 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	check_wstatus(int *wstatus)
 	if (WIFEXITED(*wstatus))
 		return (WEXITSTATUS(*wstatus));
 	if (WIFSIGNALED(*wstatus))
-		return (WTERMSIG(*wstatus) + 128); // check
+		return (WTERMSIG(*wstatus) + 128);
 	return (0);
 }
 
@@ -56,7 +56,7 @@ static void	iter_redirections(t_list *redir)
 	}
 }
 
-static void	unlink_here_doc(t_node *tree)
+void	unlink_here_doc(t_node *tree)
 {
 	t_node	*node;
 	t_pipe	*pipe;
@@ -82,6 +82,6 @@ int	parent(t_data *data)
 	if (data->pid)
 		data->e_code = wait_children(data->pid, data->n_ps, &wstatus);
 	unlink_here_doc(data->tree);
-	init_sig_handling();
+	// init_sig_handling();
 	return (0);
 }

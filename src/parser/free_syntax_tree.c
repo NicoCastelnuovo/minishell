@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 10:28:35 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/09 07:53:39 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 09:24:51 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@ void	free_dptr(char **p)
 	int	i;
 
 	i = 0;
-	while (p[i])
+	if (p)
 	{
-		free(p[i]);
-		i++;
+		while (p[i])
+		{
+			free(p[i]);
+			i++;
+		}
+		free(p);
 	}
-	free(p);
 }
 
 void	del_redir_content(void *content)

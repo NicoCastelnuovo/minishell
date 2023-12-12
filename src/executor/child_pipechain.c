@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:49:46 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/10 11:34:54 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/12 10:00:58 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	child_pipechain(t_data *data, t_node *node, int *pipe, int *prev_pipe)
 	cmd = (t_cmd *)node->content;
 	env = convert_to_dptr(data->env);
 	if (!env)
-		free_child_and_exit(data, env, 1); // chaged from exit(1);
+		free_child_and_exit(data, env, 1);
 	if (redirect_to_pipes(pipe, prev_pipe))
 		free_child_and_exit(data, env, 1);
 	if (redirect_to_explicit(node))
