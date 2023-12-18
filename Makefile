@@ -6,7 +6,7 @@
 #    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/12 14:25:53 by ncasteln          #+#    #+#              #
-#    Updated: 2023/12/12 15:19:15 by ncasteln         ###   ########.fr        #
+#    Updated: 2023/12/18 08:52:30 by ncasteln         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ BUILTINS = cd.c \
 	echo.c \
 	export.c \
 	sort_env.c \
+	sort_env_utils.c \
 	pwd.c \
 	unset.c \
 	exit.c \
@@ -124,11 +125,11 @@ OBJS_PATH = ./objs
 OBJS = $(patsubst %.c, $(OBJS_PATH)/%.o, $(SRCS))
 
 CC = cc
-CFLAGS = -c -g -Wall -Wextra #-Werror
+CFLAGS = -c -g -Wall -Wextra -Werror
 NAME = minishell
 MYLIB_PATH = ./mylib
 MYLIB = $(MYLIB_PATH)/libmylib.a
-INCLUDE = -I./include -I./mylib/libft -I./mylib/ft_printf -I./mylib/get_next_line
+INCLUDE = -I./include -I./mylib/libft -I./mylib/ft_printf
 
 COLOR_GREEN = \033[0;32m
 COLOR_YELLOW = \033[0;33m
@@ -160,4 +161,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re test
+.PHONY: all clean fclean re

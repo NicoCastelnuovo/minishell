@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:19:33 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 18:24:29 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/13 11:24:47 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,21 +93,21 @@ static int	resolve_here_doc(t_node *tree, t_data *data, char **eofs)
 	if (WIFEXITED(wstatus))
 		return (WEXITSTATUS(wstatus));
 	if (WIFSIGNALED(wstatus))
-		return (WTERMSIG(wstatus) + 128);
+		return (1);
 	return (0);
 }
 
-void	here_doc(t_node *tree, t_data *data)
+int	here_doc(t_node *tree, t_data *data)
 {
 	char	**eofs;
 
 	if (!data->tree)
-		return ;
+		return (1);
 	eofs = collect_eofs(tree, data);
 	if (!eofs)
-		return ;
-	if (resolve_here_doc(tree, data, eofs))
-		data->e_code = 1;
+		return (0);
+	signal(SIGINT, SIG_IGN);
+	data->e_code = resolve_here_doc(tree, data, eofs);
 	free_dptr(eofs);
-	return ;
+	return (data->e_code);
 }

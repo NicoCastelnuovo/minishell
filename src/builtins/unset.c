@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:37:54 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 18:03:05 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/13 11:29:32 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	unset_head(t_list *head, t_list **env, char *name)
 	t_list	*tmp;
 
 	var = NULL;
-	tmp	= NULL;
+	tmp = NULL;
 	if (head == (*env))
 	{
 		var = (t_var *)head->content;

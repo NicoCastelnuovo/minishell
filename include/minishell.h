@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:46:56 by fahmadia          #+#    #+#             */
-/*   Updated: 2023/12/12 15:17:47 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/13 11:31:28 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*remove_quote_pairs(char *s);
 void	change_is_open_quote(char curr_quote, char *is_open);
 
 // ------------------------------------------------------------------- HERE_DOC
-void	here_doc(t_node *tree, t_data *data);
+int		here_doc(t_node *tree, t_data *data);
 char	**collect_eofs(t_node *tree, t_data *data);
 int		get_tmp_name(t_redir_data *redir_cont, int fd_tmp, int n);
 int		get_interactive_input(int fd_tmp, char **eof, t_data *data);
@@ -133,6 +133,8 @@ int		check_export(char *arg, t_list **env);
 char	**check_next_chars(char **sorted_env);
 char	**sort_export(t_list *env);
 void	print_each_line(int *i, bool *is_equal, char **sorted_env);
+size_t	find_min_len(char *str1, char *str2);
+void	swap(char **str1, char **str2);
 
 // ---------------------------------------------------------------------- UTILS
 void	terminal_config(void);

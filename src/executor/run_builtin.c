@@ -6,44 +6,54 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:18:14 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 14:38:36 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/13 08:04:43 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*str_to_lower(char *s)
+static char	*str_to_lowcase(char *s)
 {
-	int	i;
+	char	*s_lowcase;
+	int		i;
 
+	s_lowcase = ft_strdup(s);
+	if (!s_lowcase)
+		return (NULL);
 	i = 0;
 	while (s[i])
 	{
-		s[i] = ft_tolower(s[i]);
+		s_lowcase[i] = ft_tolower(s[i]);
 		i++;
 	}
-	return (s);
+	s_lowcase[i] = '\0';
+	return (s_lowcase);
 }
 
 int	is_builtin(t_cmd *cmd)
 {
+	char	*cmd_low;
+
 	if (!cmd->args)
 		return (0);
-	if (ft_strcmp(str_to_lower(cmd->args[0]), "cd") == 0)
-		return (1);
-	if (ft_strcmp(str_to_lower(cmd->args[0]), "echo") == 0)
-		return (1);
-	if (ft_strcmp(str_to_lower(cmd->args[0]), "exit") == 0)
-		return (1);
-	if (ft_strcmp(str_to_lower(cmd->args[0]), "export") == 0)
-		return (1);
-	if (ft_strcmp(str_to_lower(cmd->args[0]), "env") == 0)
-		return (1);
-	if (ft_strcmp(str_to_lower(cmd->args[0]), "pwd") == 0)
-		return (1);
-	if (ft_strcmp(str_to_lower(cmd->args[0]), "unset") == 0)
-		return (1);
-	return (0);
+	cmd_low = str_to_lowcase(cmd->args[0]);
+	if (!cmd_low)
+		return (free(cmd_low), 1);
+	if (ft_strcmp(cmd_low, "cd") == 0)
+		return (free(cmd_low), 1);
+	if (ft_strcmp(cmd_low, "echo") == 0)
+		return (free(cmd_low), 1);
+	if (ft_strcmp(cmd_low, "exit") == 0)
+		return (free(cmd_low), 1);
+	if (ft_strcmp(cmd_low, "export") == 0)
+		return (free(cmd_low), 1);
+	if (ft_strcmp(cmd_low, "env") == 0)
+		return (free(cmd_low), 1);
+	if (ft_strcmp(cmd_low, "pwd") == 0)
+		return (free(cmd_low), 1);
+	if (ft_strcmp(cmd_low, "unset") == 0)
+		return (free(cmd_low), 1);
+	return (free(cmd_low), 0);
 }
 
 /*
@@ -53,20 +63,28 @@ int	is_builtin(t_cmd *cmd)
 */
 int	call_builtin_function(t_cmd *cmd, t_data *data)
 {
-	if (ft_strcmp(str_to_lower(cmd->args[0]), "cd") == 0)
+	char	*cmd_low;
+
+	if (!cmd->args)
+		return (0);
+	cmd_low = str_to_lowcase(cmd->args[0]);
+	if (!cmd_low)
+		return (1);
+	if (ft_strcmp(cmd_low, "cd") == 0)
 		data->e_code = cd(cmd, data);
-	else if (ft_strcmp(str_to_lower(cmd->args[0]), "echo") == 0)
+	else if (ft_strcmp(cmd_low, "echo") == 0)
 		data->e_code = echo(data, cmd);
-	else if (ft_strcmp(str_to_lower(cmd->args[0]), "exit") == 0)
+	else if (ft_strcmp(cmd_low, "exit") == 0)
 		data->e_code = exit_custom(cmd, data);
-	else if (ft_strcmp(str_to_lower(cmd->args[0]), "export") == 0)
+	else if (ft_strcmp(cmd_low, "export") == 0)
 		data->e_code = export(cmd, data);
-	else if (ft_strcmp(str_to_lower(cmd->args[0]), "env") == 0)
+	else if (ft_strcmp(cmd_low, "env") == 0)
 		data->e_code = print_env(data->env);
-	else if (ft_strcmp(str_to_lower(cmd->args[0]), "pwd") == 0)
+	else if (ft_strcmp(cmd_low, "pwd") == 0)
 		data->e_code = pwd();
-	else if (ft_strcmp(str_to_lower(cmd->args[0]), "unset") == 0)
+	else if (ft_strcmp(cmd_low, "unset") == 0)
 		data->e_code = unset(cmd, data);
+	free(cmd_low);
 	return (data->e_code);
 }
 

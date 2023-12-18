@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:38:38 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 18:25:14 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/13 11:29:54 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,21 @@ static void	shell_loop(t_data *data)
 	while (1)
 	{
 		set_sig_action(1);
-		data->input = ft_strdup(" << OK");		// for leaks
-		// data->input = readline(data->prompt);
+		data->input = readline(data->prompt);
 		set_sig_action(0);
 		switch_g_var(data);
 		if (!data->input)
-			break ;		// for leaks
+			break ;
 		if (ft_strlen(data->input) != 0)
 		{
 			lexer(data->input, &data->tokens);
 			parser(data);
 			expansion(data);
 			quote_removal(data);
-			here_doc(data->tree, data);
-			executor(data);
-			// add_history(data->input);
+			if (!here_doc(data->tree, data))
+				executor(data);
+			add_history(data->input);
 			free_data(data);
-			exit_custom(NULL, data);		// for leaks
 		}
 	}
 }

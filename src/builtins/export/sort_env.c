@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 12:03:48 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/12/12 17:50:31 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/12/13 11:32:06 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,27 +92,6 @@ void	print_each_line(int *i, bool *is_equal, char **sorted_env)
 	ft_putchar_fd('\n', 1);
 }
 
-size_t	find_min_len(char *str1, char *str2)
-{
-	size_t	len1;
-	size_t	len2;
-
-	len1 = ft_strlen(str1);
-	len2 = ft_strlen(str2);
-	if (len1 < len2)
-		return (len1);
-	else
-		return (len2);
-}
-
-static void	swap(char **str1, char **str2)
-{
-	char		*temp;
-	temp = *str2;
-	*str2 = *str1;
-	*str1 = temp;
-}
-
 char	**check_next_chars(char **sorted_env)
 {
 	int			i;
@@ -134,6 +113,6 @@ char	**check_next_chars(char **sorted_env)
 			j++;
 		}
 		i++;
-	} // check if creash with unsetting all variables
+	}
 	return (sorted_env);
 }
