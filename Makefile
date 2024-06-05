@@ -3,15 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+         #
+#    By: nico <nico@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/12 14:25:53 by ncasteln          #+#    #+#              #
-#    Updated: 2023/12/18 08:52:30 by ncasteln         ###   ########.fr        #
+#    Updated: 2024/06/05 10:25:09 by nico             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # GENERAL INSTRUCTIONS
-#	Installing readline in Debian: apt-get install libreadline-dev
 #	kill -9 $(jobs -ps) - kill all the suspended job, done with ctrl-Z
 
 VPATH = ./src/ \
@@ -130,34 +129,39 @@ NAME = minishell
 MYLIB_PATH = ./mylib
 MYLIB = $(MYLIB_PATH)/libmylib.a
 INCLUDE = -I./include -I./mylib/libft -I./mylib/ft_printf
+READLINE = -lreadline
 
-COLOR_GREEN = \033[0;32m
-COLOR_YELLOW = \033[0;33m
-COLOR_END = \033[0m
+G = \033[0;32m
+Y = \033[0;33m
+W = \033[0m
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(MYLIB) Makefile
-	@$(CC) $(OBJS) -L$(MYLIB_PATH) -lreadline -lmylib -ltermcap -o $(NAME)
-	@echo "$(COLOR_GREEN)minishell is created.$(COLOR_END)"
+$(NAME): $(READLINE) $(OBJS) $(MYLIB) Makefile
+	@$(CC) $(OBJS) -L$(MYLIB_PATH) $(READLINE) -lmylib -ltermcap -o $(NAME)
+	@echo "$(G)minishell is created.$(W)"
+
+$(READLINE):
+	@echo "$(G)Dependency required: libreadline-dev$(W)"
+	@sudo apt-get install libreadline-dev
 
 $(OBJS_PATH)/%.o: %.c
 	@mkdir -p $(OBJS_PATH)
 	@$(CC) $(CFLAGS) $(INCLUDE) $< -o $@
 
 $(MYLIB):
-	@cd $(MYLIB_PATH) && make
+	@cd $(MYLIB_PATH) && $(MAKE)
 
 clean:
 	@rm -f $(OBJS)
-	@cd ./$(MYLIB_PATH) && make clean
-	@echo "$(COLOR_YELLOW)minishell object files are deleted.$(COLOR_END)"
+	@cd ./$(MYLIB_PATH) && $(MAKE) clean
+	@echo "$(Y)minishell object files are deleted.$(W)"
 
 fclean: clean
 	@rm -f $(NAME)
 	@rm -rf $(OBJS_PATH)
-	@cd ./$(MYLIB_PATH) && make fclean
-	@echo "$(COLOR_YELLOW)minishell object files and minishell executable file are deleted.$(COLOR_END)"
+	@cd ./$(MYLIB_PATH) && $(MAKE) fclean
+	@echo "$(Y)minishell object files and minishell executable file are deleted.$(W)"
 
 re: fclean all
 

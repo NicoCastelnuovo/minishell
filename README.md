@@ -39,15 +39,16 @@ Once the data is ready, it had to be sent to the executor. We had to re-implemen
 
 The executor had also to handle the one or multiple redirection. That said, the main behavior is that if we have multiple redirection, each of them has to be performed, so that in case od error, the pipechain is not executed anymore. So given this example:
 ```bash
-echo "Hello World" > infile-1;
-< infile-1 < infile-2 cat -e > outfile-1 > outfile-2; #bash: infile-2: No such file or directory
+$ echo "Hello World" > infile-1;
+$ < infile-1 < infile-2 cat -e > outfile-1 > outfile-2;
+# bash: infile-2: No such file or directory
 ```
 Bash tries to take input from _infile-1_, then tries from _infile-2_. If one of these two doesn't exist, the error _No such file or directory_ is thrown, and nothing else is executed. If the two files exist, bash will only take the input from the last one _infile-2_. Regarding the redirection of the output, it will be redirected only to the last one, but if an output file has not write permissions, bash will return an error and nothing more is executed:
 ```bash
-echo "Hello World" > infile-1;
-touch outfile-not-writable;
-chmod 444 outfile-not-writable; # sets only read permissions
-< infile-1 cat -e >outfile-not-writable >outfile-2; #bash: outfile-not-writable: Permission denied
+$ echo "Hello World" > infile-1;
+$ touch outfile-not-writable;
+$ chmod 444 outfile-not-writable; # sets only read permissions
+$ < infile-1 cat -e >outfile-not-writable >outfile-2; #bash: outfile-not-writable: Permission denied
 ```
 That said, since we have to replicate Bash, every redirection has to be performed to get the same behavior and results.
 
@@ -57,8 +58,8 @@ As last step of the whole project, we did the signal handling as request by the 
 Here is a list of suggestions in case you're starting the project at 42. If I had known this before, I would have saved myself some time.
 - First thing ever: use BASH! Verify that you are testing the behavior of bash and not other shells like _zsh_ or other stuff. Why? Because they behaves differently. If you want to test something, test this in bash and zsh:
 ```bash
-echo "Hello Bash!?" >file1 >file2 >file3;
-cat file1 file2 file3;
+$ echo "Hello Bash!?" >file1 >file2 >file3;
+$ cat file1 file2 file3;
 ```
 - Try to really understand each step of bash, having in mind that you have to implement them a bit simplified (for example, unenclosed quotes has not to handled, therefore decide what to do, throw an error or what you prefer). The main steps could be resumed in: creation of an environment, waiting for the user's input, lexing, parsing, expanding, quote removal, execution and so on waiting for the next input. It is a big while loop which never dies and never exits excepts in **only 2 cases**: when you use the built-in `exit` and when you send `EOF` through _control+D_ (check what it makes in the context of bash).
 - Once you get the meaning of each step, try to arrange the job with your team mate. This doesn't only mean assignation of each step to me and you, but trying to anticipate what each step needs from the previous one. For example, the parser will produce an output: what expects the next step? Which kind of structure it needs? Is the output of the parser holding enough information, or while processing the input data, are we losing some importante information? You can repeat this kind of approach for each step. A side note: I heard a lot of people recommend to use an [Abstract Syntax Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree) to parse the data. After doing it, I could say that it is nice to use it to gain some knowledge about it and it is nice to have in your curriculum, but you don't need it. This is just a personal and questionable opinion. Feel free to do what you think.
@@ -66,8 +67,10 @@ cat file1 file2 file3;
 - Test your minishell as soon as possible. You really don't know how much can be done wrong, so it is better to run a tester, to get rid of some structur problems before they get too deep in your code. You can find a lot of valid testers online, made by 42 students. Try them out soon!
 
 ## Try it out
+To run minishell on your system you need sudo privileges since `readline` is required. By doing `make` you will asked to insert the passoword, to install the required dependency.
 ```bash
-
+$ git clone https://github.com/ncasteln/42-minishell minishell;
+$ cd minishell && make;
 ```
 
 ## Useful resources
